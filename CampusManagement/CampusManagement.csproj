@@ -1,0 +1,1423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9CFFA4FD-203B-47A0-8C6E-B3661D99E17E}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CampusManagement</RootNamespace>
+    <AssemblyName>CampusManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="VBClassLibrary">
+      <HintPath>..\VBClassLibrary\bin\Debug\VBClassLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\SystemSettingsController.cs" />
+    <Compile Include="Controllers\FinanceController.cs" />
+    <Compile Include="Controllers\AdmissionsController.cs" />
+    <Compile Include="Controllers\BatchProgramCoursesController.cs" />
+    <Compile Include="Controllers\CourseTypesController.cs" />
+    <Compile Include="Controllers\InstitutesController.cs" />
+    <Compile Include="Controllers\MeritListApproveAdmissionsController.cs" />
+    <Compile Include="Controllers\FormReceiveDetailsController.cs" />
+    <Compile Include="Controllers\OnlineApplyQualificationsController.cs" />
+    <Compile Include="Controllers\OnlineApplyController.cs" />
+    <Compile Include="Controllers\CollegeServicesController.cs" />
+    <Compile Include="Controllers\ChallansController.cs" />
+    <Compile Include="Controllers\EntryTestInterviewMarksController.cs" />
+    <Compile Include="Controllers\SelectionCriteriasController.cs" />
+    <Compile Include="Controllers\StudentBatchProgramCoursesController.cs" />
+    <Compile Include="Controllers\StudentProgramEnrollmentsController.cs" />
+    <Compile Include="Controllers\StudentsController.cs" />
+    <Compile Include="Controllers\ApplicantsController.cs" />
+    <Compile Include="Controllers\ApplicantQualificationsController.cs" />
+    <Compile Include="Controllers\TimeSlotCourseAllocationsController.cs" />
+    <Compile Include="Controllers\TimeSlotsController.cs" />
+    <Compile Include="Controllers\TeachersCourseAllocationsController.cs" />
+    <Compile Include="Controllers\TeachersController.cs" />
+    <Compile Include="Controllers\BatchProgramsController.cs" />
+    <Compile Include="Controllers\BatchesController.cs" />
+    <Compile Include="Controllers\BankAccountsController.cs" />
+    <Compile Include="Controllers\BatchProgramSemestersController.cs" />
+    <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\FormSaleDetailsController.cs" />
+    <Compile Include="Controllers\ProgramsController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Controllers\SemestersController.cs" />
+    <Compile Include="Controllers\SalutationsController.cs" />
+    <Compile Include="Controllers\RoomTypesController.cs" />
+    <Compile Include="Controllers\RoomsController.cs" />
+    <Compile Include="Controllers\ReligionsController.cs" />
+    <Compile Include="Controllers\RelationTypesController.cs" />
+    <Compile Include="Controllers\ProgramTypesController.cs" />
+    <Compile Include="Controllers\NationalitiesController.cs" />
+    <Compile Include="Controllers\MaritalStatusController.cs" />
+    <Compile Include="Controllers\FormTypesController.cs" />
+    <Compile Include="Controllers\DurationsController.cs" />
+    <Compile Include="Controllers\DesignationsController.cs" />
+    <Compile Include="Controllers\DepositTypesController.cs" />
+    <Compile Include="Controllers\DepartmentsController.cs" />
+    <Compile Include="Controllers\CurrentOccupationsController.cs" />
+    <Compile Include="Controllers\ProvincesController.cs" />
+    <Compile Include="Controllers\CountriesController.cs" />
+    <Compile Include="Controllers\DegreesController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestsController.cs" />
+    <Compile Include="Controllers\TimeTablesController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Applicant.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApplicantQualification.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApplyForProgram.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BankAccount.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Bank_Account.cs">
+      <DependentUpon>ModelFinance.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Batch.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BatchProgram.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BatchProgramCourse.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BatchProgramSemester.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CampusHomePageSetting.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CampusSetting.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Challan.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChallanService.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\City.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CollegeService.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Country.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Course.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CourseType.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CurrentOccupation.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Day.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Degree.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Department.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Deposit.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DepositType.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Designation.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Duration.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormSaleDetail.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormType.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Gender.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetAllChallans_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetApplicantPersonalInfo_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetApplicantSummary_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetApplicant_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetApplyForPrograms_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetBatchProgramNameConcat_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetChallanService_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetChallan_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetDisplayValues_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetEnrolledStudent_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetFormSaleDetail_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetLoginUser_Result.cs">
+      <DependentUpon>ModelUserManagement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetQualification_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetSelectionCriteria_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetStudentChallans_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetStudentPersonalInfo_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Get_Modules_Result.cs">
+      <DependentUpon>ModelUserManagement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Get_Module_Pages_Result.cs">
+      <DependentUpon>ModelUserManagement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Institute.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Login.cs">
+      <DependentUpon>ModelUserManagement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Login_log.cs">
+      <DependentUpon>ModelUserManagement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MaritalStatu.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelCMS.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelCMS.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelCMS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelCMS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelCMS.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelFinance.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelFinance.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelFinance.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelFinance.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelFinance.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelFinance.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelUserManagement.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelUserManagement.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelUserManagement.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelUserManagement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelUserManagement.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelUserManagement.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Nationality.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Option.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Program.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProgramType.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Province.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RelationType.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Religion.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Room.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RoomType.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\rpt_GetBatchProgramStudentSummary_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\rpt_GetFormSaleSlip_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\rpt_GetMeritList_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\rpt_GetStudentCoursesDetail_Result.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Salutation.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SelectionCriteria.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Semester.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Status.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Student.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentBatchProgramCourse.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentProgramEnrollment.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Teacher.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TeachersCourseAllocation.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TimeSlot.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TimeSlotCourseAllocation.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TimeTable.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>ModelCMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MyRoleProvider\SiteRole.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reporting\ReportDataset\DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\ReportForms\ReportViewerForm.aspx.cs">
+      <DependentUpon>ReportViewerForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reporting\ReportForms\ReportViewerForm.aspx.designer.cs">
+      <DependentUpon>ReportViewerForm.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\contactform\contactform.js" />
+    <Content Include="assets\contactform\readme.txt" />
+    <Content Include="assets\css\animate.css" />
+    <Content Include="assets\css\animate.min.css" />
+    <Content Include="assets\css\bootstrap-theme.css" />
+    <Content Include="assets\css\bootstrap-theme.min.css" />
+    <Content Include="assets\css\bootstrap.css" />
+    <Content Include="assets\css\bootstrap.min.css" />
+    <Content Include="assets\css\font-awesome.css" />
+    <Content Include="assets\css\font-awesome.min.css" />
+    <Content Include="assets\css\overwrite.css" />
+    <Content Include="assets\css\responsive-slider.css" />
+    <Content Include="assets\css\style.css" />
+    <Content Include="assets\css\style5.css" />
+    <Content Include="assets\css\style7.css" />
+    <Content Include="assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="assets\img\baqai\banner1.jpg" />
+    <Content Include="assets\img\baqai\banner2.jpg" />
+    <Content Include="assets\img\baqai\banner3.jpg" />
+    <Content Include="assets\img\baqai\banner4.jpg" />
+    <Content Include="assets\img\baqai\bg3.jpg" />
+    <Content Include="assets\img\baqai\logo.png" />
+    <Content Include="assets\img\icons\admin.png" />
+    <Content Include="assets\img\icons\AdminManagement.png" />
+    <Content Include="assets\img\icons\Attendence.png" />
+    <Content Include="assets\img\icons\CampusConnectLogo.png" />
+    <Content Include="assets\img\icons\credit-card.png" />
+    <Content Include="assets\img\icons\dashboard 1.png" />
+    <Content Include="assets\img\icons\dashboard.png" />
+    <Content Include="assets\img\icons\Discipline.png" />
+    <Content Include="assets\img\icons\dot.png" />
+    <Content Include="assets\img\icons\down-arrow.png" />
+    <Content Include="assets\img\icons\down.png" />
+    <Content Include="assets\img\icons\exit-to-app-button.png" />
+    <Content Include="assets\img\icons\external-link-symbol.png" />
+    <Content Include="assets\img\icons\Extra.png" />
+    <Content Include="assets\img\icons\filter-filled-tool-symbol.png" />
+    <Content Include="assets\img\icons\four-squares-with-frame-shape.png" />
+    <Content Include="assets\img\icons\help.png" />
+    <Content Include="assets\img\icons\home.png" />
+    <Content Include="assets\img\icons\icon.png" />
+    <Content Include="assets\img\icons\iqrabg1.jpg" />
+    <Content Include="assets\img\icons\iqrabg2.jpg" />
+    <Content Include="assets\img\icons\iqrabg3.jpg" />
+    <Content Include="assets\img\icons\iqralogo.png" />
+    <Content Include="assets\img\icons\iqra_bann1.jpg" />
+    <Content Include="assets\img\icons\iqra_bann2.jpg" />
+    <Content Include="assets\img\icons\iqra_bann3.jpg" />
+    <Content Include="assets\img\icons\iqra_bann4.jpg" />
+    <Content Include="assets\img\icons\lecturenotes.png" />
+    <Content Include="assets\img\icons\login-square-arrow-button-outline.png" />
+    <Content Include="assets\img\icons\magnifier.png" />
+    <Content Include="assets\img\icons\male-cartoon-pointing-to-white-board.png" />
+    <Content Include="assets\img\icons\maxresdefault.jpg" />
+    <Content Include="assets\img\icons\MeritList.png" />
+    <Content Include="assets\img\icons\next.png" />
+    <Content Include="assets\img\icons\next1.png" />
+    <Content Include="assets\img\icons\scholorship.png" />
+    <Content Include="assets\img\icons\settings.png" />
+    <Content Include="assets\img\icons\sign-in.png" />
+    <Content Include="assets\img\icons\signing-the-contract.png" />
+    <Content Include="assets\img\icons\speaker-giving-a-lecture-on-a-stand.png" />
+    <Content Include="assets\img\icons\student.png" />
+    <Content Include="assets\img\icons\table-clock.png" />
+    <Content Include="assets\img\icons\user.png" />
+    <Content Include="assets\img\icons\user1.png" />
+    <Content Include="assets\img\icons\workshop.png" />
+    <Content Include="assets\img\iqra\banner1.jpg" />
+    <Content Include="assets\img\iqra\banner2.jpg" />
+    <Content Include="assets\img\iqra\banner3.jpg" />
+    <Content Include="assets\img\iqra\banner4.jpg" />
+    <Content Include="assets\img\iqra\bg1.jpg" />
+    <Content Include="assets\img\iqra\bg2.jpg" />
+    <Content Include="assets\img\iqra\bg3.jpg" />
+    <Content Include="assets\img\iqra\logo.png" />
+    <Content Include="assets\js\bootstrap.js" />
+    <Content Include="assets\js\bootstrap.min.js" />
+    <Content Include="assets\js\fliplightbox.min.js" />
+    <Content Include="assets\js\jquery-2.1.1.min.js" />
+    <Content Include="assets\js\responsive-slider.js" />
+    <Content Include="assets\js\responsive-slider.min.js" />
+    <Content Include="assets\js\wow.min.js" />
+    <Content Include="assets\x-demo-images\1.gif" />
+    <Content Include="assets\x-demo-images\2.gif" />
+    <Content Include="assets\x-demo-images\3.gif" />
+    <Content Include="assets\x-demo-images\4.gif" />
+    <Content Include="assets\x-demo-images\a.jpg" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="assets\css\Bootstrap3.3.7.min.css" />
+    <Content Include="Content\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Content\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Content\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Content\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\Login1\css\demo.css" />
+    <Content Include="Content\Login1\css\font-awesome.css" />
+    <Content Include="Content\Login1\css\LoginStyle.css" />
+    <Content Include="Content\Login1\font\fontawesome-webfont.svg" />
+    <Content Include="Content\Login1\images\bg.jpg" />
+    <Content Include="Content\Login1\images\bg2.jpg" />
+    <Content Include="Content\Login1\images\bg3.jpg" />
+    <Content Include="Content\Login1\images\blurred.jpg" />
+    <Content Include="Content\Login1\images\noise.png" />
+    <Content Include="Content\Login1\images\wood_pattern.jpg" />
+    <Content Include="Content\Login1\js\jquery.placeholder.min.js" />
+    <Content Include="Content\Login1\js\modernizrCustom.js" />
+    <Content Include="Content\Login2\css\main.css" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="Content\Login2\fonts\Linearicons-Free-v1.0.0\icon-font.min.css" />
+    <Content Include="Content\Login2\fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.svg" />
+    <Content Include="Content\Login2\fonts\montserrat\OFL.txt" />
+    <Content Include="Content\Login2\images\bg1.jpg" />
+    <Content Include="Content\Login2\images\Cms.png" />
+    <Content Include="Content\Login2\js\jquery-3.2.1.min.js" />
+    <Content Include="Content\Login2\js\main.js" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="DegreeDocument\1_636566288007743906_Doc1.jpg" />
+    <Content Include="DegreeDocument\1_636566288819763671_doc2.jpg" />
+    <Content Include="DegreeDocument\1_636566391083484551_Doc1.jpg" />
+    <Content Include="DegreeDocument\1_636566391227142742_Doc1.jpg" />
+    <Content Include="DegreeDocument\1_Doc1.jpg" />
+    <Content Include="DegreeDocument\noimage.png" />
+    <Content Include="favicon.ico" />
+    <Content Include="Flags\afghanistan.gif" />
+    <Content Include="Flags\aland_islands.gif" />
+    <Content Include="Flags\albania.gif" />
+    <Content Include="Flags\algeria.gif" />
+    <Content Include="Flags\american_samoa.gif" />
+    <Content Include="Flags\andorra.gif" />
+    <Content Include="Flags\angola.gif" />
+    <Content Include="Flags\anguilla.gif" />
+    <Content Include="Flags\antarctica.gif" />
+    <Content Include="Flags\antigua_and_barbuda.gif" />
+    <Content Include="Flags\argentina.gif" />
+    <Content Include="Flags\armenia.gif" />
+    <Content Include="Flags\aruba.gif" />
+    <Content Include="Flags\australia.gif" />
+    <Content Include="Flags\austria.gif" />
+    <Content Include="Flags\azerbaijan.gif" />
+    <Content Include="Flags\bahamas.gif" />
+    <Content Include="Flags\bahrain.gif" />
+    <Content Include="Flags\bangladesh.gif" />
+    <Content Include="Flags\barbados.gif" />
+    <Content Include="Flags\belarus.gif" />
+    <Content Include="Flags\belgium.gif" />
+    <Content Include="Flags\belize.gif" />
+    <Content Include="Flags\benin.gif" />
+    <Content Include="Flags\bermuda.gif" />
+    <Content Include="Flags\bhutan.gif" />
+    <Content Include="Flags\bolivia.gif" />
+    <Content Include="Flags\bonaire.gif" />
+    <Content Include="Flags\bosnia_and_herzegovina.gif" />
+    <Content Include="Flags\botswana.gif" />
+    <Content Include="Flags\bouvet_island.gif" />
+    <Content Include="Flags\brazil.gif" />
+    <Content Include="Flags\british_indian_ocean_territory.gif" />
+    <Content Include="Flags\brunei.gif" />
+    <Content Include="Flags\bulgaria.gif" />
+    <Content Include="Flags\burkina_faso.gif" />
+    <Content Include="Flags\burundi.gif" />
+    <Content Include="Flags\cambodia.gif" />
+    <Content Include="Flags\cameroon.gif" />
+    <Content Include="Flags\canada.gif" />
+    <Content Include="Flags\cape_verde.gif" />
+    <Content Include="Flags\cayman_islands.gif" />
+    <Content Include="Flags\central_african_republic.gif" />
+    <Content Include="Flags\chad.gif" />
+    <Content Include="Flags\chile.gif" />
+    <Content Include="Flags\china.gif" />
+    <Content Include="Flags\christmas_island.gif" />
+    <Content Include="Flags\cocos_islands.gif" />
+    <Content Include="Flags\colombia.gif" />
+    <Content Include="Flags\comoros.gif" />
+    <Content Include="Flags\cook_islands.gif" />
+    <Content Include="Flags\costa_rica.gif" />
+    <Content Include="Flags\cote_d_Ivoire.gif" />
+    <Content Include="Flags\croatia.gif" />
+    <Content Include="Flags\cuba.gif" />
+    <Content Include="Flags\curacao.gif" />
+    <Content Include="Flags\cyprus.gif" />
+    <Content Include="Flags\czech_republic.gif" />
+    <Content Include="Flags\democratic_republic_of_the_congo.gif" />
+    <Content Include="Flags\denmark.gif" />
+    <Content Include="Flags\djibouti.gif" />
+    <Content Include="Flags\dominica.gif" />
+    <Content Include="Flags\dominican_republic.gif" />
+    <Content Include="Flags\east_timor.gif" />
+    <Content Include="Flags\ecuador.gif" />
+    <Content Include="Flags\egypt.gif" />
+    <Content Include="Flags\el_salvador.gif" />
+    <Content Include="Flags\england.gif" />
+    <Content Include="Flags\equatorial_guinea.gif" />
+    <Content Include="Flags\eritrea.gif" />
+    <Content Include="Flags\estonia.gif" />
+    <Content Include="Flags\ethiopia.gif" />
+    <Content Include="Flags\european_union.gif" />
+    <Content Include="Flags\falkland_islands.gif" />
+    <Content Include="Flags\faroe_islands.gif" />
+    <Content Include="Flags\fiji.gif" />
+    <Content Include="Flags\finland.gif" />
+    <Content Include="Flags\france.gif" />
+    <Content Include="Flags\french_guiana.gif" />
+    <Content Include="Flags\french_polynesia.gif" />
+    <Content Include="Flags\french_southern_territories.gif" />
+    <Content Include="Flags\gabon.gif" />
+    <Content Include="Flags\gambia.gif" />
+    <Content Include="Flags\georgia.gif" />
+    <Content Include="Flags\germany.gif" />
+    <Content Include="Flags\ghana.gif" />
+    <Content Include="Flags\gibraltar.gif" />
+    <Content Include="Flags\greece.gif" />
+    <Content Include="Flags\greenland.gif" />
+    <Content Include="Flags\grenada.gif" />
+    <Content Include="Flags\guadeloupe.gif" />
+    <Content Include="Flags\guam.gif" />
+    <Content Include="Flags\guatemala.gif" />
+    <Content Include="Flags\guernsey.gif" />
+    <Content Include="Flags\guinea.gif" />
+    <Content Include="Flags\guinea_bissau.gif" />
+    <Content Include="Flags\guyana.gif" />
+    <Content Include="Flags\haiti.gif" />
+    <Content Include="Flags\heard_island_and_mcdonald_islands.gif" />
+    <Content Include="Flags\honduras.gif" />
+    <Content Include="Flags\hong_kong.gif" />
+    <Content Include="Flags\hungary.gif" />
+    <Content Include="Flags\iceland.gif" />
+    <Content Include="Flags\india.gif" />
+    <Content Include="Flags\indonesia.gif" />
+    <Content Include="Flags\iran.gif" />
+    <Content Include="Flags\iraq.gif" />
+    <Content Include="Flags\ireland.gif" />
+    <Content Include="Flags\isle_of_man.gif" />
+    <Content Include="Flags\israel.gif" />
+    <Content Include="Flags\italy.gif" />
+    <Content Include="Flags\jamaica.gif" />
+    <Content Include="Flags\japan.gif" />
+    <Content Include="Flags\jersey.gif" />
+    <Content Include="Flags\jordan.gif" />
+    <Content Include="Flags\kazakhstan.gif" />
+    <Content Include="Flags\kenya.gif" />
+    <Content Include="Flags\kiribati.gif" />
+    <Content Include="Flags\korea_north.gif" />
+    <Content Include="Flags\korea_south.gif" />
+    <Content Include="Flags\kosovo.gif" />
+    <Content Include="Flags\kuwait.gif" />
+    <Content Include="Flags\kyrgyzstan.gif" />
+    <Content Include="Flags\laos.gif" />
+    <Content Include="Flags\latvia.gif" />
+    <Content Include="Flags\lebanon.gif" />
+    <Content Include="Flags\lesotho.gif" />
+    <Content Include="Flags\liberia.gif" />
+    <Content Include="Flags\libya.gif" />
+    <Content Include="Flags\liechtenstein.gif" />
+    <Content Include="Flags\lithuania.gif" />
+    <Content Include="Flags\luxembourg.gif" />
+    <Content Include="Flags\macao.gif" />
+    <Content Include="Flags\macedonia.gif" />
+    <Content Include="Flags\madagascar.gif" />
+    <Content Include="Flags\malawi.gif" />
+    <Content Include="Flags\malaysia.gif" />
+    <Content Include="Flags\maldives.gif" />
+    <Content Include="Flags\mali.gif" />
+    <Content Include="Flags\malta.gif" />
+    <Content Include="Flags\marshall_islands.gif" />
+    <Content Include="Flags\martinique.gif" />
+    <Content Include="Flags\mauritania.gif" />
+    <Content Include="Flags\mauritius.gif" />
+    <Content Include="Flags\mayotte.gif" />
+    <Content Include="Flags\mexico.gif" />
+    <Content Include="Flags\micronesia.gif" />
+    <Content Include="Flags\moldova.gif" />
+    <Content Include="Flags\monaco.gif" />
+    <Content Include="Flags\mongolia.gif" />
+    <Content Include="Flags\montenegro.gif" />
+    <Content Include="Flags\montserrat.gif" />
+    <Content Include="Flags\morocco.gif" />
+    <Content Include="Flags\mozambique.gif" />
+    <Content Include="Flags\myanmar.gif" />
+    <Content Include="Flags\namibia.gif" />
+    <Content Include="Flags\nauru.gif" />
+    <Content Include="Flags\nepal.gif" />
+    <Content Include="Flags\netherlands.gif" />
+    <Content Include="Flags\new_caledonia.gif" />
+    <Content Include="Flags\new_zealand.gif" />
+    <Content Include="Flags\nicaragua.gif" />
+    <Content Include="Flags\niger.gif" />
+    <Content Include="Flags\nigeria.gif" />
+    <Content Include="Flags\niue.gif" />
+    <Content Include="Flags\norfolk_island.gif" />
+    <Content Include="Flags\northern_mariana_islands.gif" />
+    <Content Include="Flags\norway.gif" />
+    <Content Include="Flags\oman.gif" />
+    <Content Include="Flags\pakistan.gif" />
+    <Content Include="Flags\palau.gif" />
+    <Content Include="Flags\palestinian_territory.gif" />
+    <Content Include="Flags\panama.gif" />
+    <Content Include="Flags\papua_new_guinea.gif" />
+    <Content Include="Flags\paraguay.gif" />
+    <Content Include="Flags\peru.gif" />
+    <Content Include="Flags\philippines.gif" />
+    <Content Include="Flags\pitcairn_islands.gif" />
+    <Content Include="Flags\poland.gif" />
+    <Content Include="Flags\portugal.gif" />
+    <Content Include="Flags\puerto_rico.gif" />
+    <Content Include="Flags\qatar.gif" />
+    <Content Include="Flags\republic_of_china.gif" />
+    <Content Include="Flags\republic_of_the_congo.gif" />
+    <Content Include="Flags\reunion.gif" />
+    <Content Include="Flags\romania.gif" />
+    <Content Include="Flags\russia.gif" />
+    <Content Include="Flags\rwanda.gif" />
+    <Content Include="Flags\saint_barthelemy.gif" />
+    <Content Include="Flags\saint_helena.gif" />
+    <Content Include="Flags\saint_kitts_and_nevis.gif" />
+    <Content Include="Flags\saint_lucia.gif" />
+    <Content Include="Flags\saint_martin.gif" />
+    <Content Include="Flags\saint_pierre_and_miquelon.gif" />
+    <Content Include="Flags\saint_vincent_and_the_grenadines.gif" />
+    <Content Include="Flags\samoa.gif" />
+    <Content Include="Flags\san_marino.gif" />
+    <Content Include="Flags\sao_tome_and_principe.gif" />
+    <Content Include="Flags\saudi_arabia.gif" />
+    <Content Include="Flags\scotland.gif" />
+    <Content Include="Flags\senegal.gif" />
+    <Content Include="Flags\serbia.gif" />
+    <Content Include="Flags\seychelles.gif" />
+    <Content Include="Flags\sierra_leone.gif" />
+    <Content Include="Flags\singapore.gif" />
+    <Content Include="Flags\sint_maarten.gif" />
+    <Content Include="Flags\slovakia.gif" />
+    <Content Include="Flags\slovenia.gif" />
+    <Content Include="Flags\solomon_islands.gif" />
+    <Content Include="Flags\somalia.gif" />
+    <Content Include="Flags\south_africa.gif" />
+    <Content Include="Flags\south_georgia_and_the_south_sandwich_islands.gif" />
+    <Content Include="Flags\south_sudan.gif" />
+    <Content Include="Flags\spain.gif" />
+    <Content Include="Flags\sri_lanka.gif" />
+    <Content Include="Flags\sudan.gif" />
+    <Content Include="Flags\suriname.gif" />
+    <Content Include="Flags\svalbard_and_jan_mayen.gif" />
+    <Content Include="Flags\swaziland.gif" />
+    <Content Include="Flags\sweden.gif" />
+    <Content Include="Flags\switzerland.gif" />
+    <Content Include="Flags\syria.gif" />
+    <Content Include="Flags\tajikistan.gif" />
+    <Content Include="Flags\tanzania.gif" />
+    <Content Include="Flags\thailand.gif" />
+    <Content Include="Flags\togo.gif" />
+    <Content Include="Flags\tokelau.gif" />
+    <Content Include="Flags\tonga.gif" />
+    <Content Include="Flags\trinidad_and_tobago.gif" />
+    <Content Include="Flags\tunisia.gif" />
+    <Content Include="Flags\turkey.gif" />
+    <Content Include="Flags\turkmenistan.gif" />
+    <Content Include="Flags\turks_and_caicos_islands.gif" />
+    <Content Include="Flags\tuvalu.gif" />
+    <Content Include="Flags\uganda.gif" />
+    <Content Include="Flags\ukraine.gif" />
+    <Content Include="Flags\united_arab_emirates.gif" />
+    <Content Include="Flags\united_kingdom.gif" />
+    <Content Include="Flags\usa.gif" />
+    <Content Include="Flags\uruguay.gif" />
+    <Content Include="Flags\ussr.gif" />
+    <Content Include="Flags\uzbekistan.gif" />
+    <Content Include="Flags\vanuatu.gif" />
+    <Content Include="Flags\vatican_city.gif" />
+    <Content Include="Flags\venezuela.gif" />
+    <Content Include="Flags\vietnam.gif" />
+    <Content Include="Flags\virgin_islands_british.gif" />
+    <Content Include="Flags\virgin_islands_us.gif" />
+    <Content Include="Flags\wales.gif" />
+    <Content Include="Flags\wallis_and_futuna.gif" />
+    <Content Include="Flags\western_sahara.gif" />
+    <Content Include="Flags\yemen.gif" />
+    <Content Include="Flags\zambia.gif" />
+    <Content Include="Flags\zimbabwe.gif" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Models\ModelCMS.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelCMS.Context.cs</LastGenOutput>
+      <DependentUpon>ModelCMS.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\ModelCMS.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelCMS.cs</LastGenOutput>
+      <DependentUpon>ModelCMS.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\ModelFinance.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelFinance.Context.cs</LastGenOutput>
+      <DependentUpon>ModelFinance.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\ModelFinance.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelFinance.cs</LastGenOutput>
+      <DependentUpon>ModelFinance.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\ModelUserManagement.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelUserManagement.Context.cs</LastGenOutput>
+      <DependentUpon>ModelUserManagement.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\ModelUserManagement.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelUserManagement.cs</LastGenOutput>
+      <DependentUpon>ModelUserManagement.edmx</DependentUpon>
+    </Content>
+    <Content Include="Reporting\ReportForms\ReportViewerForm.aspx" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="Models\ModelCMS.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelCMS.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ModelCMS.edmx.diagram">
+      <DependentUpon>ModelCMS.edmx</DependentUpon>
+    </Content>
+    <Content Include="assets\css\bootstrap-theme.css.map" />
+    <Content Include="assets\css\bootstrap.css.map" />
+    <Content Include="assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="assets\fonts\FontAwesome.otf" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Login1\font\fontawesome-webfont.eot" />
+    <Content Include="Content\Login1\font\fontawesome-webfont.ttf" />
+    <Content Include="Content\Login1\font\fontawesome-webfont.woff" />
+    <Content Include="Content\Login1\images\.DS_Store" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\core.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\list.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\path.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="Content\Login2\fonts\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Content\Login2\fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.eot" />
+    <Content Include="Content\Login2\fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.ttf" />
+    <Content Include="Content\Login2\fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.woff" />
+    <Content Include="Content\Login2\fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.woff2" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-Black.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-BlackItalic.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-Bold.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-BoldItalic.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-ExtraBold.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-ExtraBoldItalic.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-ExtraLight.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-ExtraLightItalic.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-Italic.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-Light.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-LightItalic.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-Medium.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-MediumItalic.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-Regular.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-SemiBold.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-SemiBoldItalic.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-Thin.ttf" />
+    <Content Include="Content\Login2\fonts\montserrat\Montserrat-ThinItalic.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-Black.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-BlackItalic.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-Bold.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-BoldItalic.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-ExtraBold.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-ExtraBoldItalic.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-ExtraLight.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-ExtraLightItalic.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-Italic.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-Light.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-LightItalic.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-Medium.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-MediumItalic.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-Regular.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-SemiBold.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-SemiBoldItalic.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-Thin.ttf" />
+    <Content Include="Content\Login2\fonts\poppins\Poppins-ThinItalic.ttf" />
+    <EntityDeploy Include="Models\ModelUserManagement.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelUserManagement.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ModelUserManagement.edmx.diagram">
+      <DependentUpon>ModelUserManagement.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\ModelFinance.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelFinance.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ModelFinance.edmx.diagram">
+      <DependentUpon>ModelFinance.edmx</DependentUpon>
+    </Content>
+    <Content Include="DegreeDocument\1_636566388588082952_software.pdf" />
+    <Content Include="DegreeDocument\1_Doc1.jpg_636566283835165907" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Reporting\ReportDataset\DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
+    <None Include="Reporting\ReportDataset\DataSet1.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reporting\ReportDataset\DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Common.js" />
+    <Content Include="Scripts\i18n\grid.locale-ar.js" />
+    <Content Include="Scripts\i18n\grid.locale-bg.js" />
+    <Content Include="Scripts\i18n\grid.locale-bg1251.js" />
+    <Content Include="Scripts\i18n\grid.locale-cat.js" />
+    <Content Include="Scripts\i18n\grid.locale-cn.js" />
+    <Content Include="Scripts\i18n\grid.locale-cs.js" />
+    <Content Include="Scripts\i18n\grid.locale-da.js" />
+    <Content Include="Scripts\i18n\grid.locale-de.js" />
+    <Content Include="Scripts\i18n\grid.locale-dk.js" />
+    <Content Include="Scripts\i18n\grid.locale-el.js" />
+    <Content Include="Scripts\i18n\grid.locale-en.js" />
+    <Content Include="Scripts\i18n\grid.locale-es.js" />
+    <Content Include="Scripts\i18n\grid.locale-fa.js" />
+    <Content Include="Scripts\i18n\grid.locale-fi.js" />
+    <Content Include="Scripts\i18n\grid.locale-fr.js" />
+    <Content Include="Scripts\i18n\grid.locale-gl.js" />
+    <Content Include="Scripts\i18n\grid.locale-he.js" />
+    <Content Include="Scripts\i18n\grid.locale-hr.js" />
+    <Content Include="Scripts\i18n\grid.locale-hr1250.js" />
+    <Content Include="Scripts\i18n\grid.locale-hu.js" />
+    <Content Include="Scripts\i18n\grid.locale-id.js" />
+    <Content Include="Scripts\i18n\grid.locale-is.js" />
+    <Content Include="Scripts\i18n\grid.locale-it.js" />
+    <Content Include="Scripts\i18n\grid.locale-ja.js" />
+    <Content Include="Scripts\i18n\grid.locale-kr.js" />
+    <Content Include="Scripts\i18n\grid.locale-lt.js" />
+    <Content Include="Scripts\i18n\grid.locale-mne.js" />
+    <Content Include="Scripts\i18n\grid.locale-nl.js" />
+    <Content Include="Scripts\i18n\grid.locale-no.js" />
+    <Content Include="Scripts\i18n\grid.locale-pl.js" />
+    <Content Include="Scripts\i18n\grid.locale-pt-br.js" />
+    <Content Include="Scripts\i18n\grid.locale-pt.js" />
+    <Content Include="Scripts\i18n\grid.locale-ro.js" />
+    <Content Include="Scripts\i18n\grid.locale-ru.js" />
+    <Content Include="Scripts\i18n\grid.locale-sk.js" />
+    <Content Include="Scripts\i18n\grid.locale-sr-latin.js" />
+    <Content Include="Scripts\i18n\grid.locale-sr.js" />
+    <Content Include="Scripts\i18n\grid.locale-sv.js" />
+    <Content Include="Scripts\i18n\grid.locale-th.js" />
+    <Content Include="Scripts\i18n\grid.locale-tr.js" />
+    <Content Include="Scripts\i18n\grid.locale-tw.js" />
+    <Content Include="Scripts\i18n\grid.locale-ua.js" />
+    <Content Include="Scripts\i18n\grid.locale-vi.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.10.0.js" />
+    <Content Include="Scripts\jquery-ui-1.10.0.min.js" />
+    <Content Include="Scripts\jquery.jqGrid.js" />
+    <Content Include="Scripts\jquery.jqGrid.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\mask.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Views\Shared\_MyLayout.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\TimeTables\TimeTableTabs.cshtml" />
+    <Content Include="Views\TimeTables\RoomWiseTimeTable.cshtml" />
+    <Content Include="Views\TimeTables\SubjectWiseTimeTable.cshtml" />
+    <Content Include="Views\TimeTables\SemesterWiseTimeTable.cshtml" />
+    <Content Include="Views\TimeTables\TeacherWiseTimeTable.cshtml" />
+    <Content Include="Views\TimeTables\BatchWiseTimeTable.cshtml" />
+    <Content Include="Views\Tests\TestView.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Applicants\Create.cshtml" />
+    <Content Include="Views\Applicants\Delete.cshtml" />
+    <Content Include="Views\Applicants\Edit.cshtml" />
+    <Content Include="Views\Applicants\Index.cshtml" />
+    <Content Include="Views\TimeTables\SlotWiseTimeTable.cshtml" />
+    <Content Include="Views\Degrees\Index.cshtml" />
+    <Content Include="Views\Degrees\Create.cshtml" />
+    <Content Include="Views\Degrees\Edit.cshtml" />
+    <Content Include="Views\Degrees\Delete.cshtml" />
+    <Content Include="Views\BankAccounts\Create.cshtml" />
+    <Content Include="Views\BankAccounts\Delete.cshtml" />
+    <Content Include="Views\BankAccounts\Edit.cshtml" />
+    <Content Include="Views\BankAccounts\Index.cshtml" />
+    <Content Include="Views\Batches\Create.cshtml" />
+    <Content Include="Views\Batches\Delete.cshtml" />
+    <Content Include="Views\Batches\Edit.cshtml" />
+    <Content Include="Views\Batches\Index.cshtml" />
+    <Content Include="Views\BatchPrograms\Create.cshtml" />
+    <Content Include="Views\BatchPrograms\Delete.cshtml" />
+    <Content Include="Views\BatchPrograms\Edit.cshtml" />
+    <Content Include="Views\BatchPrograms\Index.cshtml" />
+    <Content Include="Views\ApplicantQualifications\Create.cshtml" />
+    <Content Include="Views\ApplicantQualifications\Delete.cshtml" />
+    <Content Include="Views\ApplicantQualifications\Edit.cshtml" />
+    <Content Include="Views\ApplicantQualifications\Index.cshtml" />
+    <Content Include="Views\BatchProgramSemesters\Create.cshtml" />
+    <Content Include="Views\BatchProgramSemesters\Delete.cshtml" />
+    <Content Include="Views\BatchProgramSemesters\Edit.cshtml" />
+    <Content Include="Views\BatchProgramSemesters\Index.cshtml" />
+    <Content Include="Views\Countries\Create.cshtml" />
+    <Content Include="Views\Countries\Delete.cshtml" />
+    <Content Include="Views\Countries\Edit.cshtml" />
+    <Content Include="Views\Countries\Index.cshtml" />
+    <Content Include="Views\Provinces\Create.cshtml" />
+    <Content Include="Views\Provinces\Delete.cshtml" />
+    <Content Include="Views\Provinces\Edit.cshtml" />
+    <Content Include="Views\Provinces\Index.cshtml" />
+    <Content Include="Views\Cities\Create.cshtml" />
+    <Content Include="Views\Cities\Delete.cshtml" />
+    <Content Include="Views\Cities\Edit.cshtml" />
+    <Content Include="Views\Cities\Index.cshtml" />
+    <Content Include="Views\Courses\Create.cshtml" />
+    <Content Include="Views\Courses\Delete.cshtml" />
+    <Content Include="Views\Courses\Edit.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\CurrentOccupations\Create.cshtml" />
+    <Content Include="Views\CurrentOccupations\Delete.cshtml" />
+    <Content Include="Views\CurrentOccupations\Edit.cshtml" />
+    <Content Include="Views\CurrentOccupations\Index.cshtml" />
+    <Content Include="Views\Departments\Create.cshtml" />
+    <Content Include="Views\Departments\Delete.cshtml" />
+    <Content Include="Views\Departments\Edit.cshtml" />
+    <Content Include="Views\Departments\Index.cshtml" />
+    <Content Include="Views\DepositTypes\Create.cshtml" />
+    <Content Include="Views\DepositTypes\Delete.cshtml" />
+    <Content Include="Views\DepositTypes\Edit.cshtml" />
+    <Content Include="Views\DepositTypes\Index.cshtml" />
+    <Content Include="Views\Designations\Create.cshtml" />
+    <Content Include="Views\Designations\Delete.cshtml" />
+    <Content Include="Views\Designations\Edit.cshtml" />
+    <Content Include="Views\Designations\Index.cshtml" />
+    <Content Include="Views\Durations\Create.cshtml" />
+    <Content Include="Views\Durations\Delete.cshtml" />
+    <Content Include="Views\Durations\Edit.cshtml" />
+    <Content Include="Views\Durations\Index.cshtml" />
+    <Content Include="Views\FormTypes\Create.cshtml" />
+    <Content Include="Views\FormTypes\Delete.cshtml" />
+    <Content Include="Views\FormTypes\Edit.cshtml" />
+    <Content Include="Views\FormTypes\Index.cshtml" />
+    <Content Include="Views\MaritalStatus\Create.cshtml" />
+    <Content Include="Views\MaritalStatus\Delete.cshtml" />
+    <Content Include="Views\MaritalStatus\Edit.cshtml" />
+    <Content Include="Views\MaritalStatus\Index.cshtml" />
+    <Content Include="Views\Nationalities\Create.cshtml" />
+    <Content Include="Views\Nationalities\Delete.cshtml" />
+    <Content Include="Views\Nationalities\Edit.cshtml" />
+    <Content Include="Views\Nationalities\Index.cshtml" />
+    <Content Include="Views\ProgramTypes\Create.cshtml" />
+    <Content Include="Views\ProgramTypes\Delete.cshtml" />
+    <Content Include="Views\ProgramTypes\Edit.cshtml" />
+    <Content Include="Views\ProgramTypes\Index.cshtml" />
+    <Content Include="Views\RelationTypes\Create.cshtml" />
+    <Content Include="Views\RelationTypes\Delete.cshtml" />
+    <Content Include="Views\RelationTypes\Edit.cshtml" />
+    <Content Include="Views\RelationTypes\Index.cshtml" />
+    <Content Include="Views\Religions\Create.cshtml" />
+    <Content Include="Views\Religions\Delete.cshtml" />
+    <Content Include="Views\Religions\Edit.cshtml" />
+    <Content Include="Views\Religions\Index.cshtml" />
+    <Content Include="Views\Rooms\Create.cshtml" />
+    <Content Include="Views\Rooms\Delete.cshtml" />
+    <Content Include="Views\Rooms\Edit.cshtml" />
+    <Content Include="Views\Rooms\Index.cshtml" />
+    <Content Include="Views\RoomTypes\Create.cshtml" />
+    <Content Include="Views\RoomTypes\Delete.cshtml" />
+    <Content Include="Views\RoomTypes\Edit.cshtml" />
+    <Content Include="Views\RoomTypes\Index.cshtml" />
+    <Content Include="Views\Salutations\Create.cshtml" />
+    <Content Include="Views\Salutations\Delete.cshtml" />
+    <Content Include="Views\Salutations\Edit.cshtml" />
+    <Content Include="Views\Salutations\Index.cshtml" />
+    <Content Include="Views\Semesters\Create.cshtml" />
+    <Content Include="Views\Semesters\Delete.cshtml" />
+    <Content Include="Views\Semesters\Edit.cshtml" />
+    <Content Include="Views\Semesters\Index.cshtml" />
+    <Content Include="Views\Status\Create.cshtml" />
+    <Content Include="Views\Status\Delete.cshtml" />
+    <Content Include="Views\Status\Edit.cshtml" />
+    <Content Include="Views\Status\Index.cshtml" />
+    <Content Include="Views\FormSaleDetails\Create.cshtml" />
+    <Content Include="Views\FormSaleDetails\Delete.cshtml" />
+    <Content Include="Views\FormSaleDetails\Edit.cshtml" />
+    <Content Include="Views\FormSaleDetails\Index.cshtml" />
+    <Content Include="Views\Programs\Create.cshtml" />
+    <Content Include="Views\Programs\Delete.cshtml" />
+    <Content Include="Views\Programs\Edit.cshtml" />
+    <Content Include="Views\Programs\Index.cshtml" />
+    <Content Include="Views\Teachers\Create.cshtml" />
+    <Content Include="Views\Teachers\Delete.cshtml" />
+    <Content Include="Views\Teachers\Edit.cshtml" />
+    <Content Include="Views\Teachers\Index.cshtml" />
+    <Content Include="Views\TeachersCourseAllocations\Create.cshtml" />
+    <Content Include="Views\TeachersCourseAllocations\Delete.cshtml" />
+    <Content Include="Views\TeachersCourseAllocations\Edit.cshtml" />
+    <Content Include="Views\TeachersCourseAllocations\Index.cshtml" />
+    <Content Include="Views\TimeSlots\Create.cshtml" />
+    <Content Include="Views\TimeSlots\Index.cshtml" />
+    <Content Include="Views\TimeSlotCourseAllocations\Create.cshtml" />
+    <Content Include="Views\TimeSlotCourseAllocations\Delete.cshtml" />
+    <Content Include="Views\TimeSlotCourseAllocations\Index.cshtml" />
+    <Content Include="Views\Students\Create.cshtml" />
+    <Content Include="Views\Students\Delete.cshtml" />
+    <Content Include="Views\Students\Edit.cshtml" />
+    <Content Include="Views\Students\Index.cshtml" />
+    <Content Include="Views\Shared\_MyLoginLayout.cshtml" />
+    <Content Include="Views\Home\Login1.cshtml" />
+    <Content Include="Views\Shared\_MyLoginLayout2.cshtml" />
+    <Content Include="Views\Home\Login2.cshtml" />
+    <Content Include="Views\Shared\_MessageView.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\CollegeServices\Create.cshtml" />
+    <Content Include="Views\CollegeServices\Delete.cshtml" />
+    <Content Include="Views\CollegeServices\Edit.cshtml" />
+    <Content Include="Views\CollegeServices\Index.cshtml" />
+    <Content Include="Views\StudentProgramEnrollments\Create.cshtml" />
+    <Content Include="Views\StudentProgramEnrollments\Delete.cshtml" />
+    <Content Include="Views\StudentProgramEnrollments\Index.cshtml" />
+    <Content Include="Views\Challans\Create.cshtml" />
+    <Content Include="Views\Challans\Index.cshtml" />
+    <Content Include="Views\OnlineApply\Create.cshtml" />
+    <Content Include="Views\OnlineApply\Delete.cshtml" />
+    <Content Include="Views\OnlineApply\Edit.cshtml" />
+    <Content Include="Views\OnlineApply\Index.cshtml" />
+    <Content Include="Views\OnlineApplyQualifications\Create.cshtml" />
+    <Content Include="Views\OnlineApplyQualifications\Delete.cshtml" />
+    <Content Include="Views\OnlineApplyQualifications\Edit.cshtml" />
+    <Content Include="Views\OnlineApplyQualifications\Index.cshtml" />
+    <Content Include="Views\Home\RegisterApplicant.cshtml" />
+    <Content Include="Views\FormReceiveDetails\Create.cshtml" />
+    <Content Include="Views\FormReceiveDetails\Delete.cshtml" />
+    <Content Include="Views\FormReceiveDetails\Index.cshtml" />
+    <Content Include="Views\SelectionCriterias\Create.cshtml" />
+    <Content Include="Views\SelectionCriterias\Delete.cshtml" />
+    <Content Include="Views\SelectionCriterias\Index.cshtml" />
+    <Content Include="Views\SelectionCriterias\Edit.cshtml" />
+    <Content Include="Views\EntryTestInterviewMarks\Search.cshtml" />
+    <Content Include="Views\EntryTestInterviewMarks\Index.cshtml" />
+    <Content Include="Views\EntryTestInterviewMarks\SaveAll.cshtml" />
+    <Content Include="Views\MeritListApproveAdmissions\Index.cshtml" />
+    <Content Include="Views\MeritListApproveAdmissions\Search.cshtml" />
+    <Content Include="Views\MeritListApproveAdmissions\SaveAll.cshtml" />
+    <Content Include="Views\Institutes\Create.cshtml" />
+    <Content Include="Views\Institutes\Delete.cshtml" />
+    <Content Include="Views\Institutes\Edit.cshtml" />
+    <Content Include="Views\Institutes\Index.cshtml" />
+    <Content Include="Views\StudentBatchProgramCourses\Index.cshtml" />
+    <Content Include="Views\CourseTypes\Create.cshtml" />
+    <Content Include="Views\CourseTypes\Delete.cshtml" />
+    <Content Include="Views\CourseTypes\Edit.cshtml" />
+    <Content Include="Views\CourseTypes\Index.cshtml" />
+    <Content Include="Views\BatchProgramCourses\Create.cshtml" />
+    <Content Include="Views\BatchProgramCourses\Delete.cshtml" />
+    <Content Include="Views\BatchProgramCourses\Edit.cshtml" />
+    <Content Include="Views\BatchProgramCourses\Index.cshtml" />
+    <Content Include="Views\Admissions\NewAdmission.cshtml" />
+    <Content Include="Views\Admissions\ProgramIntake.cshtml" />
+    <Content Include="Views\Admissions\SemesterEnrolment.cshtml" />
+    <Content Include="Views\Finance\Invoicing.cshtml" />
+    <Content Include="Views\Finance\Collection.cshtml" />
+    <Content Include="Views\Finance\Discount.cshtml" />
+    <Content Include="Views\Finance\Refunds.cshtml" />
+    <Content Include="Views\Finance\FinanceReports.cshtml" />
+    <Content Include="Views\Challans\ApproveChallans.cshtml" />
+    <Content Include="Views\Challans\Search.cshtml" />
+    <Content Include="Views\TimeTables\TimeTableSetup.cshtml" />
+    <Content Include="Views\TimeTables\TimeTableView.cshtml" />
+    <Content Include="Views\SystemSettings\Academic.cshtml" />
+    <Content Include="Views\SystemSettings\Administration.cshtml" />
+    <Content Include="Views\SystemSettings\Discipline.cshtml" />
+    <Content Include="Views\SystemSettings\ExtraCurriculum.cshtml" />
+    <Content Include="Views\SystemSettings\Finance.cshtml" />
+    <Content Include="Views\SystemSettings\Registration.cshtml" />
+    <Content Include="Views\SystemSettings\Campus.cshtml" />
+    <Content Include="Views\Teachers\LecturerProfile.cshtml" />
+    <Content Include="Views\Teachers\ViewLecturerProfile.cshtml" />
+    <Content Include="Views\Challans\SingleStudentChallan.cshtml" />
+    <Content Include="Views\FormSaleDetails\PostForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="ProfilePics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reporting\Reports\rptAdmissionFormSale.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\rptFormReceiveSlip.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\rptFormSaleSlip.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\rptGetChallan.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\rptReceivedFormsDetail.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\rpt_MeritList.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\rpt_MeritListBlank.rdlc" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>63965</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:63965/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

@@ -1,0 +1,60 @@
+﻿@model CampusManagement.Models.CountriesViewModel
+
+@{
+    ViewBag.Title = "Countries";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedCountry != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedCountry);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedCountry);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.Country());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCountry.CountryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCountry.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCountry.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Countries)
+    {
+    <tr>
+        <td>
+            <img src="@Url.Content(item.FlagURL)" style="width:20px;height:20px;" /> @Html.DisplayFor(modelItem => item.CountryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.CountryID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.CountryID })
+        </td>
+    </tr>
+    }
+
+</table>

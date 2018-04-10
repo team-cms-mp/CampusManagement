@@ -1,0 +1,82 @@
+﻿@model CampusManagement.Models.BatchProgramCourseViewModel
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Program Courses";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.SelectedBatchProgramCourse != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedBatchProgramCourse);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedBatchProgramCourse);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new BatchProgramCourse());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatchProgramCourse.BatchProgramID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatchProgramCourse.Course.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatchProgramCourse.CourseType.CourseTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatchProgramCourse.YearSemesterNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatchProgramCourse.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.BatchProgramCourses)
+    {
+        <tr>
+            <td>
+                @{
+                    ModelCMSContainer dbView = new ModelCMSContainer();
+                    GetBatchProgramNameConcat_Result bpn = dbView.GetBatchProgramNameConcat("", 0).FirstOrDefault(b => b.ID == item.BatchProgramID);
+                    string bpName = "";
+                    if(bpn != null)
+                    {
+                        bpName = bpn.Name;
+                    }
+                }
+                @Html.Raw(bpName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseType.CourseTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearSemesterNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id = item.ProgramCourseID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProgramCourseID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+

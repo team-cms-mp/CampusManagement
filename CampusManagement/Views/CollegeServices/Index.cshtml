@@ -1,0 +1,60 @@
+﻿@model CampusManagement.Models.CollegeServicesViewModel
+
+@{
+    ViewBag.Title = "College Services";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.SelectedCollegeService != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedCollegeService);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedCollegeService);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.CollegeService());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCollegeService.CollegeServiceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCollegeService.IsEffectProgramFee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCollegeService.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.CollegeServices)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CollegeServiceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsEffectProgramFee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id = item.CollegeServiceID })
+                @* | @Html.ActionLink("Delete", "Delete", new { id = item.CollegeServiceID })*@
+            </td>
+        </tr>
+    }
+
+</table>
+

@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ModelFinance.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Finance.dbo.Bank_Account' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Bank_Account">
+          <Key>
+            <PropertyRef Name="Account_ID" />
+            <PropertyRef Name="Account_No" />
+            <PropertyRef Name="Branch_Id" />
+          </Key>
+          <Property Name="Account_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account_No" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Branch_Id" Type="int" Nullable="false" />
+          <Property Name="Bank_E_Code" Type="varchar" MaxLength="50" />
+          <Property Name="Bank_E_ID" Type="int" />
+          <Property Name="For_Commodity_ID" Type="int" />
+          <Property Name="Purpose" Type="varchar" MaxLength="500" />
+          <Property Name="Account_Type" Type="varchar" MaxLength="50" />
+          <Property Name="OD_Limit" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="Compnay_id" Type="int" />
+          <Property Name="E_Code" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="Financial_Company_Branch_ID" Type="int" />
+          <Property Name="Account_Access" Type="int" />
+          <Property Name="BankId" Type="int" />
+          <Property Name="Bank_Branch_Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="ModelFinanceStoreContainer">
+          <EntitySet Name="Bank_Account" EntityType="Self.Bank_Account" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Bank_Account].[Account_ID] AS [Account_ID], 
+    [Bank_Account].[Account_No] AS [Account_No], 
+    [Bank_Account].[Branch_Id] AS [Branch_Id], 
+    [Bank_Account].[Bank_E_Code] AS [Bank_E_Code], 
+    [Bank_Account].[Bank_E_ID] AS [Bank_E_ID], 
+    [Bank_Account].[For_Commodity_ID] AS [For_Commodity_ID], 
+    [Bank_Account].[Purpose] AS [Purpose], 
+    [Bank_Account].[Account_Type] AS [Account_Type], 
+    [Bank_Account].[OD_Limit] AS [OD_Limit], 
+    [Bank_Account].[Compnay_id] AS [Compnay_id], 
+    [Bank_Account].[E_Code] AS [E_Code], 
+    [Bank_Account].[Description] AS [Description], 
+    [Bank_Account].[Financial_Company_Branch_ID] AS [Financial_Company_Branch_ID], 
+    [Bank_Account].[Account_Access] AS [Account_Access], 
+    [Bank_Account].[BankId] AS [BankId], 
+    [Bank_Account].[Bank_Branch_Name] AS [Bank_Branch_Name]
+    FROM [dbo].[Bank_Account] AS [Bank_Account]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ModelFinance" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ModelFinanceContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bank_Account" EntityType="ModelFinance.Bank_Account" />
+        </EntityContainer>
+        <EntityType Name="Bank_Account">
+          <Key>
+            <PropertyRef Name="Account_ID" />
+            <PropertyRef Name="Account_No" />
+            <PropertyRef Name="Branch_Id" />
+          </Key>
+          <Property Name="Account_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account_No" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Branch_Id" Type="Int32" Nullable="false" />
+          <Property Name="Bank_E_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_E_ID" Type="Int32" />
+          <Property Name="For_Commodity_ID" Type="Int32" />
+          <Property Name="Purpose" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Account_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OD_Limit" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Compnay_id" Type="Int32" />
+          <Property Name="E_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Financial_Company_Branch_ID" Type="Int32" />
+          <Property Name="Account_Access" Type="Int32" />
+          <Property Name="BankId" Type="Int32" />
+          <Property Name="Bank_Branch_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="ModelFinance" />
+        <Alias Key="Target" Value="ModelFinance.Store" />
+        <EntityContainerMapping CdmEntityContainer="ModelFinanceContainer" StorageEntityContainer="ModelFinanceStoreContainer">
+          <EntitySetMapping Name="Bank_Account">
+            <EntityTypeMapping TypeName="ModelFinance.Bank_Account">
+              <MappingFragment StoreEntitySet="Bank_Account">
+                <ScalarProperty Name="Bank_Branch_Name" ColumnName="Bank_Branch_Name" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="Account_Access" ColumnName="Account_Access" />
+                <ScalarProperty Name="Financial_Company_Branch_ID" ColumnName="Financial_Company_Branch_ID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="E_Code" ColumnName="E_Code" />
+                <ScalarProperty Name="Compnay_id" ColumnName="Compnay_id" />
+                <ScalarProperty Name="OD_Limit" ColumnName="OD_Limit" />
+                <ScalarProperty Name="Account_Type" ColumnName="Account_Type" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+                <ScalarProperty Name="For_Commodity_ID" ColumnName="For_Commodity_ID" />
+                <ScalarProperty Name="Bank_E_ID" ColumnName="Bank_E_ID" />
+                <ScalarProperty Name="Bank_E_Code" ColumnName="Bank_E_Code" />
+                <ScalarProperty Name="Branch_Id" ColumnName="Branch_Id" />
+                <ScalarProperty Name="Account_No" ColumnName="Account_No" />
+                <ScalarProperty Name="Account_ID" ColumnName="Account_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

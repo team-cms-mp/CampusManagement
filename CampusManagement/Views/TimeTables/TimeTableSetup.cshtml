@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "TimeTableSetup";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "RoomTypes")" class="alert-link"> Room Types </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "Rooms")" class="alert-link"> Rooms </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "Durations")" class="alert-link"> Durations </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "TimeSlots")" class="alert-link"> Time Slots </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "TimeSlotCourseAllocations")" class="alert-link"> Slot Course Allocation </a>
+            </div>
+        </div>
+    </div>
+
+</div> 
+

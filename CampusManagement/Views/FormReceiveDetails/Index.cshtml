@@ -1,0 +1,159 @@
+﻿@model CampusManagement.Models.FormSaleDetailsViewModel
+
+@{
+    ViewBag.Title = "Form Receive Detail";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.SelectedFormSaleDetail != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedFormSaleDetail);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedFormSaleDetail);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.FormSaleDetail());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.FormNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.ApplicantName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.FatherName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.PhoneNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.CNIC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.ReceiveDate)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.FormSaleDetails)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicantName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FatherName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CNIC)
+        </td>
+        <td>
+            @{
+                string receiveDate = "";
+                if (item.ReceiveDate != null)
+                {
+                    DateTime rd = (DateTime)item.ReceiveDate;
+                    receiveDate = rd.ToString("MM/dd/yyyy");
+                }
+            }
+            @Html.Raw(receiveDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.FormID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.FormID }) |
+            <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptFormReceiveSlip&FormID=")@item.FormID" target="_blank">Slip</a>
+        </td>
+    </tr>
+    }
+
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#ReceiveDate").mask("99/99/9999");
+            $("#FormPrice").ForceNumericOnly();
+            $("#FormPrice").val("0");
+            ShowHideBankDetail();
+            $("#DepositTypeID").change(function () {
+                ShowHideBankDetail();
+            });
+
+            $("#FormNo").blur(function () {
+                GetFormSaleDetail();
+            });
+        });
+
+        function ShowHideBankDetail() {
+            var DepositType = $("#DepositTypeID option:selected").text();
+            if (DepositType.toLowerCase() == "bank") {
+                $("#divAccountID").css("display", "block");
+                $("#divDepositSlipNo").css("display", "block");
+            }
+            else {
+                $("#divAccountID").css("display", "none");
+                $("#divDepositSlipNo").css("display", "none");
+            }
+        }
+
+        function GetFormSaleDetail() {
+            var FormNo = $("#FormNo").val();
+            $.ajax({
+                url: "@Url.Content("~/FormReceiveDetails/GetFormSaleDetail")",
+                type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ FormNo: + FormNo }),
+            success: function (result) {
+                if (result == "No result found.") {
+                    alert(result);
+                    return;
+                }
+
+                var result = $.parseJSON(result);
+                $("#FormID").val(result[0].FormID);
+                $("#FormTypeID").val(result[0].FormTypeID);
+                $("#FormPrice").val(result[0].FormPrice);
+                $("#FormDescription").val(result[0].FormDescription);
+                $("#DepositTypeID").val(result[0].DepositTypeID);
+                $("#BatchProgramID").val(result[0].BatchProgramID);
+                $("#ApplicantName").val(result[0].ApplicantName);
+                $("#FatherName").val(result[0].FatherName);
+                $("#PhoneNo").val(result[0].PhoneNo);
+                $("#CNIC").val(result[0].CNIC);
+                $("#DepositSlipNo").val(result[0].DepositSlipNo);
+                $("#PurchaseDate").val(result[0].PurchaseDate);
+                $("#AccountID").val(result[0].AccountID);
+                $("#CreatedBy").val(result[0].CreatedBy);
+                $("#CreatedOn").val(result[0].CreatedOn);
+                $("#IsActive").val(result[0].IsActive);
+                $("#ModifiedOn").val(result[0].ModifiedOn);
+                $("#ModifiedBy").val(result[0].ModifiedBy);
+            },
+            error: function () {
+                alert("Something went wrong..");
+            },
+                });
+        }
+
+    </script>
+}
+

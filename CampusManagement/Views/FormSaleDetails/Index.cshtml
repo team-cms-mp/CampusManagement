@@ -1,0 +1,126 @@
+﻿@model CampusManagement.Models.FormSaleDetailsViewModel
+
+@{
+    ViewBag.Title = "Form Sale Detail";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.SelectedFormSaleDetail != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedFormSaleDetail);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedFormSaleDetail);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.FormSaleDetail());
+    }
+}
+
+@using (Html.BeginForm("Index", "FormSaleDetails", FormMethod.Post))
+{
+    <div class="row" style="margin-top: -2em;margin-bottom: -2em;">
+        <div class="col-sm-5 inner-addon right-addon">
+            <input type="text" class="form-control" placeholder="search" name="Search" />
+        </div>
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-success" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.FormNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.ApplicantName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.FormType.FormTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.DepositType.DepositTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.FormPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.PurchaseDate)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.FormSaleDetails)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicantName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormType.FormTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepositType.DepositTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormPrice)
+        </td>
+        <td>
+            @{
+                string purchaseDate = "";
+                if (item.PurchaseDate != null)
+                {
+                    DateTime pd = (DateTime)item.PurchaseDate;
+                    purchaseDate = pd.ToString("MM/dd/yyyy");
+                }
+            }
+            @Html.Raw(purchaseDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.FormID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.FormID }) |
+            <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptFormSaleSlip&FormID=")@item.FormID" target="_blank">Slip</a>
+        </td>
+    </tr>
+    }
+
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#PurchaseDate").mask("99/99/9999");
+            $("#FormPrice").ForceNumericOnly();
+            ShowHideBankDetail();
+            $("#DepositTypeID").change(function () {
+                ShowHideBankDetail();
+            });
+        });
+
+        function ShowHideBankDetail() {
+            var DepositType = $("#DepositTypeID option:selected").text();
+            if (DepositType.toLowerCase() == "bank") {
+                $("#divAccountID").css("display", "block");
+                $("#divDepositSlipNo").css("display", "block");
+            }
+            else {
+                $("#divAccountID").css("display", "none");
+                $("#divDepositSlipNo").css("display", "none");
+            }
+        }
+    </script>
+}
+

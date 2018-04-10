@@ -1,0 +1,48 @@
+﻿@model CampusManagement.Models.GetSelectionCriteria_Result
+
+@using (Html.BeginForm("Search", "EntryTestInterviewMarks", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Entry Test/Interview Marks</span></h2>
+    </div>
+    <hr style=" border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+    <input id="txtBatchProgramID" name="txtBatchProgramID" type="hidden" />
+    <div class="row">
+        <div class="col-sm-12">
+            @Html.LabelFor(model => model.BatchProgramID, "Batch Program", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("BatchProgramID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BatchProgramID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            @Html.LabelFor(model => model.DegreeID, "Degree", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("DegreeID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DegreeID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-7">
+            @Html.LabelFor(model => model.FullName, "Search with Form #/Applicant Name/Father Name", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="submit" value="Search" class="btn btn-success" />
+            <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rpt_MeritList&IsBlank=true&BatchProgramID=")@Model.BatchProgramID" class="btn btn-success" target="_blank">Blank Merit Report</a>
+            <a href="@Url.Content("~/EntryTestInterviewMarks/Index")" class="btn btn-success">Refresh</a>
+        </div>
+    </div>
+}
+
+<script>
+    $("#txtBatchProgramID").val($("#BatchProgramID").val());
+    $("#BatchProgramID").change(function () {
+        $("#txtBatchProgramID").val($("#BatchProgramID").val());
+    });
+
+</script>    
+

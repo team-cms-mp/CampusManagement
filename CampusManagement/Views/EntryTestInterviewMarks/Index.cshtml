@@ -1,0 +1,119 @@
+﻿@model CampusManagement.Models.GetSelectionCriteria_ResultViewModel
+@{
+    ViewBag.Title = "Entry Test/Interview Marks";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Search", new CampusManagement.Models.GetSelectionCriteria_Result());
+    }
+    int i = 1;
+}
+
+<div class="row">
+    <div class="col-sm-3">
+        <label class="control-label">Total Marks</label>
+        <input id="TotalMarks" class="form-control" />
+    </div>
+</div>
+<br />
+@using (Html.BeginForm("SaveAll", "EntryTestInterviewMarks", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="hdnDegreeID" value="@ViewBag.hdnDegreeID" />
+    <input type="hidden" name="hdnBatchProgramID" value="@ViewBag.hdnBatchProgramID" />
+    <input type="hidden" name="hdnFullName" value="@ViewBag.hdnFullName" />
+    <input type="hidden" name="TotalRows" value="@Model.GetSelectionCriteria_Results.Count" />
+    <table class="table">
+        <tr>
+            <th>
+                Form #
+            </th>
+            <th>
+                Applicant Name
+            </th>
+            <th>
+                Father Name
+            </th>
+            <th>
+                Total Marks
+            </th>
+            <th>
+                Obtained Marks
+            </th>
+        </tr>
+
+        @foreach (var item in Model.GetSelectionCriteria_Results)
+        {
+            string FormNoID = "txtFormNo_" + i;
+            string TotalMarksID = "txtTotalMarks_" + i;
+            string ObtainedMarksID = "txtObtainedMarks_" + i;
+            <tr>
+                <td>
+                    <input name="@FormNoID" type="hidden" value="@item.FormNo" class="form-control col-sm-1" readonly />
+                    @Html.DisplayFor(modelItem => item.FormNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FatherName)
+                </td>
+                <td>
+                    <input id="@TotalMarksID" name="@TotalMarksID" value="@item.TotalMarks" class="form-control col-sm-1 dummyClassTotalMarks" readonly />
+                </td>
+                <td>
+                    <input id="@ObtainedMarksID" name="@ObtainedMarksID" value="@item.ObtainedMarks" class="form-control col-sm-1 dummyClassObtainedMarks" />
+                </td>
+            </tr>
+            i++;
+        }
+    </table>
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="submit" value="Save All" class="btn btn-success" />
+            <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rpt_MeritList&IsBlank=false&BatchProgramID=")@ViewBag.hdnBatchProgramID" class="btn btn-success" target="_blank">Merit List Report</a>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var dummyClassTotalMarks = $(".dummyClassTotalMarks");
+            var dummyClassObtainedMarks = $(".dummyClassObtainedMarks");
+            for (var j = 0; j < dummyClassTotalMarks.length; j++) {
+                $("#" + dummyClassTotalMarks[j].id).ForceNumericOnly();
+                if ($("#" + dummyClassTotalMarks[j].id).val() == "" || $("#" + dummyClassTotalMarks[j].id).val() == null) {
+                    $("#" + dummyClassTotalMarks[j].id).val("0");
+                }
+            }
+
+            for (var j = 0; j < dummyClassObtainedMarks.length; j++) {
+                $("#" + dummyClassObtainedMarks[j].id).ForceNumericOnly();
+                $("#" + dummyClassObtainedMarks[j].id).attr("maxlength", "7");
+                var DegreeName = $("#DegreeID option:selected").text();
+                if (DegreeName != "Interview" && DegreeName != "Test") {
+                    $("#" + dummyClassObtainedMarks[j].id).attr("readonly", true);
+                }
+
+                if ($("#" + dummyClassObtainedMarks[j].id).val() == "" || $("#" + dummyClassObtainedMarks[j].id).val() == null) {
+                    $("#" + dummyClassObtainedMarks[j].id).val("0");
+                }
+            }
+
+            $("#TotalMarks").blur(function () {
+                var DegreeName = $("#DegreeID option:selected").text();
+                if ($("#TotalMarks").val() != ""
+                    && $("#TotalMarks").val() != "0"
+                    && (DegreeName == "Interview" || DegreeName == "Test")) {
+                    for (var j = 0; j < dummyClassTotalMarks.length; j++) {
+                        $("#" + dummyClassTotalMarks[j].id).val($("#TotalMarks").val());
+                    }
+                }
+            });
+        });
+    </script>
+}

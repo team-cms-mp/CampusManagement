@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Time Table";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style=" border-top: 1px solid #6d9b90;" />
+
+@using (Html.BeginForm())
+{
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#RoomWiseTimeTable" aria-controls="First" role="tab" data-toggle="tab">Room Wise</a></li>
+        <li role="presentation"><a href="#SubjectWiseTimeTable" aria-controls="Second" role="tab" data-toggle="tab">Subject Wise</a></li>
+        <li role="presentation"><a href="#SemesterWiseTimeTable" aria-controls="Third" role="tab" data-toggle="tab">Semester Wise</a></li>
+        <li role="presentation"><a href="#BatchWiseTimeTable" aria-controls="Fourth" role="tab" data-toggle="tab">Batch Wise</a></li>
+        <li role="presentation"><a href="#TeacherWiseTimeTable" aria-controls="Fifth" role="tab" data-toggle="tab">Teacher Wise</a></li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="RoomWiseTimeTable">
+            
+            @Html.Action("RoomWiseTimeTable", "TimeTables")
+        </div>
+        <div role="tabpanel" class="tab-pane" id="SubjectWiseTimeTable">
+            @Html.Action("SubjectWiseTimeTable", "TimeTables")
+        </div>
+        <div role="tabpanel" class="tab-pane" id="SemesterWiseTimeTable">
+            @Html.Action("SemesterWiseTimeTable", "TimeTables")
+        </div>
+        <div role="tabpanel" class="tab-pane" id="BatchWiseTimeTable">
+            @Html.Action("BatchWiseTimeTable", "TimeTables")
+        </div>
+        <div role="tabpanel" class="tab-pane" id="TeacherWiseTimeTable">
+            @Html.Action("TeacherWiseTimeTable", "TimeTables")
+        </div>
+    </div>
+</div>
+
+}

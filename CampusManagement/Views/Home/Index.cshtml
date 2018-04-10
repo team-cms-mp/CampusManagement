@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+
+    <div class="row">
+        <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #00529c;" />
+
+    <div class="w3-content w3-section" style="max-width: 100%;">
+        @{
+            foreach (var item in MvcApplication.lstchps)
+            {
+                <img class="mySlides w3-animate-fading" src="@Url.Content(item.ImagePath)" style="width:100%;height:300px;">
+            }
+        }
+    </div>
+
+<script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}
+    x[myIndex-1].style.display = "block";
+    setTimeout(carousel, 6000);
+}
+</script>
+
+</body>
+</html>
+
+
+

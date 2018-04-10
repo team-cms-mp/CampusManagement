@@ -1,0 +1,44 @@
+﻿@model CampusManagement.Models.Province
+
+@using (Html.BeginForm("Edit", "Provinces", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Edit Province</span></h2>
+    </div>
+    <hr style=" border-top: 1px solid #6d9b90;" />
+    @Html.HiddenFor(model => model.ProvinceID)
+
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.CountryID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("CountryID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.ProvinceName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ProvinceName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ProvinceName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+            @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Save" class="btn btn-success" />
+            <a href="@Url.Content("~/Provinces/Index")" class="btn btn-success">Cancel</a>
+        </div>
+    </div>
+}

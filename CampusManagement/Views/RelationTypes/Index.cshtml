@@ -1,0 +1,60 @@
+﻿@model CampusManagement.Models.RelationTypesViewModel
+
+@{
+    ViewBag.Title = "Relation Types";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedRelationType != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedRelationType);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedRelationType);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.RelationType());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedRelationType.RelationTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedRelationType.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedRelationType.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.RelationTypes)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RelationTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.RelationTypeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.RelationTypeID })
+        </td>
+    </tr>
+    }
+
+</table>

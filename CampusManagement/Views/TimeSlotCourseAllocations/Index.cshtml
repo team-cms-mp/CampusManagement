@@ -1,0 +1,67 @@
+﻿@model CampusManagement.Models.TimeSlotCourseAllocationsViewModel
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Slot Courses";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.SelectedTimeSlotCourseAllocation != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedTimeSlotCourseAllocation);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedTimeSlotCourseAllocation);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.TimeSlotCourseAllocation());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Slot
+        </th>
+        <th>
+            Course
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTimeSlotCourseAllocation.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.TimeSlotCourseAllocations)
+    {
+    <tr>
+        <td>
+            @{
+                ModelCMSContainer dbc = new ModelCMSContainer();
+                GetBatchProgramNameConcat_Result dv = dbc.GetBatchProgramNameConcat("", 2).FirstOrDefault(bp => bp.ID == item.TimeSlotID);
+            }
+            @Html.Raw(dv.Name)
+        </td>
+        <td>
+            @{
+                dv = dbc.GetBatchProgramNameConcat("", 3).FirstOrDefault(bp => bp.ID == item.TCourseAllocationID);
+            }
+            @Html.Raw(dv.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id = item.TimeSlotCourseAllocationID })
+        </td>
+    </tr>
+    }
+
+</table>
+
+

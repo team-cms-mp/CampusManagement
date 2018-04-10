@@ -1,0 +1,13 @@
+﻿
+<div class="row">
+    <div class="col-sm-12">
+        @if (ViewBag.MessageType == "success")
+        {
+            <div class="alert alert-success alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="Close">&times;</a>@Html.Raw(@ViewBag.Message)</div>
+        }
+        else if (ViewBag.MessageType == "error")
+        {
+            <div class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="Close">&times;</a>@Html.Raw(@ViewBag.Message)</div>
+        }
+    </div>
+</div>

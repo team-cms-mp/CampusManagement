@@ -1,0 +1,54 @@
+﻿@model CampusManagement.Models.DurationsViewModel
+
+@{
+    ViewBag.Title = "Durations";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedDuration != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedDuration);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedDuration);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.Duration());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDuration.DurationMinutes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDuration.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Durations)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DurationMinutes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.DurationID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.DurationID })
+        </td>
+    </tr>
+    }
+
+</table>

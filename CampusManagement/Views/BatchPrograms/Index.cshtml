@@ -1,0 +1,72 @@
+﻿@model CampusManagement.Models.BatchProgramViewModel
+
+@{
+    ViewBag.Title = "Batch Programs";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedBatchProgram != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedBatchProgram);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedBatchProgram);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.BatchProgram());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatchProgram.BatchID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatchProgram.ProgramID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatchProgram.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.BatchPrograms)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Batch.BatchName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Program.ProgramName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id = item.BatchProgramID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.BatchProgramID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#StartDate").mask("99/99/9999");
+            $("#EndDate").mask("99/99/9999");
+            $("#ProgramFees").ForceNumericOnly();
+        });
+
+
+    </script>
+}

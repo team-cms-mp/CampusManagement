@@ -1,0 +1,215 @@
+﻿@{
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ViewBag.Title = "Applicant Registration";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style=" border-top: 1px solid #6d9b90;" />
+
+<div class="row">
+    <div class="col-sm-3">
+        <label for="FormNo">Form #</label>
+        <input id="FormNo" type="text" class="form-control" />
+    </div>
+</div>
+
+<div class="divHeading">
+    <a id="clickBasicInfo"><h4 class="fa fa-level-down"> Basic Info </h4></a>
+</div>
+<div class="row" id="hide">
+    <div class="col-sm-3">
+        <label for="SalutationID">Salutation</label>
+        <select id="SalutationID" class="form-control"></select>
+        <input id="SalutationName" type="text" class="form-control" style="display:none;" />
+    </div>
+    <div class="col-sm-3">
+        <label for="FirstName">First Name</label>
+        <input id="FirstName" type="text" class="form-control" />
+    </div>
+    <div class="col-sm-3">
+        <label for="LastName">Last Name</label>
+        <input id="Last_Name" type="text" class="form-control" />
+    </div>
+    <div class="col-sm-3">
+        <label for="FatherName">Father Name</label>
+        <input id="FatherName" type="text" class="form-control" />
+    </div>
+    <div class="col-sm-3">
+        <label for="ApplicantDOB">DOB</label>
+        <input id="ApplicantDOB" type="date" class="form-control" />
+    </div>
+    <div class="col-sm-3">
+        <label for="PlaceOfBirth">Place of Birth</label>
+        <input id="PlaceOfBirth" class="form-control" type="date" />
+    </div>
+    <div class="col-sm-3">
+        <label for="GenderID">Gender</label>
+        <select id="GenderID" class="form-control"></select>
+        <input id="GenderName" type="text" class="form-control" style="display:none;" />
+    </div>
+    <div class="col-sm-3">
+        <label for="NationalityID">Nationality</label>
+        <select id="NationalityID" class="form-control"></select>
+        <input id="NationalityName" type="text" class="form-control" style="display:none;" />
+    </div>
+    <div class="col-sm-3">
+        <label for="MaritalStatusID">Marital Status</label>
+        <select id="MaritalStatusID" class="form-control"></select>
+        <input id="MaritalStatusName" type="text" class="form-control" style="display:none;" />
+    </div>
+    <div class="col-sm-3">
+        <label for="ACNIC">CNIC</label>
+        <input id="ACNIC" type="text" class="form-control" />
+    </div>
+    <div class="col-sm-3">
+        <label for="PassportNo">Passport #</label>
+        <input id="PassportNo" class="form-control" />
+    </div>
+    <div class="col-sm-3">
+        <label for="PassportExpiryDate">Passport Expiry Date</label>
+        <input id="PassportExpiryDate" class="form-control" type="date" />
+    </div>
+    <div class="col-sm-3">
+        <label for="ReligionID">Religion</label>
+        <select id="ReligionID" class="form-control"></select>
+        <input id="ReligionName" type="text" class="form-control" style="display:none;" />
+    </div>
+    <div class="col-sm-3">
+        <label for="CurrentOccupationID">Current Occupation</label>
+        <select id="CurrentOccupationID" class="form-control"></select>
+        <input id="CurrentOccupationName" type="text" class="form-control" style="display:none;" />
+    </div>
+</div>
+
+<div class="divHeading">
+    <a id="clickContact"><h4 class="fa fa-level-down" aria-hidden="true"> Contact Info </h4></a>
+</div>
+<div class="row" id="hide1">
+    <div class="col-sm-3">
+        <label for="PTCLNO">PTCL #</label>
+        <input id="PTCLNO" class="form-control" type="text" />
+    </div>
+    <div class="col-sm-3">
+        <label for="CellNo">Cell #</label>
+        <input id="CellNo" class="form-control" type="text" />
+    </div>
+    <div class="col-sm-3">
+        <label for="Email">Email</label>
+        <input id="Email" class="form-control" type="email" />
+    </div>
+    <div class="col-sm-3">
+        <label for="AlternateEmail">Alternate Email</label>
+        <input id="AlternateEmail" class="form-control" type="email" />
+    </div>
+</div>
+
+<div class="divHeading">
+    <a data-toggle="collapse" data-target="#hide2"><h4 class="fa fa-level-down" aria-hidden="true"> Guardian Info </h4></a>
+</div>
+<div class="row" id="hide2">
+    <div class="col-sm-3">
+        <label for="GuardianName">Guardian Name</label>
+        <input id="GuardianName" class="form-control" />
+    </div>
+    <div class="col-sm-3">
+        <label for="RelationTypeID">Relation Type</label>
+        <select id="RelationTypeID" class="form-control"></select>
+        <input id="RelationTypeName" class="form-control" style="display:none;" />
+    </div>
+    <div class="col-sm-3">
+        <label for="GuardianCNIC">Guardian CNIC #</label>
+        <input id="GuardianCNIC" class="form-control" />
+    </div>
+</div>
+
+<div class="divHeading">
+    <a data-toggle="collapse" data-target="#hide3"><h4 class="fa fa-level-down" aria-hidden="true"> Address Info </h4></a>
+</div>
+<div class="row" id="hide3">
+    <div class="col-sm-3">
+        <label for="CountryID">Country</label>
+        <select id="CountryID" class="form-control"></select>
+        <input id="CountryName" class="form-control" style="display:none;" />
+    </div>
+    <div class="col-sm-3">
+        <label for="ProvinceID">Province</label>
+        <select id="ProvinceID" class="form-control"></select>
+        <input id="ProvinceName" class="form-control" style="display:none;" />
+    </div>
+    <div class="col-sm-3">
+        <label for="CityID">City</label>
+        <select id="CityID" class="form-control"></select>
+        <input id="CityName" class="form-control" style="display:none;" />
+    </div>
+    <div class="col-sm-3">
+        <label for="PresentAddress">Present Address</label>
+        <input id="PresentAddress" class="form-control" />
+    </div>
+    <div class="col-sm-3">
+        <label for="PermanentAddress">Permanent Address</label>
+        <input id="PermanentAddress" class="form-control" />
+    </div>
+</div>
+
+<div class="divHeading">
+    <a data-toggle="collapse" data-target="#hide4"><h4 class="fa fa-level-down" aria-hidden="true"> Program Info </h4></a>
+</div>
+<div class="row" id="hide4">
+    <div class="col-sm-3">
+        <label for="BatchID">Batch</label>
+        <select id="BatchID" class="form-control"></select>
+        <input id="BatchName" class="form-control" style="display:none;" />
+    </div>
+    <div class="col-sm-3">
+        <label for="ProgramID">Program</label>
+        <select id="ProgramID" class="form-control"></select>
+        <input id="ProgramName" class="form-control" style="display:none;" />
+    </div>
+</div>
+
+<div class="divHeading">
+    <a data-toggle="collapse" data-target="#hide5"><h4 class="fa fa-level-down" aria-hidden="true"> Other Info </h4></a>
+</div>
+<div class="row" id="hide5">
+    <div class="col-sm-3">
+        <label for="StatusID">Batch</label>
+        <select id="StatusID" class="form-control"></select>
+        <input id="Status" class="form-control" style="display:none;" />
+    </div>
+    <div class="col-sm-3">
+        <label for="ActiveID">Program</label>
+        <select id="ActiveID" class="form-control"></select>
+        <input id="ActiveStatus" class="form-control" style="display:none;" />
+        <input id="IsActive" class="form-control" style="display:none;" />
+    </div>
+</div>
+<hr style=" border-top: 1px solid #6d9b90;" />
+<div class="row">
+    <div class="col-sm-12">
+        <button type="button" class="btn btn-lg mybutton">
+            <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+            Submit
+        </button>
+    </div>
+</div>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            Name("hide", "clickBasicInfo");
+            Name("hide1", "clickContact");
+        });
+
+        function Name(target, click) {
+            $('#' + click).on('click', function () {
+                if ($('#' + target).css("display") == "none") {
+                    $('#' + target).css("display", "block");
+                }
+                else {
+                    $('#' + target).css("display", "none");
+                }
+            });
+        }
+</script>
+

@@ -1,0 +1,37 @@
+﻿@model CampusManagement.Models.CourseType
+
+@using (Html.BeginForm("Create", "CourseTypes", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Add Course Type</span></h2>
+    </div>
+    <hr style=" border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.CourseTypeName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.CourseTypeName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CourseTypeName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            @Html.LabelFor(model => model.CourseTypeDescription, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.CourseTypeDescription, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CourseTypeDescription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Add" class="btn btn-success" />
+            <a href="@Url.Content("~/CourseTypes/Index")" class="btn btn-success">Refresh</a>
+        </div>
+    </div>
+}

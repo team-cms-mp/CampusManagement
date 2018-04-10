@@ -1,0 +1,106 @@
+﻿@model CampusManagement.Models.ApplicantQualification
+
+@using (Html.BeginForm("Create", "ApplicantQualifications", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Add Applicant Qualification</span></h2>
+    </div>
+    <hr style=" border-top: 1px solid #6d9b90;" />
+    <div>
+        @Html.ActionLink("Back to Applicant List", "Index", "Applicants")
+    </div>
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.FormNo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FormNo, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+            @Html.ValidationMessageFor(model => model.FormNo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.DegreeID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("DegreeID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DegreeID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.InstituteID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("InstituteID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.InstituteID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.RollNO, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.RollNO, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.RollNO, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.RegNo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.RegNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.RegNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.YearQualification, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.YearQualification, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.YearQualification, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.InstituteCity, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.InstituteCity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.InstituteCity, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.TotalMarks, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.TotalMarks, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TotalMarks, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.ObtainedMarks, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ObtainedMarks, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ObtainedMarks, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.Percentage, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+            @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.UploadDocument, "Upload File", htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.UploadDocument, new { @class = "form-control", Type = "File" })
+            @Html.ValidationMessageFor(model => model.UploadDocument, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3" style="display:none;">
+            <label for="imgView" class="control-label">Document</label>
+            <img id="imgView" src="@Url.Content("~/DegreeDocument/noimage.png")" style="width:100px;height:100px;" />
+            @Html.TextBoxFor(model => model.DegreeDocument, new { @class = "form-control", type = "hidden" })
+        </div>
+        <div class="col-sm-3" style="display:none;">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Add" class="btn btn-success" />
+            @Html.ActionLink("Refresh", "Create", "ApplicantQualifications", new { FormNo = ViewBag.FormNo }, htmlAttributes: new { @class = "btn btn-success" })
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            if ($("#DegreeDocument").val() != "") {
+                $("#imgView").attr("src", $('#DegreeDocument').val());
+            }
+            else {
+                $("#DegreeDocument").val("@Url.Content("~/DegreeDocument/noimage.png")");
+            }
+        });
+    </script>
+}

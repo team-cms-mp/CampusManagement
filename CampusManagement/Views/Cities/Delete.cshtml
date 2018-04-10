@@ -1,0 +1,89 @@
+﻿@model CampusManagement.Models.City
+
+<h4 class="alert alert-info">Are you sure you want to delete this?</h4>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.Country.CountryName)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country.CountryName)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.Province.ProvinceName)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Province.ProvinceName)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.CityName)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CityName)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.Description)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.IsActive)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.CreatedOn)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.CreatedBy)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.ModifiedOn)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedOn)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.ModifiedBy)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-success" />
+            <a href="@Url.Content("~/Cities/Index")" class="btn btn-success">Cancel</a>
+        </div>
+    }
+</div>

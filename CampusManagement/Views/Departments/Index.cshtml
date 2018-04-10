@@ -1,0 +1,74 @@
+﻿@model CampusManagement.Models.DepartmentsViewModel
+
+@{
+    ViewBag.Title = "Departments";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedDepartment != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedDepartment);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedDepartment);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.Department());
+    }
+}
+
+@using (Html.BeginForm("Index", "Departments", FormMethod.Post))
+{
+    <div class="row" style="margin-top: -2em;margin-bottom: -2em;">
+        <div class="col-sm-5 inner-addon right-addon">
+            <input type="text" class="form-control" placeholder="search" name="Search" />
+        </div>
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-success" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDepartment.DepartmentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDepartment.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDepartment.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Departments)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartmentName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.DepartmentID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.DepartmentID })
+        </td>
+    </tr>
+    }
+
+</table>

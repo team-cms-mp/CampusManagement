@@ -1,0 +1,39 @@
+﻿@model CampusManagement.Models.TeachersCourseAllocation
+
+@using (Html.BeginForm("Edit", "TeachersCourseAllocations", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Edit Teacher Course</span></h2>
+    </div>
+    <hr style=" border-top: 1px solid #6d9b90;" />
+    @Html.HiddenFor(model => model.TCourseAllocationID)
+
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.TeacherID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("TeacherID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TeacherID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.ProgramCourseID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("ProgramCourseID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ProgramCourseID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+            @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Save" class="btn btn-success" />
+            <a href="@Url.Content("~/TeachersCourseAllocations/Index")" class="btn btn-success">Cancel</a>
+        </div>
+    </div>
+}

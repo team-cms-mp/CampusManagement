@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_MyLoginLayout2.cshtml";
+}
+
+@using (Html.BeginForm("RegisterApplicant", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @class = "login100-form validate-form", @style = "" }))
+{
+    <img src="@Url.Content(@MvcApplication.CompanyLogo)" alt="Alternate Text" style="margin-top: -10em; margin-left: 14%; width: 70%; ">
+    <div class="wrap-input100 validate-input" data-validate="User Name is required">
+        <input class="input100" type="text" name="UserName" placeholder="User Name">
+        <span class="focus-input100"></span>
+      
+    </div>
+    <div class="wrap-input100 validate-input" data-validate="Password is required">
+        <input class="input100" type="password" name="UserPassword" placeholder="Password">
+        <span class="focus-input100"></span>
+       
+    </div>
+    <div class="wrap-input100 validate-input" data-validate="Re-Enter Password is required">
+        <input class="input100" type="password" name="ReEnterPassword" placeholder="Re-Enter Your Password">
+        <span class="focus-input100"></span>
+      
+    </div>
+    <div class="flex-sb-m w-full" style="margin-bottom:8px;">
+        <div>
+            <a href="@Url.Content("~/Home/Login2")" class="txt1">
+                Already Registered
+            </a>
+        </div>
+    </div>
+    <div>
+        @{
+            if (ViewBag.MessageType == "error")
+            {
+                <span style="color:red;">@Html.Raw(ViewBag.ErrorMessage)</span>
+            }
+            if (ViewBag.MessageType == "success")
+            {
+                <span style="color:green;">@Html.Raw(ViewBag.ErrorMessage)</span>
+            }
+        }
+
+    </div>
+    <div class="container-login100-form-btn">
+        <button class="login100-form-btn" type="submit">
+            Register
+        </button>
+        <input type="hidden" value="Yes" name="IsActive" />
+    </div>
+}
+
+

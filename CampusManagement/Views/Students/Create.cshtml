@@ -1,0 +1,399 @@
+﻿@model CampusManagement.Models.Student
+
+@{
+    ViewBag.Title = "Create Student";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style=" border-top: 1px solid #6d9b90;" />
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@Html.Partial("_MessageView")
+
+@using (Html.BeginForm("Create", "Students", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-sm-8">
+            <label for="searchValue" class="control-label">Applicant Search</label>
+            <input id="searchValue" class="form-control" />
+            <input id="selectedValue" class="form-control" type="hidden" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="button" value="Populate Applicant" class="btn btn-success" onclick="GetApplicant();" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.FormNo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FormNo, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+            @Html.ValidationMessageFor(model => model.FormNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-5">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.ProfilePicture, "Upload Profile Picture", htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.ProfilePicture, new { @class = "form-control", Type = "File" })
+            @Html.ValidationMessageFor(model => model.ProfilePicture, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label for="imgView" class="control-label">Profile Picture</label>
+            <img id="imgView" src="@Url.Content("~/ProfilePics/noimage.png")" style="width:100px;height:100px;border-radius:150px;" />
+            @Html.TextBoxFor(model => model.Picture, new { @class = "form-control", type = "hidden" })
+        </div>
+    </div>
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide"><h4 class="fa fa-level-down" aria-hidden="true"> Basic Info </h4></a>
+    </div>
+    <div class="row" id="hide">
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.SalutationID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("SalutationID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SalutationID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.FatherName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FatherName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FatherName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.StudentDOB, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.StudentDOB, new { htmlAttributes = new { @class = "form-control", @placeholder = "mm/dd/yyyy" } })
+            @Html.ValidationMessageFor(model => model.StudentDOB, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.PlaceOfBirth, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PlaceOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PlaceOfBirth, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.GenderID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("GenderID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.GenderID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.NationalityID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("NationalityID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.NationalityID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.MaritalStatusID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("MaritalStatusID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MaritalStatusID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.ACNIC, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ACNIC, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ACNIC, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.PassportNo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PassportNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PassportNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.PassportExpiryDate, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PassportExpiryDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "mm/dd/yyyy" } })
+            @Html.ValidationMessageFor(model => model.PassportExpiryDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.ReligionID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("ReligionID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ReligionID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3" style="display:none;">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.CurrentOccupationID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("CurrentOccupationID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CurrentOccupationID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide1"><h4 class="fa fa-level-down" aria-hidden="true"> Contact Info </h4></a>
+    </div>
+    <div class="row" id="hide1">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.PTCLNO, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PTCLNO, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PTCLNO, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.CellNo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.CellNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CellNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.AlternateEmail, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.AlternateEmail, new { htmlAttributes = new { @class = "form-control", type = "email" } })
+            @Html.ValidationMessageFor(model => model.AlternateEmail, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide2"><h4 class="fa fa-level-down" aria-hidden="true"> Guardian Info </h4></a>
+    </div>
+    <div class="row" id="hide2">
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.GuardianName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.GuardianName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.GuardianName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.RelationTypeID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("RelationTypeID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.RelationTypeID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.GuardianCNIC, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.GuardianCNIC, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.GuardianCNIC, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide3"><h4 class="fa fa-level-down" aria-hidden="true"> Address Info </h4></a>
+    </div>
+    <div class="row" id="hide3">
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.CountryID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("CountryID", null, "--Please Select", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.ProvinceID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("ProvinceID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ProvinceID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.CityID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("CityID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.PresentAddress, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PresentAddress, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PresentAddress, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.PermanentAddress, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PermanentAddress, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PermanentAddress, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide5"><h4 class="fa fa-level-down" aria-hidden="true"> Other Info </h4></a>
+    </div>
+    <div class="row" id="hide5">
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.StatusID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("StatusID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <hr style=" border-top: 1px solid #6d9b90;" />
+    <div class="row">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-lg mybutton">
+                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                Submit
+            </button>
+        </div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    <script>
+            $(document).ready(function () {
+                $("#PassportExpiryDate").mask("99/99/9999");
+                $("#StudentDOB").mask("99/99/9999");
+
+                if ($("#Picture").val() != "") {
+                    $("#imgView").attr("src", $('#Picture').val());
+                }
+                else {
+                    $("#Picture").val("@Url.Content("~/ProfilePics/noimage.png")");
+                }
+
+                GetApplicantsList();
+
+                GetProvinceList();
+                GetCityList();
+                $("#CountryID").change(function () {
+                    GetProvinceList();
+                    GetCityList();
+                });
+
+                $("#ProvinceID").change(function () {
+                    GetCityList();
+                });
+            });
+
+            function GetProvinceList() {
+                var CountryID = $("#CountryID").val();
+                $.ajax({
+                    url: "@Url.Content("~/Students/GetProvinceList")",
+                    type: 'POST',
+                    datatype: 'application/json',
+                    contentType: 'application/json',
+                    async: false,
+                    data: JSON.stringify({ CountryID: + CountryID }),
+                    success: function (result) {
+                        $("#ProvinceID").html("");
+                        $("#ProvinceID").append($('<option></option>').val(null).html("--Please Select--"));
+                        $.each($.parseJSON(result), function (i, province) {
+                            $("#ProvinceID").append($('<option></option>').val(province.ProvinceID).html(province.ProvinceName));
+                        });
+                    },
+                    error: function () {
+                        alert("Whooaaa! Something went wrong..");
+                    },
+                });
+            }
+
+            function GetCityList() {
+                var ProvinceID = $("#ProvinceID").val();
+                $.ajax({
+                    url: "@Url.Content("~/Students/GetCitiesList")",
+                    type: 'POST',
+                    datatype: 'application/json',
+                    contentType: 'application/json',
+                    async: false,
+                    data: JSON.stringify({ ProvinceID: + ProvinceID }),
+                    success: function (result) {
+                        $("#CityID").html("");
+                        $("#CityID").append($('<option></option>').val(null).html("--Please Select--"));
+                        $.each($.parseJSON(result), function (i, city) {
+                            $("#CityID").append($('<option></option>').val(city.CityID).html(city.CityName));
+                        });
+                    },
+                    error: function () {
+                        alert("Whooaaa! Something went wrong..");
+                    },
+                });
+            }
+
+            function GetApplicantsList() {
+                $("#searchValue").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "@Url.Content("~/Students/GetApplicantsList")",
+                            datatype: 'json',
+                            data: { searchValue: $("#searchValue").val() },
+                            success: function (data) {
+                                response($.map($.parseJSON(data), function (item) {
+                                    return {
+                                        label: item.FormNo + ":" + item.FirstName + ":" + item.LastName + ":" + item.ACNIC,
+                                        value: item.FormNo + ":" + item.FirstName + ":" + item.LastName + ":" + item.ACNIC
+                                    };
+                                }));
+                            },
+                            error: function (xhr, status, error) {
+                                alert(xhr.error);
+                            }
+                        });
+                    },
+                    select: function (event, ui) {
+                        var splitted = ui.item.label.split(":");
+                        $("#selectedValue").val(splitted[0]);
+                    }
+                });
+            }
+
+            function GetApplicant() {
+                var selectedValue = $("#selectedValue").val();
+                $.ajax({
+                    url: "@Url.Content("~/Students/GetApplicant")",
+                    type: 'POST',
+                    datatype: 'application/json',
+                    contentType: 'application/json',
+                    async: false,
+                    data: JSON.stringify({ FormNo: + selectedValue }),
+                    success: function (result) {
+                        if (result == "No result found.") {
+                            alert(result);
+                            return;
+                        }
+
+                        var result = $.parseJSON(result);
+                        $("#FormNo").val(result[0].FormNo);
+                        $("#SalutationID").val(result[0].SalutationID);
+                        $("#FirstName").val(result[0].FirstName);
+                        $("#LastName").val(result[0].LastName);
+                        $("#FatherName").val(result[0].FatherName);
+                        $("#StudentDOB").val(result[0].ApplicantDOB);
+                        $("#PlaceOfBirth").val(result[0].PlaceOfBirth);
+                        $("#GenderID").val(result[0].GenderID);
+                        $("#NationalityID").val(result[0].NationalityID);
+                        $("#MaritalStatusID").val(result[0].MaritalStatusID);
+                        $("#ACNIC").val(result[0].ACNIC);
+                        $("#PassportNo").val(result[0].PassportNo);
+                        $("#PassportExpiryDate").val(result[0].PassportExpiryDate);
+                        $("#PTCLNO").val(result[0].PTCLNO);
+                        $("#CellNo").val(result[0].CellNo);
+                        $("#Email").val(result[0].Email);
+                        $("#AlternateEmail").val(result[0].AlternateEmail);
+                        $("#GuardianName").val(result[0].GuardianName);
+                        $("#RelationTypeID").val(result[0].RelationTypeID);
+                        $("#GuardianCNIC").val(result[0].GuardianCNIC);
+                        $("#BatchProgramID").val(result[0].BatchProgramID);
+                        $("#Picture").val(result[0].Picture);
+                        if ($("#Picture").val() != "") {
+                            var pic = $("#Picture").val().replace("~/", "");
+                            $("#imgView").attr("src", "@Url.Content("~/")" + pic);
+                        }
+                        else {
+                            $("#Picture").val("@Url.Content("~/ProfilePics/noimage.png")");
+                        }
+                        $("#CountryID").val(result[0].CountryID);
+                        GetProvinceList();
+                        $("#ProvinceID").val(result[0].ProvinceID);
+                        GetCityList();
+                        $("#CityID").val(result[0].CityID);
+                        $("#PresentAddress").val(result[0].PresentAddress);
+                        $("#PermanentAddress").val(result[0].PermanentAddress);
+                        $("#ReligionID").val(result[0].ReligionID);
+                        $("#CurrentOccupationID").val(result[0].CurrentOccupationID);
+                        $("#StatusID").val(result[0].StatusID);
+                        $("#IsActive").val(result[0].IsActive);
+                    },
+                    error: function () {
+                        alert("Something went wrong..");
+                    },
+                });
+            }
+
+    </script>
+}

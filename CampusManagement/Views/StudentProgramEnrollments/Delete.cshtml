@@ -1,0 +1,125 @@
+﻿@model CampusManagement.Models.StudentProgramEnrollment
+@using CampusManagement.Models
+<h4 class="alert alert-info">Are you sure you want to delete this?</h4>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            <label class="control-label">Student Name</label>
+        </dt>
+
+        <dd>
+            @{
+                ModelCMSContainer dbc = new ModelCMSContainer();
+                Student student = dbc.Students.FirstOrDefault(s => s.StudentID == Model.StudentID);
+                GetBatchProgramNameConcat_Result dv = dbc.GetBatchProgramNameConcat(student.FormNo, 6).FirstOrDefault();
+                string StudentName = string.Concat(student.FirstName, " ", student.LastName);
+                string adate = Model.AdmissionDate.Value.ToShortDateString();
+                string dcdate = "";
+                if(Model.DegreeCompletionDate != null)
+                {
+                    dcdate = Model.DegreeCompletionDate.Value.ToShortDateString();
+                }
+            }
+            @Html.Raw(StudentName)
+        </dd>
+
+        <dt>
+            <label class="control-label">Batch Program</label>
+        </dt>
+
+        <dd>
+            @Html.Raw(dv.Name)
+        </dd>
+
+        <dt>
+            <label class="control-label">Admission Date</label>
+        </dt>
+
+        <dd>
+            @Html.Raw(adate)
+        </dd>
+
+        <dt>
+            <label class="control-label">Enrollment #</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnrollmentNo)
+        </dd>
+
+        <dt>
+            <label class="control-label">Registration #</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegistrationNo)
+        </dd>
+
+        <dt>
+            <label class="control-label">Degree Completed</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DegreeCompleted)
+        </dd>
+
+        <dt>
+            <label class="control-label">Degree Completion Date</label>
+        </dt>
+
+        <dd>
+            @Html.Raw(dcdate)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.IsActive)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.CreatedOn)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.CreatedBy)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.ModifiedOn)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedOn)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.ModifiedBy)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-success" />
+            <a href="@Url.Content("~/StudentProgramEnrollments/Index")" class="btn btn-success">Cancel</a>
+        </div>
+    }
+</div>

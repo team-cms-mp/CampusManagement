@@ -1,0 +1,71 @@
+﻿@model CampusManagement.Models.TeachersCourseAllocationsViewModel
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Teacher Courses";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.SelectedTeachersCourseAllocation != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedTeachersCourseAllocation);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedTeachersCourseAllocation);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.TeachersCourseAllocation());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTeachersCourseAllocation.Teacher.TeacherName)
+        </th>
+        <th>
+            Program
+        </th>
+        <th>
+            Course
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTeachersCourseAllocation.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.TeachersCourseAllocations)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Teacher.TeacherName)
+        </td>
+        <td>
+            @{
+            ModelCMSContainer dbc = new ModelCMSContainer();
+            GetDisplayValues_Result dv = dbc.GetDisplayValues(0, item.ProgramCourseID).FirstOrDefault();
+            }
+            @Html.Raw(dv.ProgramName)
+        </td>
+        <td>
+            @Html.Raw(dv.CourseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.TCourseAllocationID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.TCourseAllocationID })
+        </td>
+    </tr>
+    }
+
+</table>
+
+

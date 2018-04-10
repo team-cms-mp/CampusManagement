@@ -1,0 +1,78 @@
+﻿@model CampusManagement.Models.TimeSlotsViewModel
+@{
+    ViewBag.Title = "Time Slots";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.SelectedTimeSlot != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedTimeSlot);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedTimeSlot);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.TimeSlot());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTimeSlot.TimeSlot1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTimeSlot.DayName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTimeSlot.Room.RoomName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTimeSlot.Duration.DurationMinutes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTimeSlot.IsActive)
+        </th>
+    </tr>
+
+    @foreach (var item in Model.TimeSlots)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeSlot1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DayName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Room.RoomName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Duration.DurationMinutes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+    </tr>
+    }
+
+</table>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#DurationMunutes").val(parseInt($("#DurationID option:selected").text()));
+            $("#DurationID").change(function () {
+                $("#DurationMunutes").val($("#DurationID option:selected").text());
+            });
+        });
+    </script>    
+}
+
+

@@ -1,0 +1,66 @@
+﻿@model CampusManagement.Models.ProvincesViewModel
+
+@{
+    ViewBag.Title = "Provinces";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.SelectedProvince != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedProvince);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedProvince);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.Province());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedProvince.Country.CountryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedProvince.ProvinceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedProvince.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedProvince.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Provinces)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country.CountryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProvinceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id = item.ProvinceID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProvinceID })
+            </td>
+        </tr>
+    }
+
+</table>
+

@@ -1,0 +1,39 @@
+﻿@model CampusManagement.Models.GetSelectionCriteria_Result
+
+@using (Html.BeginForm("Search", "MeritListApproveAdmissions", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Merit List & Approve Admission</span></h2>
+    </div>
+    <hr style=" border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+        <div class="col-sm-7">
+            @Html.LabelFor(model => model.BatchProgramID, "Batch Program", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("BatchProgramID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BatchProgramID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-5">
+            @Html.LabelFor(model => model.DegreeID, "Degree", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("DegreeID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DegreeID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-7">
+            @Html.LabelFor(model => model.FullName, "Search with Form #/Applicant Name/Father Name", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Search" class="btn btn-success" />
+            <a href="@Url.Content("~/MeritListApproveAdmissions/Index")" class="btn btn-success">Refresh</a>
+        </div>
+    </div>
+}
+

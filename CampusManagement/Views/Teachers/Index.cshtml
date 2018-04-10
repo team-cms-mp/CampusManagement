@@ -1,0 +1,85 @@
+﻿@model CampusManagement.Models.TeachersViewModel
+
+@{
+    ViewBag.Title = "Teachers";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.SelectedTeacher != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedTeacher);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedTeacher);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.Teacher());
+    }
+}
+
+@using (Html.BeginForm("Index", "Teachers", FormMethod.Post))
+{
+    <div class="row" style="margin-top: -2em;margin-bottom: -2em;">
+        <div class="col-sm-5 inner-addon right-addon">
+            <input type="text" class="form-control" placeholder="search" name="Search" />
+        </div>
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-success" value="Search">
+                <span class="glyphicon glyphicon-search" ></span> Search
+            </button>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTeacher.TeacherName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTeacher.MobileNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTeacher.CNIC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTeacher.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTeacher.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Teachers)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TeacherName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MobileNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CNIC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.TeacherID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.TeacherID })
+        </td>
+    </tr>
+    }
+
+</table>

@@ -1,0 +1,45 @@
+﻿@using CampusManagement.Models
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+
+@{
+    ModelUserManagementContainer dbm = new ModelUserManagementContainer();
+    List<Get_Modules_Result> lstModule = new List<Get_Modules_Result>();
+    List<Get_Module_Pages_Result> lstPages = new List<Get_Module_Pages_Result>();
+    if (Session["emp_id"] != null)
+    {
+        lstModule = dbm.Get_Modules().ToList();
+        foreach (var item in lstModule)
+        {
+            lstPages = dbm.Get_Module_Pages(Convert.ToInt32(Session["emp_id"])).Where(p => p.Module_ID == item.Module_ID).ToList();
+            if (lstPages.Count > 0)
+            {
+                <div class="panel-default">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <div class="panel-title pull-left" style="font-weight:bold;font-size: 20px;">
+                                @item.Module_Name
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                @foreach (var itemPage in lstPages)
+                                {
+                                    <p class="col-sm-6 Navbarr"><a href="@Url.Content(itemPage.Page_URL)" class="alert-link">@itemPage.Page_Name</a></p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+}

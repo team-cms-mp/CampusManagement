@@ -1,0 +1,102 @@
+﻿@model IEnumerable<CampusManagement.Models.Student>
+
+@{
+    ViewBag.Title = "Students";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style=" border-top: 1px solid #6d9b90;" />
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "Students", FormMethod.Post))
+{
+    <div class="row" style="margin-top: -2em;margin-bottom: -2em;">
+        <div class="col-sm-5 inner-addon right-addon">
+            <input type="text" class="form-control" placeholder="search" name="Search" />
+        </div>
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-success" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+    </div>
+}
+<table class="table">
+    <tr>
+        <th></th>
+        <th></th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="@Url.Content(item.Picture)" style="width:125px; height:125px;border-radius:150px;" />
+            </td>
+            <td>
+                <table class="table-striped">
+                    <tr>
+                        <td>
+                            <label class="control-label">First Name : </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">Last Name : </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">Cell # : </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CellNo)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">Email : </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">Status : </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status.StatusName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">Nationality : </label>
+                        </td>
+                        <td>
+                            <img src="@Url.Content(item.Nationality.FlagURL)" style="width:20px;height:20px;" /> @Html.DisplayFor(modelItem => item.Nationality.NationalityName)
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.StudentID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.StudentID })
+            </td>
+        </tr>
+    }
+
+</table>

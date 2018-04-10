@@ -1,0 +1,102 @@
+﻿@model CampusManagement.Models.CitiesViewModel
+
+@{
+    ViewBag.Title = "Cities";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.SelectedCity != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedCity);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedCity);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.City());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCity.Country.CountryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCity.Province.ProvinceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCity.CityName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCity.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCity.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Cities)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country.CountryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Province.ProvinceName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CityName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.CityID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.CityID })
+        </td>
+    </tr>
+    }
+
+</table>
+
+    <script>
+        $(document).ready(function () {
+            GetProvinceList();
+            $("#CountryID").change(function () {
+                GetProvinceList();
+            });
+        });
+
+        function GetProvinceList() {
+            var CountryID = $("#CountryID").val();
+            $.ajax({
+                url: "@Url.Content("~/Cities/GetProvinceList")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ CountryID: + CountryID }),
+                success: function (result) {
+                    $("#ProvinceID").html("");
+                    $.each($.parseJSON(result), function (i, province) {
+                        $("#ProvinceID").append($('<option></option>').val(province.ProvinceID).html(province.ProvinceName));
+                    });
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                },
+            });
+        }
+    </script>
+

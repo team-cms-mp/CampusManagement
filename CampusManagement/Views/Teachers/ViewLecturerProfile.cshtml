@@ -1,0 +1,135 @@
+﻿
+@model CampusManagement.Models.TeachersViewModel
+
+@{
+    ViewBag.Title = "ViewLecturerProfile";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<div class="row">
+    <h2><span class="col-sm-12">Lecturer Profile</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+@Html.Partial("_MessageView")
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.TeacherName)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.TeacherName)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.FatherName)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.FatherName)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.MobileNo)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.MobileNo)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.CNIC)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.CNIC)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.Email)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.Email)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.EmployeeNo)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.EmployeeNo)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.Designation.DesignationName)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.Designation.DesignationName)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.IsActive)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.IsActive)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.Qualification)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.Qualification)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.PresentAddress)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.PresentAddress)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.PermanentAddress)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.PermanentAddress)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.CreatedOn)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.CreatedOn)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.CreatedBy)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.CreatedBy)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.ModifiedOn)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.ModifiedOn)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectedTeacher.ModifiedBy)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTeacher.ModifiedBy)
+        </dd>
+
+    </dl>
+</div>
+

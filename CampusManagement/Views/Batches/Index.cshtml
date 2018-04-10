@@ -1,0 +1,66 @@
+﻿@model CampusManagement.Models.BatchViewModel
+
+@{
+    ViewBag.Title = "Batches";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedBatch != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedBatch);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedBatch);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.Batch());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatch.BatchName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatch.BatchCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatch.BatchSession)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatch.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Batches)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BatchName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BatchCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BatchSession)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.BatchID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BatchID })
+        </td>
+    </tr>
+    }
+
+</table>

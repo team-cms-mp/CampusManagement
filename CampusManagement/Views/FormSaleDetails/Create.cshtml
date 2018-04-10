@@ -1,0 +1,93 @@
+﻿@model CampusManagement.Models.FormSaleDetail
+
+@using (Html.BeginForm("Create", "FormSaleDetails", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Add Form Sale Detail</span></h2>
+    </div>
+    <hr style=" border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.FormNo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FormNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FormNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.FormTypeID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("FormTypeID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FormTypeID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.BatchProgramID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("BatchProgramID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BatchProgramID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.DepositTypeID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("DepositTypeID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DepositTypeID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.FormPrice, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FormPrice, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FormPrice, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.ApplicantName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ApplicantName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ApplicantName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.FatherName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FatherName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FatherName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PhoneNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.CNIC, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.CNIC, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CNIC, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3" id="divAccountID">
+            @Html.LabelFor(model => model.AccountID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("AccountID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.AccountID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3" id="divDepositSlipNo">
+            @Html.LabelFor(model => model.DepositSlipNo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.DepositSlipNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DepositSlipNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.PurchaseDate, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PurchaseDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "mm/dd/yyyy" } })
+            @Html.ValidationMessageFor(model => model.PurchaseDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3" style="display:none;">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            @Html.LabelFor(model => model.FormDescription, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FormDescription, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FormDescription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-6">
+            <input type="submit" value="Add" class="btn btn-success" />
+            <a href="@Url.Content("~/FormSaleDetails/Index")" class="btn btn-success">Refresh</a>
+            <a class="btn btn-success" href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptAdmissionFormSale&IsReceived=&FormNo=")" target="_blank">View Report</a>
+        </div>
+    </div>
+}

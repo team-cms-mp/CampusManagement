@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Invoicing";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Create", "Challans")"  class="alert-link">Create Invoice Program Wise</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("SingleStudentChallan", "Challans")" class="alert-link">Create Student Invoice</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("ApproveChallans", "Challans")"  class="alert-link">Verify Invoice </a>
+            </div>
+        </div>
+    </div>
+
+</div>

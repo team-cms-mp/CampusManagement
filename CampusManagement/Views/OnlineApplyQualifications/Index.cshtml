@@ -1,0 +1,150 @@
+﻿@model CampusManagement.Models.ApplicantQualificationViewModel
+
+@{
+    ViewBag.Title = "Applicant Qualifications";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedApplicantQualification != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedApplicantQualification);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedApplicantQualification);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.ApplicantQualification());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+        </th>
+        <th></th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.ApplicantQualifications)
+    {
+        <tr>
+            <td>
+                @{
+                    string docLink = "~/DegreeDocument/noimage.png";
+                    if (item.DegreeDocument != null)
+                    {
+                        docLink = item.DegreeDocument;
+                    }
+                }
+                <a href="@Url.Content(docLink)" target="_blank"><img src="@Url.Content(docLink)" style="width:125px; height:125px;" /></a>
+            </td>
+            <td>
+                <table class="table-striped">
+                    <tr>
+                        <td>
+                            <label class="control-label">@Html.DisplayNameFor(model => item.Degree.DegreeName) : </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Degree.DegreeName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">@Html.DisplayNameFor(model => item.Institute.InstituteName) : </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Institute.InstituteName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">@Html.DisplayNameFor(model => item.YearQualification) : </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.YearQualification)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">@Html.DisplayNameFor(model => item.InstituteCity) : </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InstituteCity)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">@Html.DisplayNameFor(model => item.TotalMarks) : </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalMarks)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">@Html.DisplayNameFor(model => item.ObtainedMarks) : </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ObtainedMarks)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">@Html.DisplayNameFor(model => item.Percentage) : </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Percentage)
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id = item.AppQualiID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.AppQualiID, FormNo = item.FormNo })
+            </td>
+        </tr>
+        }
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#YearQualification").ForceNumericOnly();
+            $("#TotalMarks").ForceNumericWithDot();
+            $("#ObtainedMarks").ForceNumericWithDot();
+
+            $("#TotalMarks").blur(function () {
+                CalculatePercentage("#TotalMarks", "#ObtainedMarks", "#Percentage");
+            });
+
+            $("#ObtainedMarks").blur(function () {
+                CalculatePercentage("#TotalMarks", "#ObtainedMarks", "#Percentage");
+            });
+        });
+
+        function CalculatePercentage(TotalMarks, ObtainedMarks, PercentageField) {
+            if ($(TotalMarks).val() != "" && $(ObtainedMarks).val() != ""
+                && $(TotalMarks).val() != "0" && $(ObtainedMarks).val() != "0") {
+
+                if (parseFloat($(ObtainedMarks).val()) > parseFloat($(TotalMarks).val())) {
+                    alert("Obtained Marks are greater then Total Marks.");
+                    $(TotalMarks).val("0");
+                    $(ObtainedMarks).val("0");
+                    return;
+                }
+
+                var Percentage = (parseFloat($(ObtainedMarks).val()) / parseFloat($(TotalMarks).val())) * 100;
+                $(PercentageField).val(parseFloat(Percentage).toFixed(2));
+            }
+        }
+    </script>
+}
+
+

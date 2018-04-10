@@ -1,0 +1,60 @@
+﻿@model CampusManagement.Models.DegreesViewModel
+
+@{
+    ViewBag.Title = "Degrees";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedDegree != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedDegree);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedDegree);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.Degree());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDegree.DegreeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDegree.DegreeDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDegree.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Degrees)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DegreeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DegreeDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.DegreeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.DegreeID })
+        </td>
+    </tr>
+    }
+
+</table>

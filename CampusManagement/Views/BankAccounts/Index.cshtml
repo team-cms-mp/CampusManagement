@@ -1,0 +1,66 @@
+﻿@model CampusManagement.Models.BankAccountViewModel
+
+@{
+    ViewBag.Title = "Bank Accounts";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedBankAccount != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedBankAccount);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedBankAccount);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.BankAccount());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBankAccount.BankName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBankAccount.AccountNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBankAccount.BankPhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBankAccount.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.BankAccounts)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BankName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BankPhone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.BankAccountID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BankAccountID })
+        </td>
+    </tr>
+    }
+
+</table>

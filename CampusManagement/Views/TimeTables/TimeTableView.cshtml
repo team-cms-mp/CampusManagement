@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "TimeTableView";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("BatchWiseTimeTable", "TimeTables")" class="alert-link"> View By Batch </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("RoomWiseTimeTable", "TimeTables")" class="alert-link"> View By Venue </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("SemesterWiseTimeTable", "TimeTables")" class="alert-link"> View By Semester </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("SubjectWiseTimeTable", "TimeTables")" class="alert-link"> View By Subject </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("TeacherWiseTimeTable", "TimeTables")" class="alert-link"> View By Lecturer </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("SlotWiseTimeTable", "TimeTables")" class="alert-link"> View By Slot </a>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,74 @@
+﻿@model CampusManagement.Models.SalutationsViewModel
+
+@{
+    ViewBag.Title = "Salutations";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedSalutation != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedSalutation);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedSalutation);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.Salutation());
+    }
+}
+
+
+@using (Html.BeginForm("Index", "Salutations", FormMethod.Post))
+{
+    <div class="row" style="margin-top: -2em;margin-bottom: -2em;">
+        <div class="col-sm-5 inner-addon right-addon">
+            <input type="text" class="form-control" placeholder="search" name="Search" />
+        </div>
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-success" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+    </div>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedSalutation.SalutationName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedSalutation.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedSalutation.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Salutations)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SalutationName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.SalutationID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.SalutationID })
+        </td>
+    </tr>
+    }
+
+</table>

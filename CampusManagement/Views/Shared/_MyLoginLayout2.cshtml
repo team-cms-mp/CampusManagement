@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>4S Campus Connect</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS -->
+    <link href="@Url.Content("~/Content/Login2/fonts/font-awesome-4.7.0/css/font-awesome.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/Login2/css/main.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.10.0.min.js")"></script>
+
+</head>
+<body style="background-color: #666666;">
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+               
+                <div class="login100-more" style="width: 100%; height: 90%;">
+                    <img src="@Url.Content(@MvcApplication.CampusBackground)" class="img-responsive" style=" width: 100%; height: 680px" />
+
+                </div>
+
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="@Url.Content("~/Content/Login2/js/jquery-3.2.1.min.js")"></script>
+    <script src="@Url.Content("~/Content/Login2/js/main.js")"></script>
+</body>
+</html>

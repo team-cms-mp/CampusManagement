@@ -1,0 +1,60 @@
+﻿@model CampusManagement.Models.CourseTypesViewModel
+
+@{
+    ViewBag.Title = "Course Types";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedCourseType != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedCourseType);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedCourseType);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.CourseType());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCourseType.CourseTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCourseType.CourseTypeDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCourseType.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.CourseTypes)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseTypeDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.CourseTypeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.CourseTypeID })
+        </td>
+    </tr>
+    }
+
+</table>

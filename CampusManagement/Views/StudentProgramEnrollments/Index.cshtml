@@ -1,0 +1,138 @@
+﻿@model CampusManagement.Models.StudentProgramEnrollmentsViewModel
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Students Enrollment";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.SelectedStudentProgramEnrollment != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedStudentProgramEnrollment);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedStudentProgramEnrollment);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.StudentProgramEnrollment());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Student Name
+        </th>
+        <th>
+            Batch Program
+        </th>
+        <th>
+            Admission Date
+        </th>
+        <th>
+            Is Active
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.StudentProgramEnrollments)
+    {
+        <tr>
+            <td>
+                @{
+                    ModelCMSContainer dbc = new ModelCMSContainer();
+                    Student student = dbc.Students.FirstOrDefault(s => s.StudentID == item.StudentID);
+                    GetBatchProgramNameConcat_Result dv = dbc.GetBatchProgramNameConcat(student.FormNo, 6).FirstOrDefault();
+                    string StudentName = string.Concat(student.FirstName, " ", student.LastName);
+                    string adate = item.AdmissionDate.Value.ToShortDateString();
+                }
+                @Html.Raw(StudentName)
+            </td>
+            <td>
+                @Html.Raw(dv.Name)
+            </td>
+            <td>
+                @Html.Raw(adate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.EnrollmentID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section Scripts {
+    <script>
+            $(document).ready(function () {
+                $("#AdmissionDate").mask("99/99/9999");
+                $("#DegreeCompletionDate").mask("99/99/9999");
+                $("#DegreeCompleted").val("No");
+                GetStudentsList();
+            });
+
+            function GetStudentsList() {
+                $("#searchValue").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "@Url.Content("~/StudentProgramEnrollments/GetStudentsList")",
+                            datatype: 'json',
+                            data: { searchValue: $("#searchValue").val() },
+                            success: function (data) {
+                                response($.map($.parseJSON(data), function (item) {
+                                    return {
+                                        label: item.AddAppID + ":" + item.FormNo + ":" + item.FirstName + ":" + item.LastName + ":" + item.ACNIC,
+                                        value: item.AddAppID + ":" + item.FormNo + ":" + item.FirstName + ":" + item.LastName + ":" + item.ACNIC
+                                    };
+                                }));
+                            },
+                            error: function (xhr, status, error) {
+                                alert(xhr.error);
+                            }
+                        });
+                    },
+                    select: function (event, ui) {
+                        var splitted = ui.item.label.split(":");
+                        $("#StudentID").val(splitted[0]); 
+                        $("#selectedValue").val(splitted[1]);
+                        GetBatchProgramsByFormNo();
+                    }
+                });
+            }
+
+            function GetBatchProgramsByFormNo() {
+                var selectedValue = $("#selectedValue").val();
+                $.ajax({
+                    url: "@Url.Content("~/StudentProgramEnrollments/GetBatchProgramsByFormNo")",
+                    type: 'POST',
+                    datatype: 'application/json',
+                    contentType: 'application/json',
+                    async: false,
+                    data: JSON.stringify({ FormNo: + selectedValue }),
+                    success: function (result) {
+                        if (result == "No result found.") {
+                            alert(result);
+                            return;
+                        }
+
+                        $("#BatchProgramID").html("");
+                        $.each($.parseJSON(result), function (i, bp) {
+                            $("#BatchProgramID").append($('<option></option>').val(bp.ID).html(bp.Name));
+                        });
+                    },
+                    error: function () {
+                        alert("Something went wrong..");
+                    },
+                });
+            }
+
+    </script>
+}

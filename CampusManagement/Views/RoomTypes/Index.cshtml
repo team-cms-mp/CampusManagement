@@ -1,0 +1,60 @@
+﻿@model CampusManagement.Models.RoomTypesViewModel
+
+@{
+    ViewBag.Title = "Room Types";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedRoomType != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedRoomType);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedRoomType);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.RoomType());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedRoomType.RoomTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedRoomType.RoomTypeDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedRoomType.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.RoomTypes)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoomTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoomTypeDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.RoomTypeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.RoomTypeID })
+        </td>
+    </tr>
+    }
+
+</table>

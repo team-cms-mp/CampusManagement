@@ -1,0 +1,60 @@
+﻿@model CampusManagement.Models.MaritalStatusViewModel
+
+@{
+    ViewBag.Title = "Marital Status";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedMaritalStatu != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedMaritalStatu);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedMaritalStatu);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.MaritalStatu());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedMaritalStatu.MaritalStatusName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedMaritalStatu.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedMaritalStatu.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.MaritalStatus)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaritalStatusName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.MaritalStatusID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.MaritalStatusID })
+        </td>
+    </tr>
+    }
+
+</table>

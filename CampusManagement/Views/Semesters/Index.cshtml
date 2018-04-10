@@ -1,0 +1,66 @@
+﻿@model CampusManagement.Models.SemestersViewModel
+
+@{
+    ViewBag.Title = "Semesters";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedSemester != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedSemester);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedSemester);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.Semester());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedSemester.SemesterName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedSemester.SemesterCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedSemester.YearSemesterNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedSemester.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Semesters)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SemesterName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SemesterCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.YearSemesterNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.YearSemesterNo }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.YearSemesterNo })
+        </td>
+    </tr>
+    }
+
+</table>

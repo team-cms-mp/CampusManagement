@@ -1,0 +1,60 @@
+﻿@model CampusManagement.Models.DepositTypesViewModel
+
+@{
+    ViewBag.Title = "Deposit Types";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedDepositType != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedDepositType);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedDepositType);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.DepositType());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDepositType.DepositTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDepositType.DepositTypeDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDepositType.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.DepositTypes)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepositTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepositTypeDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.DepositTypeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.DepositTypeID })
+        </td>
+    </tr>
+    }
+
+</table>

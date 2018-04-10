@@ -1,0 +1,60 @@
+﻿@model CampusManagement.Models.DesignationsViewModel
+
+@{
+    ViewBag.Title = "Designations";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedDesignation != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedDesignation);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedDesignation);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.Designation());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDesignation.DesignationName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDesignation.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDesignation.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Designations)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DesignationName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.DesignationID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.DesignationID })
+        </td>
+    </tr>
+    }
+
+</table>

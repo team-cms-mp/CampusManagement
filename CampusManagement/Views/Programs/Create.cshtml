@@ -1,0 +1,47 @@
+﻿@model CampusManagement.Models.Program
+
+@using (Html.BeginForm("Create", "Programs", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Add Program</span></h2>
+    </div>
+    <hr style=" border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.ProgramName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ProgramName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ProgramName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.ProgramCode, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ProgramCode, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ProgramCode, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.ProgramTypeID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("ProgramTypeID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ProgramTypeID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            @Html.LabelFor(model => model.ProgramDescription, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ProgramDescription, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ProgramDescription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Add" class="btn btn-success" />
+            <a href="@Url.Content("~/Programs/Index")" class="btn btn-success">Refresh</a>
+        </div>
+    </div>
+}

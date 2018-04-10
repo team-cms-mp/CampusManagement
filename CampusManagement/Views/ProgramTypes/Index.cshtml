@@ -1,0 +1,60 @@
+﻿@model CampusManagement.Models.ProgramTypesViewModel
+
+@{
+    ViewBag.Title = "Program Types";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedProgramType != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedProgramType);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedProgramType);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.ProgramType());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedProgramType.ProgramTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedProgramType.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedProgramType.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.ProgramTypes)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProgramTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.ProgramTypeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ProgramTypeID })
+        </td>
+    </tr>
+    }
+
+</table>

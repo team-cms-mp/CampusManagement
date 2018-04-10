@@ -1,0 +1,64 @@
+﻿@model CampusManagement.Models.BatchProgramSemesterViewModel
+@using CampusManagement.Models;
+@{
+    ViewBag.Title = "Batch Program Semesters";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedBatchProgramSemester != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedBatchProgramSemester);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedBatchProgramSemester);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.BatchProgramSemester());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatchProgramSemester.BatchProgramID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatchProgramSemester.YearSemesterNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatchProgramSemester.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.BatchProgramSemesters)
+    {
+        <tr>
+            <td>
+                @{
+                    ModelCMSContainer dbView = new ModelCMSContainer();
+                    GetBatchProgramNameConcat_Result bpn = dbView.GetBatchProgramNameConcat("", 0).FirstOrDefault(b => b.ID == item.BatchProgramID);
+                }
+                @Html.Raw(bpn.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearSemesterNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id = item.BatchProgramSemesterID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.BatchProgramSemesterID })
+            </td>
+        </tr>
+    }
+
+</table>
