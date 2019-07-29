@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
 using CampusManagement.Models;
-using VBClassLibrary;
+//using VBClassLibrary;
 
 namespace CampusManagement.Controllers
 {
@@ -14,7 +14,7 @@ namespace CampusManagement.Controllers
     {
         ModelUserManagementContainer dbUser = new ModelUserManagementContainer();
         ModelCMSContainer dbCMS = new ModelCMSContainer();
-        Encryption encryption = new Encryption();
+        //Encryption encryption = new Encryption();
 
         public ActionResult Index()
         {

@@ -935,9 +935,6 @@
     <Content Include="Reporting\ReportForms\ReportViewerForm.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <EntityDeploy Include="Models\ModelCMS.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelCMS.Designer.cs</LastGenOutput>
