@@ -20,13 +20,13 @@ namespace CampusManagement.Models
         {
             this.BatchPrograms = new HashSet<BatchProgram>();
         }
-
+        
         public int BatchID { get; set; }
-        [Display(Name = "Batch Name")]
+        [Display(Name = "Session Name")]
         public string BatchName { get; set; }
-        [Display(Name = "Batch Code")]
+        [Display(Name = "Session Code")]
         public string BatchCode { get; set; }
-        [Display(Name = "Batch Session")]
+        [Display(Name = "Session Duration")]
         public string BatchSession { get; set; }
         public string Description { get; set; }
         [Display(Name = "Created On")]

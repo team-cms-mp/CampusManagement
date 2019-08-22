@@ -12,10 +12,10 @@ using CampusManagement.Models;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
+    [Authorize]
     public class CollegeServicesController : Controller
     {
-        private ModelCMSContainer db = new ModelCMSContainer();
+        private ModelCMSNewContainer db = new ModelCMSNewContainer();
         CollegeServicesViewModel model = new CollegeServicesViewModel();
 
         public ActionResult Index()
@@ -25,6 +25,7 @@ namespace CampusManagement.Controllers
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.IsEffectProgramFee = new SelectList(db.Options, "OptionDesc", "OptionDesc");
+            ViewBag.E_Code = new SelectList(db.Finance_Expenditures.Where(e => e.E_Code != "0").ToList(), "E_Code", "E_Name");
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View(model);
@@ -38,6 +39,7 @@ namespace CampusManagement.Controllers
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.IsEffectProgramFee = new SelectList(db.Options, "OptionDesc", "OptionDesc");
+            ViewBag.E_Code = new SelectList(db.Finance_Expenditures.Where(e => e.E_Code != "0").ToList(), "E_Code", "E_Name");
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -70,9 +72,9 @@ namespace CampusManagement.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Service Name is already exists.");
+                    ModelState.AddModelError(string.Empty, "Service Name already exists.");
                     ViewBag.MessageType = "error";
-                    ViewBag.Message = "Service Name is already exists.";
+                    ViewBag.Message = "Service Name already exists.";
                 }
             }
             catch (DbEntityValidationException ex)
@@ -97,6 +99,7 @@ namespace CampusManagement.Controllers
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", collegeService.IsActive);
             ViewBag.IsEffectProgramFee = new SelectList(db.Options, "OptionDesc", "OptionDesc", collegeService.CollegeServiceID);
+            ViewBag.E_Code = new SelectList(db.Finance_Expenditures.Where(e => e.E_Code != "0").ToList(), "E_Code", "E_Name", collegeService.E_Code);
             return View("Index", model);
         }
 
@@ -118,6 +121,7 @@ namespace CampusManagement.Controllers
             model.DisplayMode = "ReadWrite";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", collegeService.IsActive);
             ViewBag.IsEffectProgramFee = new SelectList(db.Options, "OptionDesc", "OptionDesc", collegeService.CollegeServiceID);
+            ViewBag.E_Code = new SelectList(db.Finance_Expenditures.Where(e => e.E_Code != "0").ToList(), "E_Code", "E_Name", collegeService.E_Code);
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -167,6 +171,7 @@ namespace CampusManagement.Controllers
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", collegeService.IsActive);
             ViewBag.IsEffectProgramFee = new SelectList(db.Options, "OptionDesc", "OptionDesc", collegeService.CollegeServiceID);
+            ViewBag.E_Code = new SelectList(db.Finance_Expenditures.Where(e => e.E_Code != "0").ToList(), "E_Code", "E_Name",collegeService.E_Code);
 
             return View("Index", model);
         }
@@ -214,6 +219,7 @@ namespace CampusManagement.Controllers
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.IsEffectProgramFee = new SelectList(db.Options, "OptionDesc", "OptionDesc");
+            ViewBag.E_Code = new SelectList(db.Finance_Expenditures.Where(e => e.E_Code != "0").ToList(), "E_Code", "E_Name");
 
             return View("Index", model);
         }

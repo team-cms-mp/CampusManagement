@@ -9,7 +9,7 @@ namespace CampusManagement.MyRoleProvider
 {
     public class SiteRole : RoleProvider
     {
-        ModelUserManagementContainer db = new ModelUserManagementContainer();
+        ModelCMSNewContainer db = new ModelCMSNewContainer();
         public override string ApplicationName { get; set; }
 
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
@@ -40,14 +40,14 @@ namespace CampusManagement.MyRoleProvider
         public override string[] GetRolesForUser(string username)
         {
             string roleData = string.Empty;
-            var dn = db.GetLoginUser(username, null).FirstOrDefault();
+            var dn = db.GetLoginUser(username, "", "").FirstOrDefault();
             if (dn == null)
             {
                 roleData = string.Empty;
             }
             else
             {
-                roleData = db.GetLoginUser(username, null).FirstOrDefault().Designation_Name;
+                roleData = db.GetLoginUser(username, "", "").FirstOrDefault().Designation_Name;
             }
 
             if(string.IsNullOrEmpty(roleData))

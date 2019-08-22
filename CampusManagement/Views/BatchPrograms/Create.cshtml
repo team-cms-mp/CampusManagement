@@ -1,13 +1,13 @@
-﻿@model CampusManagement.Models.BatchProgram
+﻿@model CampusManagement.Models.GetBatchPrograms_Result
 
 @using (Html.BeginForm("Create", "BatchPrograms", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
     <div class="row">
-        <h2><span class="col-sm-12">Add Batch Program</span></h2>
+        <h2><span class="col-sm-12">Add Session Program</span></h2>
     </div>
-    <hr style=" border-top: 1px solid #6d9b90;" />
+    <hr style="border-top: 1px solid #6d9b90;" />
     @Html.Partial("_MessageView")
 
     <div class="row">
@@ -16,24 +16,155 @@
             @Html.DropDownList("BatchID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.BatchID, "", new { @class = "text-danger" })
         </div>
-        <div class="col-sm-12">
+        <div class="col-sm-9">
             @Html.LabelFor(model => model.ProgramID, htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("ProgramID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.ProgramID, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
-            @Html.LabelFor(model => model.ProgramFees, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.ProgramFees, new { htmlAttributes = new { @class = "form-control", @maxlength = "10" } })
-            @Html.ValidationMessageFor(model => model.ProgramFees, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.ShiftID ,htmlAttributes : new { @class = "control-label" })
+            @Html.DropDownList("ShiftID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ShiftID, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
+            @Html.LabelFor(model => model.SelectionPercentage, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.SelectionPercentage, new { htmlAttributes = new { @class = "form-control" ,type="number" } })
+            @Html.ValidationMessageFor(model => model.SelectionPercentage, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.EntryTestPercentage, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.EntryTestPercentage, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+            @Html.ValidationMessageFor(model => model.EntryTestPercentage, "", new { @class = "text-danger" })
+        </div>
+       
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.GATNATPercentage, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.GATNATPercentage, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+            @Html.ValidationMessageFor(model => model.GATNATPercentage, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.WithdrawalSubjectPercentage, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.WithdrawalSubjectPercentage, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+            @Html.ValidationMessageFor(model => model.WithdrawalSubjectPercentage, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.AdmissionDateFrom, htmlAttributes: new { @class = "control-label"  })
+            @Html.EditorFor(model => model.AdmissionDateFrom, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.AdmissionDateFrom, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.AdmissionDateTo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.AdmissionDateTo, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.AdmissionDateTo, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.RegistrationDateFrom, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.RegistrationDateFrom, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.RegistrationDateFrom, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.RegistrationDateTo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.RegistrationDateTo, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.RegistrationDateTo, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.EntryTestDate, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.EntryTestDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.EntryTestDate, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.EntryTestDate1, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.EntryTestDate1, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.EntryTestDate1, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.EntryTestDate2, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.EntryTestDate2, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.EntryTestDate2, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.EntryTestDate3, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.EntryTestDate3, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.EntryTestDate3, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.EntryTestResultDate, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.EntryTestResultDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.EntryTestResultDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.FirstMeritListDate, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FirstMeritListDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.FirstMeritListDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.SecondMeritListDate, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.SecondMeritListDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.SecondMeritListDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.ThirdMeritListDate, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ThirdMeritListDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.ThirdMeritListDate, "", new { @class = "text-danger"})
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.FourthMeritListDate, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FourthMeritListDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.FourthMeritListDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.SendingOfferLetterDate, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.SendingOfferLetterDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.SendingOfferLetterDate, "", new { @class = "text-danger" })
+        </div>
+       
+        <div class="col-sm-3 " >
+            @Html.LabelFor(model => model.OrientationDateFrom, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.OrientationDateFrom, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.OrientationDateFrom, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.OrientationDateTo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.OrientationDateTo, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.OrientationDateTo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.AddDropDeadlineDateFrom, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.AddDropDeadlineDateFrom, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.AddDropDeadlineDateFrom, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.AddDropDeadlineDateTo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.AddDropDeadlineDateTo, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.AddDropDeadlineDateTo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.WithdrawalSubjectDateFrom, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.WithdrawalSubjectDateFrom, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.WithdrawalSubjectDateFrom, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.WithdrawalSubjectDateTo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.WithdrawalSubjectDateTo, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.WithdrawalSubjectDateTo, "", new { @class = "text-danger" })
+        </div>
+       
+        <div class="col-sm-3">
             @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "mm/dd/yyyy" } })
+            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
             @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
             @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "mm/dd/yyyy" } })
+            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
             @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
@@ -45,8 +176,8 @@
     <br />
     <div class="row">
         <div class="col-sm-3">
-            <input type="submit" value="Add" class="btn btn-success" />
-            <a href="@Url.Content("~/BatchPrograms/Index")" class="btn btn-success">Refresh</a>
+            <input type="submit" value="Add" class="btn btn-primary" />
+            <a href="@Url.Content("~/BatchPrograms/Index")" class="btn btn-primary">Refresh</a>
         </div>
     </div>
 }

@@ -22,6 +22,7 @@ namespace CampusManagement.Models
         public string IsActive { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
+        public Nullable<int> ProgramPriority { get; set; }
     
         public virtual Applicant Applicant { get; set; }
     }

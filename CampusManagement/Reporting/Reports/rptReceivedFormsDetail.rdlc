@@ -18,7 +18,7 @@
               <Width>2.5cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.365cm</Width>
+              <Width>2.99458cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.8175cm</Width>
@@ -709,7 +709,7 @@
         <Top>0.17639cm</Top>
         <Left>0.00001cm</Left>
         <Height>1.2cm</Height>
-        <Width>24.80666cm</Width>
+        <Width>24.43624cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -733,9 +733,8 @@
               <Source>External</Source>
               <Value>=Parameters!ImagePath.Value</Value>
               <Sizing>FitProportional</Sizing>
-              <Left>0.66146cm</Left>
               <Height>1.99729cm</Height>
-              <Width>3.25979cm</Width>
+              <Width>5.48229cm</Width>
               <ToolTip>=Parameters!ImagePath.Value</ToolTip>
               <Style>
                 <Border>
@@ -752,7 +751,7 @@
             <Border>
               <Style>None</Style>
             </Border>
-            <BackgroundColor>Gray</BackgroundColor>
+            <BackgroundColor>White</BackgroundColor>
           </Style>
         </Rectangle>
         <Textbox Name="Textbox1">

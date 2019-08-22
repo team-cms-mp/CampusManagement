@@ -1,0 +1,91 @@
+﻿@model CampusManagement.Models.LMSWeekDetailsViewModel
+
+@{
+    ViewBag.Title = "Week Details";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedLMSWeekDetails != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedLMSWeekDetails);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedLMSWeekDetails);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.LMSWeekDetail());
+    }
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.SelectedLMSWeekDetails.WeekListTypeID)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedLMSWeekDetails.Title)
+        </th>
+        <th>
+            Content
+        </th>
+        <th>
+            File
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedLMSWeekDetails.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.LMSWeekDetails)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LMSWeekID)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.WeekListTypeID)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContentText)
+            </td>
+            <td>
+                <a href="@Url.Content(item.FilePath)" target="_blank">Download</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+         
+            @if (item.WeekListTypeID == 2005)
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Update", new { id = item.LMSWeekDetailID }) | 
+                    @Html.ActionLink("Add Quiz", "Index", "LmsQuiz", new { LMSWeekDetailID = item.LMSWeekDetailID }, null)
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Update", new { id = item.LMSWeekDetailID })
+                </td>
+            }
+</tr>
+    }
+
+</table>
+
+

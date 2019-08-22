@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"> </script>
+    <script type="text/javascript" language="javascript">
+
+   var indexValue = 0;
+   function addRow(){
+       var test = '<tr class="row"><td class="col-sm-2"><input class = "form-control" type="text" name="DegreeID"/></td><td class="col-sm-2"><input class = "form-control" type="text" name="InstituteID" /></td><td class="col-sm-2"><input class = "form-control" type="text" name="TotalMarks" /></td><td class="col-sm-2"><input class = "form-control" type="text" name="ObtainedMarks"/></td> <td class="col-sm-2"><input class = "form-control" type="text" name="Percentage" /></td><td class="col-sm-2"><input class = "form-control" type="file" name="UploadDocument" /></td></tr>';
+       $("#myTable").append(test);
+        }
+    </script>
+</head>
+<div>
+    <table id="myTable">
+        <tr class="row">
+        <td class="col-sm-2"><input class = "form-control" type="text" name="DegreeID" /></td>
+        <td class="col-sm-2"><input class = "form-control" type="text" name="InstituteID" /></td>
+        <td class="col-sm-2"><input class = "form-control" type="text" name="TotalMarks" /></td>
+        <td class="col-sm-2"><input class = "form-control" type="text" name="ObtainedMarks" /></td>
+        <td class="col-sm-2"><input class = "form-control" type="text" name="Percentage" /></td>
+        <td class="col-sm-2"><input class = "form-control" type="file" name="UploadDocument" /></td>
+        </tr>
+        
+    </table>
+</div>
+<div>
+    <input type="button" value="Add" onclick="addRow()" /><br /><br />
+</div>
+<body>
+</body>

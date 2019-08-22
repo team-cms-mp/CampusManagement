@@ -1,0 +1,106 @@
+﻿@model IEnumerable<CampusManagement.Models.ScholarshipOpportunitie>
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Scholarships List Display";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<script type="text/javascript"
+        src="https://viralpatel.net/blogs/demo/jquery/jquery.shorten.1.0.js"></script>
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+
+<table style="width:700px">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td >
+                <a href="@Url.Content(item.ScholarshipImagePath)" target="_blank"><img id="imgView" src="@Url.Content(item.ScholarshipImagePath)" style="width:100px;height:100px;border-radius:10px;" /></a>
+            </td>
+            <td>
+                <table class="table-striped" style="width:300px">
+                    <tr>
+                        <td>
+                            <label class="control-label">Title &nbsp; &nbsp;</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ScholarshipTitle)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">DeadLine &nbsp; &nbsp;</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeadLine)
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="control-label">Scholarship Description </label>
+            </td>
+            </tr>
+            <tr>
+            <td class="comment">
+           
+                    @Html.DisplayFor(modelItem => item.ScholarshipDescription)
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="control-label">How To Qualify </label>
+            </td>
+        </tr>
+            <tr>
+                <td class="comment">
+                    @Html.DisplayFor(modelItem => item.HowToQualify)
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="control-label">Eligibility Description </label>
+                </td>
+            </tr>
+            <tr>
+                <td class="comment">
+                    @Html.DisplayFor(modelItem => item.EligibilityDescription)
+
+                </td>
+                <td>
+                    @Html.ActionLink("View", "Index", "ScholarshipApply", new { id = item.ScholarshipOpportunitiesID }, null)|
+                    @Html.ActionLink("Applicants", "Index", "ScholarshipApplicants", new { ScholarshipOpportunitiesID = item.ScholarshipOpportunitiesID }, null)
+
+                </td>
+               
+               
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <hr />
+                </td>
+
+            </tr>
+    }
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".comment").shorten({
+            "showChars": 50,
+            "moreText": "Read More",
+            "lessText": "Less",
+        });
+    });
+</script>

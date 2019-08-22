@@ -2,10 +2,11 @@
 @using CampusManagement.Models
 @{
     ViewBag.Title = "Selection Criteria";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
     if (Model.SelectedSelectionCriteria != null)
     {
         if (Model.DisplayMode == "Delete")
@@ -19,7 +20,7 @@
     }
     if (Model.DisplayMode == "WriteOnly")
     {
-        Html.RenderPartial("Create", new CampusManagement.Models.SelectionCriteria());
+        Html.RenderPartial("Create", new CampusManagement.Models.GetSelectionCriterias_Result());
     }
 }
 
@@ -41,14 +42,10 @@
     {
         <tr>
             <td>
-                @{
-                    ModelCMSContainer dbc = new ModelCMSContainer();
-                    GetBatchProgramNameConcat_Result dv = dbc.GetBatchProgramNameConcat("", 0).FirstOrDefault(bp => bp.ID == item.BatchProgramID);
-                }
-                @Html.Raw(dv.Name)
+                @Html.DisplayFor(modelItem => item.ProgramName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Degree.DegreeName)
+                @Html.DisplayFor(modelItem => item.DegreeName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DegreePercentage)

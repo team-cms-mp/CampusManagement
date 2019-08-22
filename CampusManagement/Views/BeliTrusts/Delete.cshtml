@@ -1,0 +1,193 @@
+﻿@model CampusManagement.Models.BeliTrust
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Remove BeliTrust";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<h4 class="alert alert-info">Are you sure you want to delete this?</h4>
+
+<div>
+    <dl class="dl-horizontal">
+   
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.BeliTrustID)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BeliTrustID)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.FirstName)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.LastName)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.FatherName)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FatherName)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.ApplicantDOB)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicantDOB)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.PlaceOfBirth)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlaceOfBirth)
+        </dd>
+
+      
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.ACNIC)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ACNIC)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.PTCLNO)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PTCLNO)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.CellNo)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CellNo)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.Email)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.AlternateEmail)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AlternateEmail)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.GuardianName)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GuardianName)
+        </dd>
+
+      
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.GuardianCNIC)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GuardianCNIC)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.PresentAddress)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PresentAddress)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.PermanentAddress)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PermanentAddress)
+        </dd> 
+
+        <dt style="display:none;">
+            <label class="control-label">Batch Program</label>
+        </dt>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.IsActive)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.CreatedOn)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.CreatedBy)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.ModifiedOn)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedOn)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.ModifiedBy)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-primary" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

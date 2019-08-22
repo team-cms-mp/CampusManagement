@@ -1,51 +1,66 @@
-﻿@model CampusManagement.Models.BatchProgramViewModel
-
+﻿@model CampusManagement.Models.GetBatchPrograms_ResultViewModel
+@using CampusManagement.Models
 @{
-    ViewBag.Title = "Batch Programs";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ViewBag.Title = "Session Programs";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
-
-
+<div class="row">
+    <div class="col-sm-12 ">
+        <a href="@Url.Content("~/SystemSettings/Campus")" class="btn btn-primary pull-right">Back</a>
+    </div>
+</div>
 @{
-    if (Model.SelectedBatchProgram != null)
+    if (Model.SelectedGetBatchPrograms_Result != null)
     {
         if (Model.DisplayMode == "Delete")
         {
-            Html.RenderPartial("Delete", Model.SelectedBatchProgram);
+            Html.RenderPartial("Delete", Model.SelectedGetBatchPrograms_Result);
         }
         else if (Model.DisplayMode == "ReadWrite")
         {
-            Html.RenderPartial("Edit", Model.SelectedBatchProgram);
+            Html.RenderPartial("Edit", Model.SelectedGetBatchPrograms_Result);
         }
     }
     if (Model.DisplayMode == "WriteOnly")
     {
-        Html.RenderPartial("Create", new CampusManagement.Models.BatchProgram());
+        Html.RenderPartial("Create", new CampusManagement.Models.GetBatchPrograms_Result());
     }
 }
-
+@using (Html.BeginForm("Index", "BatchPrograms", FormMethod.Post))
+{
+    <div class="row" style="margin-top: -2em;margin-bottom: -2em;">
+        <div class="col-sm-5 inner-addon right-addon">
+            <input type="text" class="form-control" placeholder="search" name="Search" />
+        </div>
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-primary" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+    </div>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedBatchProgram.BatchID)
+            Session
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedBatchProgram.ProgramID)
+            Program
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedBatchProgram.IsActive)
+            Active
         </th>
         <th>Actions</th>
     </tr>
 
-    @foreach (var item in Model.BatchPrograms)
+    @foreach (var item in Model.GetBatchPrograms_Results)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Batch.BatchName)
+                @Html.DisplayFor(modelItem => item.BatchName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Program.ProgramName)
+                @Html.DisplayFor(modelItem => item.ProgramName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsActive)
@@ -59,14 +74,3 @@
 
 </table>
 
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("#StartDate").mask("99/99/9999");
-            $("#EndDate").mask("99/99/9999");
-            $("#ProgramFees").ForceNumericOnly();
-        });
-
-
-    </script>
-}

@@ -1,0 +1,39 @@
+﻿@model CampusManagement.Models.OBE_Level
+
+@using (Html.BeginForm("Create", "OBE_Levels", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Add OBE Level</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.LevelName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.LevelName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LevelName, "", new { @class = "text-danger" })
+        </div>
+        
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+        
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Add" class="btn btn-primary" />
+            <a href="@Url.Content("~/OBE_Levels/Index")" class="btn btn-primary">Refresh</a>
+        </div>
+    </div>
+}

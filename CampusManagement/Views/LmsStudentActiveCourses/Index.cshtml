@@ -1,0 +1,139 @@
+﻿@model CampusManagement.Models.LMSWeekViewModel
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Learning Subjects ";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    int i = 1;
+    ModelCMSContainer Lms = new ModelCMSContainer();
+  
+
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">Learning Content  </span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+<div>
+    @foreach (var item in Model.LMSWeeks)
+    {
+
+        string LMSWeekID = string.Concat("LMSWeekID_", i);
+
+        string LmsWeek = string.Concat("#", @LMSWeekID);
+        <div class="row divHeading">
+            <a data-toggle="collapse" style="cursor:pointer" data-target="@LmsWeek"><h4 style="color: white;" aria-hidden="true"> <b> @Html.DisplayFor(modelItem => item.Title)</b>&nbsp; &nbsp;(@Html.DisplayFor(modelItem => item.TopicText)) &nbsp;<b style="margin-left: 38em;">Active &nbsp;</b> (@Html.DisplayFor(modelItem => item.IsActive))&nbsp;&nbsp; <b style="font-weight: bolder;" class="fa fa-angle-down"></b></h4> </a>
+        </div>
+        List<LMSWeekDetail> LmsWeekDetails = Lms.LMSWeekDetails.Where(x => x.LMSWeekID == item.LMSWeekID).ToList();
+
+        <div>
+
+
+            <div id="@LMSWeekID" class="collapse">
+
+                @foreach (var Detailitem in LmsWeekDetails)
+                {
+
+                    <div class="row" style="padding: 8px; border-bottom: 2px solid #eaeaea;">
+                        <div class="col-md-2">
+                            @Html.DisplayFor(modelItem => Detailitem.Title)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DisplayFor(modelItem => Detailitem.ContentText)
+                        </div>
+                        <div class="col-md-5">
+                            @if (Detailitem.WeekListTypeID == 2005)
+                            {
+                                LMSQuiz LMSQuizObj = Lms.LMSQuizs.Where(x => x.LMSWeekDetailID == Detailitem.LMSWeekDetailID).FirstOrDefault();
+                                @Html.ActionLink("View Quiz", "WelcomeQuizPage", new { LMSQuizID = LMSQuizObj.LMSQuizID, LMSSubjectLearningID = item.LMSSubjectLearningID, LSTitle = @ViewBag.LSTitle }, null)
+
+                            }
+                            else
+                            {
+                                <a href="@Url.Content(Detailitem.FilePath)" target="_blank">View Document</a>
+                            }
+
+                        </div>
+                        @{ Model.LMSWeekDetailAttemptObj = Lms.LMSWeekDetailAttempts.Where(x => x.LMSWeekDetailID == Detailitem.LMSWeekDetailID && x.LMSWeekID == Detailitem.LMSWeekID && x.WeekListTypeID == Detailitem.WeekListTypeID && x.StudentID == 7004).FirstOrDefault();
+
+                            string cbId = "cbAttempt_" + Detailitem.LMSWeekDetailID;
+                            if (Model.LMSWeekDetailAttemptObj == null)
+                            {
+                                LMSWeekDetailAttempt Obj = new LMSWeekDetailAttempt();
+                                Obj.IsAttempt = false;
+                                Model.LMSWeekDetailAttemptObj = Obj;
+                                @Html.CheckBoxFor(Model => Model.LMSWeekDetailAttemptObj.IsAttempt , new { onclick = string.Format("StudentAttemptDone({0},{1},{2},{3})", Detailitem.LMSWeekDetailID, Detailitem.LMSWeekID, Detailitem.WeekListTypeID, Obj.LMSWeekDetailAttemptID), @class = "checkbox-inline", @style = "width:20px;height:20px", @id= cbId })<label style="text-align:center;margin-left:10px">Submit</label>
+                            }
+                            else
+                            {
+                                if (Model.LMSWeekDetailAttemptObj.IsAttempt == true)
+                                {
+                                    @Html.CheckBoxFor(Model => Model.LMSWeekDetailAttemptObj.IsAttempt, new { onclick = string.Format("StudentAttemptDone({0},{1},{2},{3})", Detailitem.LMSWeekDetailID, Detailitem.LMSWeekID, Detailitem.WeekListTypeID, Model.LMSWeekDetailAttemptObj.LMSWeekDetailAttemptID), @class = "checkbox-inline", @style = "width:20px;height:20px", @id = cbId , @disabled = "disabled" })<label style="text-align:center;margin-left:10px">Submit</label>
+                                }
+                                else
+                                {
+                                    @Html.CheckBoxFor(Model => Model.LMSWeekDetailAttemptObj.IsAttempt, new { onclick = string.Format("StudentAttemptDone({0},{1},{2},{3})", Detailitem.LMSWeekDetailID, Detailitem.LMSWeekID, Detailitem.WeekListTypeID, Model.LMSWeekDetailAttemptObj.LMSWeekDetailAttemptID), @class = "checkbox-inline", @style = "width:20px;height:20px", @id = cbId })<label style="text-align:center;margin-left:10px">Submit</label>
+                                }
+
+
+                            }
+                        } 
+      
+                              
+                    </div>
+                    <input name="LMSSubjectLearningID" value="@ViewBag.LMSSubjectLearningID" type="hidden" id="LMSSubjectLearningID" />
+                    <input name="LSTitle" value="@ViewBag.LSTitle" type="hidden" id="LSTitle" />
+                }
+
+            </div>
+
+        </div>
+        i++;
+    }
+
+
+</div>
+
+<script>
+    $('b').on('click', fav);
+
+    function fav(e) {
+        $('.fa').toggleClass('fa-angle-right');
+    }
+
+    function StudentAttemptDone(LMSWeekDetailID, LMSWeekID, WeekListTypeID, LMSWeekDetailAttemptID) {
+        var cbAttemptId = "#cbAttempt_" + LMSWeekDetailID;
+        var cbattempt = $(cbAttemptId).val();
+        var IsChecked = false;
+        if ($(cbAttemptId).is(':checked')) {
+            IsChecked = true;
+            $(cbAttemptId).attr("disabled", true);
+            
+        }
+        else {
+            IsChecked = false;
+        }
+        
+       // alert("Fnction Called" + LMSWeekDetailID + "= " + LMSWeekID + "= " + WeekListTypeID + "=" + LMSWeekDetailAttemptID);
+
+        $.ajax({
+            url: "@Url.Content("~/LmsStudentActiveCourses/StudentAttemptDone")",
+            type: 'POST',
+        datatype: 'application/json',
+        contentType: 'application/json',
+        async: false,
+        data: JSON.stringify({ LMSWeekDetailID: +LMSWeekDetailID, LMSWeekID: +LMSWeekID, WeekListTypeID: +WeekListTypeID, LMSWeekDetailAttemptID: +LMSWeekDetailAttemptID, IsChecked: +IsChecked }),
+        success: function (result) {
+            //  var countLocal = 0;
+
+            // alert(result.responseText);
+        },
+        error: function (ex) {
+            alert(ex.error);
+        },
+        });
+    }
+</script>

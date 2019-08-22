@@ -2,7 +2,7 @@
 @using CampusManagement.Models
 @{
     ViewBag.Title = "Students Enrollment";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
@@ -21,6 +21,7 @@
     {
         Html.RenderPartial("Create", new CampusManagement.Models.StudentProgramEnrollment());
     }
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
 }
 
 <table class="table">
@@ -45,11 +46,9 @@
         <tr>
             <td>
                 @{
-                    ModelCMSContainer dbc = new ModelCMSContainer();
                     Student student = dbc.Students.FirstOrDefault(s => s.StudentID == item.StudentID);
                     GetBatchProgramNameConcat_Result dv = dbc.GetBatchProgramNameConcat(student.FormNo, 6).FirstOrDefault();
                     string StudentName = string.Concat(student.FirstName, " ", student.LastName);
-                    string adate = item.AdmissionDate.Value.ToShortDateString();
                 }
                 @Html.Raw(StudentName)
             </td>
@@ -57,7 +56,7 @@
                 @Html.Raw(dv.Name)
             </td>
             <td>
-                @Html.Raw(adate)
+                @Html.DisplayFor(modelItem => item.AdmissionDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsActive)
@@ -73,8 +72,8 @@
 @section Scripts {
     <script>
             $(document).ready(function () {
-                $("#AdmissionDate").mask("99/99/9999");
-                $("#DegreeCompletionDate").mask("99/99/9999");
+                //$("#AdmissionDate").mask("99/99/9999");
+                //$("#DegreeCompletionDate").mask("99/99/9999");
                 $("#DegreeCompleted").val("No");
                 GetStudentsList();
             });

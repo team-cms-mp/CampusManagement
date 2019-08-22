@@ -1,0 +1,264 @@
+﻿@model CampusManagement.Models.GetStudentServicesAccumulate_ResultsViewModel
+@{
+    ViewBag.Title = "Student Services Accumulate";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<div>
+    <a href="/Finance/Invoicing" class="btn btn-primary pull-right">Back</a>
+</div>
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+@{
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Search", new CampusManagement.Models.Challan());
+    }
+
+    int i = 1;
+       
+
+}
+
+<hr style="border-top: 1px solid #6d9b90;" />
+@Html.Partial("_MessageViewTempData")
+
+@using (Html.BeginForm("GenerateChallansAccumulate", "StudentServices", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <table class="table">
+        <tr>
+            <th>Form #</th>
+            <th>Student Name</th>
+            <th>Status</th>
+            <th>Amount</th>
+            <th>Program</th>
+            <th>Session</th>
+            <th>Actions</th>
+            <th><input type="checkbox" value="Yes" name="chkSelectAll" id="chkSelectAll" /></th>
+        </tr>
+        @foreach (var item in Model.GetStudentServicesAccumulate_Results)
+        {
+            string chkGenerateChallan = "chkGenerateChallan_" + i;
+            string StudentID = "StudentID_" + i;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentName)
+                </td>
+              
+                <td style="width:20%;">
+                    @{
+                        if (item.StatusName == "Pending")
+                        {
+                            <span style="color:red;font-weight:bold">@item.StatusName</span>
+                        }
+                        else if (item.StatusName == "Approved")
+                        {
+                            <span style="color:blue;font-weight:bold">@item.StatusName</span>
+                        }
+                        else if (item.StatusName == "Challan Generated")
+                        {
+                            <span style="color:forestgreen;font-weight:bold">@item.StatusName</span>
+                        }
+                    }
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ComputedAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProgramName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BatchName)
+                </td>
+                <td>
+                    @Html.ActionLink("Services Detail", "SingleStudentServicesApproval", "StudentServices", new { StudentID = item.StudentID }, null)
+                </td>
+                <td>
+                    @{
+                        if (item.StatusName == "Approved")
+                        {
+                            <input type="checkbox" value="Yes" name="@chkGenerateChallan" id="@chkGenerateChallan" class="dummyClass" />
+                        }
+                    }
+                    <input type="hidden" value="@item.StudentID" name="@StudentID" id="@StudentID" />
+                </td>
+
+            </tr>
+            i++;
+        }
+
+    </table>
+    <hr style="border-top: 1px solid #6d9b90;" />
+
+    <input type="hidden" id="hdnCount" name="hdnCount" value="@Model.GetStudentServicesAccumulate_Results.Count()" />
+    if (Model.GetStudentServicesAccumulate_Results.Count() > 0)
+    {
+        <div class="row">
+            <h2><span class="col-sm-12">Generate Challans</span></h2>
+        </div>
+        <hr style="border-top: 1px solid #6d9b90;" />
+
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="IssueDate" class="control-label">Issue Date</label>
+                <input type="date" class="form-control"  onload="getDate() " id="IssueDate" name="IssueDate"  required/>
+            </div>
+            <div class="col-sm-3">
+                <label for="LastDate" class="control-label">Last Date</label>
+                <input id="LastDate" name="LastDate" type="date" class="form-control" required />
+            </div>
+            <div class="col-sm-6">
+                <label for="AccountID" class="control-label">Account</label>
+                <select id="AccountID" name="AccountID" class="form-control"></select>
+            </div>
+        </div>
+        <input type="hidden" id="hdnBatchID" name="hdnBatchID" value="@ViewBag.hdnBatchID" />
+        <input type="hidden" id="hdnBatchProgramID" name="hdnBatchProgramID" value="@ViewBag.hdnBatchProgramID" />
+        <input type="hidden" id="hdnYearSemesterNo" name="hdnYearSemesterNo" value="1" />
+        <br />
+        <div class="row">
+            <div class="col-sm-5">
+                <input type="submit" value="Generate Challans" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+}
+<input type="hidden" id="hdnBatchID" name="hdnBatchID" value="@ViewBag.hdnBatchID" />
+<input type="hidden" id="hdnBatchProgramID" name="hdnBatchProgramID" value="@ViewBag.hdnBatchProgramID" />
+<input type="hidden" id="hdnYearSemesterNo" name="hdnYearSemesterNo" value="@ViewBag.hdnYearSemesterNo" />
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            SelectAllCheckboxes();
+            GetBankAccounts();
+            GetActiveBatches();
+            GetPrograms_by_FacultyLevelBatch();
+            $("#BatchProgramID").val(@ViewBag.hdnBatchProgramID);
+            GetBatchProgramSemesterList();
+            $("#YearSemesterNo").val(@ViewBag.hdnYearSemesterNo);
+
+            $("#BatchID").change(function () {
+                GetPrograms_by_FacultyLevelBatch();
+                $("#BatchProgramID").val(@ViewBag.hdnBatchProgramID);
+                GetBatchProgramSemesterList();
+                $("#YearSemesterNo").val(@ViewBag.hdnYearSemesterNo);
+            });
+
+            $("#BatchProgramID").change(function () {
+                GetBatchProgramSemesterList();
+                $("#YearSemesterNo").val(@ViewBag.hdnYearSemesterNo);
+            });
+        });
+
+        function GetBatchProgramSemesterList() {
+            var BatchProgramID = $("#BatchProgramID").val();
+            $.ajax({
+                url: "@Url.Content("~/StudentServices/GetBatchProgramSemesterList")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ BatchProgramID: +BatchProgramID }),
+                success: function (result) {
+                    $("#YearSemesterNo").html("");
+                    $("#YearSemesterNo").append($('<option></option>').val("0").html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#YearSemesterNo").append($('<option></option>').val(sem.YearSemesterNo).html(sem.YearSemesterNo));
+                    });
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                }
+            });
+        }
+
+        function GetPrograms_by_FacultyLevelBatch() {
+
+            var BatchID = $("#BatchID").val();
+            $.ajax({
+                url: "@Url.Content("~/StudentServices/GetPrograms_by_FacultyLevelBatch")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ BatchID: +BatchID }),
+                success: function (result) {
+                    $("#BatchProgramID").html("");
+                    $("#BatchProgramID").append($('<option></option>').val("0").html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#BatchProgramID").append($('<option></option>').val(sem.BatchProgramID).html(sem.ProgramName));
+                    });
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                }
+            });
+        }
+
+        function GetActiveBatches() {
+            $.ajax({
+                url: "@Url.Content("~/StudentServices/GetActiveBatches")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                success: function (result) {
+                    $("#BatchID").html("");
+                    $("#BatchID").append($('<option></option>').val("0").html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#BatchID").append($('<option></option>').val(sem.BatchID).html(sem.BatchName));
+                    });
+
+                    if ("@ViewBag.hdnBatchID" != "") {
+                        $("#BatchID").val("@ViewBag.hdnBatchID");
+                    }
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                }
+            });
+        }
+
+        function GetBankAccounts() {
+            $.ajax({
+                url: "@Url.Content("~/StudentServices/GetBankAccounts")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                success: function (result) {
+                    $("#AccountID").html("");
+                    $("#AccountID").append($('<option></option>').val("0").html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#AccountID").append($('<option></option>').val(sem.Account_ID).html(sem.Account_No));
+                    });
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                }
+            });
+        }
+
+        function SelectAllCheckboxes()
+        {
+            $("#chkSelectAll").change(function () {
+                var chkAttr = $("#chkSelectAll").prop("checked");
+                if (chkAttr == true) {
+                    $(".dummyClass").prop("checked", true);
+                }
+                else {
+                    $(".dummyClass").prop("checked", false);
+                }
+            });
+        }
+
+    </script>
+}
+

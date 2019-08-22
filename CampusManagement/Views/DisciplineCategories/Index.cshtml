@@ -1,0 +1,75 @@
+﻿@model CampusManagement.Models.DisciplineCategoryViewModel
+
+@{
+    ViewBag.Title = "DisciplineCategories";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedDisciplineCategory != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedDisciplineCategory);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedDisciplineCategory);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.DisciplineCategory());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDisciplineCategory.DisciplineCategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDisciplineCategory.DisciplineType.DisciplineTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDisciplineCategory.DisciplineSeverityLevel.DisciplineSeverityLevelName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDisciplineCategory.Punishment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDisciplineCategory.PointWeightage)
+        </th>
+        
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.DisciplineCategories)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisciplineCategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisciplineType.DisciplineTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisciplineSeverityLevel.DisciplineSeverityLevelName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Punishment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PointWeightage)
+        </td>
+       
+        
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.DisciplineCategoryID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.DisciplineCategoryID })
+        </td>
+    </tr>
+    }
+
+</table>

@@ -1,0 +1,29 @@
+﻿@model CampusManagement.Models.ScholarshipApplicantDocument
+
+<h4 class="alert alert-info">Are you sure you want to delete this?</h4>
+<input id="ScholarshipApplicantID" name="ScholarshipApplicantID" value="@ViewBag.ScholarshipApplicantID" type="hidden" />
+<input id="ScholarshipDocumentID" name="ScholarshipDocumentID" value="@ViewBag.ScholarshipDocumentID" type="hidden" />
+<input id="ScholarshipOpportunitiesID" name="ScholarshipOpportunitiesID" value="@ViewBag.ScholarshipOpportunitiesID" type="hidden" />
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.DocumentPath)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DocumentPath)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-primary" />
+            <a href="@Url.Content("~/ScholarshipStudentApply/UploadDocuments?")ScholarshipApplicantID=@ViewBag.ScholarshipApplicantID&ScholarshipDocumentID=@ViewBag.ScholarshipDocumentID&ScholarshipOpportunitiesID=@ViewBag.ScholarshipOpportunitiesID" class="btn btn-primary">Cancel</a>
+            <a href="@Url.Content("~/ScholarshipStudentApply/Index/")@ViewBag.ScholarshipOpportunitiesID" class="btn btn-primary">Back</a>
+        </div>
+
+    }
+</div>

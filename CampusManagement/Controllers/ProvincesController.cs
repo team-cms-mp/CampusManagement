@@ -12,15 +12,15 @@ using CampusManagement.Models;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
+    [Authorize]
     public class ProvincesController : Controller
     {
-        private ModelCMSContainer db = new ModelCMSContainer();
+        private ModelCMSNewContainer db = new ModelCMSNewContainer();
         ProvincesViewModel model = new ProvincesViewModel();
 
         public ActionResult Index()
         {
-            model.Provinces = db.Provinces.OrderByDescending(a => a.ProvinceID).ToList();
+            model.Provinces = db.GetProvinces("").OrderByDescending(a => a.ProvinceID).ToList();
             model.SelectedProvince = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
@@ -33,7 +33,7 @@ namespace CampusManagement.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            model.Provinces = db.Provinces.OrderByDescending(a => a.ProvinceID).ToList();
+            model.Provinces = db.GetProvinces("").OrderByDescending(a => a.ProvinceID).ToList();
             model.SelectedProvince = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
@@ -70,9 +70,9 @@ namespace CampusManagement.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Province Name is already exists.");
+                    ModelState.AddModelError(string.Empty, "Province Name already exists.");
                     ViewBag.MessageType = "error";
-                    ViewBag.Message = "Province Name is already exists.";
+                    ViewBag.Message = "Province Name already exists.";
                 }
             }
             catch (DbEntityValidationException ex)
@@ -92,7 +92,7 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.Provinces = db.Provinces.OrderByDescending(a => a.ProvinceID).ToList();
+            model.Provinces = db.GetProvinces("").OrderByDescending(a => a.ProvinceID).ToList();
             model.SelectedProvince = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", province.IsActive);
@@ -108,13 +108,13 @@ namespace CampusManagement.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Province province = db.Provinces.Find(id);
+            GetProvinces_Result province = db.GetProvinces("").FirstOrDefault(x=>x.ProvinceID == id);
             if (province == null)
             {
                 return HttpNotFound();
             }
 
-            model.Provinces = db.Provinces.OrderByDescending(a => a.ProvinceID).ToList();
+            model.Provinces = db.GetProvinces("").OrderByDescending(a => a.ProvinceID).ToList();
             model.SelectedProvince = province;
             model.DisplayMode = "ReadWrite";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", province.IsActive);
@@ -163,7 +163,7 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.Provinces = db.Provinces.OrderByDescending(a => a.ProvinceID).ToList();
+            model.Provinces = db.GetProvinces("").OrderByDescending(a => a.ProvinceID).ToList();
             model.SelectedProvince = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", province.IsActive);
@@ -178,13 +178,13 @@ namespace CampusManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Province province = db.Provinces.Find(id);
+            GetProvinces_Result province = db.GetProvinces("").FirstOrDefault(x => x.ProvinceID == id);
             if (province == null)
             {
                 return HttpNotFound();
             }
 
-            model.Provinces = db.Provinces.OrderByDescending(a => a.ProvinceID).ToList();
+            model.Provinces = db.GetProvinces("").OrderByDescending(a => a.ProvinceID).ToList();
             model.SelectedProvince = province;
             model.DisplayMode = "Delete";
             ViewBag.MessageType = "";
@@ -210,7 +210,7 @@ namespace CampusManagement.Controllers
                 ViewBag.Message = ex.Message;
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
-            model.Provinces = db.Provinces.OrderByDescending(a => a.ProvinceID).ToList();
+            model.Provinces = db.GetProvinces("").OrderByDescending(a => a.ProvinceID).ToList();
             model.SelectedProvince = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");

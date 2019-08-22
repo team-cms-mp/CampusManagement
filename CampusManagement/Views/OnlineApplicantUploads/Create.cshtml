@@ -1,0 +1,84 @@
+﻿@model CampusManagement.Models.ApplicantUpload
+@using CampusManagement.Models
+@using (Html.BeginForm("Create", "OnlineApplicantUploads", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+    string FormNo = "";
+    if (ViewBag.FormNo != null)
+    {
+        FormNo = ViewBag.FormNo.ToString();
+    }
+    <div>
+</div>
+    <div class="row">
+        <h2><span class="col-sm-12">Supporting Documents</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+        <div class="col-sm-3" style="display:none">
+            @Html.LabelFor(model => model.FormNo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FormNo, new { htmlAttributes = new { @class = "form-control", @value=FormNo } })
+            @Html.ValidationMessageFor(model => model.FormNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4">
+            @Html.LabelFor(model => model.DocumentName, htmlAttributes: new { @class = "control-label" })
+            @*@Html.EditorFor(model => model.DocumentName, new { htmlAttributes = new { @class = "form-control" } })*@
+            @Html.DropDownList("DocumentName", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DocumentName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4" style="display:none">
+            @Html.LabelFor(model => model.UploadPath, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.UploadPath, new { @class = "form-control", Type = "text" })
+            @Html.ValidationMessageFor(model => model.UploadPath, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4">
+            @Html.LabelFor(model => model.ApplicantUploadFile, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.ApplicantUploadFile, new { @class = "form-control", Type = "File", onchange = "readURL(this);" })
+            @Html.ValidationMessageFor(model => model.ApplicantUploadFile, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4">
+            <label for="imgView" class="control-label"></label>
+            <img id="imgView" src="@Url.Content("~/DegreeDocument/noimage.png")" style="width:70px;height:70px;border-radius:10px;" />
+            
+        </div>
+    </div>
+    <br />
+    <input type="submit" value="Save" class="btn btn-primary" />
+    @*Applicant ap = dbc.Applicants.FirstOrDefault(a => a.FormNo == FormNo);
+    if (ap != null)
+    {
+        Status s = dbc.Status.FirstOrDefault(st => st.StatusID == ap.StatusID);
+        if (s.StatusName == "Pending")
+        {
+            <div class="row">
+                <div class="col-sm-3">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+        }
+    }*@
+}
+
+<script>
+    $(document).ready(function () {
+        $("#tab5").css("background", "#eee");
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#imgView')
+                    .attr('src', e.target.result)
+                    .width(70)
+                    .height(70);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

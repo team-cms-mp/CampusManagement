@@ -1,0 +1,60 @@
+﻿@using CampusManagement.Models
+@{
+    ViewBag.Title = "Active Exam";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<div class="row">
+    <h2><span class="col-sm-12">Exam List</span></h2>
+</div>
+@{
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+    List<Exam> ExamList = new List<Exam>();
+    ExamList = dbc.Exams.OrderByDescending(a => a.ExamID).ToList();
+}
+
+ @if (ExamList.Count > 0)
+    {
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => ExamList[0].ExamTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => ExamList[0].IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in ExamList)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ExamTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td> 
+                @Html.ActionLink("Create DateSheet", "CreateDateSheet", "GeneraterDateSheet", new { ExamID = item.ExamID }, null) |
+                @Html.ActionLink("View DateSheet", "IndexDateSheet", "GeneraterDateSheet", new { ExamID = item.ExamID }, null) | 
+                
+                @if (item.IsDateSheetApproved == 1)
+                {
+                    <span style="color:green">Approved</span>
+                 }
+                 else
+                 {
+                 @Html.ActionLink("Approve", "ApproveDateSheet", "GeneraterDateSheet", new { ExamID = item.ExamID }, null)
+                 }
+
+                        @* |
+                            @Html.ActionLink("Room Dispatch", "DateSheetRoomDispatch", "GeneraterDateSheet", new { ExamID = item.ExamID }, null)*@
+
+</td>
+        </tr>
+    }
+</table>
+<hr />
+    }

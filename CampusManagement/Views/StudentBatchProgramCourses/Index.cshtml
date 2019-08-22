@@ -1,13 +1,14 @@
 ﻿@model CampusManagement.Models.StudentBatchProgramCourse
 @using CampusManagement.Models
 @{
-    ViewBag.Title = "Student Course";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ViewBag.Title = "Add/Drop Subjects";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{ 
-    int bpID = ViewBag.hdnBatchProgramID;
-    int ysNo = ViewBag.hdnYearSemesterNo;
+    int? CurrentSemesterNo = 0;
+    int? PreviousSemesterNo = 0;
+    int? NextSemesterNo = 0;
     int StudentID = 0;
     if (ViewBag.StudentID != null)
     {
@@ -15,80 +16,91 @@
     }
 }
 
-@using (Html.BeginForm("Index", "StudentBatchProgramCourses", FormMethod.Post))
+@using (Html.BeginForm("SubmitForSubjectsApproval", "StudentBatchProgramCourses", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     ModelCMSContainer dbCMS = new ModelCMSContainer();
     <div class="row">
-        <h2><span class="col-sm-12">Student Course</span></h2>
+        <h2><span class="col-sm-12">Add/Drop Subjects</span></h2>
     </div>
     <hr style="border-top: 1px solid #6d9b90;" />
     @Html.Partial("_MessageView")
-
-    <div class="row">
-        <div class="col-sm-6">
-            @Html.LabelFor(model => model.BatchProgramID, htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownList("BatchProgramID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.BatchProgramID, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.YearSemesterNo, htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownList("YearSemesterNo", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.YearSemesterNo, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-9">
-            <label for="searchValue" class="control-label">Student Search</label>
-            <input id="searchValue" class="form-control" />
-            <input id="StudentID" name="StudentID" class="form-control" type="hidden" />
-        </div>
-    </div>
-        if(StudentID > 0)
-        { 
-        <br />
-        <div class="row">
-            <div class="col-sm-6">
-                @Html.LabelFor(model => model.BatchProgramID, htmlAttributes: new { @class = "control-label" })
-                <label >Student ID</label>
-                @Html.DropDownList("BatchProgramID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.BatchProgramID, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-sm-3">
-                @Html.LabelFor(model => model.YearSemesterNo, htmlAttributes: new { @class = "control-label" })
-                @Html.DropDownList("YearSemesterNo", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.YearSemesterNo, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-sm-9">
-                <label for="searchValue" class="control-label">Student Search</label>
-                <input id="searchValue" class="form-control" />
-                <input id="StudentID" name="StudentID" class="form-control" type="hidden" />
-            </div>
-        </div>
-        }
+        
     <br />
-    <div class="row">
+    <div class="row" style="display:none;">
         <div class="col-sm-5">
-            <input type="submit" value="Search" class="btn btn-success" />
-            <a href="@Url.Content("~/StudentBatchProgramCourses/Index")" class="btn btn-success">Refresh</a>
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <a href="@Url.Content("~/StudentBatchProgramCourses/Index")" class="btn btn-primary">Refresh</a>
         </div>
     </div>
     <br />
+    <div>
+        <h3>Student Information</h3>
+    </div>
+    <div style="border:1px solid #ddd;  padding:5px;">
+    @{
+        Student st = dbCMS.Students.FirstOrDefault(a => a.StudentID == StudentID);
+        if(st != null)
+        { 
+            <label>Student Name</label> 
+            <span>@st.FirstName @st.LastName</span>
+            <label>Status</label>
+            <span>@st.Status.StatusName</span>
+            <label>Email</label>
+            <span>@st.Email</span>
+            <label>CNIC</label>
+            <span>@st.ACNIC</span>
+            <label>Cell #</label>
+            <span>@st.CellNo</span>
+            <label>Current Semester #</label>
+            <span>@st.CurrentSemesterNo</span>
+            CurrentSemesterNo = st.CurrentSemesterNo;
+            NextSemesterNo = st.CurrentSemesterNo + 1;
+            PreviousSemesterNo = st.CurrentSemesterNo - 1;
+            <input id="YearSemesterNo" name="YearSemesterNo" value="@st.CurrentSemesterNo" class="form-control" type="hidden" />
+            <input id="BatchProgramID" name="BatchProgramID" value="@st.BatchProgramID" class="form-control" type="hidden" />
+            <input id="StudentID" name="StudentID" value="@st.StudentID" class="form-control" type="hidden" />
+        }
+    }
+
+       
+    </div>
+
+        // Current Semester Subjects
     <div class="row">
         <div class="col-sm-6">
-            <h4><span class="control-label">All Courses</span></h4>
+            <h4><span class="control-label">Current Semester Subjects</span></h4>
             <table class="table">
                 <tr>
-                    <th>Course</th>
+                    <th>Subject</th>
+                    <th>Credit Hours</th>
+                    <th>Semester</th>
                     <th>Action</th>
                 </tr>
+               
                 @{
-                    foreach (var item in dbCMS.BatchProgramCourses.Where(bpc => bpc.BatchProgramID == bpID && bpc.YearSemesterNo == ysNo).ToList())
+                    List<GetStudentBatchProgramCourse_Result> lstGetStudentBatchProgramCourse = new List<GetStudentBatchProgramCourse_Result>();
+                    lstGetStudentBatchProgramCourse = dbCMS.GetStudentBatchProgramCourse(st.BatchProgramID, CurrentSemesterNo, StudentID, 0).ToList();
+                    foreach (var item in lstGetStudentBatchProgramCourse)
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Course.CourseName)
+                                @Html.DisplayFor(modelItem => item.CourseName)
                             </td>
                             <td>
-                                @Html.ActionLink("Assign", "Assign", new { id = item.ProgramCourseID, sID = StudentID })
+                                @Html.DisplayFor(modelItem => item.CreditHours)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.YearSemesterNo)
+                            </td>
+                            <td>
+                                @if (CurrentSemesterNo > 1)
+                                {
+                            if (item.StatusName == "Promoted")
+                            {
+                                @Html.ActionLink("Add", "Assign", new { id = item.ProgramCourseID, sID = StudentID, YearSemesterNo = CurrentSemesterNo })
+                                    }
+                        }
                             </td>
                         </tr>
                     }
@@ -96,101 +108,131 @@
             </table>
         </div>
         <div class="col-sm-6">
-            <h4><span class="control-label">Avail Courses</span></h4>
+            <h4><span class="control-label">Availed Subjects</span></h4>
             <table class="table">
                 <tr>
-                    <th>Course</th>
+                    <th>Subject</th>
+                    <th>Credit Hours</th>
+                    <th>Semester</th>
                     <th>Action</th>
                 </tr>
                 @{
-                    List<StudentBatchProgramCourse> lstSBP = new List<StudentBatchProgramCourse>();
-                    if(StudentID > 0)
+                    List<GetStudentBatchProgramCourse_Result> lstSBP = new List<GetStudentBatchProgramCourse_Result>();
+                    if (StudentID > 0)
                     {
-                        lstSBP = dbCMS.StudentBatchProgramCourses.Where(bpc => bpc.BatchProgramID == bpID && bpc.YearSemesterNo == ysNo && bpc.StudentID == StudentID).ToList();
-                    }
-                    else
-                    {
-                        lstSBP = dbCMS.StudentBatchProgramCourses.Where(bpc => bpc.BatchProgramID == bpID && bpc.YearSemesterNo == ysNo).ToList();
+                        lstSBP = dbCMS.GetStudentBatchProgramCourse(st.BatchProgramID, CurrentSemesterNo, StudentID, 1).ToList();
                     }
 
                     foreach (var item in lstSBP)
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Course.CourseName)
+                                @Html.DisplayFor(modelItem => item.CourseName)
                             </td>
                             <td>
-                                @Html.ActionLink("Unassign", "Unassign", new { id = item.StudentBatchProgramCourseID, sID = StudentID })
+                                @Html.DisplayFor(modelItem => item.CreditHours)
                             </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.YearSemesterNo)
+                            </td>
+                            <td>
+                                @if (CurrentSemesterNo > 1)
+                                {
+                                    if (item.StatusName == "Promoted")
+                                    {
+                                        @Html.ActionLink("Drop", "Unassign", new { id = item.StudentBatchProgramCourseID, sID = StudentID })
+                                    }
+                                }
+                            </td>
+
                         </tr>
                     }
                 }
             </table>
         </div>
     </div>
-}
-
-<input type="hidden" name="hdnBatchProgramID" value="@ViewBag.hdnBatchProgramID" />
-<input type="hidden" name="hdnYearSemesterNo" value="@ViewBag.hdnYearSemesterNo" />
-
-@section Scripts {
-<script>
-        $(document).ready(function () {
-            GetBatchProgramSemesterList();
-            GetStudentsList();
-            $("#BatchProgramID").change(function () {
-                GetBatchProgramSemesterList();
-            });
-        });
-
-        function GetBatchProgramSemesterList() {
-            var BatchProgramID = $("#BatchProgramID").val();
-            $.ajax({
-                url: "@Url.Content("~/StudentBatchProgramCourses/GetBatchProgramSemesterList")",
-                type: 'POST',
-                datatype: 'application/json',
-                contentType: 'application/json',
-                async: false,
-                data: JSON.stringify({ BatchProgramID: + BatchProgramID }),
-                success: function (result) {
-                    $("#YearSemesterNo").html("");
-                    $.each($.parseJSON(result), function (i, sem) {
-                        $("#YearSemesterNo").append($('<option></option>').val(sem.YearSemesterNo).html(sem.YearSemesterNo));
-                    });
-                },
-                error: function (ex) {
-                    alert(ex.error);
-                },
-            });
-        }
-
-            function GetStudentsList() {
-                $("#searchValue").autocomplete({
-                    source: function (request, response) {
-                        $.ajax({
-                            url: "@Url.Content("~/StudentBatchProgramCourses/GetStudentsList")",
-                            datatype: 'json',
-                            data: { searchValue: $("#searchValue").val(), BatchProgramID: $("#BatchProgramID").val() },
-                            success: function (data) {
-                                response($.map($.parseJSON(data), function (item) {
-                                    return {
-                                        label: item.Name,
-                                        value: item.Name
-                                    };
-                                }));
-                            },
-                            error: function (xhr, status, error) {
-                                alert(xhr.error);
-                            }
-                        });
-                    },
-                    select: function (event, ui) {
-                        var splitted = ui.item.label.split(":");
-                        $("#StudentID").val(splitted[0]); 
+    <hr style="border-top: 1px solid #6d9b90;" />
+    <input type="submit" value="Submit Availed Subjects" class="btn btn-primary" />
+    <hr style="border-top: 1px solid #6d9b90;" />
+    <div class="row">
+        <div class="col-sm-6">
+            <h4><span class="control-label">Failed Subjects</span></h4>
+            <table class="table">
+                <tr>
+                    <th>Subject</th>
+                    <th>Credit Hours</th>
+                    <th>Semester</th>
+                    <th>Action</th>
+                </tr>
+                @{
+                    if (PreviousSemesterNo > 0)
+                    {
+                        foreach (var item in dbCMS.GetStudentBatchProgramCourse(st.BatchProgramID, PreviousSemesterNo, StudentID, 3).ToList())
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CourseName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreditHours)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.YearSemesterNo)
+                            </td>
+                            <td>
+                                @if (item.StatusName == "Promoted")
+                                {
+                                    @Html.ActionLink("Add", "Assign", new { id = item.ProgramCourseID, sID = StudentID, YearSemesterNo = CurrentSemesterNo })
+                                }
+                            </td>
+                        </tr>
+                        }
                     }
-                });
-            }
-
-</script>
+                }
+            </table>
+        </div>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    <div class="row">
+        <div class="col-sm-6">
+            <h4><span class="control-label">Next Semester Subjects</span></h4>
+            <table class="table">
+                <tr>
+                    <th>Subject</th>
+                    <th>Credit Hours</th>
+                    <th>Semester</th>
+                    <th>Action</th>
+                </tr>
+                @{
+                    if (CurrentSemesterNo > 1)
+                    {
+                        foreach (var item in dbCMS.GetStudentBatchProgramCourse(st.BatchProgramID, NextSemesterNo, StudentID, 2).ToList())
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CourseName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreditHours)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.YearSemesterNo)
+                                </td>
+                                <td>
+                                    @if (item.StatusName == "Promoted")
+                                    {
+                                        @Html.ActionLink("Add", "Assign", new { id = item.ProgramCourseID, sID = StudentID, YearSemesterNo = CurrentSemesterNo })
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+        </div>
+    </div>
+    
 }
+<input type="hidden" id="hdnBatchProgramID" name="hdnBatchProgramID" value="@ViewBag.hdnBatchProgramID" />
+<input type="hidden" id="hdnYearSemesterNo" name="hdnYearSemesterNo" value="@ViewBag.hdnYearSemesterNo" />
 

@@ -1,0 +1,580 @@
+﻿
+<!DOCTYPE html>
+<html>
+@using CampusManagement.Models
+<head>
+
+    <title>4S Campus Connect</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | Dashboard</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <!-- Font Awesome -->
+    @*<link rel="stylesheet" href="@Url.Content("~/assetsNew/dist/css/font-awesome.min.css")">*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="@Url.Content("~/assetsNew/dist/css/ionicons.min.css")">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="@Url.Content("~/assetsNew/dist/css/AdminLTE.min.css")">
+
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="@Url.Content("~/assetsNew/dist/css/skins/_all-skins.min.css")">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="@Url.Content("~/assetsNew/plugins/iCheck/flat/blue.css")">
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="@Url.Content("~/assetsNew/plugins/morris/morris.css")">
+    <!-- jvectormap -->
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="@Url.Content("~/assetsNew/plugins/datepicker/datepicker3.css")">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="@Url.Content("~/assetsNew/plugins/daterangepicker/daterangepicker.css")">
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="@Url.Content("~/assetsNew/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assetsNew/bootstrap/css/bootstrap.min.css")">
+
+    <script src="@Url.Content("~/assetsNew/plugins/jQuery/jquery-2.2.3.min.js")"></script>
+    <script src="@Url.Content("~/assetsNew/plugins/sparkline/jquery.sparkline.min.js")"></script>
+    <!-- jvectormap -->
+    <script src="@Url.Content("~/assetsNew/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js")"></script>
+    <script src="@Url.Content("~/assetsNew/plugins/jvectormap/jquery-jvectormap-world-mill-en.js")"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="@Url.Content("~/assetsNew/plugins/knob/jquery.knob.js")"></script>
+    <script src="@Url.Content("~/assetsNew/plugins/slimScroll/jquery.slimscroll.min.js")"></script>
+    <link rel="stylesheet" href="@Url.Content("~/assetsNew/plugins/jvectormap/jquery-jvectormap-1.2.2.css")">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.10.0/adapters/jquery.js"></script>
+    <script type="text/javascript" src="@Url.Content("~/assetsNew/dist/js/jquery.session.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/assetsNew/dist/js/jquery.session.js")"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery.session@1.0.0/package.json"></script>
+
+
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini" style="font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
+    <div class="wrapper">
+
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="index2.html" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b></b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b></b></span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" style="height: 2em;">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <div class="navbar-custom-menu">
+
+                    <ul class="nav navbar-nav">
+                        @{
+                            if (Session["UserName"] != null)
+                            {
+                                <li class="dropdown messages-menu">
+                                    <a href="@Url.Action("Index", "Home")" title="Home">
+                                        <i class="fa fa-home" style="font-size: x-large;"></i>
+                                    </a>
+                                    
+                                </li>
+
+                                <li class="dropdown user user-menu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        @*<i class="fa fa-user"   style="font-size: x-large;"></i>*@
+                                        <img src="~/assetsNew/dist/img/avatar5.png" class="user-image" alt="User Image">
+                                        <span class="hidden-xs"> @Session["UserName"]</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <!-- User image -->
+                                        <li class="user-header">
+                                            <img src="~/assetsNew/dist/img/avatar5.png" class="img-circle" alt="User Image">
+                                            <p>
+                                                @Session["UserName"]
+                                                <small>@Session["Designation"]</small>
+                                            </p>
+                                        </li>
+                                        <!-- Menu Body -->
+                                        
+                                        <!-- Menu Footer-->
+                                        <li class="user-footer">
+                                            <div class="pull-left">
+                                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                            </div>
+                                            <div class="pull-right">
+                                                <a href="@Url.Action("SignOut", "Home")" class="btn btn-default btn-flat">Sign out</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                                </li>
+                            }
+                            else if (Session["UserNameApplicant"] != null)
+                            {
+                                <li class="dropdown messages-menu">
+                                    <a href="@Url.Action("Index", "Home")" title="Home">
+                                        <i class="fa fa-home" style="font-size: x-large;"></i>
+                                    </a>
+                                </li>
+                                <li class="dropdown user user-menu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-user" style="font-size: x-large;"></i>
+                                        <span class="hidden-xs">&nbsp; @Session["UserNameApplicant"]</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <!-- User image -->
+                                        <li class="user-header">
+                                            <p>
+                                                @Session["UserNameApplicant"]
+                                            </p>
+                                        </li>
+                                        <!-- Menu Body -->
+                                        <!-- Menu Footer-->
+                                        <li class="user-footer">
+                                            <div class="pull-left">
+                                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                            </div>
+                                            <div class="pull-right">
+                                                <a href="@Url.Action("SignOut", "Home")" class="btn btn-default btn-flat">Sign out</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="dropdown messages-menu">
+                                    <a href="@Url.Action("Index", "Home")" title="Home">
+                                        <i class="fa fa-home" style="font-size: x-large;"></i>
+                                    </a>
+                                </li>
+                                <li class="dropdown messages-menu">
+                                    <a href="@Url.Action("Login2", "Home")" title="Login">
+                                        <i class="fa fa-sign-in" style="font-size: x-large;"></i>
+                                    </a>
+                                </li>
+                                <li class="dropdown messages-menu">
+                                    <a href="@Url.Action("RegisterApplicant", "Home")" title="Register">
+                                        <i class="fa fa-user-plus" style="font-size: x-large;"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-toggle="control-sidebar" title="Settings"><i class="fa fa-gears"></i></a>
+                                </li>
+                            }
+                        }
+                    </ul>
+
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="~/assetsNew/dist/img/avatar5.png" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        <p>
+                            @Session["UserName"]
+                        </p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+                <hr />
+
+                <ul class="sidebar-menu">
+                    @{
+                        ModelCMSNewContainer dbm = new ModelCMSNewContainer();
+                        string FormNo = Convert.ToString(Session["FormNo"]);
+                        List<Get_Modules_Result> lstModule = new List<Get_Modules_Result>();
+                        List<Get_Module_Pages_Result> lstPages = new List<Get_Module_Pages_Result>();
+                        List<Get_Module_Pages_Result> lstAllPages = new List<Get_Module_Pages_Result>();
+                        if (Session["emp_id"] != null)
+                        {
+                            if (Session["lstModule"] != null)
+                            {
+                                lstModule = Session["lstModule"] as List<Get_Modules_Result>;
+                            }
+                            else
+                            {
+                                lstModule = dbm.Get_Modules().ToList();
+                                Session["lstModule"] = lstModule;
+                            }
+
+                            if (Session["lstAllPages"] != null)
+                            {
+                                lstAllPages = Session["lstAllPages"] as List<Get_Module_Pages_Result>;
+                            }
+                            else
+                            {
+                                lstAllPages = dbm.Get_Module_Pages(0).ToList();
+                                Session["lstAllPages"] = lstAllPages;
+                            }
+
+                            foreach (var item in lstModule)
+                            {
+                                lstPages = lstAllPages.Where(p => p.Emp_ID == Convert.ToInt32(Session["emp_id"]) && p.Module_ID == item.Module_ID).ToList();
+                                string ModuleName = "p" + item.Module_Name.Replace(" ", "").Replace("/", "").Replace("&", "");
+                                string ImgName = "img" + item.Module_Name.Replace(" ", "").Replace("/", "").Replace("&", "");
+                                if (lstPages.Count > 0)
+                                {
+                                    if (item.Priority == 0)
+                                    {
+                                        <li id="@ModuleName" class="paradummyclass treeview"><a href="#"><i class="fa fa-edit"></i><span>@item.Module_Name</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a></li>
+                                        @*<li><a ><img src="@Url.Content(@item.Module_Icon)" style="width: 1.5em;" align="left" class="imgDummyClass" /> &nbsp; </a> <img id="@ImgName" src="~/assets/img/icons/next1.png" style="width: 1.1em;" align="right" class="imgDummyClass" /></li>*@
+                                    }
+                                    else
+                                    {
+                                        <li id="@ModuleName" class="paradummyclass treeview"><a href="#"><i class="fa fa-laptop"></i><span>@item.Module_Name</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a></li>
+                                        @*<li id="@ModuleName" class="paradummyclass treeview"><a href="#" class="alert-link"><img src="@Url.Content(@item.Module_Icon)" style="width: 1.5em;" align="left" class="imgDummyClass" /> &nbsp;  @item.Module_Name</a> <img id="@ImgName" src="~/assets/img/icons/next1.png" style="width: 1.1em;" align="right" class="imgDummyClass" /></li>*@
+                                    }
+
+                                    ModuleName = "d" + item.Module_Name.Replace(" ", "").Replace("/", "").Replace("&", "");
+                                    <li id="@ModuleName" style="display:none;" class="divdummyclass">
+
+                                        <ul class="treeview-menu" style="display: block;">
+
+
+                                            @foreach (var itemPage in lstPages)
+                                            {
+                                                if (item.Module_Name == "Reports")
+                                                {
+                                                    <li class="subMenudummyclass" id="@itemPage.Page_ID"><a href="@Url.Content(itemPage.Page_URL)" class="alert-link" target="_blank"><i class="fa fa-circle-o"></i> @itemPage.Page_Name</a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="subMenudummyclass" id="@itemPage.Page_ID"><a href="@Url.Content(itemPage.Page_URL)" class="alert-link"><i class="fa fa-circle-o"></i> @itemPage.Page_Name</a></li>
+                                                }
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Url.Action("Index", "Home");
+                        }
+                    }
+                </ul>
+
+
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <div class="content-wrapper">
+            <section class="content">
+                @RenderBody()
+            </section>
+
+        </div>
+
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Create the tabs -->
+            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- Home tab content -->
+                <div class="tab-pane" id="control-sidebar-home-tab">
+                    <h3 class="control-sidebar-heading">Recent Activity</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                                    <p>Will be 23 on April 24th</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                                    <p>New phone +1(800)555-1234</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                                    <p>nora@example.com</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                                    <p>Execution time 5 seconds</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+
+                    <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Custom Template Design
+                                    <span class="label label-danger pull-right">70%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Update Resume
+                                    <span class="label label-success pull-right">95%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Laravel Integration
+                                    <span class="label label-warning pull-right">50%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Back End Framework
+                                    <span class="label label-primary pull-right">68%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+
+                </div>
+                <!-- /.tab-pane -->
+                <!-- Stats tab content -->
+                <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+                <!-- /.tab-pane -->
+                <!-- Settings tab content -->
+                <div class="tab-pane" id="control-sidebar-settings-tab">
+                    <form method="post">
+                        <h3 class="control-sidebar-heading">General Settings</h3>
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                Report panel usage
+                                <input type="checkbox" class="pull-right" checked>
+                            </label>
+
+                            <p>
+                                Some information about this general settings option
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                Allow mail redirect
+                                <input type="checkbox" class="pull-right" checked>
+                            </label>
+
+                            <p>
+                                Other sets of options are available
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                Expose author name in posts
+                                <input type="checkbox" class="pull-right" checked>
+                            </label>
+
+                            <p>
+                                Allow the user to show his name in blog posts
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                Show me as online
+                                <input type="checkbox" class="pull-right" checked>
+                            </label>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                Turn off notifications
+                                <input type="checkbox" class="pull-right">
+                            </label>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                Delete chat history
+                                <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                            </label>
+                        </div>
+                        <!-- /.form-group -->
+                    </form>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+        </aside>
+
+    </div>
+
+
+
+
+    <!-- jQuery UI 1.11.4 -->
+    <script src="@Url.Content("~/assetsNew/dist/js/jquery-ui.min.js")"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+  $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <!-- Bootstrap 3.3.6 -->
+    @*<script src="@Url.Content("~/assetsNew/bootstrap/js/bootstrap.min.js")"></script>*@
+    <!-- Morris.js charts -->
+    <script src="@Url.Content("~/assetsNew/dist/js/raphael-min.js")"></script>
+    @*<script src="@Url.Content("~/assetsNew/plugins/morris/morris.min.js")"></script>*@
+    <!-- Sparkline -->
+    <!-- daterangepicker -->
+    <script src="@Url.Content("~/assetsNew/dist/js/moment.min.js")"></script>
+    <script src="@Url.Content("~/assetsNew/plugins/daterangepicker/daterangepicker.js")"></script>
+    <!-- datepicker -->
+    <script src="@Url.Content("~/assetsNew/plugins/datepicker/bootstrap-datepicker.js")"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src="@Url.Content("~/assetsNew/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js")"></script>
+    <!-- Slimscroll -->
+    <!-- FastClick -->
+    <script src="@Url.Content("~/assetsNew/plugins/fastclick/fastclick.js")"></script>
+    <!-- AdminLTE App -->
+    <script src="@Url.Content("~/assetsNew/dist/js/app.min.js")"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    @*<script src="@Url.Content("~/assetsNew/dist/js/pages/dashboard.js")"></script>*@
+    <!-- AdminLTE for demo purposes -->
+    <script src="@Url.Content("~/assetsNew/dist/js/demo.js")"></script>
+
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $(this).toggleClass('active');
+
+            });
+            CollapseMenus();
+        });
+
+
+        function CollapseMenus() {
+
+            var pMenus = $(".paradummyclass");
+            var divMenus = $(".divdummyclass");
+            var imgDummyClass = $(".imgDummyClass");
+            var subMenudummyclass = $(".subMenudummyclass");
+
+            var PageIDFromSession = $.session.get("PageID");
+            if (PageIDFromSession != undefined) {
+                var parentID = $("#" + PageIDFromSession).parent().parent().attr('id');
+                $("#" + parentID).slideDown("slow");
+                $("#" + PageIDFromSession).css("background", "#80808057").css("margin-left", "0%").css("font-weight", "bold").css("padding-left", "14%");
+                $.session.remove("PageID");
+            }
+
+            $(pMenus).each(function (i) {
+                $("#" + pMenus[i].id).click(function () {
+
+                    $(divMenus).each(function (j) {
+                        if (pMenus[i].id.substr(1, pMenus[i].id.length) == divMenus[j].id.substr(1, divMenus[j].id.length)) {
+                            var dlDisplay = $("#" + divMenus[j].id).css("display");
+
+                            if (dlDisplay == "none") {
+                                $("#" + divMenus[j].id).slideDown("slow");
+                                //$("#"+pMenus[i].id).toggleClass('red');
+                                //$("#" + imgDummyClass[i].id).attr("src", "/assets/img/icons/down.png");
+                            }
+                            else {
+                                $("#" + divMenus[j].id).slideUp("slow");
+                                //$("#" + pMenus[i].id).toggleClass('red1');
+                                //$("#" + imgDummyClass[i].id).attr("src", "/assets/img/icons/next1.png");
+                            }
+                        }
+                        else {
+                            $("#" + divMenus[j].id).slideUp("slow");
+                        }
+                    });
+                });
+            });
+
+            $(subMenudummyclass).each(function (i) {
+                $("#" + subMenudummyclass[i].id).click(function () {
+                    var PageID = subMenudummyclass[i].id;
+                    $.session.set("PageID", PageID);
+                });
+            });
+
+        }
+    </script>
+
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>
+

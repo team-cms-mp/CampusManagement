@@ -1,106 +1,800 @@
 ﻿@model CampusManagement.Models.ApplicantQualification
+@using CampusManagement.Models
+@{
+    string FormNo = ViewBag.FormNo;
+}
+@Html.Partial("_ApplicantAdmissionTabsView")
 
-@using (Html.BeginForm("Create", "ApplicantQualifications", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "ApplicantQualifications", new { FormNo = ViewBag.FormNo, SubmitType = "AddQualification" }, FormMethod.Post, new { enctype = "multipart/form-data", @style= "margin-bottom:10px" }))
 {
     @Html.AntiForgeryToken()
-
     <div class="row">
-        <h2><span class="col-sm-12">Add Applicant Qualification</span></h2>
+        <h2 style="margin-top:-28px;"><span class="col-sm-12">Academic History</span></h2>
     </div>
-    <hr style=" border-top: 1px solid #6d9b90;" />
-    <div>
-        @Html.ActionLink("Back to Applicant List", "Index", "Applicants")
-    </div>
-    @Html.Partial("_MessageView")
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageViewTempData")
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+    if (Session["error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="Close">&times;</a>@Session["error"].ToString()</div>
+        Session.Remove("error");
+    }
+    else
+    {
+        @Html.Partial("_MessageView")
+    }
 
-    <div class="row">
-        <div class="col-sm-3">
+    <div class="row" style="display:none">
+        <div class="col-sm-2">
             @Html.LabelFor(model => model.FormNo, htmlAttributes: new { @class = "control-label" })
             @Html.EditorFor(model => model.FormNo, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
             @Html.ValidationMessageFor(model => model.FormNo, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.DegreeID, htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownList("DegreeID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.DegreeID, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-6">
-            @Html.LabelFor(model => model.InstituteID, htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownList("InstituteID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.InstituteID, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.RollNO, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.RollNO, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.RollNO, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.RegNo, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.RegNo, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.RegNo, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.YearQualification, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.YearQualification, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.YearQualification, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.InstituteCity, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.InstituteCity, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.InstituteCity, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.TotalMarks, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.TotalMarks, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.TotalMarks, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.ObtainedMarks, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.ObtainedMarks, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ObtainedMarks, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.Percentage, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-            @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-6">
-            @Html.LabelFor(model => model.UploadDocument, "Upload File", htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.UploadDocument, new { @class = "form-control", Type = "File" })
-            @Html.ValidationMessageFor(model => model.UploadDocument, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-3" style="display:none;">
-            <label for="imgView" class="control-label">Document</label>
-            <img id="imgView" src="@Url.Content("~/DegreeDocument/noimage.png")" style="width:100px;height:100px;" />
-            @Html.TextBoxFor(model => model.DegreeDocument, new { @class = "form-control", type = "hidden" })
-        </div>
-        <div class="col-sm-3" style="display:none;">
-            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-sm-3">
-            <input type="submit" value="Add" class="btn btn-success" />
-            @Html.ActionLink("Refresh", "Create", "ApplicantQualifications", new { FormNo = ViewBag.FormNo }, htmlAttributes: new { @class = "btn btn-success" })
-        </div>
-    </div>
-}
 
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            if ($("#DegreeDocument").val() != "") {
-                $("#imgView").attr("src", $('#DegreeDocument').val());
+    GetApplicantLevel_Result Al = dbc.GetApplicantLevel(FormNo).FirstOrDefault();
+    List<GetApplicantQualifications_Result> lstAQ = new List<GetApplicantQualifications_Result>();
+    Applicant ApplicantObj = dbc.Applicants.FirstOrDefault(x => x.FormNo == FormNo);
+    
+    @Html.Partial("_ApplicantInformation", FormNo)
+    <hr style="border-top: 1px solid #6d9b90;" />
+    //if (Al.LevelID == 1 || Al.LevelID == 2)
+    //{
+    //    lstAQ = dbc.GetApplicantQualifications(FormNo, 1).Where(d => d.DegreeID == 20 || d.DegreeID == 1020 || d.DegreeID == 1021).ToList();
+    //}
+    //else if (Al.LevelID == 3 || Al.LevelID == 4)
+    //{
+    //    lstAQ = dbc.GetApplicantQualifications(FormNo, 1).Where(d => d.DegreeID == 20 || d.DegreeID == 1020 || d.DegreeID == 1021 || d.DegreeID == 1022 || d.DegreeID == 1023).ToList();
+    //}
+    //else if (Al.LevelID == 4)
+    //{
+    //    lstAQ = dbc.GetApplicantQualifications(FormNo, 1).Where(d => d.DegreeID == 20 || d.DegreeID == 1020 || d.DegreeID == 1021 || d.DegreeID == 1022 || d.DegreeID == 1023).ToList();
+    //}
+    lstAQ = dbc.GetApplicantQualifications(FormNo, 1).Where(d => d.DegreeID == 20 || d.DegreeID == 1020 || d.DegreeID == 1021 || d.DegreeID == 1022 || d.DegreeID == 1023).ToList();
+    <input id="hdnRowCount" name="hdnRowCount" value="@lstAQ.Count" type="hidden" />
+    int i = 1;
+    if (lstAQ.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Degree
+                </th>
+                <th>
+                    Institute
+                </th>
+    
+                <th>
+                    Degree Title
+                </th>
+                <th>
+                    Year
+                </th>
+                <th>
+                    Obtained Marks/CGPA
+                </th>
+                <th>
+                    Total Marks/CGPA
+                </th>
+                <th>
+                    Percentage
+                </th>
+                @*<th>
+                    Complete/Result Awaited
+                </th>*@
+            </tr>
+
+            @foreach (var item in lstAQ)
+            {
+                string DegreeID = string.Concat("DegreeID_", i);
+                string DegreeName = string.Concat("DegreeName_", i);
+                string YearQualification = string.Concat("YearQualification_", i);
+                string TotalMarks = string.Concat("TotalMarks_", i);
+                string ObtainedMarks = string.Concat("ObtainedMarks_", i);
+                string Percentage = string.Concat("Percentage_", i);
+                string InstituteID = string.Concat("InstituteID_", i);
+                string InstituteName = string.Concat("InstituteName_", i);
+                string DegreeTitle = string.Concat("DegreeTitle_", i);
+                string CompleteResultAwaitedID = string.Concat("CompleteResultAwaitedID_", i);
+                string OtherInstitute = string.Concat("OtherInstitute_", i);
+                string OtherDegree = string.Concat("OtherDegree_", i);
+
+                string disabled = "";
+                string readonlyField = "";
+                if (Al.LevelID == 1)
+                {
+                    if (item.DegreeID == 1020 && ApplicantObj.ApplicantStatus == "RESULT AWAITED")
+                    {
+                        disabled = "disabled";
+                        readonlyField = "readonly";
+                        //item.ObtainedMarks = 247.50;
+                        //item.TotalMarks = 550;
+                        //item.Percentage = Convert.ToDecimal(45.00);
+                    }
+
+                    if (item.DegreeID == 1021)
+                    {
+                        disabled = "disabled";
+                        readonlyField = "readonly";
+                    }
+                    else if (item.DegreeID == 1022)
+                    {
+                        disabled = "disabled";
+                        readonlyField = "readonly";
+                    }
+                    else if (item.DegreeID == 1023)
+                    {
+                        disabled = "disabled";
+                        readonlyField = "readonly";
+                    }
+                }
+                else if (Al.LevelID == 2)
+                {
+                    if (item.DegreeID == 1021 && ApplicantObj.ApplicantStatus == "RESULT AWAITED")
+                    {
+                        //item.ObtainedMarks = 344;
+                        //item.TotalMarks = 550;
+                        //item.Percentage = Convert.ToDecimal(62.54);
+
+                        disabled = "disabled";
+                        readonlyField = "readonly";
+                    }
+                    else if (item.DegreeID == 1022)
+                    {
+                        disabled = "disabled";
+                        readonlyField = "readonly";
+                    }
+                    else if (item.DegreeID == 1023)
+                    {
+                        disabled = "disabled";
+                        readonlyField = "readonly";
+                    }
+                }
+                else if (Al.LevelID == 3)
+                {
+                    if (item.DegreeID == 1021)
+                    {
+                        disabled = "";
+                        readonlyField = "";
+                    }
+                    else if (item.DegreeID == 1022 && ApplicantObj.ApplicantStatus == "RESULT AWAITED")
+                    {
+                        //item.ObtainedMarks = 413;
+                        //item.TotalMarks = 550;
+                        //item.Percentage = Convert.ToDecimal(75.00);
+
+                        disabled = "disabled";
+                        readonlyField = "readonly";
+                    }
+                    else if (item.DegreeID == 1023)
+                    {
+                        disabled = "disabled";
+                        readonlyField = "readonly";
+                    }
+                }
+                else if (Al.LevelID == 4)
+                {
+                    if (item.DegreeID == 1023 && ApplicantObj.ApplicantStatus == "RESULT AWAITED")
+                    {
+                        //item.ObtainedMarks = 413;
+                        //item.TotalMarks = 550;
+                        //item.Percentage = Convert.ToDecimal(75.00);
+                        disabled = "disabled";
+                        readonlyField = "readonly";
+                    }
+
+                    //disabled = "";
+                    //readonlyField = "";
+                }
+
+                //if (ApplicantObj.ApplicantStatus == "RESULT AWAITED" && lstAQ.Count == i)
+                if (ApplicantObj.ApplicantStatus == "RESULT AWAITED" && Al.LevelID == 0)
+                {
+                    //item.ObtainedMarks = 247.50;
+                    //item.TotalMarks = 550;
+                    //item.Percentage = Convert.ToDecimal(45.00);
+
+                    <tr>
+                    <td>
+                        <input id="@DegreeID" name="@DegreeID" value="@item.DegreeID" class="form-control" type="hidden" />
+                        <input id="@DegreeName" name="@DegreeName" value="@item.DegreeName" class="form-control" type="hidden" />
+                        @Html.DisplayFor(modelItem => item.DegreeName)
+                    </td>
+                    <td>
+                        <input id="@InstituteName" name="@InstituteName" type="hidden" value="@item.InstituteName" class="form-control" placeholder="Select from below list or enter your institute name" />
+                        <select required class="form-control" id="@InstituteID" name="@InstituteID" @disabled  onchange='OtherInstitute(this.id);'>
+                            <option value="" selected>Select your institute</option>
+                            @{
+                                if (item.DegreeID == 20) //SSC/O-Level
+                                {
+                                    foreach (var institute in dbc.Institutes.Where(ins => ins.TypeName == "school" || ins.TypeName == null).OrderBy(o => o.InstituteName).ToList())
+                                    {
+                                        if (institute.InstituteID == item.InstituteID)
+                                        {
+                                            <option value="@institute.InstituteID" selected>@institute.InstituteName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@institute.InstituteID">@institute.InstituteName</option>
+                                        }
+                                    }
+                                }
+
+                                if (item.DegreeID == 1020) //HSSC/A-Level
+                                {
+                                    foreach (var institute in dbc.Institutes.Where(ins => ins.TypeName == "school" || ins.TypeName == "college" || ins.TypeName == null).OrderBy(o => o.InstituteName).ToList())
+                                    {
+                                        if (institute.InstituteID == item.InstituteID)
+                                        {
+                                            <option value="@institute.InstituteID" selected>@institute.InstituteName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@institute.InstituteID">@institute.InstituteName</option>
+                                        }
+                                    }
+                                }
+
+                                if (item.DegreeID == 1021 || item.DegreeID == 1022 || item.DegreeID == 1023) //1021-Bachelors,1022-Masters,1023-MS/MPhil
+                                {
+                                    foreach (var institute in dbc.Institutes.Where(ins => ins.TypeName == "college" || ins.TypeName == "university" || ins.TypeName == null).OrderBy(o => o.InstituteName).ToList())
+                                    {
+                                        if (institute.InstituteID == item.InstituteID)
+                                        {
+                                            <option value="@institute.InstituteID" selected>@institute.InstituteName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@institute.InstituteID">@institute.InstituteName</option>
+                                        }
+                                    }
+                                }
+                            }
+                        </select>
+                        <input id="@OtherInstitute" name="@OtherInstitute" class="form-control" style='display:none;' placeholder="Please Mention"/>
+                    </td>
+                    
+                    <td>
+                        <select class="form-control" id="@DegreeTitle" name="@DegreeTitle" style="width: -webkit-fill-available;" @disabled onchange='OtherDegree(this.id);'>
+                            @{
+                                foreach (var degree in dbc.DegreeTitles.Where(d => (d.IsActive.Equals("Yes") && d.DegreeID == item.DegreeID) || d.DegreeID == null).ToList())
+                                {
+                                    if (item.DegreeTitle != null)
+                                    {
+                                        if (item.DegreeTitle.Trim().Equals(degree.DegreeTitleName.Trim()))
+                                        {
+                                            <option value="@degree.DegreeTitleName.Trim()" selected>@degree.DegreeTitleName.Trim()</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@degree.DegreeTitleName.Trim()">@degree.DegreeTitleName.Trim()</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@degree.DegreeTitleName.Trim()">@degree.DegreeTitleName.Trim()</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <input id="@OtherDegree" name="@OtherDegree" class="form-control" style='display:none;' placeholder="Please Mention" />
+                    </td>
+                    <td>
+                        <input id="@YearQualification" name="@YearQualification" value="@item.YearQualification" class="form-control" @readonlyField />
+                    </td>
+                    <td>
+                        <input id="@ObtainedMarks" name="@ObtainedMarks" value="@item.ObtainedMarks" class="form-control" onblur="CalculatePercentage(this);" @readonlyField />
+                    </td>
+                    <td>
+                        <input id="@TotalMarks" name="@TotalMarks" value="@item.TotalMarks" class="form-control" onblur="CalculatePercentage(this);" @readonlyField />
+                    </td>
+                    <td>
+                        <input id="@Percentage" name="@Percentage" value="@item.Percentage" class="form-control" readonly />
+                    </td>
+                    @*<td>
+                        @{ 
+                            
+                            if (item.DegreeID == 20) //20 SSC/O-Level
+                            {
+                                <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control">
+                                    <option value="1" selected>Complete</option>
+                                </select>
+                            }
+                            else if (item.DegreeID == 1020) //1020 HSSC/A-Level
+                            {
+                                if (ApplicantObj.ApplicantStatus == "RESULT AWAITED" && Al.LevelID == 1)
+                                {
+                                    <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2" selected>Result Awaited</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control">
+                                        <option value="0">--Select--</option>
+                                        <option value="1" selected>Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    </select>
+                                }
+
+                                <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control" @readonlyField>
+                                @{
+                                    if (item.CompleteResultAwaitedID == 0 || item.CompleteResultAwaitedID == null)
+                                    {
+                                        <option value="0" selected>--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    }
+                                    else if (item.CompleteResultAwaitedID == 1)
+                                    {
+                                        <option value="0">--Select--</option>
+                                        <option value="1" selected>Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    }
+                                    else if (item.CompleteResultAwaitedID == 2)
+                                    {
+                                        <option value="0">--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2" selected>Result Awaited</option>
+                                    }
+                                }
+                                </select>
+                            }
+                            else if (item.DegreeID == 1021) //1021	Bachelors
+                            {
+                                if (ApplicantObj.ApplicantStatus == "RESULT AWAITED" && Al.LevelID == 2)
+                                {
+                                    <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2" selected>Result Awaited</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control">
+                                        <option value="0">--Select--</option>
+                                        <option value="1" selected>Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    </select>
+                                }
+
+                                <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control" @readonlyField>
+                                @{
+                                    if (item.CompleteResultAwaitedID == 0 || item.CompleteResultAwaitedID == null)
+                                    {
+                                        <option value="0" selected>--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    }
+                                    else if (item.CompleteResultAwaitedID == 1)
+                                    {
+                                        <option value="0">--Select--</option>
+                                        <option value="1" selected>Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    }
+                                    else if (item.CompleteResultAwaitedID == 2)
+                                    {
+                                        <option value="0">--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2" selected>Result Awaited</option>
+                                    }
+                                }
+                                </select>
+                            }
+                            else if (item.DegreeID == 1022) //1022	Masters
+                            {
+                                if (ApplicantObj.ApplicantStatus == "RESULT AWAITED" && Al.LevelID == 3)
+                                {
+                                    <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2" selected>Result Awaited</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control">
+                                        <option value="0">--Select--</option>
+                                        <option value="1" selected>Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    </select>
+                                }
+
+                                <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control" @readonlyField>
+                                @{
+                                    if (item.CompleteResultAwaitedID == 0 || item.CompleteResultAwaitedID == null)
+                                    {
+                                        <option value="0" selected>--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    }
+                                    else if (item.CompleteResultAwaitedID == 1)
+                                    {
+                                        <option value="0">--Select--</option>
+                                        <option value="1" selected>Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    }
+                                    else if (item.CompleteResultAwaitedID == 2)
+                                    {
+                                        <option value="0">--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2" selected>Result Awaited</option>
+                                    }
+                                }
+                                </select>
+                            }
+                            else if (item.DegreeID == 1023) //1023	MS/MPhil
+                            {
+                                if (ApplicantObj.ApplicantStatus == "RESULT AWAITED" && Al.LevelID == 4)
+                                {
+                                    <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2" selected>Result Awaited</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control">
+                                        <option value="0">--Select--</option>
+                                        <option value="1" selected>Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    </select>
+                                }
+
+                                <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control" @readonlyField>
+                                @{
+                                    if (item.CompleteResultAwaitedID == 0 || item.CompleteResultAwaitedID == null)
+                                    {
+                                        <option value="0" selected>--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    }
+                                    else if (item.CompleteResultAwaitedID == 1)
+                                    {
+                                        <option value="0">--Select--</option>
+                                        <option value="1" selected>Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    }
+                                    else if (item.CompleteResultAwaitedID == 2)
+                                    {
+                                        <option value="0">--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2" selected>Result Awaited</option>
+                                    }
+                                }
+                                </select>
+                            }
+                            else
+                            {
+                            <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control" @readonlyField>
+                                @{
+                                    if (item.CompleteResultAwaitedID == 0 || item.CompleteResultAwaitedID == null)
+                                    {
+                                        <option value="0" selected>--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    }
+                                    else if (item.CompleteResultAwaitedID == 1)
+                                    {
+                                        <option value="0">--Select--</option>
+                                        <option value="1" selected>Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    }
+                                    else if (item.CompleteResultAwaitedID == 2)
+                                    {
+                                        <option value="0">--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2" selected>Result Awaited</option>
+                                    }
+                                }
+                            </select>
+                            }
+                        }
+                    </td>*@
+                </tr>
+                }
+                else{
+                    if (ApplicantObj.ApplicantStatus == "RESULT AWAITED" && Al.LevelID == 1 && item.DegreeID == 1020)
+                    {
+                        disabled = "disabled";
+                        readonlyField = "readonly";
+                        //item.ObtainedMarks = 247.50;
+                        //item.TotalMarks = 550;
+                        //item.Percentage = Convert.ToDecimal(45.00);
+                    }
+                <tr>
+                    <td>
+                        <input id="@DegreeID" name="@DegreeID" value="@item.DegreeID" class="form-control" type="hidden" />
+                        <input id="@DegreeName" name="@DegreeName" value="@item.DegreeName" class="form-control" type="hidden" />
+                        @Html.DisplayFor(modelItem => item.DegreeName)
+                    </td>
+                    <td>
+
+                        <input id="@InstituteName" name="@InstituteName" type="hidden" value="@item.InstituteName" class="form-control" placeholder="Select from below list or enter your institute name" />
+                        <select required class="form-control" id="@InstituteID" name="@InstituteID" @disabled  onchange='OtherInstitute(this.id);'>
+                            <option value="" selected>Select your institute</option>
+                            @{
+                                if (item.DegreeID == 20) //SSC/O-Level
+                                {
+                                    foreach (var institute in dbc.Institutes.Where(ins => ins.TypeName == "school" || ins.TypeName == null).OrderBy(o => o.InstituteName).ToList())
+                                    {
+                                        if (institute.InstituteID == item.InstituteID)
+                                        {
+                                            <option value="@institute.InstituteID" selected>@institute.InstituteName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@institute.InstituteID">@institute.InstituteName</option>
+                                        }
+                                    }
+                                }
+
+                                if (item.DegreeID == 1020) //HSSC/A-Level
+                                {
+                                    foreach (var institute in dbc.Institutes.Where(ins => ins.TypeName == "school" || ins.TypeName == "college" || ins.TypeName == null).OrderBy(o => o.InstituteName).ToList())
+                                    {
+                                        if (institute.InstituteID == item.InstituteID)
+                                        {
+                                            <option value="@institute.InstituteID" selected>@institute.InstituteName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@institute.InstituteID">@institute.InstituteName</option>
+                                        }
+                                    }
+                                }
+
+                                if (item.DegreeID == 1021 || item.DegreeID == 1022 || item.DegreeID == 1023) //1021-Bachelors,1022-Masters,1023-MS/MPhil
+                                {
+                                    foreach (var institute in dbc.Institutes.Where(ins => ins.TypeName == "college" || ins.TypeName == "university" || ins.TypeName == null).OrderBy(o => o.InstituteName).ToList())
+                                    {
+                                        if (institute.InstituteID == item.InstituteID)
+                                        {
+                                            <option value="@institute.InstituteID" selected>@institute.InstituteName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@institute.InstituteID">@institute.InstituteName</option>
+                                        }
+                                    }
+                                }
+                            }
+                        </select>
+                        <input id="@OtherInstitute" name="@OtherInstitute" class="form-control" style='display:none;' placeholder="Please Mention" />
+                    </td>
+                    
+                    <td>
+                        <select class="form-control" id="@DegreeTitle" name="@DegreeTitle" style="width: -webkit-fill-available;" @disabled onchange='OtherDegree(this.id);'>
+                            @{
+                                foreach (var degree in dbc.DegreeTitles.Where(d => (d.IsActive.Equals("Yes") && d.DegreeID == item.DegreeID) || d.DegreeID == null).ToList())
+                                {
+                                    if (item.DegreeTitle != null)
+                                    {
+                                        if (item.DegreeTitle.Trim().Equals(degree.DegreeTitleName.Trim()))
+                                        {
+                                            <option value="@degree.DegreeTitleName.Trim()" selected>@degree.DegreeTitleName.Trim()</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@degree.DegreeTitleName.Trim()">@degree.DegreeTitleName.Trim()</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@degree.DegreeTitleName.Trim()">@degree.DegreeTitleName.Trim()</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <input id="@OtherDegree" name="@OtherDegree" class="form-control" style='display:none;' placeholder="Please Mention" />
+                    </td>
+                    <td>
+                        @{
+                            if(item.DegreeID == 20)
+                            { 
+                                <input id="@YearQualification" name="@YearQualification" value="@item.YearQualification" class="form-control" required />
+                            }
+                            else if (item.DegreeID == 1020 && ApplicantObj.ApplicantStatus == "RESULT AWAITED")
+                            {
+                                <input id="@YearQualification" name="@YearQualification" value="@item.YearQualification" class="form-control" @readonlyField />
+                            }
+                            else
+                            {
+                                <input id="@YearQualification" name="@YearQualification" value="@item.YearQualification" class="form-control" @readonlyField />
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            if (item.DegreeID == 20)
+                            {
+                                <input id="@ObtainedMarks" name="@ObtainedMarks" value="@item.ObtainedMarks" class="form-control" onblur="CalculatePercentage(this);" required />
+                            }
+                            else if (item.DegreeID == 1020 && ApplicantObj.ApplicantStatus == "RESULT AWAITED")
+                            {
+                                <input id="@ObtainedMarks" name="@ObtainedMarks" value="@item.ObtainedMarks" class="form-control" onblur="CalculatePercentage(this);" @readonlyField />
+                            }
+                            else
+                            {
+                                <input id="@ObtainedMarks" name="@ObtainedMarks" value="@item.ObtainedMarks" class="form-control" onblur="CalculatePercentage(this);" @readonlyField />
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            if (item.DegreeID == 20)
+                            {
+                                <input id="@TotalMarks" name="@TotalMarks" value="@item.TotalMarks" class="form-control" onblur="CalculatePercentage(this);" required />
+                            }
+                            else if (item.DegreeID == 1020 && ApplicantObj.ApplicantStatus == "RESULT AWAITED")
+                            {
+                                <input id="@TotalMarks" name="@TotalMarks" value="@item.TotalMarks" class="form-control" onblur="CalculatePercentage(this);" @readonlyField />
+                            }
+                            else
+                            {
+                                <input id="@TotalMarks" name="@TotalMarks" value="@item.TotalMarks" class="form-control" onblur="CalculatePercentage(this);" @readonlyField />
+                            }
+                        }
+                    </td>
+                    <td>
+                        <input id="@Percentage" name="@Percentage" value="@item.Percentage" class="form-control" readonly />
+                    </td>
+                    @*<td>
+                        @{ 
+                            if (item.DegreeID == 20) //SSC/O-Level
+                            {
+                            <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control">
+                                <option value="1" selected>Complete</option>
+                            </select>
+                            }
+                            else
+                            { 
+                            <select id="@CompleteResultAwaitedID" name="@CompleteResultAwaitedID" class="form-control" @disabled>
+                                @{
+                                    if (item.CompleteResultAwaitedID == 0 || item.CompleteResultAwaitedID == null)
+                                    {
+                                        <option value="0" selected>--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    }
+                                    else if (item.CompleteResultAwaitedID == 1)
+                                    {
+                                        <option value="0">--Select--</option>
+                                        <option value="1" selected>Complete</option>
+                                        <option value="2">Result Awaited</option>
+                                    }
+                                    else if (item.CompleteResultAwaitedID == 2)
+                                    {
+                                        <option value="0">--Select--</option>
+                                        <option value="1">Complete</option>
+                                        <option value="2" selected>Result Awaited</option>
+                                    }
+                                }
+                            </select>
+                            }
+                        }
+                    </td>*@
+                </tr>
+                }
+                i++;
             }
-            else {
-                $("#DegreeDocument").val("@Url.Content("~/DegreeDocument/noimage.png")");
+        </table>
+        }
+        <br />
+        List<GetApplicantQualifications_Result> lstAQ1 = dbc.GetApplicantQualifications(FormNo, 2).ToList();
+        <input id="hdnRowCount1" name="hdnRowCount1" value="@lstAQ1.Count" type="hidden" />
+        int j = 100;
+        if (lstAQ1.Count > 0)
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        Entrance Exam (If Taken)
+                    </th>
+                    <th>
+                        Obtained Marks
+                    </th>
+                    <th>
+                        Total Marks
+                    </th>
+                    <th>
+                        Percentage
+                    </th>
+                    <th>
+                        Roll Number
+                    </th>
+                    <th>
+                        Valid Up To
+                    </th>
+                </tr>
+
+                @foreach (var item in lstAQ1)
+                {
+                    string DegreeID = string.Concat("DegreeID_", j);
+                    string DegreeName = string.Concat("DegreeName_", j);
+                    string TotalMarks = string.Concat("TotalMarks_", j);
+                    string ObtainedMarks = string.Concat("ObtainedMarks_", j);
+                    string Percentage = string.Concat("Percentage_", j);
+                    string RollNumber = string.Concat("RollNumber_", j);
+                    string ValidUpTo = string.Concat("ValidUpTo_", j);
+                    <tr>
+                        <td>
+                            <input id="@DegreeID" name="@DegreeID" value="@item.DegreeID" class="form-control" type="hidden" />
+                            <input id="@DegreeName" name="@DegreeName" value="@item.DegreeName" class="form-control" type="hidden" />
+                            @Html.DisplayFor(modelItem => item.DegreeName)
+                        </td>
+                        <td>
+                            <input id="@ObtainedMarks" name="@ObtainedMarks" value="@item.ObtainedMarks" class="form-control" onblur="CalculatePercentage(this);" />
+                        </td>
+                        <td>
+                            <input id="@TotalMarks" name="@TotalMarks" value="@item.TotalMarks" class="form-control" onblur="CalculatePercentage(this);" />
+                        </td>
+                        <td>
+                            <input id="@Percentage" name="@Percentage" value="@item.Percentage" class="form-control" readonly />
+                        </td>
+                        <td>
+                            <input id="@RollNumber" name="@RollNumber" value="@item.RollNumber" class="form-control" />
+                        </td>
+                        <td>
+                            <input id="@ValidUpTo" name="@ValidUpTo" value="@item.ValidUpTo" class="form-control" type="date" />
+                        </td>
+                    </tr>
+                    j++;
+                }
+            </table>
+        }
+        <br />
+        <input type="submit" value="Save" class="btn btn-primary" />
+        @*Applicant ap = dbc.Applicants.FirstOrDefault(a => a.FormNo == FormNo);
+        if (ap != null)
+        {
+            Status s = dbc.Status.FirstOrDefault(st => st.StatusID == ap.StatusID);
+            if (s.StatusName == "Pending")
+            {
+                <div class="row">
+                    <div class="col-sm-3">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+            </div>
             }
-        });
-    </script>
-}
+        }*@
+    }
+
+
+
+<script type="text/javascript">
+    function OtherInstitute(id) {
+        
+        var index = id.indexOf("_");
+        var toConcat = id.substr(index, id.length);
+        var txtID = 'OtherInstitute' + toConcat;
+        var text = $("#" + id + " option:selected").text();
+        if (text == 'Other')
+            $("#" + txtID).css("display", "block");
+        else
+            $("#" + txtID).css("display", "none");
+    }
+
+    function OtherDegree(id) {
+        
+        var index = id.indexOf("_");
+        var toConcat = id.substr(index, id.length);
+        var txtID = 'OtherDegree' + toConcat;
+        var text = $("#" + id + " option:selected").text();
+        if (text == 'Others') {
+            $("#" + txtID).css("display", "block");
+            //$("#" + txtID).css("display", "block");
+        }
+        else
+        {
+            $("#" + txtID).css("display", "none");
+        }
+            
+    }
+
+</script> 

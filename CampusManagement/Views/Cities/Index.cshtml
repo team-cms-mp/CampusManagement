@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Cities";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
@@ -19,17 +19,17 @@
     }
     if (Model.DisplayMode == "WriteOnly")
     {
-        Html.RenderPartial("Create", new CampusManagement.Models.City());
+        Html.RenderPartial("Create", new CampusManagement.Models.GetCities_Result());
     }
 }
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedCity.Country.CountryName)
+            @Html.DisplayNameFor(model => model.SelectedCity.CountryName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedCity.Province.ProvinceName)
+            @Html.DisplayNameFor(model => model.SelectedCity.ProvinceName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SelectedCity.CityName)
@@ -47,10 +47,10 @@
     {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Country.CountryName)
+            @Html.DisplayFor(modelItem => item.CountryName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Province.ProvinceName)
+            @Html.DisplayFor(modelItem => item.ProvinceName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CityName)

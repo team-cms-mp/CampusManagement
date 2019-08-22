@@ -171,6 +171,15 @@ iframe {
   color: #999999;
 }
 
+.dropdown_custom {
+    height: 48px;
+    background-color: #faffbd;
+    padding-left: 23px;
+    margin-bottom: 10px;
+    font-family: Montserrat-Regular;
+    font-size: 18px;
+}
+
 
 /*==================================================================
 [ Size ]*/
@@ -236,15 +245,15 @@ iframe {
 [ Form ]*/
 
 .login100-form {
-    margin-top: 8%;
-    margin-left: -30em;
-    /* height: 90%; */
-    Position: absolute;
     width: 385px;
-    /* min-height: 100vh; */
     display: block;
     background: linear-gradient(to left, rgba(109, 179, 235, 0.78), rgba(132, 151, 161, 0.62));
     padding: 173px 55px 55px 55px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -14em;
+        margin-left: -11.7em;
 }
 
 .login100-form-title {
@@ -301,10 +310,11 @@ iframe {
 .input100 {
   display: block;
   width: 100%;
-  background: transparent;
+  /*background: transparent;*/
+  background:rgba(255, 255, 255, 0.65);
   font-family: Montserrat-Regular;
   font-size: 18px;
-  color: #555555;
+  /*color: #555555;*/
   line-height: 1.2;
   padding: 0 26px;
 }
@@ -320,7 +330,7 @@ input.input100 {
 /*---------------------------------------------*/
 
 .focus-input100 {
-  position: absolute;
+  /*position: absolute;*/
   display: block;
   width: calc(100% + 2px);
   height: calc(100% + 2px);
@@ -462,7 +472,7 @@ input.input100 {
   width: 100%;
   height: 50px;
   border-radius: 10px;
-  background: #6675df;
+  background: #026bd1;
 
   font-family: Montserrat-Bold;
   font-size: 12px;

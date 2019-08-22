@@ -17,7 +17,7 @@ namespace CampusManagement.Models
     {
         public int CriteriaID { get; set; }
         [Required(ErrorMessage = "Required")]
-        [Display(Name = "Batch Program")]
+        [Display(Name = "Program")]
         public Nullable<int> BatchProgramID { get; set; }
         [Display(Name = "Degree")]
         public Nullable<int> DegreeID { get; set; }
@@ -37,12 +37,5 @@ namespace CampusManagement.Models
 
         public virtual BatchProgram BatchProgram { get; set; }
         public virtual Degree Degree { get; set; }
-    }
-
-    public class SelectionCriteriasViewModel
-    {
-        public List<SelectionCriteria> SelectionCriterias { get; set; }
-        public SelectionCriteria SelectedSelectionCriteria { get; set; }
-        public string DisplayMode { get; set; }
     }
 }

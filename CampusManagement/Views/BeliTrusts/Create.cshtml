@@ -1,0 +1,809 @@
+﻿@model CampusManagement.Models.BeliTrust
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Create (B.E.L.I) Trust";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@Html.Partial("_MessageView")
+
+@using (Html.BeginForm("Create", "BeliTrusts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    ModelCMSContainer dbCMS = new ModelCMSContainer();
+    string FormNo = ViewBag.FormNo.ToString();
+
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-sm-3">
+            <input id="selectedValue" class="form-control" type="hidden" />
+            @Html.LabelFor(model => model.FormNo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FormNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FormNo, "", new { @class = "text-danger" })
+        </div>
+      
+        <div class="col-sm-3">
+            <label for="imgView" class="control-label">Profile Picture</label>
+            <img id="imgView" src="@Url.Content("~/ProfilePics/noimage.png")" style="width:100px;height:100px;border-radius:10px;" />
+            @Html.TextBoxFor(model => model.Picture, new { @class = "form-control", type = "hidden" })
+        </div>
+    </div>
+    <div class="divHeading" style="display:none;">
+        <a data-toggle="collapse" data-target="#hide4"><h4 class="fa fa-level-down" aria-hidden="true"> Program Info </h4></a>
+    </div>
+        <div class="row" id="hide4" style="display:none;">
+           
+        </div>
+        <div class="divHeading">
+            <a data-toggle="collapse" data-target="#hide"><h4 class="fa fa-level-down" aria-hidden="true"> Basic Info </h4></a>
+        </div>
+        <div class="row" id="hide">
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.SalutationName, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.SalutationName, new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.SalutationName, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.FatherName, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.FatherName, new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.FatherName, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.ApplicantDOB, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.ApplicantDOB, new { htmlAttributes = new { @class = "form-control", @placeholder = "mm/dd/yyyy", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.ApplicantDOB, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.PlaceOfBirth, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.PlaceOfBirth, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.PlaceOfBirth, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.GenderName, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.GenderName, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.GenderName, "", new { @class = "text-danger"})
+            </div>
+          
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.MaritalStatusName, htmlAttributes: new { @class = "control-label" })
+               @Html.EditorFor(model => model.MaritalStatusName, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.MaritalStatusName, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.ACNIC, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.ACNIC, new { htmlAttributes = new { @class = "form-control", @maxlength = "15", @minlength = "15", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.ACNIC, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.CellNo, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.CellNo, new { htmlAttributes = new { @class = "form-control", @maxlength = "11", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.CellNo, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email", @readonly=true } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.StatusName, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.StatusName, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.StatusName, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-12">
+                @Html.LabelFor(model => model.PresentAddress, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.PresentAddress, new { htmlAttributes = new { @class = "form-control", @readonly=true } })
+                @Html.ValidationMessageFor(model => model.PresentAddress, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.TotalTuitionFee, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.TotalTuitionFee, new { htmlAttributes = new { @class = "form-control", @maxlength = "7" } })
+                @Html.ValidationMessageFor(model => model.TotalTuitionFee, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.RequestForConcession, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.RequestForConcession, new { htmlAttributes = new { @class = "form-control", @maxlength = "7" } })
+                @Html.ValidationMessageFor(model => model.RequestForConcession, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.BeliTrustCategoryID, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownList("BeliTrustCategoryID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BeliTrustCategoryID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="divHeading">
+            <a data-toggle="collapse" data-target="#hide2"><h4 class="fa fa-level-down" aria-hidden="true"> Family Info </h4></a>
+        </div>
+        <div id="hide2">
+            <div class="row">
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.GuardianName, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.GuardianName, new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @readonly = true } })
+                    @Html.ValidationMessageFor(model => model.GuardianName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.RelationTypeName, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.RelationTypeName, new { htmlAttributes = new { @class = "form-control", @maxlength = "15", @readonly = true } })
+                    @Html.ValidationMessageFor(model => model.RelationTypeName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-3">
+                    <span style="color:red;">*</span> @Html.LabelFor(model => model.GuardianCNIC, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.GuardianCNIC, new { htmlAttributes = new { @class = "form-control", @maxlength = "15", @readonly = true } })
+                    @Html.ValidationMessageFor(model => model.GuardianCNIC, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <h4 style="margin: 7px;">Service</h4>
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.NameOfOrganization, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.NameOfOrganization, new { htmlAttributes = new { @class = "form-control", @maxlength = "200" } })
+                    @Html.ValidationMessageFor(model => model.NameOfOrganization, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.DesignationName, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.DesignationName, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+                    @Html.ValidationMessageFor(model => model.DesignationName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.MonthlySalary, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.MonthlySalary, new { htmlAttributes = new { @class = "form-control", @maxlength = "7" } })
+                    @Html.ValidationMessageFor(model => model.MonthlySalary, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <h4 style="margin: 7px;">Retired</h4>
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.DateOfRetirement, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.DateOfRetirement, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                    @Html.ValidationMessageFor(model => model.DateOfRetirement, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.RetiredOrganization, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.RetiredOrganization, new { htmlAttributes = new { @class = "form-control", @maxlength = "200" } })
+                    @Html.ValidationMessageFor(model => model.RetiredOrganization, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.RetiredPosition, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.RetiredPosition, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+                    @Html.ValidationMessageFor(model => model.RetiredPosition, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.RetiredLastDrawnGrossSalary, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.RetiredLastDrawnGrossSalary, new { htmlAttributes = new { @class = "form-control", @maxlength = "7" } })
+                    @Html.ValidationMessageFor(model => model.RetiredLastDrawnGrossSalary, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <h4 style="margin: 7px;">Business</h4>
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.NatureOfBusiness, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.NatureOfBusiness, new { htmlAttributes = new { @class = "form-control", @maxlength = "200" } })
+                    @Html.ValidationMessageFor(model => model.NatureOfBusiness, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.MonthlyIncomeBus, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.MonthlyIncomeBus, new { htmlAttributes = new { @class = "form-control", @maxlength = "7" } })
+                    @Html.ValidationMessageFor(model => model.MonthlyIncomeBus, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <h4 style="margin: 7px;">Other Source Of Income</h4>
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.NatureOfSource, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.NatureOfSource, new { htmlAttributes = new { @class = "form-control", @maxlength = "200" } })
+                    @Html.ValidationMessageFor(model => model.NatureOfSource, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.MonthlyIncomeSource, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.MonthlyIncomeSource, new { htmlAttributes = new { @class = "form-control", @maxlength = "7" } })
+                    @Html.ValidationMessageFor(model => model.MonthlyIncomeSource, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+        </div>
+
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide15"><h4 class="fa fa-level-down" aria-hidden="true"> Residential Accommodation </h4></a>
+    </div>
+    <div class="row" id="hide15">
+        <div class="col-sm-12">
+            <input type="hidden" id="TypeOfResidence" name="TypeOfResidence"/>
+            @Html.LabelFor(model => model.TypeOfResidence, htmlAttributes: new { @class = "control-label" })
+            <br />
+            <label style="color:black" class="radio-inline">
+                <input type="radio" name="optradio" id="Owned">Owned
+            </label>
+            <label style="color:black" class="radio-inline">
+                <input type="radio" name="optradio" id="Rented">Rented
+            </label>
+            <label style="color:black" class="radio-inline">
+                <input type="radio" name="optradio" id="Other" />Other
+            </label>
+        </div>
+        <div class="col-sm-4">
+            @Html.LabelFor(model => model.ResidenceText, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ResidenceText, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ResidenceText, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4">
+            @Html.LabelFor(model => model.MonthlyRent, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.MonthlyRent, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MonthlyRent, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide14"><h4 class="fa fa-level-down" aria-hidden="true"> Family Members </h4></a>
+    </div>
+
+    <div id="hide14">
+        <div class="row">
+            <div class="col-sm-3">
+                <label class="control-label">Total Family Members</label>
+                <input id="TotalFamilyMember" name="TotalFamilyMember" class="form-control" />
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Age
+                </th>
+                <th>
+                    Relation With Student
+                </th>
+                <th>
+                    Marital Status
+                </th>
+                <th>
+                        Educational Expense
+                </th>
+                <th>
+                    Medical Expense
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" id="FamilyMemberID_0" name="FamilyMemberID_0" class="form-control" />
+                    <input id="FamilyMemberName_0" name="FamilyMemberName_0" class="form-control" />
+                </td>
+                           
+                <td>
+                    <input id="FamilyMemberAge_0" name="FamilyMemberAge_0" class="form-control" />
+                </td>
+                <td>
+                    <input id="RelationWithStudent_0" name="RelationWithStudent_0" class="form-control"/>
+                </td>
+                <td>
+                    <input id="MaritalStatus_0" name="MaritalStatus_0" class="form-control" />
+                </td>
+                <td>
+                    <input id="MonthlyEducationExpense_0" name="MonthlyEducationExpense_0" class="form-control"  />
+                </td>
+                <td>
+                    <input id="MedicalExpense_0" name="MedicalExpense_0" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" id="FamilyMemberID_1" name="FamilyMemberID_1" class="form-control" />
+                    <input id="FamilyMemberName_1" name="FamilyMemberName_1" class="form-control" />
+                </td>
+
+                <td>
+                    <input id="FamilyMemberAge_1" name="FamilyMemberAge_1" class="form-control" />
+                </td>
+                <td>
+                    <input id="RelationWithStudent_1" name="RelationWithStudent_1" class="form-control" />
+                </td>
+                <td>
+                    <input id="MaritalStatus_1" name="MaritalStatus_1" class="form-control" />
+                </td>
+                <td>
+                    <input id="MonthlyEducationExpense_1" name="MonthlyEducationExpense_1" class="form-control" />
+                </td>
+                <td>
+                    <input id="MedicalExpense_1" name="MedicalExpense_1" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" id="FamilyMemberID_2" name="FamilyMemberID_2" class="form-control" />
+                    <input id="FamilyMemberName_2" name="FamilyMemberName_2" class="form-control" />
+                </td>
+
+                <td>
+                    <input id="FamilyMemberAge_2" name="FamilyMemberAge_2" class="form-control" />
+                </td>
+                <td>
+                    <input id="RelationWithStudent_2" name="RelationWithStudent_2" class="form-control" />
+                </td>
+                <td>
+                    <input id="MaritalStatus_2" name="MaritalStatus_2" class="form-control" />
+                </td>
+                <td>
+                    <input id="MonthlyEducationExpense_2" name="MonthlyEducationExpense_2" class="form-control" />
+                </td>
+                <td>
+                    <input id="MedicalExpense_2" name="MedicalExpense_2" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" id="FamilyMemberID_3" name="FamilyMemberID_3" class="form-control" />
+                    <input id="FamilyMemberName_3" name="FamilyMemberName_3" class="form-control" />
+                </td>
+
+                <td>
+                    <input id="FamilyMemberAge_3" name="FamilyMemberAge_3" class="form-control" />
+                </td>
+                <td>
+                    <input id="RelationWithStudent_3" name="RelationWithStudent_3" class="form-control" />
+                </td>
+                <td>
+                    <input id="MaritalStatus_3" name="MaritalStatus_3" class="form-control" />
+                </td>
+                <td>
+                    <input id="MonthlyEducationExpense_3" name="MonthlyEducationExpense_3" class="form-control" />
+                </td>
+                <td>
+                    <input id="MedicalExpense_3" name="MedicalExpense_3" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" id="FamilyMemberID_4" name="FamilyMemberID_4" class="form-control" />
+                    <input id="FamilyMemberName_4" name="FamilyMemberName_4" class="form-control" />
+                </td>
+
+                <td>
+                    <input id="FamilyMemberAge_4" name="FamilyMemberAge_4" class="form-control" />
+                </td>
+                <td>
+                    <input id="RelationWithStudent_4" name="RelationWithStudent_4" class="form-control" />
+                </td>
+                <td>
+                    <input id="MaritalStatus_4" name="MaritalStatus_4" class="form-control" />
+                </td>
+                <td>
+                    <input id="MonthlyEducationExpense_4" name="MonthlyEducationExpense_4" class="form-control" />
+                </td>
+                <td>
+                    <input id="MedicalExpense_4" name="MedicalExpense_4" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" id="FamilyMemberID_5" name="FamilyMemberID_5" class="form-control" />
+                    <input id="FamilyMemberName_5" name="FamilyMemberName_5" class="form-control" />
+                </td>
+
+                <td>
+                    <input id="FamilyMemberAge_5" name="FamilyMemberAge_5" class="form-control" />
+                </td>
+                <td>
+                    <input id="RelationWithStudent_5" name="RelationWithStudent_5" class="form-control" />
+                </td>
+                <td>
+                    <input id="MaritalStatus_5" name="MaritalStatus_5" class="form-control" />
+                </td>
+                <td>
+                    <input id="MonthlyEducationExpense_5" name="MonthlyEducationExpense_5" class="form-control" />
+                </td>
+                <td>
+                    <input id="MedicalExpense_5" name="MedicalExpense_5" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" id="FamilyMemberID_6" name="FamilyMemberID_6" class="form-control" />
+                    <input id="FamilyMemberName_6" name="FamilyMemberName_6" class="form-control" />
+                </td>
+
+                <td>
+                    <input id="FamilyMemberAge_6" name="FamilyMemberAge_6" class="form-control" />
+                </td>
+                <td>
+                    <input id="RelationWithStudent_6" name="RelationWithStudent_6" class="form-control" />
+                </td>
+                <td>
+                    <input id="MaritalStatus_6" name="MaritalStatus_6" class="form-control" />
+                </td>
+                <td>
+                    <input id="MonthlyEducationExpense_6" name="MonthlyEducationExpense_6" class="form-control" />
+                </td>
+                <td>
+                    <input id="MedicalExpense_6" name="MedicalExpense_6" class="form-control" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide13"><h4 class="fa fa-level-down" aria-hidden="true"> Financial Support </h4></a>
+    </div>
+    <div id="hide13">
+        <table class="table">
+            <tr>
+                <th>
+                    Name Of Organization
+                </th>
+                <th>
+                    Amount Applied For
+                </th>
+                <th>
+                    Outcome
+                </th>
+                       
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" id="FinancialSupportID_0" name="FinancialSupportID_0" class="form-control" />
+                    <input id="NameOfOrganization_0" name="NameOfOrganization_0" class="form-control" />
+                </td>
+
+                <td>
+                    <input id="AmountAppliedFor_0" name="AmountAppliedFor_0" class="form-control" />
+                </td>
+                <td>
+                    <input id="Outcome_0" name="Outcome_0" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" id="FinancialSupportID_1" name="FinancialSupportID_1" class="form-control" />
+                    <input id="NameOfOrganization_1" name="NameOfOrganization_1" class="form-control" />
+                </td>
+
+                <td>
+                    <input id="AmountAppliedFor_1" name="AmountAppliedFor_1" class="form-control" />
+                </td>
+                <td>
+                    <input id="Outcome_1" name="Outcome_1" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" id="FinancialSupportID_2" name="FinancialSupportID_2" class="form-control" />
+                    <input id="NameOfOrganization_2" name="NameOfOrganization_2" class="form-control" />
+                </td>
+
+                <td>
+                    <input id="AmountAppliedFor_2" name="AmountAppliedFor_2" class="form-control" />
+                </td>
+                <td>
+                    <input id="Outcome_2" name="Outcome_2" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" id="FinancialSupportID_3" name="FinancialSupportID_3" class="form-control" />
+                    <input id="NameOfOrganization_3" name="NameOfOrganization_3" class="form-control" />
+                </td>
+
+                <td>
+                    <input id="AmountAppliedFor_3" name="AmountAppliedFor_3" class="form-control" />
+                </td>
+                <td>
+                    <input id="Outcome_3" name="Outcome_3" class="form-control" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide17"><h4 class="fa fa-level-down" aria-hidden="true"> Documents To Be Attached</h4></a>
+    </div>
+    <div class="row" id="hide17">
+        <br />
+        <ol>
+            <li><b>1- </b> A copy of CNIC of candidate and his father/guardian <input style="float: right; margin-right: 42em;height: 1.3em;width: 1.3em;" type="checkbox" name="CNIC" value="CNIC"></li> 
+            <li><b>2- </b> HSSC Certificate <input type="checkbox" name="Certificate" value="Certificate" style="float: right; margin-right: 42em;height: 1.3em;width: 1.3em;margin-top: -1.1em;"> </li>
+            <li><b>3- </b> Affidavit<input type="checkbox" name="Affidavit" value="Affidavit" style="float: right; margin-right: 42em;height: 1.3em;width: 1.3em;margin-top: -1em;">  </li>
+        </ol>
+    </div>
+
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide16"><h4 class="fa fa-level-down" aria-hidden="true"> Remarks by Principal & HOD </h4></a>
+    </div>
+        <div class="row" id="hide16">
+            <div class="col-sm-12">
+                @Html.LabelFor(model => model.RemarksByPrincipal, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.RemarksByPrincipal, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.RemarksByPrincipal, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-12">
+                @Html.LabelFor(model => model.RemarksByHOD, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.RemarksByHOD, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.RemarksByHOD, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    <div class="row">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-lg mybutton">
+                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+               Save
+            </button>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $("#ApplicantDOB").mask("99/99/9999");
+            //$("#FirstName").OnlyAlphabets();
+            //$("#LastName").OnlyAlphabets();
+            //$("#FatherName").OnlyAlphabets();
+            $("#MonthlySalary").ForceNumericOnly();
+            $("#RetiredLastDrawnGrossSalary").ForceNumericOnly();
+            $("#MonthlyIncomeBus").ForceNumericOnly();
+            $("#MonthlyIncomeSource").ForceNumericOnly();
+            $("#CellNo").ForceNumericOnly();
+            $("#ACNIC").CnicFormat();
+            $("#GuardianCNIC").CnicFormat();
+            $("#TotalTuitionFee").ForceNumericOnly();
+            $("#RequestForConcession").ForceNumericOnly();
+            $("#TotalFamilyMember").ForceNumericOnly();
+            $("#MonthlyRent").ForceNumericOnly();
+
+            if ($("#FormNo").val() != "" && $("#FormNo").val() != "0") {
+                GetApplicant();
+                GetFinancialSupports();
+                GetFamilyMembers();
+                GetBeliTrustInfo();
+            }
+
+            $("#FormNo").blur(function () {
+                GetApplicant();
+                GetFinancialSupports();
+                GetFamilyMembers();
+                GetBeliTrustInfo();
+            });
+
+            $('#Owned').on('change', function () {
+                if ($('#Owned').val() == "on") {
+                    $('#ResidenceText').val("Owned");
+                    $('#TypeOfResidence').val("Owned");
+                    $('#ResidenceText').attr("readonly", true);
+                    $('#MonthlyRent').attr("readonly", true);
+                    $('#MonthlyRent').val("");
+                }
+            });
+            $('#Rented').on('change', function () {
+                if ($('#Rented').val() == "on") {
+                    $('#ResidenceText').val("Rented");
+                    $('#TypeOfResidence').val("Rented");
+                    $('#ResidenceText').attr("readonly", true);
+                    $('#MonthlyRent').attr("readonly", false);
+                }
+            });
+            $('#Other').on('change', function () {
+                if ($('#Other').val() == "on") {
+                    $('#TypeOfResidence').val("Other");
+                    $('#ResidenceText').val("");
+                    $('#ResidenceText').attr("readonly", false);
+                    $('#MonthlyRent').attr("readonly", true);
+                    $('#MonthlyRent').val("");
+                }
+            });
+        });
+
+        function GetApplicant() {
+            var selectedValue = $("#FormNo").val();
+            $.ajax({
+                url: "@Url.Content("~/BeliTrusts/GetApplicant")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ FormNo: +selectedValue }),
+                success: function (result) {
+                    if (result == "No result found.") {
+                        alert(result);
+                        return;
+                    }
+
+                    var result = $.parseJSON(result);
+                    $("#SalutationName").val(result[0].SalutationName);
+                    $("#FirstName").val(result[0].FirstName);
+                    $("#LastName").val(result[0].LastName);
+                    $("#FatherName").val(result[0].FatherName);
+                    $("#ApplicantDOB").val(result[0].ApplicantDOB);
+                    $("#PlaceOfBirth").val(result[0].PlaceOfBirth);
+                    $("#GenderName").val(result[0].GenderName);
+
+                    $("#MaritalStatusName").val(result[0].MaritalStatusName);
+                    $("#ACNIC").val(result[0].ACNIC);
+
+                    $("#CellNo").val(result[0].CellNo);
+                    $("#Email").val(result[0].Email);
+
+                    $("#GuardianName").val(result[0].GuardianName);
+                    $("#RelationTypeName").val(result[0].RelationTypeName);
+                    $("#GuardianCNIC").val(result[0].GuardianCNIC);
+
+                    $("#Picture").val(result[0].Picture);
+                    if ($("#Picture").val() != "") {
+                        var pic = $("#Picture").val().replace("~/", "");
+                        $("#imgView").attr("src", "@Url.Content("~/")" + pic);
+                    }
+                    else {
+                        $("#Picture").val("@Url.Content("~/ProfilePics/noimage.png")");
+                    }
+                    $("#PresentAddress").val(result[0].PresentAddress);
+
+                    $("#ReligionID").val(result[0].ReligionID);
+
+                    $("#StatusName").val(result[0].StatusName);
+                    $("#IsActive").val(result[0].IsActive);
+                },
+                error: function () {
+                    alert("Something went wrong..");
+                },
+            });
+        }
+
+        function GetBeliTrustInfo() {
+            var selectedValue = $("#FormNo").val();
+            $.ajax({
+                url: "@Url.Content("~/BeliTrusts/GetBeliTrustInfo")",
+                type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ FormNo: +selectedValue }),
+            success: function (result) {
+                if (result == "No result found.") {
+                    return;
+                }
+
+                var result = $.parseJSON(result);
+                $("#NameOfOrganization").val(result[0].NameOfOrganization);
+                $("#DesignationName").val(result[0].DesignationName);
+                $("#MonthlySalary").val(result[0].MonthlySalary);
+                $("#DateOfRetirement").val(result[0].DateOfRetirement);
+                $("#RetiredOrganization").val(result[0].RetiredOrganization);
+                $("#RetiredPosition").val(result[0].RetiredPosition);
+                $("#RetiredLastDrawnGrossSalary").val(result[0].RetiredLastDrawnGrossSalary);
+                $("#NatureOfBusiness").val(result[0].NatureOfBusiness);
+                $("#MonthlyIncomeBus").val(result[0].MonthlyIncomeBus);
+                $("#TypeOfResidence").val(result[0].TypeOfResidence);
+                $("#ResidenceText").val(result[0].ResidenceText);
+                $("#MonthlyIncomeSource").val(result[0].MonthlyIncomeSource);
+                $("#NatureOfSource").val(result[0].NatureOfSource);
+                $("#MonthlyRent").val(result[0].MonthlyRent);
+                $("#TotalTuitionFee").val(result[0].TotalTuitionFee);
+                $("#BeliTrustCategoryID").val(result[0].BeliTrustCategoryID);
+                $("#RequestForConcession").val(result[0].RequestForConcession);
+                $("#RemarksByPrincipal").val(result[0].RemarksByPrincipal);
+                $("#RemarksByHOD").val(result[0].RemarksByHOD);
+
+                if (result[0].TypeOfResidence == "Owned") {
+                    $('#ResidenceText').val("Owned");
+                    $('#Owned').attr('checked', true);
+                    $('#TypeOfResidence').val("Owned");
+                    $('#ResidenceText').attr("readonly", true);
+                    $('#MonthlyRent').attr("readonly", true);
+                    $('#MonthlyRent').val("");
+                }
+                if (result[0].TypeOfResidence == "Rented") {
+                    $('#ResidenceText').val("Rented");
+                    $('#Rented').attr('checked', true);
+                    $('#TypeOfResidence').val("Rented");
+                    $('#ResidenceText').attr("readonly", true);
+                    $('#MonthlyRent').attr("readonly", false);
+                    $('#MonthlyRent').val(result[0].MonthlyRent);
+                }
+                if (result[0].TypeOfResidence == "Other") {
+                    $('#ResidenceText').val(result[0].ResidenceText);
+                    $('#Other').attr('checked', true);
+                    $('#TypeOfResidence').val("Other");
+                    $('#ResidenceText').attr("readonly", false);
+                    $('#MonthlyRent').attr("readonly", true);
+                    $('#MonthlyRent').val("");
+                }
+            },
+            error: function () {
+                alert("Something went wrong..");
+            },
+            });
+        }
+
+        function GetFamilyMembers() {
+            var selectedValue = $("#FormNo").val();
+            $.ajax({
+                url: "@Url.Content("~/BeliTrusts/GetFamilyMembers")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ FormNo: +selectedValue }),
+                success: function (result) {
+                    if (result == "No result found.") {
+                        return;
+                    }
+
+                    var TotalFamilyMember = "";
+                    var result = $.parseJSON(result);
+                    for (var i = 0; i <= result.length - 1; i++) {
+                        $("#FamilyMemberID_" + i).val(result[i].FamilyMemberID);
+                        $("#FamilyMemberName_" + i).val(result[i].FamilyMemberName);
+                        $("#FamilyMemberAge_" + i).val(result[i].FamilyMemberAge);
+                        $("#RelationWithStudent_" + i).val(result[i].RelationWithStudent);
+                        $("#MaritalStatus_" + i).val(result[i].MaritalStatus);
+                        $("#MonthlyEducationExpense_" + i).val(result[i].MonthlyEducationExpense);
+                        $("#MedicalExpense_" + i).val(result[i].MedicalExpense);
+                        TotalFamilyMember = result[i].TotalFamilyMember;
+                    }
+                    $("#TotalFamilyMember").val(TotalFamilyMember);
+                },
+                error: function () {
+                    alert("Something went wrong..");
+                },
+            });
+        }
+
+        function GetFinancialSupports() {
+            var selectedValue = $("#FormNo").val();
+            $.ajax({
+                url: "@Url.Content("~/BeliTrusts/GetFinancialSupports")",
+                type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ FormNo: +selectedValue }),
+            success: function (result) {
+                if (result == "No result found.") {
+                    return;
+                }
+                var result = $.parseJSON(result);
+                for (var i = 0; i <= result.length - 1; i++) {
+                    $("#FinancialSupportID_" + i).val(result[i].FinancialSupportID);
+                    $("#NameOfOrganization_" + i).val(result[i].NameOfOrganization);
+                    $("#AmountAppliedFor_" + i).val(result[i].AmountAppliedFor);
+                    $("#Outcome_" + i).val(result[i].Outcome);
+                }
+            },
+            error: function () {
+                alert("Something went wrong..");
+            },
+            });
+        }
+    </script>
+
+
+}
+
+

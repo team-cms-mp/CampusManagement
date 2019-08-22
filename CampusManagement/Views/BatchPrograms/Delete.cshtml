@@ -1,46 +1,210 @@
-﻿@model CampusManagement.Models.BatchProgram
-
+﻿@model CampusManagement.Models.GetBatchPrograms_Result
+@using CampusManagement.Models
 <h4 class="alert alert-info">Are you sure you want to delete this?</h4>
 
 <div>
     <dl class="dl-horizontal">
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.BatchID)</label>
+            <label class="control-label">@Html.DisplayNameFor(model => model.BatchName)</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Batch.BatchName)
+            @Html.DisplayFor(model => model.BatchName)
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.ProgramID)</label>
+            <label class="control-label">@Html.DisplayNameFor(model => model.ProgramName)</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Program.ProgramName)
+            @Html.DisplayFor(model => model.ProgramName)
+        </dd>
+        <dt>
+            <label class="control-label">Shift</label>
+        </dt>
+
+        <dd>
+            @{
+                ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+                string ShiftName = "";
+
+                Shift shft = dbc.Shifts.FirstOrDefault(f => f.ShiftID == Model.ShiftID);
+                if (shft != null)
+                {
+                    ShiftName = shft.ShiftName;
+                }
+                @Html.Raw(ShiftName)
+            }
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.ProgramFees)</label>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SelectionPercentage)</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ProgramFees)
+            @Html.DisplayFor(model => model.SelectionPercentage)
         </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.EntryTestPercentage)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EntryTestPercentage)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.GATNATPercentage)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GATNATPercentage)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.WithdrawalSubjectPercentage)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WithdrawalSubjectPercentage)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.AdmissionDateFrom)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AdmissionDateFrom)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.AdmissionDateTo)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AdmissionDateTo)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.RegistrationDateFrom)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RegistrationDateFrom)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.RegistrationDateTo)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RegistrationDateTo)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.EntryTestDate)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EntryTestDate)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.EntryTestDate1)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EntryTestDate1)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.EntryTestDate2)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EntryTestDate2)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.EntryTestDate3)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EntryTestDate3)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.EntryTestResultDate)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EntryTestResultDate)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.FirstMeritListDate)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstMeritListDate)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SecondMeritListDate)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SecondMeritListDate)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.ThirdMeritListDate)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ThirdMeritListDate)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.FourthMeritListDate)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FourthMeritListDate)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SendingOfferLetterDate)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SendingOfferLetterDate)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.OrientationDateFrom)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrientationDateFrom)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.OrientationDateTo)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrientationDateTo)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.AddDropDeadlineDateFrom)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AddDropDeadlineDateFrom)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.AddDropDeadlineDateTo)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AddDropDeadlineDateTo)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.WithdrawalSubjectDateFrom)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WithdrawalSubjectDateFrom)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.WithdrawalSubjectDateTo)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WithdrawalSubjectDateTo)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.WithdrawalSubjectDateTo)</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WithdrawalSubjectDateTo)
+        </dd>
+
+
+
+
+
 
         <dt>
             <label class="control-label">@Html.DisplayNameFor(model => model.StartDate)</label>
         </dt>
 
         <dd>
-            @{ 
-                string stDate = "";
-                if (Model.StartDate != null)
-                {
-                    stDate = Model.StartDate.Value.ToShortDateString();
-                }
-            }
-            @Html.Raw(stDate)
+            @Html.DisplayFor(model => model.StartDate)
         </dd>
 
         <dt>
@@ -48,14 +212,7 @@
         </dt>
 
         <dd>
-            @{
-                string endDate = "";
-                if (Model.EndDate != null)
-                {
-                    endDate = Model.EndDate.Value.ToShortDateString();
-                }
-            }
-            @Html.Raw(endDate)
+            @Html.DisplayFor(model => model.EndDate)
         </dd>
 
         <dt>
@@ -104,8 +261,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-success" />
-            <a href="@Url.Content("~/BatchPrograms/Index")" class="btn btn-success">Cancel</a>
+            <input type="submit" value="Delete" class="btn btn-primary" />
+            <a href="@Url.Content("~/BatchPrograms/Index")" class="btn btn-primary">Cancel</a>
         </div>
     }
 </div>

@@ -1,32 +1,58 @@
-﻿@model IEnumerable<CampusManagement.Models.Applicant>
-
+﻿@*@model IEnumerable<CampusManagement.Models.GetApplicantListSearch_Result>*@
+@model PagedList.IPagedList<CampusManagement.Models.GetApplicantListSearch_Result>
+@using PagedList.Mvc;
+@using CampusManagement.Models
 @{
     ViewBag.Title = "Applicants";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
 }
 
 <div class="row">
     <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
 </div>
-<hr style=" border-top: 1px solid #6d9b90;" />
+
+<hr style="border-top: 1px solid #6d9b90;" />
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { From = "Express" })
 </p>
 
 @using (Html.BeginForm("Index", "Applicants", FormMethod.Post))
 {
     <div class="row" style="margin-top: -2em;margin-bottom: -2em;">
         <div class="col-sm-5 inner-addon right-addon">
-            <input type="text" class="form-control" placeholder="search" name="Search" />
+            <input type="text" class="form-control" placeholder="Form #" name="Search" value="@ViewBag.Search" />
         </div>
+        <div class="col-sm-4 inner-addon right-addon">
+            @Html.DropDownList("BatchID", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        @*<div class="col-sm-4 inner-addon left-addon">
+            <i class="glyphicon glyphicon-chevron-down" style="position: absolute;margin-left: 27.5em;color: gray;top:10px"></i>
+            <input type="text" name="daterange" value="@ViewBag.daterange" class="form-control" placeholder="01/01/2019 - 02/01/2019"  readonly style="background: white;" />
+        </div>*@
+        
         <div class="col-sm-1">
-            <button type="submit" class="btn btn-success" value="Search">
+            <button type="submit" class="btn btn-primary" value="Search">
                 <span class="glyphicon glyphicon-search"></span> Search
             </button>
         </div>
     </div>
 }
+    <br />
+<hr style="border-top: 1px solid #6d9b90;" />
+<div class="col-sm-1 inner-addon right-addon">
+    <select id="pageSize" name="pageSize" class="form-control" @*onchange="redirect(this.value)"*@ value="@ViewBag.pageSize" style="padding: 7px;">
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+    </select>
+</div>
+<span>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span> <span style="font-weight:bold;">(Total Records : @ViewBag.TotalRecords)</span>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = ViewBag.pageSize, BatchID = ViewBag.BatchIDAssigned }))
+<br />
 <table class="table">
     <tr>
         <th></th>
@@ -38,10 +64,18 @@
     {
         <tr>
             <td>
-                <img src="@Url.Content(item.Picture)" style="width:125px; height:125px;border-radius:150px;" />
+                <a href="@Url.Content(item.Picture)" id="lnkProfilePicture" target="_blank"><img src="@Url.Content(item.Picture)" style="width:125px; height:125px; border-radius:10px;" /></a>
             </td>
             <td>
                 <table class="table-striped">
+                    <tr>
+                        <td>
+                            <label class="control-label">Form No. </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FormNo)
+                        </td>
+                    </tr>
                     <tr>
                         <td>
                             <label class="control-label">First Name : </label>
@@ -79,25 +113,156 @@
                             <label class="control-label">Status : </label>
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Status.StatusName)
+                            @Html.DisplayFor(modelItem => item.StatusName)
                         </td>
                     </tr>
+
                     <tr>
                         <td>
                             <label class="control-label">Nationality : </label>
                         </td>
                         <td>
-                            <img src="@Url.Content(item.Nationality.FlagURL)" style="width:20px;height:20px;" /> @Html.DisplayFor(modelItem => item.Nationality.NationalityName)
+                            <img src="@Url.Content(item.FlagURL)" style="width:20px;height:20px;" /> @Html.DisplayFor(modelItem => item.NationalityName)
                         </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label class="control-label">Program :  </label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProgramName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">Type :</label>
+                        </td>
+                        @if (item.DepositTypeName == "Walk In")
+                        {
+                            <td style="color: red; font-weight:bold">
+                                @Html.DisplayFor(modelItem => item.DepositTypeName)
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="color: blue; font-weight:bold">
+                                @Html.DisplayFor(modelItem => item.DepositTypeName)
+                            </td>
+                        }
+                        
                     </tr>
                 </table>
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.FormNo }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.FormNo }) |
-                @Html.ActionLink("Add Qualification", "Index", "ApplicantQualifications", new { FormNo = item.FormNo }, null)
+                <table class="table-striped">
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Applicants", new { id = item.FormNo }, null) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.FormNo }) |
+                            <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptApplicantCompleteDetails&FormNo=")@item.FormNo" target="_blank">Profile</a> |
+                            @Html.ActionLink("Checklist", "DocumentCheckList", "ApplicantUploads", new { FormNo = item.FormNo }, null) |
+                            @Html.ActionLink("Supporting Documents", "Index", "ApplicantUploads", new { FormNo = item.FormNo }, null) |
+                            <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptGetAdmitCard&FormNo=")@item.FormNo" target="_blank">Admit Card</a> |
+                            @{
+                                Applicant app = dbc.Applicants.FirstOrDefault(a => a.FormNo == item.FormNo);
+                                if (app != null)
+                                {
+                                    FormSaleDetail fsd = dbc.FormSaleDetails.FirstOrDefault(f => f.FormNo == item.FormNo);
+                                    if (fsd != null)
+                                    {
+                                        if (fsd.FormDescription == "Applied Online")
+                                        {
+                                            Status status = dbc.Status.FirstOrDefault(s => s.StatusID == app.StatusID);
+                                            if (status.StatusName == "Submitted")
+                                            {
+                                                @Html.ActionLink("Show Admit Card To Applicant", "ShowAdmitCardToApplicant", "Applicants", new { id = item.FormNo }, null)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        </td>
+                        </tr>
+                    <tr>
+                        <td>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Selected Programs </label>
+                            @{List<GetApplicantAppliedPrograms_Result> lstAQ1 = dbc.GetApplicantAppliedPrograms(item.FormNo).ToList();
+                                if (lstAQ1.Count > 0)
+                                {
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>
+                                                Session
+                                            </th>
+                                            <th>
+                                                Priority
+                                            </th>
+                                            <th>
+                                                Program
+                                            </th>
+                                            <th>
+                                                Level
+                                            </th>
+                                        </tr>
+
+                                        @foreach (var item1 in lstAQ1)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item1.BatchName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item1.ProgramPriority)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item1.ProgramName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item1.LevelName)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
     }
 
 </table>
+
+<br />
+<hr style="border-top: 1px solid #6d9b90;" />
+<span>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span> <span style="font-weight:bold;">(Total Records : @ViewBag.TotalRecords)</span>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = ViewBag.pageSize, BatchID = ViewBag.BatchIDAssigned }))
+
+@section Scripts {
+<script>
+    $(function () {
+        
+        $("#pageSize").val("@ViewBag.pageSize");
+
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'left'
+        }, function (start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+        $('input[name="daterange"]').val('');
+    });
+
+    function redirect(dropDownValue) {
+        window.location.href = '/Applicants/Index?page = 1&pageSize=' + dropDownValue;
+    }
+
+
+</script>
+}

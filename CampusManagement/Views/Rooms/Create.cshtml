@@ -1,13 +1,18 @@
-﻿@model CampusManagement.Models.Room
+﻿@model CampusManagement.Models.SP_roomForPage_Result
 
 @using (Html.BeginForm("Create", "Rooms", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-
+    <div class="row" style="margin-top:-35px !important">
+        <div class="col-sm-12 ">
+            @*<input type="submit" value="Add" class="btn btn-primary" />*@
+            <a href="@Url.Content("~/TimeTables/TimeTableSetup")" class="btn btn-primary pull-right">Back</a>
+        </div>
+    </div>
     <div class="row">
         <h2><span class="col-sm-12">Add Room</span></h2>
     </div>
-    <hr style=" border-top: 1px solid #6d9b90;" />
+    <hr style="border-top: 1px solid #6d9b90;" />
     @Html.Partial("_MessageView")
 
     <div class="row">
@@ -40,8 +45,8 @@
     <br />
     <div class="row">
         <div class="col-sm-3">
-            <input type="submit" value="Add" class="btn btn-success" />
-            <a href="@Url.Content("~/Rooms/Index")" class="btn btn-success">Refresh</a>
+            <input type="submit" value="Add" class="btn btn-primary" />
+            <a href="@Url.Content("~/Rooms/Index")" class="btn btn-primary">Refresh</a>
         </div>
     </div>
 }

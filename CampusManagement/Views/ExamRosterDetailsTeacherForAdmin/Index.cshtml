@@ -1,0 +1,119 @@
+﻿@model CampusManagement.Models.ExamRosterDetailsTeacherViewModel
+@using CampusManagement.Models
+@using (Html.BeginForm("Index", "ExamRosterDetailsTeacherForAdmin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12"> Roster Dispatch Details Against Teacher</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+
+        <div class="col-sm-4">
+            <label>Exam</label>
+            @Html.DropDownListFor(model => model.ExamID, null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ExamID, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="col-sm-4">
+            <label>Lecturers</label>
+            @Html.DropDownListFor(model => model.EmpID, null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.EmpID, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 1em;">
+        <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+
+    </div>
+
+}
+
+
+@{
+
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+
+    int hdnExamID = (ViewBag.hdnExamID == null) ? 0 : ViewBag.hdnExamID;
+    int hdnEmpID = (ViewBag.hdnEmpID == null) ? 0 : ViewBag.hdnEmpID;
+    Model.RosterDetailList = dbc.GetExamRosterDetailsAgainstTeacher(hdnExamID, hdnEmpID).ToList();
+    if (Model != null)
+    {
+        if (Model.RosterDetailList != null)
+        {
+            if (Model.RosterDetailList.Count > 0)
+            {
+                <table class="table">
+                    <tr>
+                        <th>
+                            Teacher Details
+                        </th>
+                        <th>
+                           Exam Details
+                        </th>
+                        <th>
+                           Room Deatils
+                        </th>
+                        <th>
+                           Course DetaIls
+                        </th>
+                    </tr>
+                    @for (var z = 0; z < Model.RosterDetailList.Count; z++)
+                    {
+                        <tr>
+                            <td>
+                                <span style="font-weight:bold">Name : </span>  @Html.DisplayFor(modelItem => Model.RosterDetailList[z].EFName)<br /> 
+                                <span style="font-weight:bold">Designation : </span>  @Html.DisplayFor(modelItem => Model.RosterDetailList[z].Designation_Name)<br /> 
+                                 <span style="font-weight:bold">CNIC : </span>  @Html.DisplayFor(modelItem => Model.RosterDetailList[z].CNIC) 
+                                @*<span style="font-weight:bold">Session : </span>  @Html.DisplayFor(modelItem => Model.CourseList[z].BatchSession) <span style="color:red">( Program:  @Html.DisplayFor(modelItem => Model.CourseList[z].ProgramName) )</span><br />
+                                <span style="font-weight:bold">Subject: </span> @Html.DisplayFor(modelItem => Model.CourseList[z].CourseCode) - @Html.DisplayFor(modelItem => Model.CourseList[z].CourseName) <span style="color:red">( Semester# :  @Html.DisplayFor(modelItem => Model.CourseList[z].YearSemesterNo) )</span><br />
+                                <span style="font-weight:bold"> Eligible Student Count:</span> <span style="color:red">(@Html.DisplayFor(modelItem => Model.CourseList[z].StudentCount))</span>*@
+                            </td>
+                            
+                            <td>
+                                <span style="font-weight:bold">Exam Title : </span>  @Html.DisplayFor(modelItem => Model.RosterDetailList[z].ExamTitle)<br /> 
+                                <span style="font-weight:bold">Exam Season : </span>  @Html.DisplayFor(modelItem => Model.RosterDetailList[z].SeasonName)<br /> 
+                                <span style="font-weight:bold">Exam Term Name : </span>  @Html.DisplayFor(modelItem => Model.RosterDetailList[z].TermName)<br /> 
+                                <span style="font-weight:bold">Exam Date Title : </span>  @Html.DisplayFor(modelItem => Model.RosterDetailList[z].ExamDateTitle)<br /> 
+                                <span style="font-weight:bold">Time Slot : </span>  @Html.DisplayFor(modelItem => Model.RosterDetailList[z].TimeSlot)
+                            </td>
+                            <td>
+                                <span style="font-weight:bold">Room Name : </span>  @Html.DisplayFor(modelItem => Model.RosterDetailList[z].RoomName)
+
+                            </td>
+                            <td>
+                                <span style="font-weight:bold">Session : </span>  @Html.DisplayFor(modelItem => Model.RosterDetailList[z].BatchSession)<br />
+                                <span style="font-weight:bold">Program : </span>  @Html.DisplayFor(modelItem => Model.RosterDetailList[z].ProgramName)<br />
+                                <span style="font-weight:bold">Subject : </span>  @Html.DisplayFor(modelItem => Model.RosterDetailList[z].CourseCode) - @Html.DisplayFor(modelItem => Model.RosterDetailList[z].CourseName) 
+                            </td>
+                        </tr>
+
+                    }
+                </table>
+                <br />
+            }
+            else
+            {
+               <span style="color:red"> No Dispatch Details Found</span>
+            }
+        }
+        else
+        {
+         <span style = "color:red" > No Dispatch Details Found </span >
+        }
+        }
+        else
+         {
+         <span style = "color:red" > No Dispatch Details Found </span >
+         }
+    }
+   

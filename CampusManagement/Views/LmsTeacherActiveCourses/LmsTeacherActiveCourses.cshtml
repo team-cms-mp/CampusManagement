@@ -1,0 +1,81 @@
+﻿@model CampusManagement.Models.LMSSubjectLearning
+@using CampusManagement.Models
+
+@using (Html.BeginForm("ActiveTeacherCourses", "LmsTeacherActiveCourses", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <br />
+    string errorstring = ViewBag.MessageType;
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+    int hdnTeacherID = (ViewBag.hdnTeacherID == null) ? 0 : ViewBag.hdnTeacherID;
+
+    List<GetTeacherActiveCources_by_TeacherID_ForLMS_Result> lstDocs = new List<GetTeacherActiveCources_by_TeacherID_ForLMS_Result>();
+    if (errorstring == "")
+    {
+        lstDocs = dbc.GetTeacherActiveCources_by_TeacherID_ForLMS(hdnTeacherID).ToList();
+    }
+    <div class="row" style="margin-top: -2em;">
+        <h2><span class="col-sm-12"> Learning Subjects </span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+
+
+    <input name="hdnTeacherID" value="@ViewBag.hdnTeacherID" type="hidden" id="hdnBatchID" />
+
+    <input id="hdnRowCount" name="hdnRowCount" value="@lstDocs.Count" type="hidden" />
+    int i = 1;
+
+    if (lstDocs.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                   Subject Name
+                </th>
+                <th>
+                    Semester
+                </th>
+                <th>
+                    Session
+                </th>
+                <th>
+                    Faculity
+                </th>
+                <th>
+                    Action
+                </th>
+
+
+            </tr>
+
+            @foreach (var item in lstDocs)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SemesterCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BatchSession)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FaculityName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Create Learning Subjects", "Index", "LmsTeacherActiveCourses", new { ProgramCourseID = item.ProgramCourseID }, null)
+                    </td>
+                </tr>
+                i++;
+            }
+        </table>
+        <hr />
+
+    }
+
+}
+
+
+

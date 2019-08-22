@@ -1,0 +1,266 @@
+﻿
+@model PagedList.IPagedList<CampusManagement.Models.GetStudentOrApplicantList_Result>
+@using PagedList.Mvc;
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Applicant/Student Count";
+    //Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+    int StudentCount = 0;
+    int ApplicantCount = 0;
+}
+
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+
+<hr style="border-top: 1px solid #6d9b90;" />
+
+<fieldset class="box-border">
+    <legend class="box-border">Search</legend>
+    <div class="control-group">
+        @Html.Partial("_MessageView")
+        @using (Html.BeginForm("Index", "ApplicantsOrStudentsSearch", FormMethod.Post))
+        {
+            <div class="row" style="margin-top: -4em;margin-bottom: -2em;">
+
+                <div class="col-sm-3">
+                    <label>Session</label>
+                    @Html.DropDownList("BatchID", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+                <div class="col-sm-3">
+                    <label>Program</label>
+                    @Html.DropDownList("BatchProgramID", null, htmlAttributes: new { @class = "form-control" })
+
+                </div>
+
+                <div class="col-sm-3">
+                   
+                        <label>Student/Applicant</label>
+                        @Html.DropDownList("Status", null, htmlAttributes: new { @class = "form-control" })
+                       
+                   
+                </div>
+
+                <div class="col-sm-1 " style="margin-top:25px;">
+                    <button type="submit" class="btn btn-primary" value="Search">
+                        <span class="glyphicon glyphicon-search"></span> Search
+                    </button>
+                </div>
+            </div>
+        }
+        <br />
+    </div>
+</fieldset>
+
+<div class="row  pull-right" style="margin-bottom:0px" >
+
+   @{
+       if (Model != null)
+       {
+        <div class="pull-right">
+            <span style="font-weight:bold; color:red">Total :  @Model.Count  </span> 
+        </div>
+       
+       }
+   }
+</div>
+<br/>
+
+<div class="row" style="margin-bottom:0px">
+    <fieldset class="boxpanel-border">
+        <legend class="boxpanel-border">Student/Applicant Count Section</legend>
+        <div class="control-group">
+            <br />
+
+            <input id='hfBatchID' name='hfBatchID' type="hidden" value='@ViewBag.hdnBatchID' />
+            <input id='hfBatchProgramID' name='hfBatchProgramID' type="hidden" value='@ViewBag.hdnBatchProgramID' />
+            @*<div class="col-sm-1 inner-addon right-addon">
+                    <select id="pageSize" name="pageSize" class="form-control" onchange="redirect(this.value)" value="@ViewBag.pageSize" style="padding: 7px;">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>*@
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+            <table class="table" id="tblEligiblestudents" name="tblEligiblestudents">
+                <tr>
+                    <th>Student Details</th>
+                    <th>Other Details</th>
+                    <th>Program Details</th>
+                    <th>Status Details</th>
+                    <th>Action</th>
+                </tr>
+              
+                @foreach (var item in Model)
+            {
+
+                    @Html.HiddenFor(model => item.FormNo)
+                    @Html.HiddenFor(model => item.AddAppID)
+                    @Html.HiddenFor(model => item.name)
+                    @Html.HiddenFor(model => item.CellNo)
+                    @Html.HiddenFor(model => item.Email)
+                    @Html.HiddenFor(model => item.ProgramName)
+                    @Html.HiddenFor(model => item.FatherName)
+                    @Html.HiddenFor(model => item.CreatedOn)
+                    @Html.HiddenFor(model => item.CreatedOn)
+                    @Html.HiddenFor(model => item.StatusID)
+                    @Html.HiddenFor(model => item.StatusName)
+                    @Html.HiddenFor(model => item.BatchName)
+                    @Html.HiddenFor(model => item.ProgramName)
+                    @Html.HiddenFor(model => item.StudentOrApplicant)
+
+                    if (item.StatusID == 6015)
+                    {
+                        StudentCount = StudentCount + 1;
+
+                    }
+                    else {
+                        ApplicantCount = ApplicantCount + 1;
+                    }
+                    <tr>
+                        <td>
+                            <span style="font-weight:bold">Form No : </span>     @Html.DisplayFor(modelItem => item.FormNo) <br />
+                            <span style="font-weight:bold">Name    : </span>@Html.DisplayFor(modelItem => item.name) <br />
+                            <span style="font-weight:bold">Cell No : </span> @Html.DisplayFor(modelItem => item.CellNo) <br />
+                            <span style="font-weight:bold">Email   : </span>@Html.DisplayFor(modelItem => item.Email)
+                        </td>
+
+                        <td>
+                            <span style="font-weight:bold">Father Name : </span>@Html.DisplayFor(modelItem => item.FatherName) <br />
+                            <span style="font-weight:bold">Created On : </span>@Html.DisplayFor(modelItem => item.CreatedOn)
+                        </td>
+                        <td>
+                            <span style="font-weight:bold">Batch Name : </span>@Html.DisplayFor(modelItem => item.BatchName) <br />
+                            <span style="font-weight:bold">Program Name : </span>@Html.DisplayFor(modelItem => item.ProgramName)
+
+                        </td>
+                        <td>
+                            @*<span style="font-weight:bold">Status : </span> @Html.DisplayFor(modelItem => item.StatusName) <br />*@
+                            <span style="font-weight:bold">CurrentRole : </span> @Html.DisplayFor(modelItem => item.StudentOrApplicant)
+
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "Delete", "Applicants", new { id = item.FormNo }, null) |
+                            @Html.ActionLink("View Detail", "Edit", "Applicants", new { id = item.FormNo }, null) |
+                            @Html.ActionLink("Supporting Documents", "Index", "ApplicantUploads", new { FormNo = item.FormNo }, null)
+                        </td>
+
+                    </tr>
+            }
+            </table>
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+
+        </div>
+    </fieldset>
+</div>
+
+<div class="row col-lg-12  pull-right" style="margin-bottom:0px">
+
+    @{
+       
+            <div class="pull-right">
+                <span style="font-weight:bold; color:red">Total Student :  @StudentCount  </span>
+            </div>
+    }
+</div>
+<div class="row col-lg-12 pull-right" style="margin-bottom:0px">
+
+    @{
+
+        <div class="pull-right">
+            <span style="font-weight:bold; color:red">Total Applicant :  @ApplicantCount  </span>
+        </div>
+    }
+</div>
+
+    @section Scripts {
+        <script>
+
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+                $("#pageSize").val("@ViewBag.pageSize");
+
+                GetPrograms_by_FacultyLevelBatch();
+
+
+                $("#BatchID").change(function () {
+                    // alert("s");
+                    @*@{ ViewBag.hdnBatchProgramID = "0"; }*@
+
+                    GetPrograms_by_FacultyLevelBatch();
+                });
+            });
+
+            function GetPrograms_by_FacultyLevelBatch() {
+                var BatchID = $("#BatchID").val();
+                $("#hfBatchProgramID").val("0") ;
+                $.ajax({
+                    url: "@Url.Content("~/ApplicantsOrStudentsSearch/GetPrograms_by_FacultyLevelBatch")",
+                    type: 'POST',
+                    datatype: 'application/json',
+                    contentType: 'application/json',
+                    async: false,
+                    data: JSON.stringify({ BatchID: +BatchID }),
+                    success: function (result) {
+                        @*alert(@ViewBag.hdnBatchProgramID + "");*@
+                        if(@ViewBag.hdnBatchProgramID != 0){
+                            $("#hfBatchProgramID").value = (@ViewBag.hdnBatchProgramID) ;
+
+                        }
+                        $("#BatchProgramID").html("");
+                        // $("#BatchProgramID").append($('<option></option>').val("0").html("--All--"));
+                        $.each($.parseJSON(result), function (i, sem) {
+                            $("#BatchProgramID").append($('<option></option>').val(sem.BatchProgramID).html(sem.ProgramName));
+                        });
+                        $("#BatchProgramID").val(@ViewBag.hdnBatchProgramID)
+                        //$("#BatchProgramID").val($("#hfBatchProgramID").val())
+                    },
+                    error: function (ex) {
+                        alert(ex.error);
+                    },
+                });
+            }
+
+            function redirect(dropDownValue) {
+                window.location.href = '/Applicants/Index?page = 1&pageSize=' + dropDownValue;
+            }
+        </script>
+        <style>
+            fieldset.box-border {
+                border: 1px groove #ddd !important;
+                padding: 0 1.4em 0 1.4em !important;
+                margin: 0 0 1.5em 0 !important;
+                -webkit-box-shadow: 0px 0px 0px 0px #000;
+                box-shadow: 0px 0px 0px 0px #000;
+            }
+
+            legend.box-border {
+                font-size: 1.2em !important;
+                font-weight: bold !important;
+                text-align: left !important;
+            }
+
+            fieldset.boxpanel-border {
+                border: 1px groove #ddd !important;
+                padding: 0 1.4em 0 1.4em !important;
+                margin: 0 0 1.5em 0 !important;
+                -webkit-box-shadow: 0px 0px 0px 0px #000;
+                box-shadow: 0px 0px 0px 0px #000;
+            }
+
+            legend.boxpanel-border {
+                font-size: 1.2em !important;
+                font-weight: bold !important;
+                text-align: left !important;
+            }
+        </style>
+
+    }

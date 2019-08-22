@@ -1,0 +1,108 @@
+﻿@model CampusManagement.Models.LMSQuiz
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Welcome Quiz Page";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ModelCMSContainer Lms = new ModelCMSContainer();
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">Welcome to @Html.DisplayFor(model => model.QuizTitle)</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+@Html.Partial("_MessageView")
+
+<h4 style="margin-bottom: 38px;">Dear  @Session["UserName"] Good Luck !</h4>
+<div>
+
+    <dl class="dl-horizontal">
+        <dt>
+            <label class="control-label">Attempts Allowed :</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoOfTries)
+            <input id="QuizEndTime" value="@Model.EndDateTime" type="text" hidden />
+        </dd>
+
+        <dt>
+            <label class="control-label">This quiz opend at :</label>
+        </dt>
+
+        <dd>
+            <input id='time' readonly style="border: none;" />
+        </dd>
+
+        <dt>
+            <label class="control-label">Time Limit :</label>
+        </dt>
+
+        <dd>
+            @{
+
+            DateTime StartTime = (DateTime)Model.StartDateTime;
+            DateTime EndTime = (DateTime)Model.EndDateTime;
+            TimeSpan hours;
+            hours = EndTime - StartTime;
+
+        }
+        @Html.Raw("" + hours + "")
+    </dd>
+
+</dl>
+
+@{
+    LMSStudentQuizAttempt lms = Lms.LMSStudentQuizAttempts.FirstOrDefault(s => s.LMSQuizID == Model.LMSQuizID);
+
+    <div class="form-actions no-color">
+        @*<input type="submit" id="checkCount" value="Attempt Quiz" class="btn btn-primary" onclick="showDiv()" />*@
+        @Html.ActionLink("Attempt Quiz", "StudentViewQuizAfterVarify", new { LMSQuizID = @ViewBag.LMSQuizID, LMSSubjectLearningID = @ViewBag.LMSSubjectLearningID, LSTitle = @ViewBag.LSTitle }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Back to Learning Contents", "Index", "LmsStudentActiveCourses", new { LMSSubjectLearningID = @ViewBag.LMSSubjectLearningID, LSTitle = @ViewBag.LSTitle }, new { @class = "btn btn-primary" })
+    </div>
+    if (lms != null)
+    {
+
+        <input id="clicks" value="@lms.StudentAttempts" name="StudentAttempts" hidden />
+    }
+
+    @Html.EditorFor(model => model.NoOfTries, new { htmlAttributes = new { @class = "form-control", @type = "hidden" } })
+    <input name="LMSSubjectLearningID" value="@ViewBag.LMSSubjectLearningID" type="hidden" id="LMSSubjectLearningID" />
+        <input name="LSTitle" value="@ViewBag.LSTitle" type="hidden" id="LSTitle" />
+        <input id="LMSQuizID" name="LMSQuizID" value="@ViewBag.LMSQuizID" type="hidden" />
+
+}
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $('#checkCount').click(function () {
+                
+                var val = $('#clicks').val();
+                if(val == undefined && val==null)
+                {
+                    val = 0;
+
+                }
+
+
+            })
+            // get a new date (locale machine date time)
+            var date = new Date();
+
+            var time = date.toLocaleTimeString();
+
+            var str = $.datepicker.formatDate('dd/mm/yy', date);
+
+            document.getElementById('time').value = str
+
+
+        });
+
+
+
+    </script>
+}
+

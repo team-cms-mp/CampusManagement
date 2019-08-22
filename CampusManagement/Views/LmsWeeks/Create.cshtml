@@ -1,0 +1,6 @@
+﻿@model CampusManagement.Models.LMSWeek
+
+@using (Html.BeginForm("Create", "LmsWeeks", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.Partial("_MessageView")
+}

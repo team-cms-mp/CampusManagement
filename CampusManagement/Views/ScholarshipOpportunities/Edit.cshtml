@@ -1,0 +1,80 @@
+﻿@model CampusManagement.Models.ScholarshipOpportunitie
+
+@using (Html.BeginForm("Edit", "ScholarshipOpportunities", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Edit Scholarship Opportunitie</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.HiddenFor(model => model.ScholarshipOpportunitiesID)
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Scholarship Catagory</label>
+            @Html.DropDownList("ScholarshipCatagoryID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ScholarshipCatagoryID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4">
+            @Html.LabelFor(model => model.DeadLine, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.DeadLine, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DeadLine, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-4" hidden>
+            @Html.LabelFor(model => model.ScholarshipImagePath, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ScholarshipImagePath, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ScholarshipImagePath, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4">
+            @Html.LabelFor(model => model.UploadFiles, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.UploadFiles, new { @class = "form-control", Type = "File", onchange = "readURL(this);" })
+            @Html.ValidationMessageFor(model => model.UploadFiles, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-4">
+            <label>Scholarship Title</label>
+            @Html.EditorFor(model => model.ScholarshipTitle, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ScholarshipTitle, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            <label> Scholarship Description</label>
+        </div>
+        <div class="col-sm-12">
+
+            @Html.TextAreaFor(model => model.ScholarshipDescription, 7, 144, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ScholarshipDescription, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+
+            <label> How To Qualify</label>
+        </div>
+        <div class="col-sm-12">
+
+            @Html.TextAreaFor(model => model.HowToQualify, 7, 144, new { htmlAttributes = new { @class = "form-control", style = "resize:none" } })
+            @Html.ValidationMessageFor(model => model.HowToQualify, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            <label>Eligibility Description</label>
+        </div>
+        <div class="col-sm-12">
+
+            @Html.TextAreaFor(model => model.EligibilityDescription, 7, 144, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EligibilityDescription, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a href="@Url.Content("~/ScholarshipOpportunities/Index")" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+}
+

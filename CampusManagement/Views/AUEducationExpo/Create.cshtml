@@ -1,0 +1,68 @@
+﻿@model CampusManagement.Models.AlumniEducationExpo
+
+@using (Html.BeginForm("Create", "AUEducationExpo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Add Education Expos </span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+        <div class="col-sm-4" hidden>
+            <input id="AlumniUserID" name="AlumniUserID" value="@ViewBag.AlumniUserID" type="hidden" />
+        </div>
+        <div class="col-sm-4">
+            <label>Education Expo Title</label>
+            @Html.TextBoxFor(model => model.EducationExpoTitle, new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(model => model.EducationExpoTitle, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-4">
+            <label> Education Expo Location </label>
+            @Html.TextBoxFor(model => model.EducationExpoLocation, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.EducationExpoLocation, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="col-sm-4">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            <label>Education Expo Details</label>
+            @Html.TextAreaFor(model => model.EducationExpoDetails, new { @class = "form-control", @style = "height: 10em;" })
+            @Html.ValidationMessageFor(model => model.EducationExpoDetails, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label> Education Expo Start Date </label>
+            <input type="date" name="Start_Date" class="form-control" required>
+            @Html.ValidationMessageFor(model => model.EducationExpoStartDateTime, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label> Education Expo Start Time </label>
+            <input type="time" name="Start_time" class = "form-control" required>
+        </div>
+        <div class="col-sm-3">
+           <label>Education Expo End Date</label>
+            <input type="date" name="End_Date" class="form-control" required>
+            @Html.ValidationMessageFor(model => model.EducationExpoEndDateTime, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label> Education Expo End Time </label>
+            <input type="time" name="End_time" class="form-control" required>
+        </div>
+
+
+
+        <div class="col-sm-2">
+            <input style="margin-top: 1.6em;" type="submit" value="Add" class="btn btn-primary" />
+        </div>
+
+    </div>
+}
+
+

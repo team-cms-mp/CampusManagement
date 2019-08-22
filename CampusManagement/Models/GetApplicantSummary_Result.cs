@@ -17,5 +17,6 @@ namespace CampusManagement.Models
         public string BatchName { get; set; }
         public string ProgramName { get; set; }
         public string StatusName { get; set; }
+        public string SubDept_Name { get; set; }
     }
 }

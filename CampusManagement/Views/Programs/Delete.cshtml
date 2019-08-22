@@ -1,11 +1,18 @@
-﻿@model CampusManagement.Models.Program
-
+﻿@model CampusManagement.Models.SP_ProgramForPage_Result
 <h4 class="alert alert-info">Are you sure you want to delete this?</h4>
 
 <div>
     <dl class="dl-horizontal">
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.ProgramName)</label>
+            <label class="control-label">Program ID</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProgramID)
+        </dd>
+
+        <dt>
+            <label class="control-label">Program Name</label>
         </dt>
 
         <dd>
@@ -13,7 +20,7 @@
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.ProgramCode)</label>
+            <label class="control-label">Program Code</label>
         </dt>
 
         <dd>
@@ -21,15 +28,55 @@
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.ProgramType.ProgramTypeName)</label>
+            <label class="control-label">Program Type</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ProgramType.ProgramTypeName)
+            @Html.DisplayFor(model => model.ProgramTypeName)
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.ProgramDescription)</label>
+            <label class="control-label">Faculty / Departments</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FacultyName)
+        </dd>
+
+        <dt>
+            <label class="control-label">Level</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LevelName)
+        </dd>
+
+        <dt>
+            <label class="control-label">Entry Test Total Marks</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TestTotalMarks)
+        </dd>
+
+        <dt>
+            <label class="control-label">Drawing Test Total Marks</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DrawingTestTotalMarks)
+        </dd>
+
+        <dt>
+            <label class="control-label">Interview Total Marks</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InterviewTotalMarks)
+        </dd>
+
+        <dt>
+            <label class="control-label">Description</label>
         </dt>
 
         <dd>
@@ -37,7 +84,7 @@
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.IsActive)</label>
+            <label class="control-label">Is Active</label>
         </dt>
 
         <dd>
@@ -45,7 +92,7 @@
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.CreatedOn)</label>
+            <label class="control-label">Created On</label>
         </dt>
 
         <dd>
@@ -53,26 +100,26 @@
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.CreatedBy)</label>
+            <label class="control-label">Created By</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
+            @Html.DisplayFor(model => model.CB_Username)
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.ModifiedOn)</label>
+            <label class="control-label">Modified On</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ModifiedOn)
+            @*@Html.DisplayFor(model => model.ModifiedOn)*@
         </dd>
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.ModifiedBy)</label>
+            <label class="control-label">Modified By)</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ModifiedBy)
+            @Html.DisplayFor(model => model.MB_Username)
         </dd>
 
     </dl>
@@ -82,8 +129,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-success" />
-            <a href="@Url.Content("~/Programs/Index")" class="btn btn-success">Cancel</a>
+            <input type="submit" value="Delete" class="btn btn-primary" />
+            <a href="@Url.Content("~/Programs/Index")" class="btn btn-primary">Cancel</a>
         </div>
     }
 </div>

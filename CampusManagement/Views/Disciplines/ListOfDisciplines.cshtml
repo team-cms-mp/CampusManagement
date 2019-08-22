@@ -1,0 +1,66 @@
+﻿@model CampusManagement.Models.DisciplineViewModel
+
+@{
+    ViewBag.Title = "Disciplines";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">List Of Cases</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+@using (Html.BeginForm("ListOfDisciplines", "Disciplines", FormMethod.Post))
+{
+    <div class="row" style="margin-top: -2em;margin-bottom: -2em;">
+        <div class="col-sm-5 inner-addon right-addon">
+            <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/yyyy" name="Search"/>
+        </div>
+
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-primary" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+    </div>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDiscipline.DisciplineDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDiscipline.StudentID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDiscipline.DisciplineCategoryID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDiscipline.DisciplineCommittedID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDiscipline.StatusID)
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Disciplines)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisciplineDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisciplineCategory.DisciplineCategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisciplineCommitted.DisciplineCommittedName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status.StatusName)
+        </td>
+    </tr>
+    }
+
+</table>

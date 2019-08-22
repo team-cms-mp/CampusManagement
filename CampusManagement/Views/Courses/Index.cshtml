@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Courses";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 
@@ -31,7 +31,7 @@
             <input type="text" class="form-control" placeholder="search" name="Search" />
         </div>
         <div class="col-sm-1">
-            <button type="submit" class="btn btn-success" value="Search">
+            <button type="submit" class="btn btn-primary" value="Search">
                 <span class="glyphicon glyphicon-search"></span> Search
             </button>
         </div>
@@ -47,6 +47,12 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SelectedCourse.CreditHours)
+        </th>
+        <th>
+            Total Lab Count
+        </th>
+        <th>
+            Total Lecture Count
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SelectedCourse.IsActive)
@@ -65,6 +71,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreditHours)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalLabCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalLectureCount)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsActive)

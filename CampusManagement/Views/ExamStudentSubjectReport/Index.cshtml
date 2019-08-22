@@ -1,0 +1,228 @@
+﻿@model CampusManagement.Models.ExamStudentSubjectReportViewModel
+@using CampusManagement.Models
+
+@using (Html.BeginForm("Index", "ExamStudentSubjectReport", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12"> Student list having more than 2 papers in a same day </span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+
+        <div class="col-sm-4">
+            <label>Exam</label>
+            @Html.DropDownListFor(model => model.ExamID, null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ExamID, "", new { @class = "text-danger" })
+
+        </div>
+
+      
+    </div>
+
+    <div class="row" style="margin-top: 1em;">
+        <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+
+    </div>
+
+}
+
+<table style="width:100%">
+    <tr style="width:100%">
+        <td style="width:100%; text-align:right">
+            <input id="btnPrint" type="submit" class="btn btn-primary" value="Print Report" onclick="@("PrintReport()")" />
+        </td>
+    </tr>
+</table>
+<div id="divAllPrint" name="divAllPrint"  style="background-color:lightyellow;">
+    <div style="page-break-before: always; border:solid;border-width:2px;border-color:lightgray;">
+        @{
+
+            ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+            int hdnExamID = (ViewBag.hdnExamID == null) ? 0 : ViewBag.hdnExamID;
+            int hdnEmpID = (ViewBag.hdnEmpID == null) ? 0 : ViewBag.hdnEmpID;
+            Model.ExamStudentSubjectReport = dbc.rpt_GetExamStudentSubjectReport(hdnExamID).ToList();
+            int SerialNumber = 1;
+            if (Model != null)
+            {
+                if (Model.ExamStudentSubjectReport != null)
+                {
+                    if (Model.ExamStudentSubjectReport.Count > 0)
+                    {
+                        Model.ExamStudentSubjectReportObj = Model.ExamStudentSubjectReport[0];
+
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="width:20%">
+                                    <span style="font-weight:bold">Exam Deatils</span>
+                                </td>
+                                <td style="width:80%">
+                                    @Model.ExamStudentSubjectReportObj.ExamTitle
+                                </td>
+                            </tr>
+
+                            <tr style="width:100%">
+                                <td style="width:20%">
+                                    <span style="font-weight:bold">Season Name</span>
+                                </td>
+                                <td style="width:80%">
+                                    @Model.ExamStudentSubjectReportObj.SeasonName
+                                </td>
+                            </tr>
+
+                            <tr style="width:100%">
+                                <td style="width:20%">
+                                    <span style="font-weight:bold">Term Name</span>
+                                </td>
+                                <td style="width:80%">
+                                    @Model.ExamStudentSubjectReportObj.TermName
+                                </td>
+                            </tr>
+
+                        </table>
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    Sr#
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Paper Count
+                                </th>
+                                <th>
+                                    Title
+                                </th>
+                                <th>
+                                    Date/Time
+                                </th>
+
+                            </tr>
+                            @for (var i = 0; i < Model.ExamStudentSubjectReport.Count; i++)
+                        {
+                            if (i == 0)
+                            {
+                                    <tr>
+                                        <td>
+                                            @SerialNumber
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Model.ExamStudentSubjectReport[i].StudentName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Model.ExamStudentSubjectReport[i].DayPaperCount)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Model.ExamStudentSubjectReport[i].CourseName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Model.ExamStudentSubjectReport[i].ExamDateTitle) / @Html.DisplayFor(modelItem => Model.ExamStudentSubjectReport[i].TimeSlot)
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    if (Model.ExamStudentSubjectReport[i - 1].StudentID == Model.ExamStudentSubjectReport[i].StudentID)
+                                    {
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.ExamStudentSubjectReport[i].CourseName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.ExamStudentSubjectReport[i].ExamDateTitle) / @Html.DisplayFor(modelItem => Model.ExamStudentSubjectReport[i].TimeSlot)
+                                            </td>
+                                        </tr>
+
+                                    }
+                                    else
+                                    {
+                                        SerialNumber = SerialNumber + 1;
+
+                                        <tr>
+                                            <td>
+                                                @SerialNumber
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.ExamStudentSubjectReport[i].StudentName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.ExamStudentSubjectReport[i].DayPaperCount)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.ExamStudentSubjectReport[i].CourseName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.ExamStudentSubjectReport[i].ExamDateTitle) / @Html.DisplayFor(modelItem => Model.ExamStudentSubjectReport[i].TimeSlot)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+
+
+                                //if (CurrentUserID == Model.ExamStudentSubjectReport[i].StudentID)
+                                //{
+
+                                //}
+                                //else {
+                                //    CurrentUserID = Model.ExamStudentSubjectReport[i].StudentID;
+                                //}
+
+
+
+                            }
+                        </table>
+                    }
+                    else
+                    { <span style="color:red"> No Record Found</span> }
+                }
+                else
+                { <span style="color:red"> No Record Found</span> }
+            }
+            else
+            { <span style="color:red"> No Record Found</span> }
+
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+        });
+
+        function PrintReport() {
+            var data = document.getElementById('divAllPrint').innerHTML;
+            var myWindow = window.open('', '', 'height=400,width=600');
+            myWindow.document.write('<html><head><title></title>');
+            /*optional stylesheet*/ //myWindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+            myWindow.document.write('</head><body >');
+            myWindow.document.write(data);
+            myWindow.document.write('</body></html>');
+            myWindow.document.close(); // necessary for IE >= 10
+
+            myWindow.onload = function () { // necessary if the div contain images
+
+                myWindow.focus(); // necessary for IE >= 10
+                myWindow.print();
+                myWindow.close();
+            };
+  
+        }
+
+    </script>
+
+}

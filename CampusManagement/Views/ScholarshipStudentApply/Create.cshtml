@@ -1,0 +1,45 @@
+﻿@model CampusManagement.Models.ScholarshipApplicantDocument
+
+@using (Html.BeginForm("Create", "ScholarshipStudentApply", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Add Scholarship Opportunity</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+   
+    <input id="ScholarshipApplicantID" name="ScholarshipApplicantID" value="@ViewBag.ScholarshipApplicantID" type="hidden" />
+    <input id="ScholarshipDocumentID" name="ScholarshipDocumentID" value="@ViewBag.ScholarshipDocumentID" type="hidden" />
+    <input id="ScholarshipOpportunitiesID" name="ScholarshipOpportunitiesID" value="@ViewBag.ScholarshipOpportunitiesID" type="hidden" />
+
+    <div class="row">
+
+        <div class="col-sm-4" hidden>
+            @Html.LabelFor(model => model.DocumentPath, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.DocumentPath, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DocumentPath, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.UploadFiles, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.UploadFiles, new { @class = "form-control", Type = "File", onchange = "readURL(this);", required = "required" })
+            @Html.ValidationMessageFor(model => model.UploadFiles, "", new { @class = "text-danger" })
+           
+          
+        </div>
+
+
+        </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-4">
+            <input type="submit" value="Add" class="btn btn-primary" /> |
+            <a href="@Url.Content("~/ScholarshipStudentApply/Index/")@ViewBag.ScholarshipOpportunitiesID" class="btn btn-primary">Back</a>
+        </div>
+
+    </div>
+    
+
+}
+

@@ -1,0 +1,304 @@
+﻿@model CampusManagement.Models.BeliTrust
+
+@{
+    ViewBag.Title = "Edit BeliTrust";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@Html.Partial("_MessageView")
+
+@using (Html.BeginForm("Edit", "BeliTrusts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.FormNo, htmlAttributes: new { @class = "control-label" })
+
+            @Html.EditorFor(model => model.FormNo, new { htmlAttributes = new { @class = "form-control", @readonly = true, @Value = ViewBag.FormNo } })
+            @Html.ValidationMessageFor(model => model.FormNo, "", new { @class = "text-danger" })
+        </div>
+        
+        <div class="col-sm-3">
+            <label for="imgView" class="control-label">Profile Picture</label>
+            <img id="imgView" src="@Url.Content(Model.Picture)" style="width:100px;height:100px;border-radius:10px;" />
+            @Html.TextBoxFor(model => model.Picture, new { @class = "form-control", type = "hidden" })
+        </div>
+    </div>
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide"><h4 class="fa fa-level-down" aria-hidden="true"> Basic Info </h4></a>
+    </div>
+    <div class="row" id="hide">
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.SalutationID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("SalutationID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SalutationID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.FatherName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FatherName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FatherName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.ApplicantDOB, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ApplicantDOB, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+            @Html.ValidationMessageFor(model => model.ApplicantDOB, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.PlaceOfBirth, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PlaceOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PlaceOfBirth, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.GenderID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("GenderID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.GenderID, "", new { @class = "text-danger" })
+        </div>
+       
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.MaritalStatusID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("MaritalStatusID", null, "--Please Select--", htmlAttributes: new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(model => model.MaritalStatusID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.ACNIC, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ACNIC, new { htmlAttributes = new { @class = "form-control", @maxlength = "15", @minlength = "14" } })
+            @Html.ValidationMessageFor(model => model.ACNIC, "", new { @class = "text-danger" })
+        </div>
+       
+    </div>
+
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide1"><h4 class="fa fa-level-down" aria-hidden="true"> Contact Info </h4></a>
+    </div>
+    <div class="row" id="hide1">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.PTCLNO, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PTCLNO, new { htmlAttributes = new { @class = "form-control", @maxlength="11"} })
+            @Html.ValidationMessageFor(model => model.PTCLNO, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.CellNo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.CellNo, new { htmlAttributes = new { @class = "form-control", @maxlength = "11" } })
+            @Html.ValidationMessageFor(model => model.CellNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.AlternateEmail, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.AlternateEmail, new { htmlAttributes = new { @class = "form-control", type = "email" } })
+            @Html.ValidationMessageFor(model => model.AlternateEmail, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide2"><h4 class="fa fa-level-down" aria-hidden="true"> Emergency Contact (other than Father and Guardian (should be blood relation)) </h4></a>
+    </div>
+    <div class="row" id="hide2">
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.GuardianName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.GuardianName, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.GuardianName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.RelationTypeID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("RelationTypeID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.RelationTypeID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> <span style="color:red;">*</span> @Html.LabelFor(model => model.GuardianCNIC, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.GuardianCNIC, new { htmlAttributes = new { @class = "form-control", @maxlength = "15", @minlength = "14" } })
+            @Html.ValidationMessageFor(model => model.GuardianCNIC, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide3"><h4 class="fa fa-level-down" aria-hidden="true"> Address Info </h4></a>
+    </div>
+    <div class="row" id="hide3">
+        
+        <div class="col-sm-12">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.PresentAddress, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PresentAddress, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PresentAddress, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.PermanentAddress, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PermanentAddress, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PermanentAddress, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="divHeading" style="display:none;">
+        <a data-toggle="collapse" data-target="#hide4"><h4 class="fa fa-level-down" aria-hidden="true"> Program Info </h4></a>
+    </div>
+   
+    <div class="divHeading">
+        <a data-toggle="collapse" data-target="#hide5"><h4 class="fa fa-level-down" aria-hidden="true"> Other Info </h4></a>
+    </div>
+    <div class="row" id="hide5">
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.StatusID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("StatusID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+            @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+        </div>
+    </div>
+
+    <div class="divHeading" style="display:none">
+        <a data-toggle="collapse" data-target="#hide6"><h4 class="fa fa-level-down" aria-hidden="true"> Bank Challan Slip </h4></a>
+    </div>
+   
+    <hr style="border-top: 1px solid #6d9b90;" />
+    <div class="row">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-lg mybutton">
+                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                Submit
+            </button>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#StatusID").val("1007");
+            $("#PassportExpiryDate").mask("99/99/9999");
+            $("#ApplicantDOB").mask("99/99/9999");
+            $("#PTCLNO").ForceNumericOnly();
+            $("#CellNo").ForceNumericOnly();
+            $("#ACNIC").CnicFormat();
+            $("#GuardianCNIC").CnicFormat();
+            $("#PassportNo").CnicFormat();
+            //$("#FirstName").OnlyAlphabets();
+
+            if ($("#Picture").val() != "") {
+                var pic = $("#Picture").val().replace("~/", "");
+                $("#imgView").attr("src", "@Url.Content("~/")" + pic);
+            }
+            else {
+                $("#Picture").val("@Url.Content("~/ProfilePics/noimage.png")");
+            }
+
+            if ($("#ChallanImagePath").val() != "") {
+                var pic = $("#ChallanImagePath").val().replace("~/", "");
+                $("#ImgChallan").attr("src", "@Url.Content("~/")" + pic);
+            }
+            else {
+                $("#ChallanImagePath").val("@Url.Content("~/ProfilePics/noimage.png")");
+            }
+
+            var CountryIDOld = $("#CountryID").val();
+            var ProvinceIDOld = $("#ProvinceID").val();
+            var CityIDOld = $("#CityID").val();
+
+            GetProvinceList();
+            $("#CountryID").val(CountryIDOld);
+            $("#ProvinceID").val(ProvinceIDOld);
+            GetCityList();
+            $("#CityID").val(CityIDOld);
+
+            $("#CountryID").change(function () {
+                GetProvinceList();
+                GetCityList();
+            });
+
+            $("#ProvinceID").change(function () {
+                GetCityList();
+            });
+        });
+
+        function GetProvinceList() {
+            var CountryID = $("#CountryID").val();
+            $.ajax({
+                url: "@Url.Content("~/Students/GetProvinceList")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ CountryID: + CountryID }),
+                success: function (result) {
+                    $("#ProvinceID").html("");
+                    $("#ProvinceID").append($('<option></option>').val(null).html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, province) {
+                        $("#ProvinceID").append($('<option></option>').val(province.ProvinceID).html(province.ProvinceName));
+                    });
+                },
+                error: function () {
+                    alert("Whooaaa! Something went wrong..");
+                },
+            });
+        }
+
+        function GetCityList() {
+            var ProvinceID = $("#ProvinceID").val();
+            $.ajax({
+                url: "@Url.Content("~/Students/GetCitiesList")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ ProvinceID: + ProvinceID }),
+                success: function (result) {
+                    $("#CityID").html("");
+                    $("#CityID").append($('<option></option>').val(null).html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, city) {
+                        $("#CityID").append($('<option></option>').val(city.CityID).html(city.CityName));
+                    });
+                },
+                error: function () {
+                    alert("Whooaaa! Something went wrong..");
+                },
+            });
+        }
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imgView')
+                        .attr('src', e.target.result)
+                        .width(100)
+                        .height(100);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+    </script>
+
+
+}

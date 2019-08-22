@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Programs";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
@@ -19,23 +19,39 @@
     }
     if (Model.DisplayMode == "WriteOnly")
     {
-        Html.RenderPartial("Create", new CampusManagement.Models.Program());
+        Html.RenderPartial("Create", new CampusManagement.Models.SP_ProgramForPage_Result());
     }
+
 }
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedProgram.ProgramName)
+            Program
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedProgram.ProgramCode)
+            Code
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedProgram.ProgramType.ProgramTypeName)
+            Fee Per Credit Hour
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedProgram.IsActive)
+            Application Fee
+        </th>
+        <th>
+            Level
+        </th>
+        <th>
+            Department
+        </th>
+        <th>
+            Test Total
+        </th>
+        <th>
+            Drawing Total
+        </th>
+        <th>
+            Interview Total
         </th>
         <th>Actions</th>
     </tr>
@@ -50,10 +66,25 @@
                 @Html.DisplayFor(modelItem => item.ProgramCode)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProgramType.ProgramTypeName)
+                @Html.DisplayFor(modelItem => item.PerCreditHourFee)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
+                @Html.DisplayFor(modelItem => item.ProspectusFee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LevelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FacultyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestTotalMarks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DrawingTestTotalMarks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InterviewTotalMarks)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Update", new { id = item.ProgramID }) |
@@ -63,5 +94,15 @@
     }
 
 </table>
+
+<script>
+    $(document).ready(function () {
+        $("#PerCreditHourFee").ForceNumericOnly();
+        $("#TestTotalMarks").ForceNumericOnly();
+        $("#DrawingTestTotalMarks").ForceNumericOnly();
+        $("#InterviewTotalMarks").ForceNumericOnly();
+    });
+
+</script>
 
 

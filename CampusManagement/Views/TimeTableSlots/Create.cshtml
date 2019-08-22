@@ -1,0 +1,81 @@
+﻿
+@model CampusManagement.Models.TimeTableSlot
+
+@using (Html.BeginForm("Create", "TimeTableSlots", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="row" style="margin-top:-35px !important">
+        <div class="col-sm-12 ">
+            @*<input type="submit" value="Add" class="btn btn-primary" />*@
+            <a href="@Url.Content("~/TimeTables/TimeTableSetup")" class="btn btn-primary pull-right">Back</a>
+        </div>
+    </div>
+    <div class="row">
+        <h2><span class="col-sm-12">Add Time Slots</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+    string StartTime = string.Concat("StartTime");
+    string EndTime = string.Concat("EndTime");
+    <div class="row">
+        <div class="col-sm-3">
+            <label>Start Time</label>
+            <input id="txtStartTime" name="txtStartTime" type="time" class="form-control"  />
+            <input id="StartTime" name="StartTime" type="hidden" class="form-control" />
+
+        </div>
+        <div class="col-sm-3">
+            <label>End Time</label>
+            <input id="txtEndTime" name="txtEndTime" type="time" class="form-control" />
+            <input id="EndTime" name="EndTime" type="hidden" class="form-control" />
+
+        </div>
+      
+     
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.TimeTableMainID, "Time Table Main", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("TimeTableMainID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TimeTableMainID, "", new { @class = "text-danger" })
+        </div>
+        
+       
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Add" class="btn btn-primary" />
+            <a href="@Url.Content("~/TimeTableSlots/Index")" class="btn btn-primary">Refresh</a>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#txtStartTime").change(function () {
+            var StartTime = $("#txtStartTime").val();
+            var st = tConv24(StartTime);
+            $("#StartTime").val(st);
+        });
+
+        $("#txtEndTime").change(function () {
+            var EndTime = $("#txtEndTime").val();
+            var et = tConv24(EndTime);
+            $("#EndTime").val(et);
+        });
+    });
+
+    function tConv24(time24) {
+        var ts = time24;
+        var H = +ts.substr(0, 2);
+        var h = (H % 12) || 12;
+        h = (h < 10) ? ("0" + h) : h;  // leading 0 at the left for 1 digit hours
+        var ampm = H < 12 ? "AM" : "PM";
+        ts = h + ts.substr(2, 3) + ampm;
+        return ts;
+    }
+</script>

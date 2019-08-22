@@ -1,0 +1,89 @@
+﻿@using CampusManagement.Models
+@{
+    ViewBag.Title = "Student Attendance Detail";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+@Html.Partial("_MessageView")
+
+@{  
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+    List<GetStudentCourseAttendanceSummary_Result> lstDocs = new List<GetStudentCourseAttendanceSummary_Result>();
+    int hdnStudentID = (ViewBag.hdnStudentID == null) ? 0 : ViewBag.hdnStudentID;
+    int hdnCourseID = (ViewBag.hdnCourseID == null) ? 0 : ViewBag.hdnCourseID;
+    if (hdnCourseID == 0) {
+        lstDocs = dbc.GetStudentCourseAttendanceSummary(hdnStudentID, 0).ToList();
+    }
+    else{
+        lstDocs = dbc.GetStudentCourseAttendanceSummary(hdnStudentID, hdnCourseID).ToList();
+    }
+
+
+
+    <input name="hdnStudentID" value="@ViewBag.hdnStudentID" type="hidden" id="hdnStudentID" />
+    <input id="hdnRowCount" name="hdnRowCount" value="@lstDocs.Count" type="hidden" />
+
+    if (lstDocs.Count > 0)
+    {
+        GetStudentCourseAttendanceSummary_Result StudentCourseAttendanceSummary_ResultObj = new GetStudentCourseAttendanceSummary_Result();
+        StudentCourseAttendanceSummary_ResultObj = lstDocs[0];
+        <div class="row">
+            <h3><span class="col-sm-12"> Student Detail</span></h3>
+        </div>
+        <table class="table">
+            <tr>
+                <td><b> Name </b> : @StudentCourseAttendanceSummary_ResultObj.FullName </td>
+                <td><b> Email </b> : @StudentCourseAttendanceSummary_ResultObj.Email </td>
+            </tr>
+            
+            <tr>
+                <td><b> Cell # </b> : @StudentCourseAttendanceSummary_ResultObj.CellNo </td>
+                <td><b> Course </b> : @StudentCourseAttendanceSummary_ResultObj.CourseName </td>
+            </tr>
+           
+            <tr>
+                <td><b> Teacher </b> : @StudentCourseAttendanceSummary_ResultObj.TeacherName </td>
+                <td></td>
+            </tr>
+        </table>
+    }
+    if (lstDocs.Count > 0)
+    {
+        <div class="row">
+            <h3><span class="col-sm-12">  Attendance Detail </span></h3>
+        </div>
+
+        <table class="table">
+            <tr>
+                <th>
+                    Present Date
+                </th>
+                <th>
+                    Status
+                </th>
+
+            </tr>
+
+            @foreach (var item in lstDocs)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PresentDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentPresentStatusName)
+                    </td>
+                 
+                </tr>
+            }
+        </table>
+        <hr />
+    }
+}
+
+

@@ -12,6 +12,7 @@ namespace CampusManagement.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     public partial class Program
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -45,16 +46,26 @@ namespace CampusManagement.Models
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         [Display(Name = "Modified By")]
         public Nullable<int> ModifiedBy { get; set; }
+        [Display(Name = "Level")]
+        public Nullable<int> LevelID { get; set; }
+        [Display(Name = "Max Credit Hours")]
+        public Nullable<double> PerCreditHourFee { get; set; }
+        [Display(Name = "Faculty / Departments")]
+        public Nullable<int> FacultyID { get; set; }
+        [Required(ErrorMessage = "Required")]
+        [Display(Name = "Application Fee")]
+        public string ProspectusFee { get; set; }
+
+        [Display(Name = "Test Total Marks")]
+        public Nullable<int> TestTotalMarks { get; set; }
+        [Display(Name = "Drawing Test Total Marks")]
+        public Nullable<int> DrawingTestTotalMarks { get; set; }
+        [Display(Name = "Interview Total Marks")]
+        public Nullable<int> InterviewTotalMarks { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchProgram> BatchPrograms { get; set; }
+        public virtual Level Level { get; set; }
         public virtual ProgramType ProgramType { get; set; }
-    }
-
-    public class ProgramsViewModel
-    {
-        public List<Program> Programs { get; set; }
-        public Program SelectedProgram { get; set; }
-        public string DisplayMode { get; set; }
     }
 }

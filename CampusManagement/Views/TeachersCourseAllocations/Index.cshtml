@@ -1,8 +1,8 @@
 ﻿@model CampusManagement.Models.TeachersCourseAllocationsViewModel
 @using CampusManagement.Models
 @{
-    ViewBag.Title = "Teacher Courses";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ViewBag.Title = "Lecturer Subjects";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
@@ -21,36 +21,36 @@
     {
         Html.RenderPartial("Create", new CampusManagement.Models.TeachersCourseAllocation());
     }
+
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
 }
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedTeachersCourseAllocation.Teacher.TeacherName)
+            Lecturer
         </th>
         <th>
             Program
         </th>
         <th>
-            Course
+            Subject
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedTeachersCourseAllocation.IsActive)
+            Is Active
         </th>
         <th>Actions</th>
     </tr>
 
     @foreach (var item in Model.TeachersCourseAllocations)
     {
+        GetDisplayValues_Result dv = dbc.GetDisplayValues(0, item.ProgramCourseID).FirstOrDefault();
+        um_GetEmployees_ByID_Result emp = dbc.um_GetEmployees_ByID(item.TeacherID).FirstOrDefault();
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Teacher.TeacherName)
+            @Html.Raw(emp.EmployeeName)
         </td>
         <td>
-            @{
-            ModelCMSContainer dbc = new ModelCMSContainer();
-            GetDisplayValues_Result dv = dbc.GetDisplayValues(0, item.ProgramCourseID).FirstOrDefault();
-            }
             @Html.Raw(dv.ProgramName)
         </td>
         <td>
@@ -67,5 +67,57 @@
     }
 
 </table>
+
+<script>
+    $(document).ready(function () {
+        GetSubDepartment();
+        um_GetEmployeesForSubjectAllocation();
+
+        $("#cmbDepartment").change(function () {
+            um_GetEmployeesForSubjectAllocation();
+        });
+    });
+
+    function GetSubDepartment() {
+        $.ajax({
+            url: "@Url.Content("~/TeachersCourseAllocations/GetSubDepartment")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            success: function (result) {
+                $("#cmbDepartment").html("");
+                $.each($.parseJSON(result), function (i, general) {
+                    $("#cmbDepartment").append($('<option></option>').val(general.SubDept_Id).html(general.SubDept_Name));
+                });
+            },
+            error: function () {
+                //alert("Whooaaa! Something went wrong..");
+            },
+        });
+    }
+
+    function um_GetEmployeesForSubjectAllocation() {
+        var SubDeptId = $("#cmbDepartment").val();
+        $.ajax({
+            url: "@Url.Content("~/TeachersCourseAllocations/um_GetEmployeesForSubjectAllocation")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ SubDeptId: +SubDeptId }),
+            success: function (result) {
+                $("#TeacherID").html("");
+                $.each($.parseJSON(result), function (i, general) {
+                    $("#TeacherID").append($('<option></option>').val(general.EmpID).html(general.EmployeeName));
+                });
+            },
+            error: function () {
+                //alert("Whooaaa! Something went wrong..");
+            },
+        });
+    }
+
+</script>
 
 

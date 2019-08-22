@@ -51,10 +51,5 @@ namespace CampusManagement.Models
         public virtual ICollection<Student> Students { get; set; }
     }
 
-    public class ProvincesViewModel
-    {
-        public List<Province> Provinces { get; set; }
-        public Province SelectedProvince { get; set; }
-        public string DisplayMode { get; set; }
-    }
+
 }

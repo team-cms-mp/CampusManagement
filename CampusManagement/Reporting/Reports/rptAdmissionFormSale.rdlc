@@ -1000,9 +1000,8 @@
               <Source>External</Source>
               <Value>=Parameters!ImagePath.Value</Value>
               <Sizing>FitProportional</Sizing>
-              <Left>0.55563cm</Left>
               <Height>1.99729cm</Height>
-              <Width>3.24625cm</Width>
+              <Width>5.46876cm</Width>
               <ToolTip>=Parameters!ImagePath.Value</ToolTip>
               <Style>
                 <Border>
@@ -1018,7 +1017,7 @@
             <Border>
               <Style>None</Style>
             </Border>
-            <BackgroundColor>Gray</BackgroundColor>
+            <BackgroundColor>White</BackgroundColor>
           </Style>
         </Rectangle>
         <Textbox Name="Textbox3">

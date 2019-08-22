@@ -1,68 +1,88 @@
-﻿
+﻿@model CampusManagement.Models.AdmissionDashbordTemplatesViewModel
+@using CampusManagement.Models
 @{
-    ViewBag.Title = "NewAdmission";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ViewBag.Title = "New Admission";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
-<div class="row">
-    <div class="col-lg-4 col-sm-6 ">
-        <div class="card">
-            <div class="content SmallDivs zoom">
-                <a href="@Url.Action("Index", "FormSaleDetails")" class="alert-link"> Issue Form</a>
-            </div>
+
+    <div class="row" style="background:white;box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important;">
+
+        <div class="" style="padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc; border-top: 1px solid #e3e6f0; border-bottom: 1px solid #e3e6f0;">
+            <h6 class="" style="color: #4e73df!important;font-weight: 700!important;font-size: 2rem;line-height: 1.2;"> New Admission </h6>
         </div>
-    </div>
-    <div class="col-lg-4 col-sm-6">
-        <div class="card">
-            <div class="content SmallDivs zoom">
-                <a href="@Url.Action("Index", "FormReceiveDetails")" class="alert-link"> Receive Form </a>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-sm-6">
-        <div class="card">
-            <div class="content SmallDivs zoom">
-                <a href="@Url.Action("Index", "Applicants")" class="alert-link"> Applicants </a>
-            </div>
-        </div>
-    </div>
-  
-    <div class="col-lg-4 col-sm-6">
-        <div class="card">
-            <div class="content SmallDivs zoom">
-                <a href="@Url.Action("Create", "Applicants")" class="alert-link"> Express Admission </a>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-sm-6">
-        <div class="card">
-            <div class="content SmallDivs zoom">
-                <a href="@Url.Action("Index", "SelectionCriterias")" class="alert-link"> Selection Criteria </a>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-sm-6">
-        <div class="card">
-            <div class="content SmallDivs zoom">
-                <a href="@Url.Action("Index", "EntryTestInterviewMarks")" class="alert-link"> Entry Test/Interview Marks </a>
-            </div>
-        </div>
-    </div>
+        <br />
+        
+            @{ int Count = 1;}
+            @foreach (var item in Model.TemplateList)
+            {
+                if (Count < 5)
+                {
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <!-- small box -->
+                                <a href="@Url.Content(item.Page_URL)" class="btn btn-primary btn-icon-split" target="_blank">
+                                    <span class="icon text-white-50">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </span>
+                                    <span class="text">@item.Page_Name</span>
+                                </a>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                }
+                else
+                {
+                    if (Count % 4 == 0)
+                    {
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                            }
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                    <!-- small box -->
+                                    <a href="@Url.Content(item.Page_URL)" class="btn btn-primary btn-icon-split" target="_blank">
+                                        <span class="icon text-white-50">
+                                            <i class="fa fa-arrow-right"></i>
+                                        </span>
+                                        <span class="text">@item.Page_Name</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <br />
+
+                        </div>
+                    }
 
 
-    <div class="col-lg-4 col-sm-6">
-        <div class="card">
-            <div class="content SmallDivs zoom">
-                <a href="@Url.Action("Index", "MeritListApproveAdmissions")" class="alert-link"> Merit List & Approve Admission </a>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-sm-6">
-        <div class="card">
-            <div class="content SmallDivs zoom">
-                <a href="#" class="alert-link"> Send Email To Candidates </a>
-            </div>
-        </div>
-    </div>
-    </div>
+                }
 
+
+            }
+
+        </div>
+
+
+<style>
+    .icon {
+        color: rgba(255,255,255,.5) !important;
+        position: absolute;
+        background: rgba(0,0,0,.15);
+        display: inline-block;
+        padding: 0.5em 0.8em 0.7em 0.5em;
+        margin-left: -13px;
+        margin-top: -7px;
+        border-radius: 5px 1px 1px 5px;
+    }
+
+    .text {
+        padding: 1em 1em 1em 2em;
+        font-size: 17px;
+    }
+    .btn {
+            width: 22em;
+            text-align: left;
+    }
+</style>

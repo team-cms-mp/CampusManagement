@@ -1,0 +1,98 @@
+﻿@model CampusManagement.Models.TimeTableMainViewModel
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Time Table Main";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedTimeTableMain != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedTimeTableMain);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedTimeTableMain);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.TimeTableMain());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Time Table Main Name
+        </th>
+        <th>
+            Start Date
+        </th>
+        <th>
+            End Date
+        </th>
+        <th>
+            Lecture Duration
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            IsActive
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.TimeTableMains)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeTableMainName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LectureDuration)
+        </td>
+        <td>
+            @{ 
+                ModelCMSNewContainer db = new ModelCMSNewContainer();
+                string StatusName="";
+                Status status = db.Status.FirstOrDefault(a => a.StatusID == item.StatusID);
+                if (status != null)
+                {
+                    StatusName = status.StatusName;
+                }
+                StatusName = status.StatusName;
+                @Html.Raw(StatusName);
+
+
+
+            }
+          
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.TimeTableMainID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.TimeTableMainID })
+        </td>
+    </tr>
+    }
+
+</table>

@@ -1,0 +1,54 @@
+﻿@model CampusManagement.Models.SF_GetStudentApplicantDiscounts_Result
+@using CampusManagement.Models
+@using (Html.BeginForm("Create", "ApplicantDiscounts", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    ModelCMSContainer dbCMS = new ModelCMSContainer();
+    int StudentID = 0;
+    if (ViewBag.StudentID != null)
+    {
+        StudentID = ViewBag.StudentID;
+    }
+
+    <div class="row">
+        <h2><span class="col-sm-12">Add Applicant Discount</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+   
+    Applicant st = dbCMS.Applicants.FirstOrDefault(a => a.AddAppID == StudentID);
+    if (st != null)
+    {
+        <label>Applicant Name</label>
+        <span>@st.FirstName @st.LastName</span>
+        <label>Email</label>
+        <span>@st.Email</span>
+        <label>CNIC</label>
+        <span>@st.ACNIC</span>
+        <label>Cell #</label>
+        <span>@st.CellNo</span>
+        <input id="BatchProgramID" name="BatchProgramID" value="@st.BatchProgramID" class="form-control" type="hidden" />
+        <input id="StudentID" name="StudentID" value="@ViewBag.StudentID" class="form-control" type="hidden" />
+        <input id="YearSemesterNo" name="YearSemesterNo" value="1" class="form-control" type="hidden" />
+    }
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.DiscountTypeID, "Discount Type", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("DiscountTypeID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DiscountTypeID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.PercentageInstallmentValue, "Percentage/Installments", htmlAttributes: new { @class = "control-label" })
+            <select class="form-control" id="PercentageInstallmentValue" name="PercentageInstallmentValue"></select>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Add" class="btn btn-primary" />
+            <a href="@Url.Content("~/ApplicantDiscounts/Index/")@ViewBag.StudentID" class="btn btn-primary">Refresh</a>
+        </div>
+    </div>
+}

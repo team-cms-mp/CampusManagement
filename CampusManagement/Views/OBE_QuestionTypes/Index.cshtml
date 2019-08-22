@@ -1,0 +1,62 @@
+﻿@model CampusManagement.Models.OBE_QuestionTypeViewModel
+
+@{
+    ViewBag.Title = "OBE Question Type";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedOBE_QuestionType != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedOBE_QuestionType);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedOBE_QuestionType);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.OBE_QuestionType());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedOBE_QuestionType.QuestionTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedOBE_QuestionType.Description)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedOBE_QuestionType.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.OBE_QuestionTypes)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id = item.QuestionTypeID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.QuestionTypeID })
+            </td>
+        </tr>
+    }
+
+</table>

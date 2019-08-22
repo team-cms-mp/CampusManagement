@@ -1,0 +1,106 @@
+﻿@model PagedList.IPagedList<CampusManagement.Models.GetApplicantListSearch_ToApprove_Result>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Online Applicants to Approve";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+
+<hr style="border-top: 1px solid #6d9b90;" />
+
+@using (Html.BeginForm("ApplicantListSearch_ToApprove", "Applicants", FormMethod.Post))
+{
+    <div class="row" style="margin-top: -2em;margin-bottom: -2em;">
+        <div class="col-sm-5 inner-addon right-addon">
+            <input type="text" class="form-control" placeholder="Form #" name="Search" value="@ViewBag.Search" />
+        </div>
+        <div class="col-sm-4 inner-addon right-addon">
+            @Html.DropDownList("BatchID", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-primary" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+    </div>
+
+<br />
+
+<hr style="border-top: 1px solid #6d9b90;" />
+
+<div class="col-sm-1 inner-addon right-addon">
+    <select id="pageSize" name="pageSize" class="form-control" @*onchange="redirect(this.value)"*@ value="@ViewBag.pageSize" style="padding: 7px;">
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+    </select>
+</div>
+
+<span>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span> <span style="font-weight:bold;">(Total Records : @ViewBag.TotalRecords)</span>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = ViewBag.pageSize, BatchID = ViewBag.BatchIDAssigned }))
+
+<br />
+
+<table class="table">
+    <tr>
+        <th></th>
+        <th>Form#</th>
+        <th>Applicant Name</th>
+        <th>Father Name</th>
+        <th>Cell#</th>
+        <th>Email</th>
+        <th>CNIC</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href="@Url.Content(item.Picture)" id="lnkProfilePicture" target="_blank"><img src="@Url.Content(item.Picture)" style="width:75px; height:75px; border-radius:45px;" /></a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FatherName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CellNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ACNIC)
+            </td>
+            <td>
+                @Html.ActionLink("Approve", "ApproveApplicant", "Applicants", new { id = item.FormNo, BatchID = item.BatchID, page = Model.PageNumber, pageSize = ViewBag.pageSize }, null)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<hr style="border-top: 1px solid #6d9b90;" />
+<span>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span> <span style="font-weight:bold;">(Total Records : @ViewBag.TotalRecords)</span>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+}
+
+@section Scripts {
+<script>
+    $(function () {
+        $("#pageSize").val("@ViewBag.pageSize");
+    });
+
+</script>
+}

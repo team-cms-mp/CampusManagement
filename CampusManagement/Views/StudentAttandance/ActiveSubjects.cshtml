@@ -1,0 +1,169 @@
+﻿@model CampusManagement.Models.StudentAttandance
+@using CampusManagement.Models
+
+@using (Html.BeginForm("ActiveSubjects", "StudentAttandance", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Active Subjects</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+
+        <div class="col-sm-4">
+            <label>Session</label>
+            @Html.DropDownListFor(model => model.BatchID, null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BatchID, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-4">
+            <label>Program</label>
+            @Html.DropDownList("BatchProgramID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BatchProgramID, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-4">
+            <label>Semester #</label>
+            @Html.DropDownList("YearSemesterNo", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.YearSemesterNo, "", new { @class = "text-danger" })
+        </div>
+
+      
+    </div>
+
+    <div class="row" style="margin-top: 1em;">
+        <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+
+    </div>
+    <br />
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+    int hdnBatchProgramID = (ViewBag.hdnBatchProgramID == null) ? 0 : ViewBag.hdnBatchProgramID;
+    int hdnBatchID = (ViewBag.hdnBatchID == null) ? 0 : ViewBag.hdnBatchID;
+    int hdnYearSemesterNo = (ViewBag.hdnYearSemesterNo == null) ? 0 : ViewBag.hdnYearSemesterNo;
+    List<GetAdminStudentAttendanceSummary_Result> lstDocs = dbc.GetAdminStudentAttendanceSummary(hdnBatchProgramID, hdnBatchID, hdnYearSemesterNo).ToList();
+    <input name="hdnBatchID" value="@ViewBag.hdnBatchID" type="hidden" id="hdnBatchID" />
+    <input name="hdnBatchProgramID" value="@ViewBag.hdnBatchProgramID" type="hidden" id="hdnBatchProgramID" />
+    <input name="hdnYearSemesterNo" value="@ViewBag.hdnYearSemesterNo" type="hidden" id="hdnYearSemesterNo" />
+    if (lstDocs.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Subject Code
+                </th>
+                <th>
+                    Subject Name
+                </th>
+                <th>
+                    Session
+                </th>
+                <th>
+                    Program Name
+                </th>
+                <th>
+                    Action
+                </th>
+
+
+            </tr>
+
+            @foreach (var item in lstDocs)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BatchSession)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProgramName)
+                    </td>
+                    <td>
+                       @Html.ActionLink("List Of Students", "SubjectWiseStudentList", new { CourseID = item.CourseID }) |
+                       @Html.ActionLink("Attendance Summary", "StudentAttendanceSummary", new { StudentID = 0, CourseID = item.CourseID })
+                    </td>
+                </tr>
+            }
+        </table>
+        <hr />
+    }
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            GetPrograms_by_FacultyLevelBatch();
+            $("#BatchProgramID").val(@ViewBag.hdnBatchProgramID);
+            GetBatchProgramSemesterList();
+            $("#YearSemesterNo").val(@ViewBag.hdnYearSemesterNo);
+
+            $("#BatchID").change(function () {
+                GetPrograms_by_FacultyLevelBatch();
+                $("#BatchProgramID").val(@ViewBag.hdnBatchProgramID);
+                GetBatchProgramSemesterList();
+                $("#YearSemesterNo").val(@ViewBag.hdnYearSemesterNo);
+            });
+
+            $("#BatchProgramID").change(function () {
+                GetBatchProgramSemesterList();
+                $("#YearSemesterNo").val(@ViewBag.hdnYearSemesterNo);
+            });
+        });
+
+        function GetPrograms_by_FacultyLevelBatch() {
+            var BatchID = $("#BatchID").val();
+            $.ajax({
+                url: "@Url.Content("~/StudentAttandance/GetPrograms_by_FacultyLevelBatch")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ BatchID: +BatchID }),
+                success: function (result) {
+                    $("#BatchProgramID").html("");
+                    $("#BatchProgramID").append($('<option></option>').val("0").html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#BatchProgramID").append($('<option></option>').val(sem.BatchProgramID).html(sem.ProgramName));
+                    });
+                    $("#BatchProgramID").val(@ViewBag.hdnBatchProgramID)
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                },
+            });
+        }
+
+        function GetBatchProgramSemesterList() {
+            var BatchProgramID = $("#BatchProgramID").val();
+            $.ajax({
+                url: "@Url.Content("~/StudentAttandance/GetBatchProgramSemesterList")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ BatchProgramID: +BatchProgramID }),
+                success: function (result) {
+                    $("#YearSemesterNo").html("");
+                    $("#YearSemesterNo").append($('<option></option>').val("0").html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#YearSemesterNo").append($('<option></option>').val(sem.YearSemesterNo).html(sem.YearSemesterNo));
+                    });
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                },
+            });
+        }
+    </script>
+}

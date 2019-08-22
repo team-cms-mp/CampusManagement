@@ -1,0 +1,129 @@
+﻿@model CampusManagement.Models.GeneralSetting
+
+@using (Html.BeginForm("Edit", "GeneralSetting", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Edit Selection Criteria</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.HiddenFor(model => model.GeneralSettingID)
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.ProspectusFee, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ProspectusFee, new { htmlAttributes = new { @class = "form-control", type = "text", @oninput = "this.value = this.value.replace(/[^0-9.]/g, '');" } })
+            @Html.ValidationMessageFor(model => model.ProspectusFee, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.BachelorPercentage, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.BachelorPercentage, new { htmlAttributes = new { @class = "form-control", @min = "0", @max = "100", type = "number", @oninput = "this.value = this.value.replace(/[^0-9.]/g, '');" } })
+            @Html.ValidationMessageFor(model => model.BachelorPercentage, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.MastersPercentage, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.MastersPercentage, new { htmlAttributes = new { @class = "form-control", @min = "0", @max = "100", @maxlength = "3", type = "number", @oninput = "this.value = this.value.replace(/[^0-9.]/g, '');" } })
+            @Html.ValidationMessageFor(model => model.MastersPercentage, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.PhdPercentage, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PhdPercentage, new { htmlAttributes = new { @class = "form-control", @min = "0", @max = "100", @maxlength = "3", type = "number", @oninput = "this.value = this.value.replace(/[^0-9.]/g, '');" } })
+            @Html.ValidationMessageFor(model => model.PhdPercentage, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.EntryTestDate, htmlAttributes: new { @class = "control-label" })
+            <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/yyyy" name="EntryTestDate" />
+            @Html.ValidationMessageFor(model => model.EntryTestDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.EntryTestResultDate, htmlAttributes: new { @class = "control-label" })
+            <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/yyyy" name="EntryTestResultDate" />
+            @Html.ValidationMessageFor(model => model.EntryTestResultDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.GATPercentage, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.GATPercentage, new { htmlAttributes = new { @class = "form-control", @min = "0", @max = "100", @maxlength = "3", type = "number", @oninput = "this.value = this.value.replace(/[^0-9.]/g, '');" } })
+            @Html.ValidationMessageFor(model => model.GATPercentage, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.NATPercentage, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.NATPercentage, new { htmlAttributes = new { @class = "form-control", @min = "0", @max = "100", @maxlength = "3", type = "number", @oninput = "this.value = this.value.replace(/[^0-9.]/g, '');" } })
+            @Html.ValidationMessageFor(model => model.NATPercentage, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.FirstMeritListDate, htmlAttributes: new { @class = "control-label" })
+            <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/yyyy" name="FirstMeritListDate" />
+            @Html.ValidationMessageFor(model => model.FirstMeritListDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.SecondMeritListDate, htmlAttributes: new { @class = "control-label" })
+            <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/yyyy" name="SecondMeritListDate" />
+            @Html.ValidationMessageFor(model => model.SecondMeritListDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.ThirdMeritListDate, htmlAttributes: new { @class = "control-label" })
+            <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/yyyy" name="ThirdMeritListDate" />
+            @Html.ValidationMessageFor(model => model.ThirdMeritListDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.FourthMeritListDate, htmlAttributes: new { @class = "control-label" })
+            <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/yyyy" name="FourthMeritListDate" />
+            @Html.ValidationMessageFor(model => model.FourthMeritListDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.SendingOfferLetterDate, htmlAttributes: new { @class = "control-label" })
+            <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/yyyy" name="SendingOfferLetterDate" />
+            @Html.ValidationMessageFor(model => model.SendingOfferLetterDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.OrientationDate, htmlAttributes: new { @class = "control-label" })
+            <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/yyyy" name="OrientationDate" />
+            @Html.ValidationMessageFor(model => model.OrientationDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.AddDropDeadlineDate, htmlAttributes: new { @class = "control-label" })
+            <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/yyyy" name="AddDropDeadlineDate" />
+            @Html.ValidationMessageFor(model => model.AddDropDeadlineDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.WithdrawalSubjectDate, htmlAttributes: new { @class = "control-label" })
+            <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/yyyy" name="WithdrawalSubjectDate" />
+            @Html.ValidationMessageFor(model => model.WithdrawalSubjectDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.BachelorMaxCreditHours, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.BachelorMaxCreditHours, new { htmlAttributes = new { @class = "form-control", type = "text", @maxlength = "2", @oninput = "this.value = this.value.replace(/[^0-9.]/g, '');" } })
+            @Html.ValidationMessageFor(model => model.BachelorMaxCreditHours, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.MastersMaxCreditHours, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.MastersMaxCreditHours, new { htmlAttributes = new { @class = "form-control", type = "text", @maxlength = "2", @oninput = "this.value = this.value.replace(/[^0-9.]/g, '');" } })
+            @Html.ValidationMessageFor(model => model.MastersMaxCreditHours, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.MPhilMaxCreditHours, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.MPhilMaxCreditHours, new { htmlAttributes = new { @class = "form-control", type = "text", @maxlength = "2", @oninput = "this.value = this.value.replace(/[^0-9.]/g, '');" } })
+            @Html.ValidationMessageFor(model => model.MPhilMaxCreditHours, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.EntryTestPercentage, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.EntryTestPercentage, new { htmlAttributes = new { @class = "form-control", @min = "0", @max = "100", @maxlength = "3", type = "number", @oninput = "this.value = this.value.replace(/[^0-9.]/g, '');" } })
+            @Html.ValidationMessageFor(model => model.EntryTestPercentage, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a href="@Url.Content("~/GeneralSetting/Index")" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+}

@@ -1,0 +1,155 @@
+﻿@model IEnumerable<CampusManagement.Models.GetApplicantStudentChallans_Result>
+@{
+    ViewBag.Title = "Fee Payment History";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+
+@using (Html.BeginForm("PaymentCollection", "Finance", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-sm-2">
+            <label for="FormNo" class="control-label">Form #</label>
+            <input id="FormNo" name="FormNo" class="form-control" />
+        </div>
+        <div class="col-sm-5">
+            <label for="BatchID" class="control-label">Session</label>
+            <select id="BatchID" name="BatchID" class="form-control"></select>
+        </div>
+        <div class="col-sm-5">
+            <label for="BatchProgramID" class="control-label">Program</label>
+            <select id="BatchProgramID" name="BatchProgramID" class="form-control"></select>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-5">
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Form #
+        </th>
+        <th>
+            Challan #
+        </th>
+        <th>
+            Issue Date
+        </th>
+        <th>
+            Deposit Date
+        </th>
+        <th>
+            Is Deposited
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChallanID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepositDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDeposited)
+            </td>
+            <td style="font-weight:bold;color:green;">
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?Type=Student&ReportName=rptGetChallan&ChallanID=")@item.ChallanID" target="_blank">Challan</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+
+    $(document).ready(function () {
+        GetActiveBatches();
+        $("#BatchID").val(@ViewBag.BatchID);
+        GetPrograms_by_FacultyLevelBatch();
+        $("#BatchProgramID").val(@ViewBag.BatchProgramID);
+        $("#FormNo").val(@ViewBag.FormNo);
+
+        $("#BatchID").change(function () {
+            GetPrograms_by_FacultyLevelBatch();
+        });
+    });
+
+    function GetPrograms_by_FacultyLevelBatch() {
+
+        var BatchID = $("#BatchID").val();
+        $.ajax({
+            url: "@Url.Content("~/Finance/GetPrograms_by_FacultyLevelBatch")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ BatchID: +BatchID }),
+            success: function (result) {
+                $("#BatchProgramID").html("");
+                $("#BatchProgramID").append($('<option></option>').val("0").html("--Please Select--"));
+                $.each($.parseJSON(result), function (i, sem) {
+                    $("#BatchProgramID").append($('<option></option>').val(sem.BatchProgramID).html(sem.ProgramName));
+                });
+            },
+            error: function (ex) {
+                alert(ex.error);
+            }
+        });
+    }
+
+    function GetActiveBatches() {
+        $.ajax({
+            url: "@Url.Content("~/Finance/GetActiveBatches")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            success: function (result) {
+                $("#BatchID").html("");
+                $("#BatchID").append($('<option></option>').val("0").html("--Please Select--"));
+                $.each($.parseJSON(result), function (i, sem) {
+                    $("#BatchID").append($('<option></option>').val(sem.BatchID).html(sem.BatchName));
+                });
+
+                if ("@ViewBag.hdnBatchID" != "") {
+                    $("#BatchID").val("@ViewBag.hdnBatchID");
+                }
+            },
+            error: function (ex) {
+                alert(ex.error);
+            }
+        });
+    }
+</script>
+
+
+

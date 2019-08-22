@@ -1,0 +1,142 @@
+﻿@model CampusManagement.Models.GetAlumni_ResultsViewModel
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Index";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<h2>Alumni Users</h2>
+
+
+
+<br />
+@using (Html.BeginForm("Index", "Alumni", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="FirstName" name="FirstName" value="@ViewBag.FirstName" />
+    <input type="hidden" id="LastName" name="LastName" value="@ViewBag.LastName" />
+    <input type="hidden" id="hdncityID" name="hdncityID" value="@ViewBag.hdncityID" />
+    <input type="hidden" id="hdnProvinceID" name="hdnProvinceID" value="@ViewBag.hdnProvinceID" />
+    <input type="hidden" id="hdnCountryID" name="hdnCountryID" value="@ViewBag.hdnCountryID" />
+
+
+    //////////////////////
+    int AlumniUserID = 0;
+    <table class="table">
+      
+      
+        @foreach (var item in Model.GetAlumni_Results)
+        {
+            if (AlumniUserID != item.AlumniUserID)
+            {
+                <tr class="divUser">
+                    <td>
+                        <h3>
+                            @Html.DisplayFor(modelItem => item.SalutationName)
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </h3>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                AlumniUserID = item.AlumniUserID;
+            }
+          
+
+            
+                    <tr  class="divTitle">
+
+                        <td>
+                            <span><a href="">@Html.DisplayFor(modelItem => item.Email)</a></span>
+                             
+
+                            <h3>Current Address</h3>
+                            <span>@Html.DisplayFor(modelItem => item.PermanentAddress)</span>
+                            <span>@Html.DisplayFor(modelItem => item.CityName)</span>
+                            <span>@Html.DisplayFor(modelItem => item.ProvinceName)</span>
+                            <span>@Html.DisplayFor(modelItem => item.CountryName) </span>  
+                            <h3>Birth Day</h3>
+                            @Html.DisplayFor(modelItem => item.UserDOB)
+                        </td>
+                        <td class="Divtext">
+                            <span><a >Last Updated:</a></span>
+                            <h5>
+                                Project
+                            </h5>
+                            <p>
+                                We are starting our project.
+                            </p>
+                           
+                        </td>
+                        <td class="divPics">
+                            @{
+                                if (@item.Picture == null)
+                                {
+                                    <h1><span>No image available</span></h1>
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(item.Picture)" style="width:125px; height:125px;border-radius:10px;margin-top:20px;" />
+                                }
+                            }
+                        </td>
+                    </tr>
+
+                    <tr class="divBottom">
+                        <td>
+                            <h4  class="fa fa-paperclip">
+                              <span style="color:#000000">Blogs</span>
+                            </h4>
+                            <h4 class="fa fa-picture-o">
+                            <span  style="color:#000000">Photo Gallery</span>
+                            </h4>
+                            <h4 class="fa fa-apple">
+                                <span style="color:#000000">@Html.ActionLink("User Account", "AlumniAccountAdmin", "Alumni", new { AlumniUserID = item.AlumniUserID }, null)</span>
+                            </h4>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+        }
+    </table>
+
+}
+
+<style>
+    .divUser {
+        font-weight: 700;
+        background: #337ab7;
+        color: white;
+        /*text-align:center*/
+    }
+
+    .divTitle {
+        font-weight: 700;
+        background: #e3edf5;
+        color:#000000;
+    }
+     .divPics {
+        font-weight: 700;
+        background:white;
+        color:#000000;
+    }
+
+     
+      .Divtext {
+        font-weight: 700;
+        background: #faf6f6;
+        color: #000000;
+    }
+      .divBottom {
+       border:4px solid #ddd;
+       border-bottom-color:white;
+       background: #e3edf5;
+        color: #000000;
+    }
+      
+</style>

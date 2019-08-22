@@ -43,16 +43,14 @@ namespace CampusManagement.Models
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         [Display(Name = "Modified By")]
         public Nullable<int> ModifiedBy { get; set; }
+        public Nullable<int> SiteID { get; set; }
+        public string SiteCode { get; set; }
+        public Nullable<int> FacultyID { get; set; }
 
         public virtual RoomType RoomType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TimeSlot> TimeSlots { get; set; }
     }
 
-    public class RoomsViewModel
-    {
-        public List<Room> Rooms { get; set; }
-        public Room SelectedRoom { get; set; }
-        public string DisplayMode { get; set; }
-    }
+   
 }

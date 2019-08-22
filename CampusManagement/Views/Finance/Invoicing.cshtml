@@ -1,30 +1,153 @@
 ﻿
 @{
     ViewBag.Title = "Invoicing";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
-<div class="row">
-    <div class="col-lg-4 col-sm-6 ">
-        <div class="card">
-            <div class="content SmallDivs zoom">
-                <a href="@Url.Action("Create", "Challans")"  class="alert-link">Create Invoice Program Wise</a>
-            </div>
-        </div>
+
+<div class="row" style="background:white;box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important;">
+
+    <div class="" style="padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc; border-top: 1px solid #e3e6f0; border-bottom: 1px solid #e3e6f0;">
+        <h6 class="" style="color: #4e73df!important;font-weight: 700!important;font-size: 2rem;line-height: 1.2;"> Invoicing </h6>
     </div>
-    <div class="col-lg-4 col-sm-6 ">
-        <div class="card">
-            <div class="content SmallDivs zoom">
-                <a href="@Url.Action("SingleStudentChallan", "Challans")" class="alert-link">Create Student Invoice</a>
+    <br />
+
+    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <div class="row" hidden>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a href="@Url.Action("StudentServicesApproval", "ApplicantServices")" class="btn btn-primary btn-icon-split" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Approval Applicant Services</span>
+                </a>
             </div>
         </div>
+        <div class="row" hidden>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a href="@Url.Action("SingleStudentServicesApproval", "ApplicantServices")" class="btn btn-primary btn-icon-split" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Approval Single Applicant Services</span>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a href="@Url.Action("StudentServicesAccumulate", "ApplicantServices")" class="btn btn-primary btn-icon-split" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Generate Challans - Applicant</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("ApproveChallans", "ChallansApplicant")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Verify Applicant Invoice</span>
+                </a>
+            </div>
+        </div>
+        <br />
     </div>
-    <div class="col-lg-4 col-sm-6">
-        <div class="card">
-            <div class="content SmallDivs zoom">
-                <a href="@Url.Action("ApproveChallans", "Challans")"  class="alert-link">Verify Invoice </a>
+    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "ApprovedAsStudent")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Student Approval</span>
+                </a>
             </div>
         </div>
+        <br />
+        <div class="row" hidden>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("StudentServicesApproval", "StudentServices")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Approval Student Services</span>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("StudentServicesAccumulate", "StudentServices")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Generate Challans - Student</span>
+                </a>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" style="background:white;">
+        <div class="row" hidden>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("SingleStudentServicesApproval", "StudentServices")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Approval Single Student Services</span>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("ApproveChallans", "ChallansStudent")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Verify Student Invoice</span>
+                </a>
+            </div>
+        </div>
+        <br />
     </div>
 
 </div>
+
+
+
+<style>
+    .icon {
+        color: rgba(255,255,255,.5) !important;
+        position: absolute;
+        background: rgba(0,0,0,.15);
+        display: inline-block;
+        padding: 0.5em 0.8em 0.7em 0.5em;
+        margin-left: -13px;
+        margin-top: -7px;
+        border-radius: 5px 1px 1px 5px;
+    }
+
+    .text {
+        padding: 1em 1em 1em 2em;
+        font-size: 17px;
+    }
+
+    .btn {
+        width: 22em;
+        text-align: left;
+    }
+</style>
+
+

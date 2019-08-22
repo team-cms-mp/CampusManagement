@@ -1,0 +1,108 @@
+﻿@model CampusManagement.Models.GetTimeTableSlotDateData_ResultViewModel
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Time Table Slots Dates";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.SelectedGetTimeTableSlotDateData_Result != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedGetTimeTableSlotDateData_Result);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedGetTimeTableSlotDateData_Result);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.GetTimeTableSlotDateData_Result());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Date 
+        </th>
+        <th>
+            Day
+        </th>
+        <th>
+            Slots
+        </th>
+        <th>
+            Is Active
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model.GetTimeTableSlotDateData_Results)
+    {
+    <tr>
+
+        <td>
+            @{
+                string date = item.TimeTableDateName.Value.ToShortDateString();
+                @Html.Raw(date);
+            }
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeTableDateDay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeSlotName)
+
+        </td>
+       
+        <td>
+            @{
+                if(item.IsActive == "No")
+                {
+                    <span style="color:red;font-weight:bold;">@item.IsActive</span>
+                }
+                else if (item.IsActive == "Yes")
+                {
+                    <span style="color:green;font-weight:bold;">@item.IsActive</span>
+                }
+               
+            }
+        </td>
+       <td>
+            @{
+                if (item.IsActive == "No")
+                {
+                    @Html.ActionLink("Mark as Active", "MarkAsActiveAndDeActive", new { TimeSlotID = item.TimeSlotID, TimeTableDateID = item.TimeTableDateID ,IsActive = "Yes" }) 
+                 
+                }
+                else if (item.IsActive == "Yes")
+                {
+                    @Html.ActionLink("Mark as Deactive", "MarkAsActiveAndDeActive", new { TimeSlotID = item.TimeSlotID, TimeTableDateID = item.TimeTableDateID, IsActive = "No" }) 
+                   
+                }
+               
+            }
+        </td>
+    </tr>
+    }
+
+</table>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#DurationMunutes").val(parseInt($("#DurationID option:selected").text()));
+            $("#DurationID").change(function () {
+                $("#DurationMunutes").val($("#DurationID option:selected").text());
+            });
+        });
+    </script>    
+}
+
+

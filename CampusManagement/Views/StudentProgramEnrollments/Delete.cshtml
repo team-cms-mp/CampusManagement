@@ -10,16 +10,10 @@
 
         <dd>
             @{
-                ModelCMSContainer dbc = new ModelCMSContainer();
+                ModelCMSNewContainer dbc = new ModelCMSNewContainer();
                 Student student = dbc.Students.FirstOrDefault(s => s.StudentID == Model.StudentID);
                 GetBatchProgramNameConcat_Result dv = dbc.GetBatchProgramNameConcat(student.FormNo, 6).FirstOrDefault();
                 string StudentName = string.Concat(student.FirstName, " ", student.LastName);
-                string adate = Model.AdmissionDate.Value.ToShortDateString();
-                string dcdate = "";
-                if(Model.DegreeCompletionDate != null)
-                {
-                    dcdate = Model.DegreeCompletionDate.Value.ToShortDateString();
-                }
             }
             @Html.Raw(StudentName)
         </dd>
@@ -37,7 +31,7 @@
         </dt>
 
         <dd>
-            @Html.Raw(adate)
+            @Html.DisplayFor(model => model.AdmissionDate)
         </dd>
 
         <dt>
@@ -69,7 +63,7 @@
         </dt>
 
         <dd>
-            @Html.Raw(dcdate)
+            @Html.DisplayFor(model => model.DegreeCompletionDate)
         </dd>
 
         <dt>
@@ -118,8 +112,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-success" />
-            <a href="@Url.Content("~/StudentProgramEnrollments/Index")" class="btn btn-success">Cancel</a>
+            <input type="submit" value="Delete" class="btn btn-primary" />
+            <a href="@Url.Content("~/StudentProgramEnrollments/Index")" class="btn btn-primary">Cancel</a>
         </div>
     }
 </div>

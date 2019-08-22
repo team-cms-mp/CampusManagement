@@ -1,0 +1,73 @@
+﻿@model CampusManagement.Models.NoticeBoardViewModel
+@using CampusManagement.Models
+
+@{
+    ViewBag.Title = "Notice Board";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedNoticeBoard != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedNoticeBoard);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedNoticeBoard);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.GetNoticeBoardDetails_Result());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Text
+        </th>
+        <th>
+            Faculty
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Is Active
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.NoticeBoards)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoticeBoardTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoticeBoardText)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.FacultyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoticeTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.NoticeBoardID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.NoticeBoardID })
+        </td>
+    </tr>
+    }
+
+</table>

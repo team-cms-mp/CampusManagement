@@ -1,0 +1,51 @@
+﻿@model CampusManagement.Models.BatchViewModel
+
+@{
+    ViewBag.Title = "Batches";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">Active Session </span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatch.BatchName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatch.BatchCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatch.BatchSession)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedBatch.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Batches)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BatchName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BatchCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BatchSession)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Active", "ActiveSessionByBatchID", new { BatchID = item.BatchID })
+        </td>
+    </tr>
+    }
+
+</table>
+

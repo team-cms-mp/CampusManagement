@@ -1,0 +1,67 @@
+﻿@model CampusManagement.Models.ExamsViewModel
+
+@{
+    ViewBag.Title = "Index";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedExam != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedExam);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedExam);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.Exam());
+    }
+}
+
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedExam.ExamTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedExam.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Exams)
+    {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.ExamTitle)
+            </td>
+            <td>
+                @if (item.IsActive == "Yes")
+                {
+                    <span style="color:green">@Html.DisplayFor(modelItem => item.IsActive)</span>
+                }
+                else
+                {
+                    <span style="color:red">@Html.DisplayFor(modelItem => item.IsActive)</span>
+                }
+               
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id = item.ExamID }) |
+                @Html.ActionLink("Add Dates", "Create", "ExamDates", new { ExamID = item.ExamID }, null) |
+                @Html.ActionLink("Add Time Slots", "Index", "ExamDateTimeSolts", new { ExamID = item.ExamID }, null) |
+                @Html.ActionLink("Mark As Active", "MarkAsActive", "Exams", new { ExamID = item.ExamID }, null) 
+              
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,158 @@
+﻿@model CampusManagement.Models.ExamDateSheetViewModel
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "My Lectures";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<hr style="border-top: 1px solid #6d9b90;" />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta name="author" content="Darko Bunic" />
+    <meta name="description" content="Drag and drop table content with JavaScript" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" /><!-- "position: fixed" fix for Android 2.2+ -->
+    <link rel="stylesheet" href="~/assets/css/mystyle.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="~/Scripts//redips-drag-min.js"></script>
+    <script type="text/javascript" src="~/Scripts/script.js"></script>
+
+
+    <title>Exam Date Sheet</title>
+</head>
+<body>
+    <div class="row" style="margin-bottom:0px">
+        <h2><span class="col-sm-12">Exam Date Sheet For  [Exam Title : @Model.ExamTitle]</span></h2>
+
+        @Html.HiddenFor(model => model.ExamID)
+        @Html.HiddenFor(model => model.RoomCount)
+        @Html.HiddenFor(model => model.SubjectCount)
+    </div>
+
+    <div id="divError" style="visibility:hidden" class="alert alert-danger alert-dismissable">Available rooms are less with respect to courses assign please drag drop subject in (red) to other valid date and time slot </div>
+    <div id="divSuccess" style="visibility:hidden" class="alert alert-success alert-dismissable">Data has been save successfully</div>
+    @{
+
+        ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+        CampusManagement.Models.GetExamDateSheetCoursesByIDs_Result GetExamDateSheetCoursesByIDs_ResultObj;
+        CampusManagement.Models.ExamDateTimeSlot ExamDateTimeSlotObj;
+        CampusManagement.Models.ExamDate ExamDateObj;
+        if(Model.ExamDateList != null) { 
+
+        if (Model.ExamDateList.Count > 0 && Model.ExamDateTimeSlotList.Count > 0)
+        {
+            <center>
+                <!-- drag1 DIV container -->
+                <div id="redips-drag">
+                    <div class="row">
+
+                        <div class="col-lg-12 pull-right">
+
+                            <table id="tblDateSheet">
+                                <colgroup>
+                                    <col width="200" />
+                                    <col width="200" />
+                                    <col width="200" />
+                                    <col width="200" />
+                                    <col width="200" />
+                                    <col width="200" />
+                                </colgroup>
+                                <tbody>
+
+                                    <tr>
+                                        <td style="font-size:25px;font-weight:bold">Date</td>
+                                        @for (int y = 0; y < Model.ExamDateTimeSlotList.Count; y++)
+                                        {
+
+                                            ExamDateTimeSlotObj = new CampusManagement.Models.ExamDateTimeSlot();
+                                            ExamDateTimeSlotObj = Model.ExamDateTimeSlotList[y];
+                                            string TimeSlotID = "TimeSlotID_" + ExamDateTimeSlotObj.ExamDateTimeSlotID;
+                                            <td id=@TimeSlotID style="font-size:15px;font-weight:bold">@ExamDateTimeSlotObj.TimeSlot </td>
+                                        }
+                                    </tr>
+
+                                    @for (int z = 0; z < Model.ExamDateList.Count; z++)
+                                    {
+                                        ExamDateObj = new CampusManagement.Models.ExamDate();
+                                        ExamDateObj = Model.ExamDateList[z];
+                                        string ExamID = "ExamID_" + ExamDateObj.ExamDateID;
+
+
+                                        <tr id=@ExamID>
+                                            <td style="font-size:15px;font-weight:bold"> @ExamDateObj.ExamDateTitle</td>
+                                            @for (int a = 0; a < Model.ExamDateTimeSlotList.Count; a++)
+                                            {
+                                                ExamDateTimeSlotObj = new CampusManagement.Models.ExamDateTimeSlot();
+                                                ExamDateTimeSlotObj = Model.ExamDateTimeSlotList[a];
+                                                string ExamIDTimeSlotID = "ExamIDTimeSlotID_" + ExamDateObj.ExamDateID + "_" + ExamDateTimeSlotObj.ExamDateTimeSlotID;
+                                                <td id=@ExamIDTimeSlotID style="font-size:10px">
+
+                                                    @{
+                                                        Model.ExamCourseList = dbc.GetExamDateSheetCoursesByIDs(Convert.ToInt32(ExamDateObj.ExamDateID), Convert.ToInt32(ExamDateTimeSlotObj.ExamDateTimeSlotID)).ToList();
+
+                                                        for (int b = 0; b < Model.ExamCourseList.Count; b++)
+                                                        {
+                                                            GetExamDateSheetCoursesByIDs_ResultObj = new CampusManagement.Models.GetExamDateSheetCoursesByIDs_Result();
+                                                            GetExamDateSheetCoursesByIDs_ResultObj = Model.ExamCourseList[b];
+                                                            string ProgramCourseID = "ProgramCourseID_" + GetExamDateSheetCoursesByIDs_ResultObj.ExamsDateSheetDetailID + "_" + GetExamDateSheetCoursesByIDs_ResultObj.ProgramCourseID;
+                                                            if (b < Model.RoomCount)
+                                                            {
+                                                                <div id=@ProgramCourseID class="redips-drag">
+                                                                    @GetExamDateSheetCoursesByIDs_ResultObj.ExamSubjectTitle  (@GetExamDateSheetCoursesByIDs_ResultObj.ProgramName (@GetExamDateSheetCoursesByIDs_ResultObj.YearSemesterNo))
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div id=@ProgramCourseID class="redips-drag" style="color:red">
+                                                                    @GetExamDateSheetCoursesByIDs_ResultObj.ExamSubjectTitle  (@GetExamDateSheetCoursesByIDs_ResultObj.ProgramName (@GetExamDateSheetCoursesByIDs_ResultObj.YearSemesterNo))
+                                                                </div>
+                                                            }
+
+                                                        }
+                                                    }
+
+
+
+                                                </td>
+                                                        }
+
+                                        </tr>
+
+                                                        }
+
+                                </tbody>
+                            </table>
+                           
+
+                        </div>
+                    </div>
+
+
+
+                    <br />
+                    <br />
+
+                </div>
+            </center>
+                   }
+               }
+
+               else
+               {
+                   <div class="row" style="margin-bottom:20px">
+                       <h4><span class="col-sm-12" style="color:red">Current Exam DateSheet Is Not Been Approved Yet!</span>  </h4>
+
+                   </div>
+               }
+    }
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+       
+        });
+
+    </script>
+
+</body>
+</html>

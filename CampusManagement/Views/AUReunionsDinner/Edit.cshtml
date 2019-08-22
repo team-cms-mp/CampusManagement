@@ -1,0 +1,95 @@
+﻿@model CampusManagement.Models.AlumniReunionsDinner
+
+@using (Html.BeginForm("Edit", "AUReunionsDinner", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Edit Reunions Dinner</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.HiddenFor(model => model.AlumniReunionsDinnerID)
+
+    <div class="row">
+        <div class="col-sm-4" hidden>
+            <input id="AlumniUserID" name="AlumniUserID" value="@ViewBag.AlumniUserID" type="hidden" />
+        </div>
+        <div class="col-sm-4">
+            <label>Add Reunions Title</label>
+            @Html.TextBoxFor(model => model.ReunionsDinnerTitle, new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(model => model.ReunionsDinnerTitle, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-4">
+            <label> Add Reunions Location </label>
+            @Html.TextBoxFor(model => model.ReunionsDinnerLocation, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ReunionsDinnerLocation, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="col-sm-4">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            <label>Add Reunions Details</label>
+            @Html.TextAreaFor(model => model.ReunionsDinnerDetails, new { @class = "form-control", @style = "height: 10em;" })
+            @Html.ValidationMessageFor(model => model.ReunionsDinnerDetails, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label> Add Reunions Start Date </label>
+            <input name="Start_Date" class="form-control" id="datepicker" required>
+            @Html.ValidationMessageFor(model => model.ReunionsDinnerStartDateTime, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label> Add Reunions Start Time </label>
+            <input name="Start_time" class="form-control" id="datepicker2" required type="time">
+        </div>
+        <div class="col-sm-3">
+            <label>Add Reunions End Date</label>
+            <input name="End_Date" class="form-control" id="datepicker1" required>
+            @Html.ValidationMessageFor(model => model.ReunionsDinnerEndDateTime, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label> Add Reunions End Time </label>
+            <input name="End_time" class="form-control" id="datepicker3" required type="time">
+        </div>
+        <div class="col-sm-4 hidden">
+            @Html.TextBoxFor(model => model.CreatedOn, new { @class = "form-control" })
+            @Html.TextBoxFor(model => model.CreatedBy, new { @class = "form-control" })
+        </div>
+
+
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a href="@Url.Content("~/AUReunionsDinner/Index")" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="@Url.Content("~/Scripts/jquery-1.12.4.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.js")"></script>
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#datepicker").val("@ViewBag.strDate");
+        $("#datepicker1").val("@ViewBag.endDate");
+        $("#datepicker2").val("@ViewBag.strTime");
+        $("#datepicker3").val("@ViewBag.endTime");
+        $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' });
+        $("#datepicker1").datepicker({ dateFormat: 'dd/mm/yy' });
+
+    });
+
+</script>
+
+
+

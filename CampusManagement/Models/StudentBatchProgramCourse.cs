@@ -25,7 +25,9 @@ namespace CampusManagement.Models
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<int> BatchProgramID { get; set; }
-    
+        public string IsFailed { get; set; }
+        public Nullable<int> StatusID { get; set; }
+
         public virtual BatchProgramCourse BatchProgramCourse { get; set; }
         public virtual Course Course { get; set; }
         public virtual Student Student { get; set; }

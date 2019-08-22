@@ -1,21 +1,21 @@
-﻿@model CampusManagement.Models.BatchProgramSemesterViewModel
+﻿@model CampusManagement.Models.GetBatchProgramSemester_ResultViewModel
 @using CampusManagement.Models;
 @{
-    ViewBag.Title = "Batch Program Semesters";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ViewBag.Title = "Program Semesters";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 
 @{
-    if (Model.SelectedBatchProgramSemester != null)
+    if (Model.SelectedGetBatchProgramSemester_Result!= null)
     {
         if (Model.DisplayMode == "Delete")
         {
-            Html.RenderPartial("Delete", Model.SelectedBatchProgramSemester);
+            Html.RenderPartial("Delete", Model.SelectedGetBatchProgramSemester_Result);
         }
         else if (Model.DisplayMode == "ReadWrite")
         {
-            Html.RenderPartial("Edit", Model.SelectedBatchProgramSemester);
+            Html.RenderPartial("Edit", Model.SelectedGetBatchProgramSemester_Result);
         }
     }
     if (Model.DisplayMode == "WriteOnly")
@@ -27,32 +27,51 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedBatchProgramSemester.BatchProgramID)
+           Session
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedBatchProgramSemester.YearSemesterNo)
+          Program
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedBatchProgramSemester.IsActive)
+          Semester #
+        </th>
+        <th>
+          Active
         </th>
         <th>Actions</th>
     </tr>
 
-    @foreach (var item in Model.BatchProgramSemesters)
+    @foreach (var item in Model.GetBatchProgramSemester_Results)
     {
         <tr>
             <td>
-                @{
-                    ModelCMSContainer dbView = new ModelCMSContainer();
-                    GetBatchProgramNameConcat_Result bpn = dbView.GetBatchProgramNameConcat("", 0).FirstOrDefault(b => b.ID == item.BatchProgramID);
-                }
-                @Html.Raw(bpn.Name)
+                @Html.DisplayFor(modelItem =>item.BatchName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProgramName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.YearSemesterNo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
+                @{ 
+                    if(item.IsActive == "Yes")
+                    {
+                        <span style="font-weight:bold;color:green;">@item.IsActive</span>
+                    }
+                    else if (item.IsActive == "No")
+                    {
+                        <span style="font-weight:bold;color:red;">@item.IsActive</span>
+                    }
+                    else if (item.IsActive == "Complete")
+                    {
+                        <span style="font-weight:bold;color:black;">@item.IsActive</span>
+                    }
+                    else if (item.IsActive == "Open")
+                    {
+                        <span style="font-weight:bold;color:yellow;">@item.IsActive</span>
+                    }
+                }
             </td>
             <td>
                 @Html.ActionLink("Edit", "Update", new { id = item.BatchProgramSemesterID }) |
@@ -62,3 +81,37 @@
     }
 
 </table>
+
+@section Scripts {
+    <script>
+    $(document).ready(function () {
+        GetPrograms_by_FacultyLevelBatch();
+        $("#BatchProgramID").val(@ViewBag.hdnBatchProgramID);
+        $("#BatchID").change(function () {
+            GetPrograms_by_FacultyLevelBatch();
+        });
+    });
+
+    function GetPrograms_by_FacultyLevelBatch() {
+        var BatchID = $("#BatchID").val();
+        $.ajax({
+            url: "@Url.Content("~/BatchProgramSemesters/GetPrograms_by_FacultyLevelBatch")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ BatchID: +BatchID }),
+            success: function (result) {
+                $("#BatchProgramID").html("");
+                $.each($.parseJSON(result), function (i, sem) {
+                    $("#BatchProgramID").append($('<option></option>').val(sem.BatchProgramID).html(sem.ProgramName));
+                });
+            },
+            error: function (ex) {
+                alert(ex.error);
+            },
+        });
+    }
+    </script>
+}
+

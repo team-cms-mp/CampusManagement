@@ -1,0 +1,134 @@
+﻿@model CampusManagement.Models.ExamAdminStudentForGardeFormViewModel
+@using CampusManagement.Models
+
+@using (Html.BeginForm("Index", "ExamAdminStudentForGardeForm", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12"> Exam Grade From Request </span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+
+        <div class="col-sm-4">
+            <label>Exam</label>
+            @Html.DropDownListFor(model => model.ExamID, null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ExamID, "", new { @class = "text-danger" })
+
+        </div>
+
+
+    </div>
+
+    <div class="row" style="margin-top: 1em;">
+        <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+
+    </div>
+
+}
+
+<table style="width:100%">
+    <tr style="width:100%">
+        <td style="width:100%; text-align:right">
+            <input id="btnPrint" type="submit" class="btn btn-primary" value="Print Report" onclick="@("PrintReport()")" />
+        </td>
+    </tr>
+</table>
+<div id="divAllPrint" name="divAllPrint" style="background-color:lightyellow;">
+    <div style="page-break-before: always; border:solid;border-width:2px;border-color:lightgray;">
+        @{
+
+            ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+            int hdnExamID = (ViewBag.hdnExamID == null) ? 0 : ViewBag.hdnExamID;
+            int hdnEmpID = (ViewBag.hdnEmpID == null) ? 0 : ViewBag.hdnEmpID;
+            Model.ExamGardeFormStudentList = dbc.GetExamAdminStudentForGardeForm(hdnExamID).ToList();
+            if (Model != null)
+            {
+                if (Model.ExamGardeFormStudentList != null)
+                {
+                    if (Model.ExamGardeFormStudentList.Count > 0)
+                    { <table class="table" id="tblEligiblestudents" name="tblEligiblestudents">
+            <tr>
+                <th>
+                    Subject Detail
+                </th>
+                <th>
+                    Student Detail
+                </th>
+
+                <th>
+                    Action
+                </th>
+            </tr>
+            @for (var i = 0; i < Model.ExamGardeFormStudentList.Count; i++)
+            {
+
+                <tr>
+                    <td>
+                        <label class="control-label">Subject:&nbsp;</label>@Html.DisplayFor(modelItem => Model.ExamGardeFormStudentList[i].ExamSubjectTitle) <br/>
+                        <label class="control-label">Program Name:&nbsp;</label>@Html.DisplayFor(modelItem => Model.ExamGardeFormStudentList[i].ProgramName) <br />
+                        <label class="control-label">Session:&nbsp;</label>@Html.DisplayFor(modelItem => Model.ExamGardeFormStudentList[i].BatchSession) 
+                    </td>
+                    <td>
+                        <label class="control-label">Student Name:&nbsp;</label>@Html.DisplayFor(modelItem => Model.ExamGardeFormStudentList[i].StudentName) <br />
+                        <label class="control-label">Registration No:&nbsp;</label>@Html.DisplayFor(modelItem => Model.ExamGardeFormStudentList[i].RegistrationNo) <br />
+                        <label class="control-label">Roll Number:&nbsp;</label>@Html.DisplayFor(modelItem => Model.ExamGardeFormStudentList[i].RollNumber) 
+
+                    </td>
+                    <td>
+                        @Html.ActionLink("View Request ", "ExamSubjectsStudentMarkDisplay", new { ExamID = Model.ExamGardeFormStudentList[i].ExamID, ProgramCourseID = Model.ExamGardeFormStudentList[i].ProgramCourseID, StudentID = Model.ExamGardeFormStudentList[i].StudentID}, null)
+                    </td>
+                </tr>
+            }
+        </table>
+
+
+                    }
+                    else
+                    { <span style="color:red"> No Record Found</span> }
+                }
+                else
+                { <span style="color:red"> No Record Found</span> }
+            }
+            else
+            { <span style="color:red"> No Record Found</span> }
+
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+        });
+
+        function PrintReport() {
+            var data = document.getElementById('divAllPrint').innerHTML;
+            var myWindow = window.open('', '', 'height=400,width=600');
+            myWindow.document.write('<html><head><title></title>');
+            /*optional stylesheet*/ //myWindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+            myWindow.document.write('</head><body >');
+            myWindow.document.write(data);
+            myWindow.document.write('</body></html>');
+            myWindow.document.close(); // necessary for IE >= 10
+
+            myWindow.onload = function () { // necessary if the div contain images
+
+                myWindow.focus(); // necessary for IE >= 10
+                myWindow.print();
+                myWindow.close();
+            };
+
+        }
+
+    </script>
+
+}

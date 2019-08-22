@@ -27,6 +27,8 @@ namespace CampusManagement.Models
         public int ProgramID { get; set; }
         public string BatchProgramConcat { get; set; }
         public string Criteria { get; set; }
+        public Nullable<int> EntryTestID { get; set; }
+        public Nullable<decimal> TotalPercentage { get; set; }
     }
 
     public class GetSelectionCriteria_ResultViewModel

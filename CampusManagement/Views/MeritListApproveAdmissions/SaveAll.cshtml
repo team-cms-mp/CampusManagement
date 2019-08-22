@@ -1,7 +1,7 @@
 ﻿@model CampusManagement.Models.GetSelectionCriteria_ResultViewModel
 @{
-    ViewBag.Title = "Merit List & Approve Admission";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ViewBag.Title = "Merit List";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
@@ -15,84 +15,162 @@
 @using (Html.BeginForm("SaveAll", "MeritListApproveAdmissions", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
+    <input type="hidden" name="hdnBatchID" value="@ViewBag.hdnBatchID" />
     <input type="hidden" name="hdnDegreeID" value="@ViewBag.hdnDegreeID" />
+    <input type="hidden" name="hdnEntryTestID" value="@ViewBag.hdnEntryTestID" />
     <input type="hidden" name="hdnBatchProgramID" value="@ViewBag.hdnBatchProgramID" />
     <input type="hidden" name="hdnFullName" value="@ViewBag.hdnFullName" />
     <input type="hidden" name="TotalRows" value="@Model.GetSelectionCriteria_Results.Count" />
-    <table class="table">
-        <tr>
-            <th>
-                Select
-            </th>
-            <th>
-                Form #
-            </th>
-            <th>
-                Applicant Name
-            </th>
-            <th>
-                Father Name
-            </th>
-            <th>
-                Status
-            </th>
-            <th>
-                Qualification
-            </th>
-        </tr>
 
-        @foreach (var item in Model.GetSelectionCriteria_Results)
-        {
-            string FormNoID = "txtFormNo_" + i;
-            string hdnStatusName = "hdnStatusName_" + i;
-            string chkIsSelected = "chkIsSelected_" + i;
+    <div class="row" style="margin-top:-4.5%">
+        <div class="col-sm-offset-9 col-sm-3 inner-addon right-addon">
+            <select id="selectTop" name="selectTop" class="form-control">
+                <option selected disabled>Select Top 5/10/20/30/40</option>
+                <option value="5">Top 5</option>
+                <option value="10">Top 10</option>
+                <option value="20">Top 20</option>
+                <option value="30">Top 30</option>
+                <option value="40">Top 40</option>
+                <option value="50">Top 50</option>
+                <option value="60">Top 60</option>
+                <option value="70">Top 70</option>
+                <option value="80">Top 80</option>
+                <option value="90">Top 90</option>
+                <option value="100">Top 100</option>
+                <option value="Select">Select All</option>
+                <option value="Unselect">Unselect All</option>
+            </select>
+        </div>
+
+        <br />    <br />
+        <table class="table">
             <tr>
-                <td>
-                    @{ 
-                        if (item.StatusName == "Selected")
-                        {
-                            <input id="@chkIsSelected" name="@chkIsSelected" type="checkbox" checked style="width:20px;height:20px;" class="form-check-input col-sm-1" />
-                        }
-                        else
-                        {
-                            <input id="@chkIsSelected" name="@chkIsSelected" type="checkbox" style="width:20px;height:20px;" class="form-check-input col-sm-1" />
-                        }
-                    }
-                </td>
-                <td>
-                    <input id="@FormNoID" name="@FormNoID" type="hidden" value="@item.FormNo" class="form-control col-sm-1" readonly />
-                    @Html.DisplayFor(modelItem => item.FormNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FatherName)
-                </td>
-                <td>
-                    <input id="@hdnStatusName" name="@hdnStatusName" type="hidden" value="@item.StatusName" class="form-control col-sm-1" readonly />
-                    @Html.DisplayFor(modelItem => item.StatusName)
-                </td>
-                <td>
-                    @{ 
-                        string criteria = item.Criteria.Replace("&lt;", "<").Replace("&gt;", ">");
-                    }
-                    @Html.Raw(criteria)
-                </td>
+                <th>
+                    Select
+                </th>
+                <th>
+                    Form #
+                </th>
+                <th>
+                    Applicant Name
+                </th>
+                <th>
+                    Father Name
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Qualification
+                </th>
+                <th>
+                    Weightage
+                </th>
             </tr>
-            i++;
-        }
-    </table>
-    <div class="row">
-        <div class="col-sm-3">
-            <input type="submit" value="Save All" class="btn btn-success" />
+
+            @foreach (var item in Model.GetSelectionCriteria_Results)
+            {
+                string FormNoID = "txtFormNo_" + i;
+                string hdnStatusName = "hdnStatusName_" + i;
+                string chkIsSelected = "chkIsSelected_" + i;
+                <tr>
+                    <td>
+                        @{
+                            if (item.StatusName == "Selected")
+                            {
+                                <input id="@chkIsSelected" name="@chkIsSelected" type="checkbox" checked disabled style="width:20px;height:20px;" class="form-check-input col-sm-1" />
+                            }
+                            else
+                            {
+                                <input id="@chkIsSelected" name="@chkIsSelected" type="checkbox" style="width:20px;height:20px;" class="form-check-input col-sm-1" />
+                            }
+                        }
+                    </td>
+                    <td>
+                        <input id="@FormNoID" name="@FormNoID" type="hidden" value="@item.FormNo" class="form-control col-sm-1" readonly />
+                        @Html.DisplayFor(modelItem => item.FormNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FatherName)
+                    </td>
+                    <td>
+                        <input id="@hdnStatusName" name="@hdnStatusName" type="hidden" value="@item.StatusName" class="form-control col-sm-1" readonly />
+                        @Html.DisplayFor(modelItem => item.StatusName)
+                    </td>
+                    <td>
+                        @{
+                            string criteria = item.Criteria.Replace("&lt;", "<").Replace("&gt;", ">");
+                        }
+                        @Html.Raw(criteria)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPercentage)%
+                    </td>
+                </tr>
+                                i++;
+                            }
+        </table>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <input type="submit" value="Save All" class="btn btn-primary" />
+                <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rpt_GetAdmissionApplicantMeritListWeightageWise&QueryID=2&BatchProgramID=")@ViewBag.hdnBatchProgramID&BatchID=@ViewBag.hdnBatchID&EntryTestID=@ViewBag.hdnEntryTestID" class="btn btn-primary" target="_blank">Merit List(Selected)</a>
+                <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rpt_GetAdmissionApplicantMeritListWeightageWise&QueryID=4&BatchProgramID=")@ViewBag.hdnBatchProgramID&BatchID=@ViewBag.hdnBatchID&EntryTestID=@ViewBag.hdnEntryTestID" class="btn btn-primary" target="_blank">Merit List(Unselected)</a>
+            </div>
         </div>
     </div>
-}
+                            }
 
 @section Scripts {
     <script>
         $(document).ready(function () {
+
+            $("#selectTop").change(function () {
+                var selectedValue = $("#selectTop").val();
+                if (selectedValue == "Unselect") {
+                    $("table tr :checkbox:lt(1000)").prop("checked", false);
+                }
+
+                $("table tr :checkbox:lt(1000)").prop("checked", false);
+
+                if (selectedValue == "Select") {
+                    $("table tr :checkbox:lt(1000)").prop("checked", true);
+                }
+
+                else {
+                    $("table tr :checkbox:lt('" + selectedValue + "')").prop("checked", true);
+                }
+
+            });
+
+            $("#DegreeID").val("22");
+            GetPrograms_by_FacultyLevelBatch();
+            GetEntryTestsByDegreeID();
+            if ("@ViewBag.hdnBatchProgramID" != "")
+            {
+                $("#BatchProgramID").val("@ViewBag.hdnBatchProgramID");
+            }
+
+            if ("@ViewBag.hdnDegreeID" != "") {
+                $("#DegreeID").val("@ViewBag.hdnDegreeID");
+                GetEntryTestsByDegreeID();
+                if ("@ViewBag.hdnEntryTestID" != "") {
+                    $("#EntryTestID").val("@ViewBag.hdnEntryTestID");
+                }
+            }
+
+            $("#BatchID").change(function () {
+                GetPrograms_by_FacultyLevelBatch();
+            });
+
+            $("#DegreeID").change(function () {
+                GetEntryTestsByDegreeID();
+            });
+
             var dummyClassTotalMarks = $(".dummyClassTotalMarks");
             var dummyClassObtainedMarks = $(".dummyClassObtainedMarks");
             for (var j = 0; j < dummyClassTotalMarks.length; j++) {
@@ -106,7 +184,7 @@
                 $("#" + dummyClassObtainedMarks[j].id).ForceNumericWithDot();
                 var DegreeName = $("#DegreeID option:selected").text();
                 if (DegreeName != "Interview" && DegreeName != "Test") {
-                    $("#" + dummyClassObtainedMarks[j].id).attr("readonly", true);
+                    //$("#" + dummyClassObtainedMarks[j].id).attr("readonly", true);
                 }
 
                 if ($("#" + dummyClassObtainedMarks[j].id).val() == "" || $("#" + dummyClassObtainedMarks[j].id).val() == null) {
@@ -125,5 +203,49 @@
                 }
             });
         });
+
+        function GetPrograms_by_FacultyLevelBatch() {
+            var BatchID = $("#BatchID").val();
+            $.ajax({
+                url: "@Url.Content("~/MeritListApproveAdmissions/GetPrograms_by_FacultyLevelBatch")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ BatchID: +BatchID }),
+                success: function (result) {
+                    $("#BatchProgramID").html("");
+                    $("#BatchProgramID").append($('<option></option>').val("0").html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#BatchProgramID").append($('<option></option>').val(sem.BatchProgramID).html(sem.ProgramName));
+                    });
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                },
+            });
+        }
+
+        function GetEntryTestsByDegreeID() {
+            var DegreeID = $("#DegreeID").val();
+            $.ajax({
+                url: "@Url.Content("~/MeritListApproveAdmissions/GetEntryTestsByDegreeID")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ DegreeID: +DegreeID }),
+                success: function (result) {
+                    $("#EntryTestID").html("");
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#EntryTestID").append($('<option></option>').val(sem.EntryTestID).html(sem.EntryTestName));
+                    });
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                },
+            });
+        }
     </script>
+
 }

@@ -10,8 +10,8 @@
 
         <dd>
             @{
-                ModelCMSContainer dbc = new ModelCMSContainer();
-                GetBatchProgramNameConcat_Result dv = dbc.GetBatchProgramNameConcat(2).FirstOrDefault(bp => bp.ID == Model.TimeSlotID);
+                ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+                GetBatchProgramNameConcat_Result dv = dbc.GetBatchProgramNameConcat("", 2).FirstOrDefault(bp => bp.ID == Model.TimeSlotID);
             }
             @Html.Raw(dv.Name)
         </dd>
@@ -22,7 +22,7 @@
 
         <dd>
             @{
-                dv = dbc.GetBatchProgramNameConcat(3).FirstOrDefault(bp => bp.ID == Model.TCourseAllocationID);
+                dv = dbc.GetBatchProgramNameConcat("", 3).FirstOrDefault(bp => bp.ID == Model.TCourseAllocationID);
             }
             @Html.Raw(dv.Name)
         </dd>
@@ -73,8 +73,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-success" />
-            <a href="@Url.Content("~/TimeSlotCourseAllocations/Index")" class="btn btn-success">Cancel</a>
+            <input type="submit" value="Delete" class="btn btn-primary" />
+            <a href="@Url.Content("~/TimeSlotCourseAllocations/Index")" class="btn btn-primary">Cancel</a>
         </div>
     }
 </div>

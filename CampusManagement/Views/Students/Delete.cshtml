@@ -1,8 +1,8 @@
-﻿@model CampusManagement.Models.Student
-@using CampusManagement.Models
+﻿@model CampusManagement.Models.GetStudents_Result
+
 @{
     ViewBag.Title = "Remove Student";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 <div>
@@ -18,7 +18,7 @@
         </dt>
 
         <dd>
-            <img id="imgView" src="@Url.Content(Model.Picture)" style="width:100px;height:100px;border-radius:150px;" />
+            <a href="@Url.Content(Model.Picture)" id="lnkProfilePicture" target="_blank"><img id="imgView" src="@Url.Content(Model.Picture)" style="width:100px;height:100px;border-radius:10px;" /></a>
         </dd>
 
         <dt>
@@ -30,11 +30,67 @@
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.Salutation.SalutationName)</label>
+            <label class="control-label">@Html.DisplayNameFor(model => model.FormNo)</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Salutation.SalutationName)
+            @Html.DisplayFor(model => model.FormNo)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.RollNumber)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RollNumber)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.RegistrationNo)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegistrationNo)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.CurrentSemesterNo)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentSemesterNo)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.BatchName)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BatchName)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.ProgramName)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProgramName)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.RegistrationNo)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegistrationNo)
+        </dd>
+
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.SalutationName)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SalutationName)
         </dd>
 
         <dt>
@@ -66,42 +122,31 @@
         </dt>
 
         <dd>
-            @{ 
-                string sdob = Model.StudentDOB.ToShortDateString();
-            }
-            @Html.Raw(sdob)
+            @Html.DisplayFor(model => model.StudentDOB)
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.PlaceOfBirth)</label>
+            <label class="control-label">@Html.DisplayNameFor(model => model.GenderName)</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PlaceOfBirth)
+            @Html.DisplayFor(model => model.GenderName)
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.Gender.GenderName)</label>
+            <label class="control-label">@Html.DisplayNameFor(model => model.NationalityName)</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Gender.GenderName)
+            <img src="@Url.Content(Model.FlagURL)" style="width:20px;height:20px;" /> @Html.DisplayFor(model => model.NationalityName)
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.Nationality.NationalityName)</label>
+            <label class="control-label">@Html.DisplayNameFor(model => model.MaritalStatusName)</label>
         </dt>
 
         <dd>
-            <img src="@Url.Content(Model.Nationality.FlagURL)" style="width:20px;height:20px;" /> @Html.DisplayFor(model => model.Nationality.NationalityName)
-        </dd>
-
-        <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.MaritalStatu.MaritalStatusName)</label>
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MaritalStatu.MaritalStatusName)
+            @Html.DisplayFor(model => model.MaritalStatusName)
         </dd>
 
         <dt>
@@ -110,25 +155,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.ACNIC)
-        </dd>
-
-        <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.PassportNo)</label>
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PassportNo)
-        </dd>
-
-        <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.PassportExpiryDate)</label>
-        </dt>
-
-        <dd>
-            @{
-                string ed = Model.PassportExpiryDate.Value.ToShortDateString();
-            }
-            @Html.Raw(ed)
         </dd>
 
         <dt>
@@ -172,43 +198,11 @@
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.RelationType.RelationTypeName)</label>
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RelationType.RelationTypeName)
-        </dd>
-
-        <dt>
             <label class="control-label">@Html.DisplayNameFor(model => model.GuardianCNIC)</label>
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.GuardianCNIC)
-        </dd>
-
-        <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.Country.CountryName)</label>
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Country.CountryName)
-        </dd>
-
-        <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.Province.ProvinceName)</label>
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Province.ProvinceName)
-        </dd>
-
-        <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.City.CityName)</label>
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.City.CityName)
         </dd>
 
         <dt>
@@ -228,35 +222,27 @@
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.Religion.ReligionName)</label>
+            <label class="control-label">@Html.DisplayNameFor(model => model.ReligionName)</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Religion.ReligionName)
+            @Html.DisplayFor(model => model.ReligionName)
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.CurrentOccupation.CurrentOccupationName)</label>
+            <label class="control-label">@Html.DisplayNameFor(model => model.StatusName)</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CurrentOccupation.CurrentOccupationName)
+            @Html.DisplayFor(model => model.StatusName)
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.Status.StatusName)</label>
+            <label class="control-label">@Html.DisplayNameFor(model => model.CreatedByUserName)</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Status.StatusName)
-        </dd>
-
-        <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.IsActive)</label>
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
+            @Html.DisplayFor(model => model.CreatedByUserName)
         </dd>
 
         <dt>
@@ -268,11 +254,11 @@
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.CreatedBy)</label>
+            <label class="control-label">@Html.DisplayNameFor(model => model.ModifiedByUserName)</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
+            @Html.DisplayFor(model => model.ModifiedByUserName)
         </dd>
 
         <dt>
@@ -283,14 +269,6 @@
             @Html.DisplayFor(model => model.ModifiedOn)
         </dd>
 
-        <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.ModifiedBy)</label>
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedBy)
-        </dd>
-
     </dl>
 
     @using (Html.BeginForm())
@@ -298,7 +276,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-success" /> |
+            <input type="submit" value="Delete" class="btn btn-primary" /> |
             @Html.ActionLink("Back to List", "Index")
         </div>
     }

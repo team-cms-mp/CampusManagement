@@ -1,0 +1,38 @@
+﻿@model CampusManagement.Models.AlumniUserNew
+
+@using (Html.BeginForm("Create", "AUNews", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Add News</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+        <div class="col-sm-4" hidden>
+            <input id="AlumniUserID" name="AlumniUserID" value="@ViewBag.AlumniUserID" type="hidden" />
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.NewsTitle, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.NewsTitle, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.NewsTitle, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            @Html.LabelFor(model => model.NewsContent, htmlAttributes: new { @class = "control-label" })
+            @Html.TextAreaFor(model => model.NewsContent, new { @class = "form-control", @style= "height: 10em;" })
+            @Html.ValidationMessageFor(model => model.NewsContent, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-2">
+            <input style="margin-top: 1.6em;" type="submit" value="Add" class="btn btn-primary" />
+        </div>
+
+    </div>
+}

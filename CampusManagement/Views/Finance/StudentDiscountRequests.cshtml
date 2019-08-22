@@ -1,0 +1,137 @@
+﻿@model CampusManagement.Models.StudentDiscountRequestsViewModel
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Student Requests";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+
+<table class="table">
+    <tr>
+        <th>
+            Form #
+        </th>
+        <th>
+            Request Type
+        </th>
+        <th>
+            Request
+        </th>
+        <th>
+            Request Status
+        </th>
+        <th>
+            Discount
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.StudentDiscountRequests)
+    {
+        string RequestTypeName = "";
+        string RequestStatus = "";
+        StudentRequestStatu srs = dbc.StudentRequestStatus.FirstOrDefault(r => r.StudentRequestStatusID == item.StudentRequestStatusID);
+        StudentRequestType srt = dbc.StudentRequestTypes.FirstOrDefault(r => r.StudentRequestTypeID == item.StudentRequestTypeID);
+        RequestTypeName = srt.RequestDescription;
+        RequestStatus = srs.StudentRequestStatusName;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormNo)
+            </td>
+            <td>
+                @Html.Raw(RequestTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDescription)
+            </td>
+            <td>
+                @Html.Raw(RequestStatus)
+            </td>
+            <td>
+                @{
+                    if (RequestTypeName == "Discount" && RequestStatus == "Pending")
+                    {
+                        string DiscountPercentage = string.Concat("DiscountPercentage_", item.StudentDiscountRequestID);
+                        <select id="@DiscountPercentage" name="@DiscountPercentage" class="form-control col-sm-2">
+                            <option value="0.20">20 %</option>
+                            <option value="0.30">30 %</option>
+                            <option value="0.40">40 %</option>
+                            <option value="0.50">50 %</option>
+                            <option value="0.60">60 %</option>
+                        </select>
+                    }
+                    else if (RequestTypeName == "Discount" && RequestStatus == "Approved")
+                    {
+                        @Html.DisplayFor(modelItem => item.DiscountPercentage)
+                    }
+                    else
+                    {
+                        @Html.Raw("0")
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (RequestStatus == "Approved")
+                    {
+                        <span style="color:green; font-weight:bold;">Approved</span>
+                    }
+                    else if (RequestStatus == "Disapproved")
+                    {
+                        <span style="color:red; font-weight:bold;">Disapproved</span>
+                    }
+                    else if (RequestStatus == "Pending")
+                    {
+                        <input type="button" class="btn btn-primary" value="Approve" onclick="ApproveDisapproveDiscounts(@item.StudentDiscountRequestID, '@item.FormNo', '@RequestTypeName', 'Approved');" />
+                        <input type="button" class="btn btn-primary" value="Disapprove" onclick="ApproveDisapproveDiscounts(@item.StudentDiscountRequestID, '@item.FormNo', '@RequestTypeName', 'Disapproved');" />
+                    }
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section Scripts {
+    <script>
+
+        function ApproveDisapproveDiscounts(StudentDiscountRequestID, FormNo, RequestTypeName, StudentRequestStatusName) {
+            var DiscountPercentage = $("#DiscountPercentage_" + StudentDiscountRequestID).val();
+            $.ajax({
+                url: "@Url.Content("~/Finance/ApproveDisapproveDiscounts")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({
+                    StudentDiscountRequestID: StudentDiscountRequestID
+                    , FormNo: FormNo, RequestTypeName: RequestTypeName
+                    , StudentRequestStatusName: StudentRequestStatusName
+                    , DiscountPercentage: DiscountPercentage
+                }),
+                success: function (result) {
+                    if (result == "error") {
+                        alert("Error occured while saving data.");
+                    }
+                    else if (result == "success") {
+                        alert("Data has been saved successfully.");
+                        window.location = "@Url.Content("~/Finance/StudentDiscountRequests")";
+                    }
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                }
+            });
+        }
+    </script>
+}
+

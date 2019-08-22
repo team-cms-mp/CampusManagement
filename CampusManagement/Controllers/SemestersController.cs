@@ -12,10 +12,10 @@ using CampusManagement.Models;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
+    [Authorize]
     public class SemestersController : Controller
     {
-        private ModelCMSContainer db = new ModelCMSContainer();
+        private ModelCMSNewContainer db = new ModelCMSNewContainer();
         SemestersViewModel model = new SemestersViewModel();
 
         public ActionResult Index()
@@ -53,25 +53,25 @@ namespace CampusManagement.Controllers
                 s = db.Semesters.FirstOrDefault(de => de.SemesterCode == semester.SemesterCode);
                 if(s != null)
                 {
-                    ModelState.AddModelError(string.Empty, "Semester Code is already exists.");
+                    ModelState.AddModelError(string.Empty, "Semester Code already exists.");
                     count++;
-                    ErrorMessage += count + "-Semester Code is already exists.<br />";
+                    ErrorMessage += count + "-Semester Code already exists.<br />";
                 }
 
                 s = db.Semesters.FirstOrDefault(de => de.SemesterName == semester.SemesterName);
                 if (s != null)
                 {
-                    ModelState.AddModelError(string.Empty, "Semester Name is already exists.");
+                    ModelState.AddModelError(string.Empty, "Semester Name already exists.");
                     count++;
-                    ErrorMessage += count + "-Semester Name is already exists.<br />";
+                    ErrorMessage += count + "-Semester Name already exists.<br />";
                 }
 
                 s = db.Semesters.FirstOrDefault(de => de.YearSemesterNo == semester.YearSemesterNo);
                 if (s != null)
                 {
-                    ModelState.AddModelError(string.Empty, "Year/Semester # is already exists.");
+                    ModelState.AddModelError(string.Empty, "Semester # already exists.");
                     count++;
-                    ErrorMessage += count + "-Year/Semester # is already exists.<br />";
+                    ErrorMessage += count + "-Semester # already exists.<br />";
                 }
 
                 if(!string.IsNullOrEmpty(ErrorMessage))

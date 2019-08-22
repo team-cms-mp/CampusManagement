@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 @using CampusManagement.Models
 <head>
@@ -15,136 +16,310 @@
     <link href="@Url.Content("~/assets/css/style5.css")" rel="stylesheet">
     <link href="@Url.Content("~/assets/css/bootstrap.min.css")" rel="stylesheet">
     <link href="@Url.Content("~/Content/jquery-ui.css")" rel="stylesheet" />
+    <link href="@Url.Content("/Content/PagedList.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/assets/css/daterangepicker.css")" rel="stylesheet">
 
     <script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery-ui-1.10.0.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script src="@Url.Content("~/Scripts/mask.js")"></script>
     <script src="@Url.Content("~/Scripts/Common.js")"></script>
+
+    @*<script src="@Url.Content("~/assets/js/jquery.min.js")"></script>*@
+    <script src="@Url.Content("~/assets/js/moment.min.js")"></script>
+    <script src="@Url.Content("~/assets/js/daterangepicker.js")"></script>
+
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
-   
+    <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.10.0/adapters/jquery.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery.session@1.0.0/jquery.session.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery.session@1.0.0/jquery.session.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery.session@1.0.0/package.json"></script>
 </head>
 <body>
     <div class="wrapper">
         <!-- Sidebar Holder -->
-        <nav id="sidebar" class="navSide">
-            <div class="sidebar-header">
-                <a href="@Url.Action(" TeacherCourse", "LookUps")"><img src="@Url.Content(@MvcApplication.CompanyLogo)" style="width: 8.8em; margin-left: 2%; margin-top: -2.2em;" class="img-responsive" alt=""></a>
-                <a href="#" style="position: absolute; color: #318fd2; text-align: center;     margin-left: 12.2%; margin-top: -4.2%; "><img src="~/assets/img/icons/help.png" style="width: 2em;" /><br />Help</a>
+        <nav id="sidebar" class="navSide" style="background:#c6c6c6 !important">
+            <div class="sidebar-header" style="background:#c6c6c6 !important">
+                <a href="@Url.Action("Index", "Home")"><img src="@Url.Content(@MvcApplication.CompanyLogo)" style="width: 8.8em; margin-left: 13%; margin-top: -2.2em;" class="img-responsive" alt=""></a>
+                <a class="hidden-md hidden-sm hidden-xs" href="#" style="position: absolute; color: #318fd2; text-align: center;     margin-left: 12.2%; margin-top: -4.2%;display:none;"><img src="~/assets/img/icons/help.png" style="width: 2em;" /><br />Help</a>
             </div>
 
             <div>
                 @{
-                    ModelUserManagementContainer dbm = new ModelUserManagementContainer();
+                    ModelCMSNewContainer dbm = new ModelCMSNewContainer();
+                    string FormNo = Convert.ToString(Session["FormNo"]);
                     List<Get_Modules_Result> lstModule = new List<Get_Modules_Result>();
                     List<Get_Module_Pages_Result> lstPages = new List<Get_Module_Pages_Result>();
+                    List<Get_Module_Pages_Result> lstAllPages = new List<Get_Module_Pages_Result>();
+                    GetSubDepartmentLogoBySubDeprtID_Result SubDepartmentLogoObj = new GetSubDepartmentLogoBySubDeprtID_Result();
                     if (Session["emp_id"] != null)
                     {
-                        lstModule = dbm.Get_Modules().ToList();
+                        if (Session["SubDeptid"] != null)
+                        {
+
+                            SubDepartmentLogoObj = dbm.GetSubDepartmentLogoBySubDeprtID(Convert.ToInt32(Session["SubDeptid"])).FirstOrDefault();
+                        }
+
+                        if (Session["lstModule"] != null)
+                        {
+                            lstModule = Session["lstModule"] as List<Get_Modules_Result>;
+                        }
+                        else
+                        {
+                            lstModule = dbm.Get_Modules().ToList();
+                            Session["lstModule"] = lstModule;
+                        }
+
+                        if (Session["lstAllPages"] != null)
+                        {
+                            lstAllPages = Session["lstAllPages"] as List<Get_Module_Pages_Result>;
+                        }
+                        else
+                        {
+                            lstAllPages = dbm.Get_Module_Pages(0).ToList();
+                            Session["lstAllPages"] = lstAllPages;
+                        }
+
                         foreach (var item in lstModule)
                         {
-                            lstPages = dbm.Get_Module_Pages(Convert.ToInt32(Session["emp_id"])).Where(p => p.Module_ID == item.Module_ID).ToList();
-                            string ModuleName = "p" + item.Module_Name.Replace(" ", "");
-                            string ImgName = "img" + item.Module_Name.Replace(" ", "");
+                            lstPages = lstAllPages.Where(p => p.Emp_ID == Convert.ToInt32(Session["emp_id"]) && p.Module_ID == item.Module_ID).ToList();
+                            string ModuleName = "p" + item.Module_Name.Replace(" ", "").Replace("/", "").Replace("&", "");
+                            string ImgName = "img" + item.Module_Name.Replace(" ", "").Replace("/", "").Replace("&", "");
                             if (lstPages.Count > 0)
                             {
                                 if (item.Priority == 0)
                                 {
-                                    <p id="@ModuleName" class="Navbarr paradummyclass"><a href="#" class="alert-link" style="margin-top: 3em;"><img src="@Url.Content(@item.Module_Icon)" style="width: 1.5em;" align="left" class="imgDummyClass" /> &nbsp; @item.Module_Name</a> <img id="@ImgName" src="~/assets/img/icons/next1.png" style="width: 1.1em;" align="right" class="imgDummyClass" /></p>
+                                    <p id = "@ModuleName" class="Navbarr paradummyclass"><a href = "#" class="alert-link" style="margin-top: 3em;"><img src = "@Url.Content(@item.Module_Icon)" style="width: 1.5em;" align="left" class="imgDummyClass" /> &nbsp; @item.Module_Name</a> <img id = "@ImgName" src="@Url.Content("~/assets/img/icons/next1.png")" style="width: 1.1em;" align="right" class="imgDummyClass" /></p>
                                 }
                                 else
                                 {
-                                    <p id="@ModuleName" class="Navbarr paradummyclass"><a href="#" class="alert-link"><img src="@Url.Content(@item.Module_Icon)" style="width: 1.5em;" align="left" class="imgDummyClass" /> &nbsp;  @item.Module_Name</a> <img id="@ImgName" src="~/assets/img/icons/next1.png" style="width: 1.1em;" align="right" class="imgDummyClass" /></p>
+                                    <p id = "@ModuleName" class="Navbarr paradummyclass"><a href = "#" class="alert-link"><img src = "@Url.Content(@item.Module_Icon)" style="width: 1.5em;" align="left" class="imgDummyClass" /> &nbsp;  @item.Module_Name</a> <img id = "@ImgName" src="@Url.Content("~/assets/img/icons/next1.png")" style="width: 1.1em;" align="right" class="imgDummyClass" /></p>
                                 }
 
-                                ModuleName = "d" + item.Module_Name.Replace(" ", "");
-                                <div id="@ModuleName" style="display:none; background: rgb(243, 243, 243);padding-top: 0.6em;box-shadow: 1px -2px 4px rgba(0, 0, 0, 0.1); border-bottom: 3px solid rgba(0, 0, 0, 0.1);" class="divdummyclass">
-                                    @foreach (var itemPage in lstPages)
-                                    {
-                                        <p class="subMenu"><a href="@Url.Content(itemPage.Page_URL)" class="alert-link">@itemPage.Page_Name</a></p>
-                         
+                        ModuleName = "d" + item.Module_Name.Replace(" ", "").Replace("/", "").Replace("&", "");
+                                <div id = "@ModuleName" style="display:none; background: rgb(243, 243, 243);padding-top: 0.6em;box-shadow: 1px -2px 4px rgba(0, 0, 0, 0.1); border-bottom: 3px solid rgba(0, 0, 0, 0.1);" class="divdummyclass">
+                                    @foreach(var itemPage in lstPages)
+                                     {
+                        if (item.Module_Name == "Reports")
+                        {
+                                            <p class="subMenu subMenudummyclass" id="@itemPage.Page_ID"><a href = "@Url.Content(itemPage.Page_URL)" class="alert-link" target="_blank">@itemPage.Page_Name</a></p>
+                                        }
+                                        else
+                                        {
+                                            <p class="subMenu subMenudummyclass" id="@itemPage.Page_ID"><a href = "@Url.Content(itemPage.Page_URL)" class="alert-link">@itemPage.Page_Name</a></p>
+                                        }
                                     }
                                 </div>
                             }
                         }
+                    }
+                    else
+                    {
+                        Url.Action("Index", "Home");
                     }
                 }
             </div>
         </nav>
 
         <!-- Page Content Holder -->
-        <div id="content" style=" width: 100%;">
+        <div id="content" style="width: 100%;">
 
-            <nav class="navbar navbar-default navTop">
+            <nav class="navbar navbar-default navTop" style="background:#c6c6c6 !important">
                 <div class="container-fluid">
-
-                    <div class="navbar-header">
-                        <button type="button" id="sidebarCollapse" class="navbar-btn">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </button>
-                        <div style="margin-top: -5.4em; position: absolute; margin-left: 17%;">
-                            <img style="width: @MvcApplication.LogoWidth;height: @MvcApplication.LogoHeight;" class="img-responsive" src="@Url.Content(@MvcApplication.CampusLogo)" />
+                    <div class="row">
+                        <div class="col-sm-1 col-xs-2   hidden-md hidden-lg">
+                            <button type="button" id="sidebarCollapse" class="navbar-btn">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
                         </div>
-                    </div>
+                        <div class="navbar-header  col-md-8 col-sm-11 col-xs-10" style="margin-top: 1.3%;">
 
+                            <div class="" style="margin-top: -0.4em; position: absolute; margin-left: 2%;">
+                                <img style="width: @MvcApplication.LogoWidth;height: @MvcApplication.LogoHeight;margin-top:@MvcApplication.MarginTop;" class="img-responsive" src="@Url.Content(@MvcApplication.CampusLogo)" />
+                            </div>
+                            <div class="hidden-xs" style="margin-left: @MvcApplication.MarginLeftTitle;">
+                                <h4><b>@MvcApplication.CampusTitle</b></h4>
+                            </div>
+                        </div>
 
-                    <div class=" navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right" >
-                            @{
-                                if (Session["UserName"] != null)
-                                {
-                                    <li><a href="@Url.Action("Index", "Home")"><img src="~/assets/img/icons/home.png" style="width: 2em;" /><br />Home</a></li>
-                                    @*<li><a href="#"><img src="~/assets/img/icons/user1.png" style="width: 2em;" /><br />Profile</a></li>*@
-                                    <li><a href="#"><img src="~/assets/img/icons/user1.png" style="width: 2em;" /><br />@Session["UserName"]&nbsp;<br />&nbsp;@Session["Designation"] </a></li>
-                                    <li><a href="@Url.Action("SignOut", "Home")"><img src="~/assets/img/icons/exit-to-app-button.png" style="width: 2em;" /><br /> Logout</a></li>
-                                }
-                                else if (Session["UserNameApplicant"] != null)
-                                {
-                            <li><a href="@Url.Action("Index", "Home")"><img src="~/assets/img/icons/home.png" style="width: 2em;" /><br />Home</a></li>
-                                    <li><a href="#"><img src="~/assets/img/icons/user1.png" style="width: 2em;" /><br />;@Session["UserNameApplicant"]&nbsp; </a></li>
-                                    <li><a href="@Url.Action("SignOut", "Home")"><img src="~/assets/img/icons/exit-to-app-button.png" style="width: 2em;" /><br /> Logout</a></li>
-                                }
-                                else
-                                {
-                                      <li><a href="@Url.Action("Index", "Home")"><img src="~/assets/img/icons/home.png" style="width: 2em;" /><br />Home</a></li>
-                                      
-                                     <li><a href="@Url.Action("RegisterApplicant", "Home")"><img src="~/assets/img/icons/exit-to-app-button.png" style="width: 2em;" /><br />Register</a></li>
-                                      <li><a href="@Url.Action("Login2", "Home")"><img src="~/assets/img/icons/exit-to-app-button.png" style="width: 2em;" /><br />Login</a></li>
-                                }
-                            }
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                     
-                           
+                        <div class="navbar-collapse  col-md-4 col-sm-12 col-xs-12" id="bs-example-navbar-collapse-1" style="float: right;">
+                            <ul class="nav navbar-nav navbar-right">
+                                @{
+                                    if (Session["UserName"] != null)
+                                    {
+                                        <li style="float: left;"><a href="@Url.Action("Index", "Home")"><img src="~/assets/img/icons/home.png" style="width: 2em;" /><br />Home</a></li>
+                                        @*<li style="float: left;"><a href="#"><img src="~/assets/img/icons/user1.png" style="width: 2em;" /><br />Profile</a></li>*@
+                                        if (SubDepartmentLogoObj != null)
+                                        {
+                                            if (!string.IsNullOrEmpty(SubDepartmentLogoObj.SubDepartmentLogo))
+                                            {
+                                                <li style="float: left;" ><a href="#"><img src=@Url.Content(SubDepartmentLogoObj.SubDepartmentLogo) style="width: 4em;height: 1.3em;" /><br />@Session["UserName"]&nbsp;<br />&nbsp;@Session["Designation"]<br />@Session["deptName"]  </a></li>
+                                            }
+                                            else
+                                            {
+                                                <li style="float: left;"><a href="#"><img src="~/assets/img/icons/user1.png" style="width: 2em;" /><br />@Session["UserName"]&nbsp;<br />&nbsp;@Session["Designation"] </a></li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li style="float: left;"><a href="#"><img src="~/assets/img/icons/user1.png" style="width: 2em;" /><br />@Session["UserName"]&nbsp;<br />&nbsp;@Session["Designation"] </a></li>
 
-                        </ul>
+                                        }
+
+                                        <li style="float: left;"><a href="@Url.Action("SignOut", "Home")"><img src="~/assets/img/icons/exit-to-app-button.png" style="width: 2em;" /><br /> Logout</a></li>
+                                    }
+                                    else if (Session["UserNameApplicant"] != null)
+                                    {
+                                        <li style="float: left;"><a href="@Url.Action("Index", "Home")"><img src="~/assets/img/icons/home.png" style="width: 2em;" /><br />Home</a></li>
+                                        <li style="float: left;"><a href="#"><img src="~/assets/img/icons/user1.png" style="width: 2em;" /><br />;@Session["UserNameApplicant"]&nbsp; </a></li>
+                                        <li style="float: left;"><a href="@Url.Action("SignOut", "Home")"><img src="~/assets/img/icons/exit-to-app-button.png" style="width: 2em;" /><br /> Logout</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li style="float: left;"><a href="@Url.Action("Index", "Home")"><img src="~/assets/img/icons/home.png" style="width: 2em;" /><br />Home</a></li>
+                                        <li style="float: left;"><a href="@Url.Action("RegisterApplicant", "Home")"><img src="~/assets/img/icons/exit-to-app-button.png" style="width: 2em;" /><br />Register</a></li>
+                                        <li style="float: left;"><a href="@Url.Action("Login2", "Home")"><img src="~/assets/img/icons/exit-to-app-button.png" style="width: 2em;" /><br />Login</a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </nav>
+
+            <!-- Modal -->
+            @{
+                List<SF_GetApplicantStudentChallansFeeDefaulterSummary_Result> lstchallan = new List<SF_GetApplicantStudentChallansFeeDefaulterSummary_Result>();
+                lstchallan = dbm.SF_GetApplicantStudentChallansFeeDefaulterSummary(FormNo, "Alerts", 0, 0).ToList();
+
+                if (lstchallan.Count > 0)
+                {
+                    if (Session["Designation"] != null)
+                    {
+                        if (Session["Designation"].ToString() == "Student")
+                        {
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"><span class="glyphicon glyphicon-bell"> </span> &nbsp; Defaulter Challans Alert </h4>
+                            </div>
+
+
+                            <div class="modal-body">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>
+                                            Challan #
+                                        </th>
+                                        <th>
+                                            Issue Date
+                                        </th>
+                                        <th>
+                                            Last Date
+                                        </th>
+                                        <th>
+                                            Amount
+                                        </th>
+                                    </tr>
+                                    @foreach (var item in lstchallan)
+                                            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ChallanID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IssueDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                    </tr>
+                                            }
+                                </table>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                            }
+                        }
+                    }
+            }
+
             <div class="container-fluid">
+                @{
+                    GetActiveSessionAndTest_Result st = dbm.GetActiveSessionAndTest().FirstOrDefault();
+                    string Designation = Convert.ToString(Session["Designation"]);
+
+                    if (Designation != "Applicant" && Designation != "Student" && Designation != "Data Entry")
+                    {
+                        <div class="row">
+                            <div class="col-sm-12" style="text-align:right;">
+                                <span style="font-weight:bold;font-size:large;background-color:#00d0ff;">Current Session : @st.ActiveSessionName, Active Test : @st.ActiveEntryTestName</span>
+                            </div>
+                        </div>
+                    }
+                }
+                
+
                 @RenderBody()
             </div>
             <hr style="border-top: 1px solid #6d9b90;" />
 
         </div>
+
+
     </div>
 
     <script type="text/javascript">
+        $(window).load(function () {
+            $('#myModal').modal('show');
+        });
+    </script>
+    <script type="text/javascript">
         $(document).ready(function () {
+
             CollapseMenus();
         });
 
+
+
         function CollapseMenus() {
+
             var pMenus = $(".paradummyclass");
             var divMenus = $(".divdummyclass");
             var imgDummyClass = $(".imgDummyClass");
+            var subMenudummyclass = $(".subMenudummyclass");
+
+            var PageIDFromSession = $.session.get("PageID");
+            if (PageIDFromSession != undefined) {
+                var parentID = $("#" + PageIDFromSession).parent().attr('id');
+                $("#" + parentID).slideDown("slow");
+                $("#" + PageIDFromSession).css("background", "#80808057").css("margin-left", "0%").css("font-weight", "bold").css("padding-left", "14%");
+                $.session.remove("PageID");
+            }
+
             $(pMenus).each(function (i) {
                 $("#" + pMenus[i].id).click(function () {
+
                     $(divMenus).each(function (j) {
                         if (pMenus[i].id.substr(1, pMenus[i].id.length) == divMenus[j].id.substr(1, divMenus[j].id.length)) {
                             var dlDisplay = $("#" + divMenus[j].id).css("display");
+
                             if (dlDisplay == "none") {
                                 $("#" + divMenus[j].id).slideDown("slow");
                                 //$("#"+pMenus[i].id).toggleClass('red');
@@ -162,20 +337,41 @@
                     });
                 });
             });
+
+            $(subMenudummyclass).each(function (i) {
+                $("#" + subMenudummyclass[i].id).click(function () {
+                    var PageID = subMenudummyclass[i].id;
+                    $.session.set("PageID", PageID);
+                });
+            });
+
         }
     </script>
-
 
     <script type="text/javascript">
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
                 $(this).toggleClass('active');
+
             });
         });
     </script>
 
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <style>
+        /*.nav > li {
+            margin-top: 0em;
+        float: left;
+        margin-left: 2em;*/
+        }
+
+        .nav > li > a {
+            display: block;
+        }
+    </style>
 </body>
+
 </html>

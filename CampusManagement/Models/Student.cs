@@ -18,7 +18,7 @@ namespace CampusManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Student()
         {
-            this.Challans = new HashSet<Challan>();
+            this.Disciplines = new HashSet<Discipline>();
             this.StudentBatchProgramCourses = new HashSet<StudentBatchProgramCourse>();
             this.StudentProgramEnrollments = new HashSet<StudentProgramEnrollment>();
         }
@@ -27,13 +27,16 @@ namespace CampusManagement.Models
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Form #")]
         public string FormNo { get; set; }
+       
+
+        public Nullable<int> AddAppID { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Salutation")]
         public int SalutationID { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
-        [Required(ErrorMessage = "Required")]
+        //[Required(ErrorMessage = "Required")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
         [Required(ErrorMessage = "Required")]
@@ -41,7 +44,7 @@ namespace CampusManagement.Models
         public string FatherName { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "DOB")]
-        public DateTime StudentDOB { get; set; }
+        public string StudentDOB { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Place of Birth")]
         public string PlaceOfBirth { get; set; }
@@ -60,8 +63,8 @@ namespace CampusManagement.Models
         [Display(Name = "Passport #")]
         public string PassportNo { get; set; }
         [Display(Name = "Expiry Date")]
-        public Nullable<DateTime> PassportExpiryDate { get; set; }
-        [Display(Name = "PTCL #")]
+        public string PassportExpiryDate { get; set; }
+        [Display(Name = "Home Phone #")]
         public string PTCLNO { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Cell #")]
@@ -73,27 +76,27 @@ namespace CampusManagement.Models
         [EmailAddress(ErrorMessage = "Invalid Email")]
         public string AlternateEmail { get; set; }
         [Required(ErrorMessage = "Required")]
-        [Display(Name = "Guardian Name")]
+        [Display(Name = "Parent/Guardian")]
         public string GuardianName { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Relation Type")]
         public int RelationTypeID { get; set; }
         [Required(ErrorMessage = "Required")]
-        [Display(Name = "Guardian CNIC")]
+        [Display(Name = "CNIC")]
         public string GuardianCNIC { get; set; }
         [Required(ErrorMessage = "Required")]
-        [Display(Name = "Batch Program")]
+        [Display(Name = "Program")]
         public int BatchProgramID { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Profile Picture")]
         public string Picture { get; set; }
-        [Required(ErrorMessage = "Required")]
+        //[Required(ErrorMessage = "Required")]
         [Display(Name = "Country")]
         public int CountryID { get; set; }
-        [Required(ErrorMessage = "Required")]
+        //[Required(ErrorMessage = "Required")]
         [Display(Name = "State")]
         public int ProvinceID { get; set; }
-        [Required(ErrorMessage = "Required")]
+        //[Required(ErrorMessage = "Required")]
         [Display(Name = "City")]
         public int CityID { get; set; }
         [Required(ErrorMessage = "Required")]
@@ -124,14 +127,25 @@ namespace CampusManagement.Models
 
         [Display(Name = "Profile Picture")]
         public HttpPostedFileBase ProfilePicture { get; set; }
-        
+        [Display(Name = "Level")]
+        public Nullable<int> LevelID { get; set; }
+        [Display(Name = "Faculty")]
+        public Nullable<int> FacultyID { get; set; }
+        public Nullable<int> CurrentSemesterNo { get; set; }
+        [Display(Name = "Roll #")]
+        public string RollNumber { get; set; }
+        [Display(Name = "Registration #")]
+        public string RegistrationNo { get; set; }
+
+        public Nullable<int> CheckForStudentProfile { get; set; } //Check of coming from Student Profile
+
         public virtual Applicant Applicant { get; set; }
         public virtual BatchProgram BatchProgram { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Challan> Challans { get; set; }
         public virtual City City { get; set; }
         public virtual Country Country { get; set; }
         public virtual CurrentOccupation CurrentOccupation { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Discipline> Disciplines { get; set; }
         public virtual Gender Gender { get; set; }
         public virtual MaritalStatu MaritalStatu { get; set; }
         public virtual Nationality Nationality { get; set; }

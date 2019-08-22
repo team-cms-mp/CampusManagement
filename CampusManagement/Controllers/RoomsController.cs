@@ -12,15 +12,15 @@ using CampusManagement.Models;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
+    [Authorize]
     public class RoomsController : Controller
     {
-        private ModelCMSContainer db = new ModelCMSContainer();
+        private ModelCMSNewContainer db = new ModelCMSNewContainer();
         RoomsViewModel model = new RoomsViewModel();
 
         public ActionResult Index()
         {
-            model.Rooms = db.Rooms.OrderByDescending(a => a.RoomID).ToList();
+            model.Rooms = db.SP_roomForPage("").ToList();
             model.SelectedRoom = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
@@ -33,7 +33,7 @@ namespace CampusManagement.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            model.Rooms = db.Rooms.OrderByDescending(a => a.RoomID).ToList();
+            model.Rooms = db.SP_roomForPage("").ToList();
             model.SelectedRoom = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
@@ -70,9 +70,9 @@ namespace CampusManagement.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Room Name is already exists.");
+                    ModelState.AddModelError(string.Empty, "Room Name already exists.");
                     ViewBag.MessageType = "error";
-                    ViewBag.Message = "Room Name is already exists.";
+                    ViewBag.Message = "Room Name already exists.";
                 }
             }
             catch (DbEntityValidationException ex)
@@ -92,7 +92,7 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.Rooms = db.Rooms.OrderByDescending(a => a.RoomID).ToList();
+            model.Rooms = db.SP_roomForPage("").ToList();
             model.SelectedRoom = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", room.IsActive);
@@ -106,14 +106,14 @@ namespace CampusManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            SP_roomForPage_Result room = db.SP_roomForPage("").FirstOrDefault(s => s.RoomID == id);
 
-            Room room = db.Rooms.Find(id);
             if (room == null)
             {
                 return HttpNotFound();
             }
 
-            model.Rooms = db.Rooms.OrderByDescending(a => a.RoomID).ToList();
+            model.Rooms = db.SP_roomForPage("").ToList();
             model.SelectedRoom = room;
             model.DisplayMode = "ReadWrite";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", room.IsActive);
@@ -162,7 +162,7 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.Rooms = db.Rooms.OrderByDescending(a => a.RoomID).ToList();
+            model.Rooms = db.SP_roomForPage("").ToList();
             model.SelectedRoom = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", room.IsActive);
@@ -177,13 +177,13 @@ namespace CampusManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Room room = db.Rooms.Find(id);
+            SP_roomForPage_Result room = db.SP_roomForPage("").FirstOrDefault(s => s.RoomID == id);
             if (room == null)
             {
                 return HttpNotFound();
             }
 
-            model.Rooms = db.Rooms.OrderByDescending(a => a.RoomID).ToList();
+            model.Rooms = db.SP_roomForPage("").ToList();
             model.SelectedRoom = room;
             model.DisplayMode = "Delete";
             ViewBag.MessageType = "";
@@ -197,8 +197,8 @@ namespace CampusManagement.Controllers
         {
             try
             {
-                Room room = db.Rooms.Find(id);
-                db.Rooms.Remove(room);
+                Room rooms = db.Rooms.FirstOrDefault(s => s.RoomID == id);
+                db.Rooms.Remove(rooms);
                 db.SaveChanges();
                 ViewBag.MessageType = "success";
                 ViewBag.Message = "Record has been removed successfully.";
@@ -209,7 +209,7 @@ namespace CampusManagement.Controllers
                 ViewBag.Message = ex.Message;
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
-            model.Rooms = db.Rooms.OrderByDescending(a => a.RoomID).ToList();
+            model.Rooms = db.SP_roomForPage("").ToList();
             model.SelectedRoom = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");

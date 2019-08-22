@@ -1,0 +1,137 @@
+﻿@model CampusManagement.Models.ExamSubjectsStudentViewModel
+@using CampusManagement.Models
+<!-- Include Twitter Bootstrap and jQuery: -->
+<!-- Include the plugin's CSS and JS: -->
+<link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/assets/js/bootstrap.min.js"></script>
+<script src="~/assets/js/jquery-2.1.1.min.js"></script>
+<script src="~/assets/js/bootstrap-multiselect.js"></script>
+<link href="~/assets/css/bootstrap-multiselect.css" rel="stylesheet" />
+
+<div class="row">
+    <h2><span class="col-sm-12"> Exam Subject Students For Result Entry</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+@{
+
+    <table style="width:100%">
+        <tr style="width:100%">
+            <td style="width:100%; background-color:lightgray ; vertical-align:top">
+                @if (Model.StudeltList != null)
+                    {
+                        if (Model.StudeltList.Count > 0)
+                        {
+                        <div class="row">
+                            <table style="width:100%;margin-left:10px">
+                                <tr style="width:100%">
+                                    <td style="width:100%">
+                                        <h3><span  style="font-weight:bold;margin-left:10px">@Model.StudeltList[0].ExamTitle</span></h3>
+                                    </td>
+                                </tr>
+                                <tr style="width:100%">
+                                    <td style="width:100%">
+                                        <span style="font-weight:bold;margin-left:10px">Session : </span> <span style="color:red"> @Html.DisplayFor(modelItem => Model.StudeltList[0].BatchSession) ( Program:  @Html.DisplayFor(modelItem => Model.StudeltList[0].ProgramName) )</span>
+                                    </td>
+                                </tr>
+                                <tr style="width:100%">
+                                    <td style="width:100%">
+                                        <span style="font-weight:bold;margin-left:10px">Course Details : </span><span style="color:red">@Html.DisplayFor(modelItem => Model.StudeltList[0].CourseCode) - ( @Html.DisplayFor(modelItem => Model.StudeltList[0].CourseName) )</span>
+                                    </td>
+                                </tr>
+
+                            </table>
+                       
+                          
+                           
+                        </div>
+                        <hr style="border-top: 1px solid #6d9b90;" />
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    Serial Number
+                                </th>
+                                <th>
+                                    Exam Student Details
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+
+                            </tr>
+                            @for (var z = 0; z < Model.StudeltList.Count; z++)
+                            {
+
+                                <tr>
+                                    <td>
+                                        @{ int currentserial = z + 1;
+                                            string Sernumber = "Sr# " + currentserial + "";}
+                                        <span style="font-weight:bold">@Sernumber </span>
+                                    </td>
+                                   <td>
+
+                                        <span style="font-weight:bold">Student Details: </span> <span style="color:red"> @Html.DisplayFor(modelItem => Model.StudeltList[z].StudentName) <br />RegistrationNo# :  @Html.DisplayFor(modelItem => Model.StudeltList[z].RegistrationNo) <br /> Roll Number :  @Html.DisplayFor(modelItem => Model.StudeltList[z].RollNumber)  </span><br />
+                                       
+
+
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].ExamEligibleStudentsID)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].StudentBatchProgramCourseID)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].ExamsDateSheetDetailID)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].RoomID)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].SeatNumber)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].ExamID)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].ExamDateID)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].ExamDateTimeSlotID)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].ProgramCourseID)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].BatchSession)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].ProgramName)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].CourseCode)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].CourseName)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].StudentName)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].RegistrationNo)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].RollNumber)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].StudentID)
+                                        @Html.HiddenFor(modelItem => Model.StudeltList[z].ExamTitle)
+
+                                    </td>
+
+                                    <td>
+
+                                            @Html.ActionLink("Subject Marks Entry", "ExamSubjectsStudentMarkEntry", new { ExamID = Model.StudeltList[z].ExamID, ProgramCourseID = Model.StudeltList[z].ProgramCourseID , StudentID = Model.StudeltList[z].StudentID })
+                                       
+                                    </td>
+                                </tr>
+
+                              }
+                        </table>
+                        <br />
+
+                               }
+
+                              }
+            </td>
+
+        </tr>
+
+    </table>
+
+
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+        });
+
+
+
+    </script>
+
+
+
+}
+
+
+

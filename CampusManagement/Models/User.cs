@@ -33,5 +33,17 @@ namespace CampusManagement.Models
 
         [Display(Name = "Re-Enter Password")]
         public string ReEnterPassword { get; set; }
+
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Display(Name = "Mobile #")]
+        public string MobileNumber { get; set; }
+
+        [Display(Name = "CNIC")]
+        public string CNIC { get; set; }
+
+        [Display(Name = "Country Code")]
+        public string CountryCode { get; set; }
     }
 }

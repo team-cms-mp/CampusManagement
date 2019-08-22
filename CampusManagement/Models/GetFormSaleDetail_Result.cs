@@ -17,14 +17,17 @@ namespace CampusManagement.Models
         public string ApplicantName { get; set; }
         public string FatherName { get; set; }
         public string CNIC { get; set; }
-        public Nullable<System.DateTime> ReceiveDate { get; set; }
+        public string ReceiveDate { get; set; }
         public string ProgramName { get; set; }
         public string BatchName { get; set; }
         public string FormTypeName { get; set; }
         public string DepositTypeName { get; set; }
         public string FormPrice { get; set; }
-        public Nullable<System.DateTime> PurchaseDate { get; set; }
+        public string PurchaseDate { get; set; }
         public string IsReceived { get; set; }
         public string PhoneNo { get; set; }
+        public Nullable<int> TotalFormPriceWalkIn { get; set; }
+        public string OnlineDraftNo { get; set; }
+
     }
 }

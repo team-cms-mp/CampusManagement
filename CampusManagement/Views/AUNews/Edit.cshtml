@@ -1,0 +1,46 @@
+﻿@model CampusManagement.Models.AlumniUserNew
+
+@using (Html.BeginForm("Edit", "AUNews", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Edit News</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.HiddenFor(model => model.AlumniUserNewsID)
+
+    <div class="row">
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.NewsTitle, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.NewsTitle, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.NewsTitle, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            @Html.LabelFor(model => model.NewsContent, htmlAttributes: new { @class = "control-label" })
+            @Html.TextAreaFor(model => model.NewsContent, new { @class = "form-control", @style = "height: 10em;" })
+            @Html.ValidationMessageFor(model => model.NewsContent, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-12">
+            @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+            @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+            <input id="AlumniUserID" name="AlumniUserID" value="@ViewBag.AlumniUserID" type="hidden" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a href="@Url.Content("~/AUNews/Index")" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+}
+
+
+

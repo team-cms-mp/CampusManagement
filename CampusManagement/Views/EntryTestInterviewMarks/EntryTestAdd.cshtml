@@ -1,0 +1,138 @@
+﻿@model CampusManagement.Models.GetApplicantEntryTestInfo_Result
+@using CampusManagement.Models
+
+@using (Html.BeginForm("Search", "EntryTestInterviewMarks", FormMethod.Post, new { @style = "margin-top: 0px !important; margin-bottom: 0px !important;" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Add Entry Test Marks</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+    <div class="row">
+        <div class="col-sm-3">
+            <label>Form #</label>
+            @Html.EditorFor(model => model.FormNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FormNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label>Entry Test</label>
+            @Html.EditorFor(model => model.EntryTestName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => model.EntryTestName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3" hidden>
+            <label>Active Entry Test Name</label>
+            @Html.EditorFor(model => model.ActiveEntryTestName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ActiveEntryTestName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
+@using (Html.BeginForm("Search", "EntryTestInterviewMarks", FormMethod.Post, new { @style = "margin-top: 0px !important; margin-bottom: 0px !important;" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-sm-3" hidden>
+            @Html.LabelFor(model => model.FormNo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FormNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FormNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label>Entry Test Obtained Marks</label>
+            @Html.EditorFor(model => model.ActiveEntryTestMarks, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ActiveEntryTestMarks, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label>Entry Test Total Marks</label>
+            @Html.EditorFor(model => model.EntryTestTotalMarks, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => model.EntryTestTotalMarks, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <br />
+            <input type="button" value="Save" class="btn btn-primary" id="btn_updateEntryTestMarks" />
+        </div>
+
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#FormNo").blur(function () {
+
+            GetEntryTest();
+        });
+
+        $("#btn_updateEntryTestMarks").click(function () {
+
+            UpdateEntryTestMarks(2);
+        });
+    });
+
+    function GetEntryTest() {
+        ClearForm();
+        var FormNo = $("#FormNo").val();
+        $.ajax({
+            url: "@Url.Content("~/EntryTestInterviewMarks/GetEntryTest")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ FormNo: +FormNo }),
+            success: function (result) {
+                if (result == "No result found.") {
+                    alert(result);
+                    return;
+                }
+
+                var result = $.parseJSON(result);
+                $("#EntryTestName").val(result.EntryTestName);
+                $("#ActiveEntryTestName").val(result.ActiveEntryTestName);
+                $("#EntryTestTotalMarks").val(result.EntryTestTotalMarks);
+                $("#ActiveEntryTestMarks").val(result.ActiveEntryTestMarks);
+            },
+            error: function () {
+                //alert("Something went wrong..");
+            },
+        }).done(function (model) {
+
+        });
+    }
+
+    function UpdateEntryTestMarks(QueryID) {
+        var FormNo = $("#FormNo").val();
+        var ActiveEntryTestMarks = $("#ActiveEntryTestMarks").val();
+        $.ajax({
+            url: "@Url.Content("~/EntryTestInterviewMarks/UpdateEntryTest")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ FormNo: +FormNo, QueryID: +QueryID, ActiveEntryTestMarks: +ActiveEntryTestMarks }),
+            success: function (result) {
+                if (result == "No result found.") {
+                    alert(result);
+                    return;
+                }
+                GetEntryTest();
+            },
+            error: function () {
+                //alert("Something went wrong..");
+            },
+        }).done(function (model) {
+
+        });
+    }
+
+    function ClearForm()
+    {
+        $("#EntryTestName").val("");
+        $("#ActiveEntryTestName").val("");
+        $("#EntryTestTotalMarks").val("");
+        $("#ActiveEntryTestMarks").val("");
+    }
+</script>
+

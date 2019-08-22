@@ -14,20 +14,21 @@ using Newtonsoft.Json;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
+    [Authorize]
     public class SelectionCriteriasController : Controller
     {
-        private ModelCMSContainer db = new ModelCMSContainer();
+        private ModelCMSNewContainer db = new ModelCMSNewContainer();
         SelectionCriteriasViewModel model = new SelectionCriteriasViewModel();
+        int[] lstDegreeID = new[] { 20, 1020, 1021, 1022, 1023 };
 
         public ActionResult Index()
         {
-            model.SelectionCriterias = db.SelectionCriterias.OrderByDescending(s => s.CriteriaID).ToList();
+            model.SelectionCriterias = db.GetSelectionCriterias("").OrderByDescending(s => s.CriteriaID).ToList();
             model.SelectedSelectionCriteria = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name");
-            ViewBag.DegreeID = new SelectList(db.Degrees, "DegreeID", "DegreeName");
+            ViewBag.DegreeID = new SelectList(db.Degrees.Where(d => lstDegreeID.Contains(d.DegreeID)).ToList(), "DegreeID", "DegreeName");
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View(model);
@@ -36,12 +37,12 @@ namespace CampusManagement.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            model.SelectionCriterias = db.SelectionCriterias.OrderByDescending(s => s.CriteriaID).ToList();
+            model.SelectionCriterias = db.GetSelectionCriterias("").OrderByDescending(s => s.CriteriaID).ToList();
             model.SelectedSelectionCriteria = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name");
-            ViewBag.DegreeID = new SelectList(db.Degrees, "DegreeID", "DegreeName");
+            ViewBag.DegreeID = new SelectList(db.Degrees.Where(d => lstDegreeID.Contains(d.DegreeID)).ToList(), "DegreeID", "DegreeName");
 
             ViewBag.MessageType = "";
             ViewBag.Message = "";
@@ -76,9 +77,9 @@ namespace CampusManagement.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Selected Batch Program is already exists against selected Degree.");
+                    ModelState.AddModelError(string.Empty, "Selected Batch Program already exists against selected Degree.");
                     ViewBag.MessageType = "error";
-                    ViewBag.Message = "Selected Batch Program is already exists against selected Degree.";
+                    ViewBag.Message = "Selected Batch Program already exists against selected Degree.";
                 }
             }
             catch (DbEntityValidationException ex)
@@ -98,12 +99,12 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.SelectionCriterias = db.SelectionCriterias.OrderByDescending(s => s.CriteriaID).ToList();
+            model.SelectionCriterias = db.GetSelectionCriterias("").OrderByDescending(s => s.CriteriaID).ToList();
             model.SelectedSelectionCriteria = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", selectionCriteria.IsActive);
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name", selectionCriteria.BatchProgramID);
-            ViewBag.DegreeID = new SelectList(db.Degrees, "DegreeID", "DegreeName", selectionCriteria.DegreeID);
+            ViewBag.DegreeID = new SelectList(db.Degrees.Where(d => lstDegreeID.Contains(d.DegreeID)).ToList(), "DegreeID", "DegreeName", selectionCriteria.DegreeID);
             return View("Index", model);
         }
 
@@ -114,18 +115,18 @@ namespace CampusManagement.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SelectionCriteria selectionCriteria = db.SelectionCriterias.Find(id);
+            GetSelectionCriterias_Result selectionCriteria = db.GetSelectionCriterias("").FirstOrDefault(x=>x.CriteriaID == id);
             if (selectionCriteria == null)
             {
                 return HttpNotFound();
             }
 
-            model.SelectionCriterias = db.SelectionCriterias.OrderByDescending(s => s.CriteriaID).ToList();
+            model.SelectionCriterias = db.GetSelectionCriterias("").OrderByDescending(s => s.CriteriaID).ToList();
             model.SelectedSelectionCriteria = selectionCriteria;
             model.DisplayMode = "ReadWrite";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", selectionCriteria.IsActive);
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name", selectionCriteria.BatchProgramID);
-            ViewBag.DegreeID = new SelectList(db.Degrees, "DegreeID", "DegreeName", selectionCriteria.DegreeID);
+            ViewBag.DegreeID = new SelectList(db.Degrees.Where(d => lstDegreeID.Contains(d.DegreeID)).ToList(), "DegreeID", "DegreeName", selectionCriteria.DegreeID);
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -170,12 +171,12 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.SelectionCriterias = db.SelectionCriterias.OrderByDescending(s => s.CriteriaID).ToList();
+            model.SelectionCriterias = db.GetSelectionCriterias("").OrderByDescending(s => s.CriteriaID).ToList();
             model.SelectedSelectionCriteria = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", selectionCriteria.IsActive);
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name", selectionCriteria.BatchProgramID);
-            ViewBag.DegreeID = new SelectList(db.Degrees, "DegreeID", "DegreeName", selectionCriteria.DegreeID);
+            ViewBag.DegreeID = new SelectList(db.Degrees.Where(d => lstDegreeID.Contains(d.DegreeID)).ToList(), "DegreeID", "DegreeName", selectionCriteria.DegreeID);
 
             return View("Index", model);
         }
@@ -186,13 +187,13 @@ namespace CampusManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SelectionCriteria selectionCriteria = db.SelectionCriterias.Find(id);
+            GetSelectionCriterias_Result selectionCriteria = db.GetSelectionCriterias("").FirstOrDefault(x => x.CriteriaID == id);
             if (selectionCriteria == null)
             {
                 return HttpNotFound();
             }
 
-            model.SelectionCriterias = db.SelectionCriterias.OrderByDescending(s => s.CriteriaID).ToList();
+            model.SelectionCriterias = db.GetSelectionCriterias("").OrderByDescending(s => s.CriteriaID).ToList();
             model.SelectedSelectionCriteria = selectionCriteria;
             model.DisplayMode = "Delete";
             ViewBag.MessageType = "";
@@ -218,12 +219,12 @@ namespace CampusManagement.Controllers
                 ViewBag.Message = ex.Message;
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
-            model.SelectionCriterias = db.SelectionCriterias.OrderByDescending(s => s.CriteriaID).ToList();
+            model.SelectionCriterias = db.GetSelectionCriterias("").OrderByDescending(s => s.CriteriaID).ToList();
             model.SelectedSelectionCriteria = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name");
-            ViewBag.DegreeID = new SelectList(db.Degrees, "DegreeID", "DegreeName");
+            ViewBag.DegreeID = new SelectList(db.Degrees.Where(d => lstDegreeID.Contains(d.DegreeID)).ToList(), "DegreeID", "DegreeName");
             return View("Index", model);
         }
 

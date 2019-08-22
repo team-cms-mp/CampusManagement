@@ -1,0 +1,120 @@
+﻿@model CampusManagement.Models.ScholarshipOpportunitie
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Scholarships Apply";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<script type="text/javascript"
+        src="https://viralpatel.net/blogs/demo/jquery/jquery.shorten.1.0.js"></script>
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+
+<table style="width:100%">
+    <tr style="width:100%">
+        <td style="width:15%">
+            <a href="@Url.Content(Model.ScholarshipImagePath)" target="_blank"><img id="imgView" src="@Url.Content(Model.ScholarshipImagePath)" style="width:100px;height:100px;border-radius:10px;" /></a>
+        </td>
+        <td style="width:85%">
+            <table class="table-striped" style="width:300px">
+                <tr>
+                    <td>
+                        <label class="control-label">Title &nbsp; &nbsp;</label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.ScholarshipTitle)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">DeadLine &nbsp; &nbsp;</label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.DeadLine)
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+        <td></td>
+    </tr>
+</table>
+    <table style="width:100%">
+        <tr>
+            <td>
+                <label class="control-label">Scholarship Description </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+                @Html.DisplayFor(modelItem => Model.ScholarshipDescription)
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <label class="control-label">How To Qualify </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.HowToQualify)
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <label class="control-label">Eligibility Description </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.EligibilityDescription)
+
+            </td>
+
+        </tr>
+        
+
+    </table>
+<br />
+
+
+
+@{
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+    int ScholarshipOpportunityID = Model.ScholarshipOpportunitiesID;
+    List<ScholarshipDocument> lstDocs = dbc.ScholarshipDocuments.Where(o => o.ScholarshipOpportunitiesID == ScholarshipOpportunityID).ToList();
+    if (lstDocs.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    &nbsp; &nbsp; Document Check List 
+                </th>
+            </tr>
+
+            @foreach (var item in lstDocs)
+            {
+                <tr>
+                    <td>
+                     <b> >> </b> @Html.DisplayFor(modelItem => item.ScholarshipDocumentName)
+                    </td>
+                </tr>
+            }
+        </table>
+        <hr />
+    }
+}
+<table style="width:100%">
+
+    <tr>
+
+        <td class="pull-right">
+            <hr/>
+            <a href="@Url.Content("~/ScholarshipListDisplays/Index")" class="btn btn-primary">Cancel</a>
+        </td>
+    </tr>
+</table>

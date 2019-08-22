@@ -1,0 +1,97 @@
+﻿
+
+@model CampusManagement.Models.GetAttandanceStudentSummaryForDashboard_Result
+@{
+    ViewBag.Title = "Dashboard";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<h2>Department Employee </h2>
+
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <script src="@Url.Content("~/assets/DashboardChart/Canvas.js")"></script>
+
+    <script>
+        
+        window.onload = function () {
+            //-Designation wise Teacher Summary
+            var print = new CanvasJS.Chart("chartContainer9", {
+
+                exportEnabled: true,
+
+            });
+            print.render();
+
+      
+
+
+            /////Department wise Employee t///
+            var chart9 = new CanvasJS.Chart("chartContainer9", {
+                animationEnabled: true,
+                exportEnabled: true,
+                title: {
+                    text: "Department wise Employee "
+                },
+                legend: {
+                    //verticalAlign: "center",
+                    //horizontalAlign: "left",
+                    fontSize: 12,
+                    fontFamily: "Helvetica"
+                },
+
+                data: [{
+                    type: "pie",
+                    startAngle:60,
+                    showInLegend: true,
+                    legendText: "{label} - {y}",
+
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label}-{y}",
+                    toolTipContent: "<b>{label}</b> {y}",
+                    dataPoints: @Html.Raw(ViewBag.DataPoints9),
+                }]
+            });
+            chart9.render();
+
+
+
+        }
+    </script>
+</head>
+<body>
+
+    @using (Html.BeginForm("DepartmentEmployeeDashboard", "DashboardStudents", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+
+        <br />
+        
+
+        <div class="row" style="border-top: solid 1px #808080 !important;margin-bottom:40px">
+
+
+
+
+            <div class="col-sm-12" style="margin-top:30px">
+
+                <div id="chartContainer9" style="height: 370px; width: 100%;"></div>
+
+
+            </div>
+        </div>
+    }
+</body>
+</html>
+
+
+
+
+@*//////////////test//////////////*@

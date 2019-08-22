@@ -1,0 +1,59 @@
+﻿@model CampusManagement.Models.Exam
+
+@using (Html.BeginForm("Edit", "Exams", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Edit Exam</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.HiddenFor(model => model.ExamID)
+
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.ExamTitle, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ExamTitle, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ExamTitle, "", new { @class = "text-danger" })
+        </div>
+
+       
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+            @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+        </div>
+        <div class="col-sm-3">
+            @Html.Label("ExamTerm", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("ExamTermID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ExamTermID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.Label("ExamSeason", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("ExamSeasonID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ExamSeasonID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.ExamStartDate, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ExamStartDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+            @Html.ValidationMessageFor(model => model.ExamStartDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.ExamEndDate, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ExamEndDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+            @Html.ValidationMessageFor(model => model.ExamEndDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a href="@Url.Content("~/Exams/Index")" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+}

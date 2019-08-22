@@ -5,35 +5,45 @@
     @Html.AntiForgeryToken()
 
     <div class="row">
-        <h2><span class="col-sm-12">Merit List & Approve Admission</span></h2>
+        <h2><span class="col-sm-12">Merit List</span></h2>
     </div>
-    <hr style=" border-top: 1px solid #6d9b90;" />
+    <hr style="border-top: 1px solid #6d9b90;" />
     @Html.Partial("_MessageView")
 
     <div class="row">
-        <div class="col-sm-7">
-            @Html.LabelFor(model => model.BatchProgramID, "Batch Program", htmlAttributes: new { @class = "control-label" })
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.BatchID, "Session", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.BatchID, null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BatchID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.BatchProgramID, "Program", htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("BatchProgramID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.BatchProgramID, "", new { @class = "text-danger" })
         </div>
-        <div class="col-sm-5">
-            @Html.LabelFor(model => model.DegreeID, "Degree", htmlAttributes: new { @class = "control-label" })
+        @*<div class="col-sm-6">
+            @Html.LabelFor(model => model.DegreeID, "Test/Interview", htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("DegreeID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.DegreeID, "", new { @class = "text-danger" })
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-7">
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.EntryTestID, "Test/Interview", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("EntryTestID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.EntryTestID, "", new { @class = "text-danger" })
+        </div>*@
+        <div class="col-sm-6">
             @Html.LabelFor(model => model.FullName, "Search with Form #/Applicant Name/Father Name", htmlAttributes: new { @class = "control-label" })
             @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
+
     <br />
     <div class="row">
         <div class="col-sm-3">
-            <input type="submit" value="Search" class="btn btn-success" />
-            <a href="@Url.Content("~/MeritListApproveAdmissions/Index")" class="btn btn-success">Refresh</a>
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <a href="@Url.Content("~/MeritListApproveAdmissions/Index")" class="btn btn-primary">Refresh</a>
         </div>
+
     </div>
 }
 

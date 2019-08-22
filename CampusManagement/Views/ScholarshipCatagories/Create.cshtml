@@ -1,0 +1,45 @@
+﻿@model CampusManagement.Models.ScholarshipCatagory
+
+@using (Html.BeginForm("Create", "ScholarshipCatagories", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Add Scholarship Category</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+        
+
+        <div class="col-sm-3">
+            <label>Scholarship Catagory</label>
+            @Html.EditorFor(model => model.ScholarshipCatagoryName, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" ,@required="required"} })
+            @Html.ValidationMessageFor(model => model.ScholarshipCatagoryName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+     
+        
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-4">
+            <input type="submit" value="Add" class="btn btn-primary" />
+            <a href="@Url.Content("~/ScholarshipCatagories/Index")" class="btn btn-primary">Refresh</a>
+        </div>
+    </div>
+}
+
+<script>
+ $(document).ready(function () {
+
+     $("#ScholarshipCatagoryName").val("");
+        
+
+     });
+</script>

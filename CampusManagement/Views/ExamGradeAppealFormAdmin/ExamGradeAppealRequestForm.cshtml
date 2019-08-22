@@ -1,0 +1,307 @@
+﻿@model CampusManagement.Models.ExamGradeAppealFormForAdminViewModel
+@using CampusManagement.Models
+
+
+<div class="row">
+    <h2><span class="col-sm-12">Grade Appeal From Page</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+@Html.Partial("_MessageView")
+@{
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+
+}
+@using (Html.BeginForm("ExamGradeAppealRequestForm", "ExamGradeAppealFormAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ExamGradeAppealFormForStudentObj.ExamGradeAppealFormID)
+    @Html.HiddenFor(model => model.ExamGradeAppealFormForStudentObj.ExamID)
+    @Html.HiddenFor(model => model.ExamID)
+    @Html.HiddenFor(model => model.ExamGradeAppealFormForStudentObj.StudentID)
+    @Html.HiddenFor(model => model.ExamGradeAppealFormForStudentObj.CreatedOn)
+    @Html.HiddenFor(model => model.ExamGradeAppealFormForStudentObj.StudentComment)
+    @Html.HiddenFor(model => model.ExamGradeAppealFormForStudentObj.StudentSignature)
+    @Html.HiddenFor(model => model.ExamGradeAppealFormForStudentObj.IsStudentSignature)
+
+    
+    <div id="divPrintRequestFrom" name="divPrintRequestFrom" style="text-align:center">
+        <div id="divPrintForm" name="divPrintForm" style="background-color:lightyellow;">
+            <div style="page-break-before: always; border:solid;border-width:2px;border-color:lightgray;">
+                <div class="row" style="margin-top:20px">
+                    <table style="width:100%">
+                        <tr style="width:100%">
+                            <td style="width:20%;padding-left:30px;padding-right:30px"></td>
+                            <td style="width:40%;text-align:inherit ">
+                                <h3><span style="font-weight:bold;margin-left:10px; text-align:inherit "> Grade Appeal Form</span></h3>
+                                <h4><span style="font-weight:bold;margin-left:10px; text-align:inherit "> Award List Mid Term Final Summer 2018</span></h4>
+                            </td>
+                            <td style="width:30%;padding-right:10px;padding-right:30px">
+                                <div style="width:100%;">
+                                    <img style="width: 12em;height: 3em;margin-top:10px;margin-left:200px" class="img-responsive" src="@Url.Content("~/assets/img/iqra/logo.png")">
+                                </div>
+                                <br />
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+
+                <div style="font-size:15px;font-weight:bold;text-align:left;margin-left:20px;padding-top:10px">
+                    @MvcApplication.UniversityCampusName
+                </div>
+                <div style="font-size:15px ;text-align:left;margin-left:20px ;padding-top:5px">
+                    @MvcApplication.CampusAddress
+                </div>
+
+                <div style="width:100%;padding-top:20px" class="row">
+                    <div class="col-sm-1" style="text-align:left;padding-top:10px;margin-left:10px">
+                        Date:
+
+                    </div>
+                    <div class="col-sm-4">
+
+                        @Html.EditorFor(model => model.ExamGradeAppealFormForStudentObj.CreatedOn, new { htmlAttributes = new { @class = "", @readonly = "readonly" } })
+                    </div>
+                    <div class="col-sm-7">
+                    </div>
+                </div>
+
+                <div style="font-size:15px;font-weight:bold;text-align:left;margin-left:20px;padding-top:10px">
+                    Dear Sir/Madam
+                </div>
+                <div style="font-size:15px ;text-align:left;margin-left:20px ;padding-top:5px">
+                    My particulars are given below
+                </div>
+                <div style="width:100%;padding-top:20px;padding-left:40px;padding-right:30px;text-align:left" class="row">
+                    <table style="width:100% ;border:solid; border-width:1px;border-color:black;">
+
+
+                        <tr style="width:100%;border: 1px solid black;">
+                            <td style="width:10%;border: 1px solid black;font-weight:bold ">
+                                1
+                            </td>
+                            <td style="width:30%;border: 1px solid black; font-weight:bold">Registration Number:</td>
+                            <td style="width:60% ;border: 1px solid black">@Model.StudentDetailObj.RegistrationNo</td>
+                        </tr>
+
+                        <tr style="width:100%;border: 1px solid black;">
+                            <td style="width:10%;border: 1px solid black;font-weight:bold ">
+                                2
+                            </td>
+                            <td style="width:30%;border: 1px solid black;font-weight:bold">Student Name:</td>
+                            <td style="width:60% ;border: 1px solid black">@Model.StudentDetailObj.StudentName</td>
+                        </tr>
+                        <tr style="width:100%;border: 1px solid black;">
+                            <td style="width:10%;border: 1px solid black;font-weight:bold ">
+                                3
+                            </td>
+                            <td style="width:30%;border: 1px solid black;font-weight:bold">Programm/Degree:</td>
+                            <td style="width:60% ;border: 1px solid black">@Model.StudentDetailObj.ProgramName</td>
+                        </tr>
+
+                        <tr style="width:100%;border: 1px solid black;">
+                            <td style="width:10%;border: 1px solid black;font-weight:bold ">
+                                4
+                            </td>
+                            <td style="width:30%;border: 1px solid black;font-weight:bold">Mobile Number:</td>
+                            <td style="width:60% ;border: 1px solid black">@Model.StudentDetailObj.MobileNumber</td>
+                        </tr>
+                    </table>
+
+                </div>
+                @if (Model.SubjectListAppeal != null)
+                {
+                    if (Model.SubjectListAppeal.Count > 0)
+                    {
+
+
+                        <div style="width:100%;padding-top:20px;padding-left:40px;padding-right:30px;text-align:left" class="row">
+                            <table style="width:100% ;border:solid; border-width:1px;border-color:black;">
+                                <tr style="width:100%; border: 1px solid black;">
+                                    <th style="width:10%;border: 1px solid black; ">
+                                        S#
+                                    </th>
+                                    <th style="width:20%;border: 1px solid black">Course Code</th>
+                                    <th style="width:20%;border: 1px solid black">Title</th>
+                                    <th style="width:20%;border: 1px solid black">Teacher Name</th>
+                                    <th style="width:20%;border: 1px solid black">Paper Rechecking</th>
+                                </tr>
+
+
+
+                                @for (var z = 0; z < Model.SubjectListAppeal.Count; z++)
+                                {
+                                    @Html.HiddenFor(modelItem => Model.SubjectListAppeal[z].CourseCode)
+                                    @Html.HiddenFor(modelItem => Model.SubjectListAppeal[z].CourseName)
+                                    @Html.HiddenFor(modelItem => Model.SubjectListAppeal[z].ExamGradeAppealFormCourseDetailID)
+                                    @Html.HiddenFor(modelItem => Model.SubjectListAppeal[z].ExamGradeAppealFormID)
+                                    @Html.HiddenFor(modelItem => Model.SubjectListAppeal[z].ExamID)
+                                    @Html.HiddenFor(modelItem => Model.SubjectListAppeal[z].ProgramCourseID)
+                                    @Html.HiddenFor(modelItem => Model.SubjectListAppeal[z].StudentID)
+
+
+                                    <tr style="width:100%;border: 1px solid black;">
+                                        <td>
+                                            @{ int currentserial = z + 1;
+                                                string Sernumber = "" + currentserial + "";}
+                                            <span style="font-weight:bold">@Sernumber </span>
+                                        </td>
+                                        <td style="width:20%;border: 1px solid black;">@Html.DisplayFor(modelItem => Model.SubjectListAppeal[z].CourseCode) </td>
+                                        <td style="width:20% ;border: 1px solid black">@Html.DisplayFor(modelItem => Model.SubjectListAppeal[z].CourseName)</td>
+                                        <td style="width:20% ;border: 1px solid black">
+                                            @Html.DropDownListFor(modelItem => Model.SubjectListAppeal[z].TeacherID, new SelectList(dbc.GetUserDetail(2, "31,59"), "EmpID", "UserDetail", Model.SubjectListAppeal[z].TeacherID), new { @class = "form-control mydropdown"})
+                                        </td>
+                                        <td style="width:20% ;border: 1px solid black">@Html.EditorFor(modelItem => Model.SubjectListAppeal[z].PaperRecheking, new { htmlAttributes = new { @class = "", @readonly = "readonly" } })</td>
+
+                                    </tr>
+
+
+                                                }
+
+                            </table>
+                        </div>
+                                                    }
+                                                }
+
+
+                                                <div class="row" style="text-align:left;margin-top:40px; margin-bottom:40px ;border:solid; border-width:1px;border-color:black;margin-left:25px;margin-right:30px">
+                                                    <span style="margin-left:20px"> Comments:</span> <br />
+                                                    <div class="col-sm-12">
+                                                        @Html.TextAreaFor(model => model.ExamGradeAppealFormForStudentObj.StudentComment, new { @class = "notes", @style = " width: 100%;  background-color: lightyellow; ", @rows = "6", @readonly = "readonly" })
+                                                    </div>
+                                                    <div style="width:100%;text-align:right;">
+                                                        <table style="width:100%"><tr style="width:100%"><td style="width:60%"></td><td style="width:10%;padding-top:10px">Student Signature:</td> <td style="width:25%">@Html.EditorFor(model => model.ExamGradeAppealFormForStudentObj.StudentSignature, new { htmlAttributes = new { @class = "", @readonly = "readonly" } })</td> <td style="width:5%; text-align:left">@Html.CheckBoxFor(model => model.ExamGradeAppealFormForStudentObj.IsStudentSignature, new { @class = "checkbox-inline", @style = "width:18px;height:18px", @disabled = "disabled" })</td></tr> </table>  <br />
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" style="text-align:left;margin-top:40px; margin-bottom:40px ;border:solid; border-width:1px;border-color:black;margin-left:25px;margin-right:30px">
+
+                                                    <table style="width:100%">
+                                                        <tr style="width:100%">
+                                                            <td style="width:30%"><span style="margin-left:20px"> Approved Comments:</span> @Html.CheckBoxFor(model => model.ExamGradeAppealFormForStudentObj.ApproveComment, new { @class = "checkbox-inline", @style = "width:18px;height:18px" })</td>
+                                                            <td style="width:30%"><span style="margin-left:20px"> Not Approved:</span> @Html.CheckBoxFor(model => model.ExamGradeAppealFormForStudentObj.NotApprove, new { @class = "checkbox-inline", @style = "width:18px;height:18px"})</td>
+                                                            <td style="width:40%"></td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <br />
+                                                    <div class="col-sm-12">
+                                                        @Html.TextAreaFor(model => model.ExamGradeAppealFormForStudentObj.HodComment, new { @class = "notes", @style = " width: 100%;  background-color: lightyellow; ", @rows = "6"})
+                                                    </div>
+                                                    <div style="width:100%;text-align:right;">
+                                                        <table style="width:100%"><tr style="width:100%"><td style="width:50%"></td><td style="width:20%;padding-top:0px"><br /><br />Signature:<br />Head Of Department</td> <td style="width:25%">@Html.EditorFor(model => model.ExamGradeAppealFormForStudentObj.HodSignature, new { htmlAttributes = new { @class = ""} })</td> <td style="width:5%; text-align:left">@Html.CheckBoxFor(model => model.ExamGradeAppealFormForStudentObj.IsHodSignature, new { @class = "checkbox-inline", @style = "width:18px;height:18px"})</td></tr> </table>  <br />
+                                                    </div>
+
+                                                </div>
+                                                <br />
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-sm-12"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-sm-4"></div>
+                                        <div class="col-sm-7"></div>
+                                        <div class="col-sm-1">
+                                            <input type="submit" value="Submit" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+
+
+                                                }
+
+
+<script>
+    $(document).ready(function () {s
+        // $("#TotalSubjectMarks").val("");
+    });
+
+
+    function PrintForm() {
+
+        var data = document.getElementById('divPrintForm').innerHTML;
+        Popup(data);
+    }
+
+    function Popup(data) {
+        var mywindow = window.open('', 'mydiv', 'height=550,width=750');
+        mywindow.document.write('<html><head><title></title>');
+        mywindow.document.write('<link rel="stylesheet" href="~/Content/Site.css" type="text/css" media="print" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10
+
+        mywindow.print();
+        mywindow.close();
+
+        return true;
+    }
+
+
+</script>
+<style>
+    input[type=text] {
+        width: 100%;
+        background-color: lightyellow;
+        border: 0;
+        border-bottom: 1px solid lightgrey;
+        padding: 3px;
+    }
+
+    .mydropdown {
+        width: 100%;
+        background-color: lightyellow;
+        border: 0;
+        border-bottom: 1px solid lightgrey;
+        padding: 3px;
+    }
+
+    input[type=datetime] {
+        width: 100%;
+        background-color: lightyellow;
+        border: 0;
+        border-bottom: 1px solid lightgrey;
+        padding: 3px;
+    }
+
+
+    input[type=textarea] {
+        width: 100%;
+        background-color: lightyellow;
+        border: 0;
+        border-bottom: 1px solid lightgrey;
+        padding: 3px;
+    }
+
+    .notes {
+        background-image: -webkit-linear-gradient(left, lightyellow 10px, transparent 10px), -webkit-linear-gradient(right, lightyellow 10px, transparent 10px), -webkit-linear-gradient(lightyellow 30px, #ccc 30px, #ccc 31px, lightyellow 31px);
+        background-image: -moz-linear-gradient(left, lightyellow 10px, transparent 10px), -moz-linear-gradient(right, lightyellow 10px, transparent 10px), -moz-linear-gradient(lightyellow 30px, #ccc 30px, #ccc 31px, lightyellow 31px);
+        background-image: -ms-linear-gradient(left, lightyellow 10px, transparent 10px), -ms-linear-gradient(right, lightyellow 10px, transparent 10px), -ms-linear-gradient(lightyellow 30px, #ccc 30px, #ccc 31px, lightyellow 31px);
+        background-image: -o-linear-gradient(left, lightyellow 10px, transparent 10px), -o-linear-gradient(right, lightyellow 10px, transparent 10px), -o-linear-gradient(lightyellow 30px, #ccc 30px, #ccc 31px, lightyellow 31px);
+        background-image: linear-gradient(left, lightyellow 10px, transparent 10px), linear-gradient(right, lightyellow 10px, transparent 10px), linear-gradient(lightyellow 30px, #ccc 30px, #ccc 31px, lightyellow 31px);
+        background-size: 100% 100%, 100% 100%, 100% 31px;
+        background-color: lightyellow;
+        border: none;
+        border-bottom: 1px solid lightgrey;
+        line-height: 31px;
+        font-family: Arial, Helvetica, Sans-serif;
+        padding: 8px;
+    }
+
+        .notes:focus {
+            outline: none;
+        }
+
+    body {
+        background-color: #eee;
+    }
+</style>

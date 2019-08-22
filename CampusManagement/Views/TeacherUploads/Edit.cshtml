@@ -1,0 +1,85 @@
+﻿@model CampusManagement.Models.TeacherUpload
+@using CampusManagement.Models
+
+@using (Html.BeginForm("Edit", "TeacherUploads", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @Html.AntiForgeryToken()
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+
+    <div class="row">
+        <h2><span class="col-sm-12">Uploads</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.HiddenFor(model => model.TeacherUploadID)
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Lecture/Assignment/Quiz Name</label>
+            @Html.EditorFor(model => model.TeacherUploadName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.TeacherUploadName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4">
+            <label>Type</label>
+            <select class="form-control" name="TeacherUploadType" id="TeacherUploadType" required>
+                <option>Lecture</option>
+                <option> Assignment </option>
+                <option> Quiz </option>
+            </select>
+            @Html.ValidationMessageFor(model => model.TeacherUploadType, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4">
+            <label>Submission Date</label>
+            @Html.EditorFor(model => model.SubmissonDate, new { htmlAttributes = new { @class = "form-control", @type = "date", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.SubmissonDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4" style="display:none">
+            @Html.LabelFor(model => model.UploadPath, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.UploadPath, new { @class = "form-control", Type = "text" })
+            @Html.ValidationMessageFor(model => model.UploadPath, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4">
+            <label>File</label>
+            @Html.TextBoxFor(model => model.TeacherUploadFile, new { @class = "form-control", Type = "File", onchange = "readURL(this);", @required = "required" })
+            @Html.ValidationMessageFor(model => model.TeacherUploadFile, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label>Is Active</label>
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4" style="display:none">
+            <label for="imgView" class="control-label"></label>
+            <img id="imgView" src="@Url.Content("~/DegreeDocument/noimage.png")" style="width:70px;height:70px;border-radius:10px;" />
+            @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+            @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a href="@Url.Content("~/TeacherUploads/Index")" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#tab3").css("background", "#eee");
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#imgView')
+                    .attr('src', e.target.result)
+                    .width(70)
+                    .height(70);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

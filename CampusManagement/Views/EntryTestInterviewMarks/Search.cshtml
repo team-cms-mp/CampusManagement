@@ -1,4 +1,5 @@
 ﻿@model CampusManagement.Models.GetSelectionCriteria_Result
+@using CampusManagement.Models
 
 @using (Html.BeginForm("Search", "EntryTestInterviewMarks", FormMethod.Post))
 {
@@ -7,23 +8,37 @@
     <div class="row">
         <h2><span class="col-sm-12">Entry Test/Interview Marks</span></h2>
     </div>
-    <hr style=" border-top: 1px solid #6d9b90;" />
+    <hr style="border-top: 1px solid #6d9b90;" />
     @Html.Partial("_MessageView")
     <input id="txtBatchProgramID" name="txtBatchProgramID" type="hidden" />
     <div class="row">
-        <div class="col-sm-12">
-            @Html.LabelFor(model => model.BatchProgramID, "Batch Program", htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownList("BatchProgramID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.BatchProgramID, "", new { @class = "text-danger" })
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.BatchID, "Session", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.BatchID, null, htmlAttributes: new { @class = "form-control" })
         </div>
-        <div class="col-sm-12">
-            @Html.LabelFor(model => model.DegreeID, "Degree", htmlAttributes: new { @class = "control-label" })
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.BatchProgramID, "Program", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("BatchProgramID", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.DegreeID, "Type", htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("DegreeID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.DegreeID, "", new { @class = "text-danger" })
+        </div>
+        @{
+
+            ModelCMSNewContainer dbm = new ModelCMSNewContainer();
+            GetActiveSessionAndTest_Result st = dbm.GetActiveSessionAndTest().FirstOrDefault();
+
+        }
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.EntryTestID, "Test/Interview", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("EntryTestID", null, htmlAttributes: new { @class = "form-control", style = "display:none" })
+            @Html.DropDownList("EntryTestID", new List<SelectListItem> { new SelectListItem { Text = @st.ActiveEntryTestName, Value = @st.ActiveEntryTestName }, }, new { @class = "form-control" })
+
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-7">
+        <div class="col-sm-6">
             @Html.LabelFor(model => model.FullName, "Search with Form #/Applicant Name/Father Name", htmlAttributes: new { @class = "control-label" })
             @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
         </div>
@@ -31,18 +46,21 @@
     <br />
     <div class="row">
         <div class="col-sm-12">
-            <input type="submit" value="Search" class="btn btn-success" />
-            <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rpt_MeritList&IsBlank=true&BatchProgramID=")@Model.BatchProgramID" class="btn btn-success" target="_blank">Blank Merit Report</a>
-            <a href="@Url.Content("~/EntryTestInterviewMarks/Index")" class="btn btn-success">Refresh</a>
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rpt_MeritList&IsBlank=true&BatchProgramID=")@Model.BatchProgramID" class="btn btn-primary hidden" target="_blank">Blank Merit Report</a>
+            <a href="@Url.Content("~/EntryTestInterviewMarks/Index")" class="btn btn-primary">Refresh</a>
         </div>
     </div>
-}
+            }
 
 <script>
-    $("#txtBatchProgramID").val($("#BatchProgramID").val());
-    $("#BatchProgramID").change(function () {
+    $(document).ready(function () {
+        $("#DegreeID").val("22");
         $("#txtBatchProgramID").val($("#BatchProgramID").val());
+        $("#BatchProgramID").change(function () {
+            $("#txtBatchProgramID").val($("#BatchProgramID").val());
+        });
     });
 
-</script>    
+</script>
 

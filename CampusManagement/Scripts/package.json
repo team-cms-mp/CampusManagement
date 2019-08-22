@@ -1,0 +1,19 @@
+{
+  "name": "jquery.session",
+  "version": "1.0.0",
+  "description": "Provides a simple interface into window.sessionStorage while providing limited support for cross protocol requests.",
+  "main": "jquery.session.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cargix1/JQuery-Session-Plugin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cargix1/JQuery-Session-Plugin/issues"
+  },
+  "homepage": "https://github.com/cargix1/JQuery-Session-Plugin"
+}

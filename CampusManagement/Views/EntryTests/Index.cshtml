@@ -1,0 +1,84 @@
+﻿@model CampusManagement.Models.EntryTestViewModel
+
+@{
+    ViewBag.Title = "Entry Tests";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedEntryTests != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedEntryTests);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedEntryTests);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.EntryTest());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Entry Test Name
+        </th>
+        <th>
+            Total Marks
+        </th>
+        <th>
+            Is Active
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.EntryTests)
+    {
+        if (item.EntryTestName.StartsWith("Test"))
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryTestName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryTestTotalMarks)
+            </td>
+            <td>
+                @{
+                    if (item.IsActive == "Yes")
+                    {
+                        <span style="color:darkgreen;font-weight:bold;">Yes</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    @Html.ActionLink("Edit", "Update", new { id = item.EntryTestID })
+                    if (item.IsActive == "No")
+                    {
+                        <span> | </span> @Html.ActionLink("Mark as Active", "UpdateEntryTestStatus", new { id = item.EntryTestID })
+                    }
+                }
+                
+                @*@if (item.EntryTestID > 6)
+                {
+                    <span>|</span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.EntryTestID })
+                }*@
+            </td>
+            
+        </tr>
+        }
+    }
+
+</table>

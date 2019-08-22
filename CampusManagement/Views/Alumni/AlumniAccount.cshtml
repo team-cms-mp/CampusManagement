@@ -1,0 +1,92 @@
+﻿
+@model CampusManagement.Models.AlumniUserViewModel
+
+@{
+    ViewBag.Title = "Alumni Association";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">My Account </span></h2>
+</div>
+<div class="row">
+    <hr style="border-top: 1px solid #6d9b90;" />
+</div>
+
+<table class="table">
+    @foreach (var item in Model.AlumniUsers)
+    {
+        <tr>
+            <td style="border:none">
+                <h3><b>My Profile</b></h3>
+                <b>Name</b> <br />
+                @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName) <br />
+           
+                <b>Address</b> <br />
+                @Html.DisplayFor(modelItem => item.PermanentAddress) <br />
+          
+                <b>Birthday</b> <br />
+                @Html.DisplayFor(modelItem => item.UserDOB) <br />
+           
+                <b>Phone</b> <br />
+                @Html.DisplayFor(modelItem => item.CellNo) <br />
+          
+                <b>Email</b> <br />
+                @Html.DisplayFor(modelItem => item.Email) <br />
+                <input id="AlumniUserID" name="AlumniUserID" value="@ViewBag.AlumniUserID" type="hidden" />
+            </td>
+            <td style="border:none">
+                <img src="@Url.Content(item.Picture)" style="width:125px; height:125px;border-radius:10px;" />
+            </td>
+            @*<td>
+                @Html.ActionLink("Edit", "Update", new { id = item.AlumniUserCareerID })
+            </td>*@
+            <td style="border:none">
+
+                <h3><b>Blogs</b></h3>
+                @Html.ActionLink("Blog Entry", "Index", "AUBlogs", new { AlumniUserID = item.AlumniUserID }, null)<br />
+                @Html.ActionLink("View Blogs", "GetAlumniUserBlogs", "AUBlogs")<br />
+                
+                <h3><b>Resume</b></h3>
+                @Html.ActionLink("Resume Entry", "Index", "AUResume", new { AlumniUserID = item.AlumniUserID }, null)<br />
+                @Html.ActionLink("View Resume", "", "", null)<br />
+
+                <h3><b>Photos</b></h3>
+                @Html.ActionLink("Photo Entry", "Index", "AUPhotos", new { AlumniUserID = item.AlumniUserID }, null)<br />
+                @Html.ActionLink("Photo Gallery", "GetAlumniUserPhoto_Result", "AUPhotos")<br />
+            </td>
+
+            <td style="border:none">
+                <div style="border-left: 2px solid #eaeaea;padding: 18px; background: #eaeaea5e;">
+                    <div  style="background: #eaeaea5e;border-right: 2px solid #eaeaea;border-top: 2px solid #eaeaea;box-shadow: -5px 3px 3px rgb(225, 223, 223);padding: 3px;"> <b>My Account </b></div><br />
+
+                    @Html.ActionLink("My Blogs", "Index", "AUBlogs", new { AlumniUserID = item.AlumniUserID }, null)<br />
+
+                    @Html.ActionLink("My Photos", "Index", "AUPhotos", new { AlumniUserID = item.AlumniUserID }, null)<br />
+
+                    
+
+                    <div style="background: #eaeaea5e;border-right: 2px solid #eaeaea;border-top: 2px solid #eaeaea;box-shadow: -5px 3px 3px rgb(225, 223, 223);padding: 3px;"> <b>My Latest News</b></div><br />
+
+                    @Html.ActionLink("News", "Index", "AUNews", new { AlumniUserID = item.AlumniUserID }, null)<br /><br />
+
+                    <div style="background: #eaeaea5e;border-right: 2px solid #eaeaea;border-top: 2px solid #eaeaea;box-shadow: -5px 3px 3px rgb(225, 223, 223);padding: 3px;"> <b>Upcoming Events </b></div><br />
+
+                    @Html.ActionLink("Upcoming Events", "GetAlumniUserEvent", "AUEvents", new { AlumniUserID = item.AlumniUserID }, null)<br /><br />
+
+                    <div style="background: #eaeaea5e;border-right: 2px solid #eaeaea;border-top: 2px solid #eaeaea;box-shadow: -5px 3px 3px rgb(225, 223, 223);padding: 3px;"> <b>Education Expo </b></div><br />
+
+                    @Html.ActionLink("Education Expo", "GetAlumniEducationExpo", "AUEducationExpo", new { AlumniUserID = item.AlumniUserID }, null)<br /><br />
+                    <div style="background: #eaeaea5e;border-right: 2px solid #eaeaea;border-top: 2px solid #eaeaea;box-shadow: -5px 3px 3px rgb(225, 223, 223);padding: 3px;"> <b>Reunions Dinners </b></div><br />
+
+                    @Html.ActionLink("Reunions Dinners", "GetAlumniReunionsDinner", "AUReunionsDinner", new { AlumniUserID = item.AlumniUserID }, null)<br /><br />
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+

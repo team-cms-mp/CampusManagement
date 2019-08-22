@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Rooms";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
@@ -19,14 +19,14 @@
     }
     if (Model.DisplayMode == "WriteOnly")
     {
-        Html.RenderPartial("Create", new CampusManagement.Models.Room());
+        Html.RenderPartial("Create", new CampusManagement.Models.SP_roomForPage_Result());
     }
 }
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedRoom.RoomType.RoomTypeName)
+            @Html.DisplayNameFor(model => model.SelectedRoom.RoomTypeName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SelectedRoom.RoomName)
@@ -44,7 +44,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.RoomType.RoomTypeName)
+                @Html.DisplayFor(modelItem => item.RoomTypeName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RoomName)

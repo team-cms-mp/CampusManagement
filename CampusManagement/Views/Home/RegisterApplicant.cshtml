@@ -4,21 +4,67 @@
     Layout = "~/Views/Shared/_MyLoginLayout2.cshtml";
 }
 
+<style>
+    input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+    .login100-form {
+    Position: absolute;
+    width: 385px;
+    display: block;
+    background: linear-gradient(to left, rgba(109, 179, 235, 0.78), rgba(132, 151, 161, 0.62));
+    padding: 142px 55px 16px 55px;
+    top: 50%;
+    left: 50%;
+    margin-top: -20em;
+    margin-left: -12em;
+
+
+}
+        .wrap-input100 {
+
+    height: 35px !important;
+}
+</style>
 @using (Html.BeginForm("RegisterApplicant", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @class = "login100-form validate-form", @style = "" }))
 {
-    <img src="@Url.Content(@MvcApplication.CompanyLogo)" alt="Alternate Text" style="margin-top: -10em; margin-left: 14%; width: 70%; ">
+    <img src="@Url.Content(@MvcApplication.CompanyLogo)" alt="Alternate Text" style="margin-top: -10em; margin-left: 14%; width: 64%; ">
+    <label style="margin-top: -5%;color:white">User Name</label>
     <div class="wrap-input100 validate-input" data-validate="User Name is required">
-        <input class="input100" type="text" name="UserName" placeholder="User Name">
+        <input class="input100" type="text" name="UserName" placeholder="User Name" autocomplete="off" id="UserName">
         <span class="focus-input100"></span>
       
     </div>
-    <div class="wrap-input100 validate-input" data-validate="Password is required">
-        <input class="input100" type="password" name="UserPassword" placeholder="Password">
+    <label style="color:white">Mobile Number</label>
+    <div class="wrap-input100 validate-input" data-validate="Phone Number is required">
+       @Html.DropDownList("CountryCode", null, htmlAttributes: new { @class = "form-control", @style= "height: 2.4em;background: rgba(242, 247, 250, 0.83);position: absolute;border: none;border-right: 1px solid #d0d0d0;" })
+       <input class="input100" type="text" id="MobileNumber" name="MobileNumber" placeholder="xxxxxxxxxx" onkeypress="return isNumberKey(event)" maxlength = "15" autocomplete="off" style="padding-left: 3em;">
         <span class="focus-input100"></span>
-       
     </div>
+    <label style="color:white">Email</label>
+    <div class="wrap-input100 validate-input" data-validate="Email is required">
+        <input class="input100" type="email" name="Email" placeholder="Email" autocomplete="off" id="Emaill">
+        <span class="focus-input100"></span>
+    </div>
+
+    <label style="color:white">CNIC/Passport</label>
+    <div class="wrap-input100">
+        <input class="input100" type="text" name="CNIC" placeholder="CNIC/Passport" id="CNIC" autocomplete="off">
+        <span class="focus-input100"></span>
+
+    </div>
+
+    <label style="color:white"> Password</label>
+    <div class="wrap-input100 validate-input" data-validate="Password is required">
+        <input class="input100" type="password" name="UserPassword" placeholder="Password" autocomplete="off" id="UserPassword">
+        <span class="focus-input100"></span>
+    </div>
+
+    <label style="color:white">Re-Enter Password</label>
     <div class="wrap-input100 validate-input" data-validate="Re-Enter Password is required">
-        <input class="input100" type="password" name="ReEnterPassword" placeholder="Re-Enter Your Password">
+        <input class="input100" type="password" name="ReEnterPassword" placeholder="Re-Enter Your Password" autocomplete="off" id="ReEnterPassword">
         <span class="focus-input100"></span>
       
     </div>
@@ -31,23 +77,151 @@
     </div>
     <div>
         @{
-            if (ViewBag.MessageType == "error")
-            {
+               if (ViewBag.MessageType == "error")
+               {
                 <span style="color:red;">@Html.Raw(ViewBag.ErrorMessage)</span>
-            }
-            if (ViewBag.MessageType == "success")
-            {
+               }
+               if (ViewBag.MessageType == "success")
+               {
                 <span style="color:green;">@Html.Raw(ViewBag.ErrorMessage)</span>
-            }
-        }
+               }
+           }
 
     </div>
     <div class="container-login100-form-btn">
-        <button class="login100-form-btn" type="submit">
+        <button class="login100-form-btn" type="submit" style="height:30px" id="save">
             Register
         </button>
         <input type="hidden" value="Yes" name="IsActive" />
     </div>
 }
 
+<script>
+
+
+    function RegisterEvents() {
+
+        $('#UserName').blur(function () {
+
+               var UserName = $('#UserName').val()
+            setCookie('UserName', UserName, 7);
+               // var x = getCookie('UserName');
+           });
+
+        $('#MobileNumber').blur(function () {
+               var MobileNumber = $('#MobileNumber').val()
+            setCookie('MobileNumber', MobileNumber, 7);
+           });
+
+        $('#Emaill').change(function () {
+               var Emaill = $('#Emaill').val()
+            setCookie('Emaill', Emaill, 7);
+           });
+
+        $('#CNIC').change(function () {
+               var CNIC = $('#CNIC').val()
+            setCookie('CNIC', CNIC, 7);
+           });
+
+        $('#UserPassword').change(function () {
+               var UserPassword = $('#UserPassword').val()
+            setCookie('UserPassword', UserPassword, 7);
+           });
+
+        $('#ReEnterPassword').change(function () {
+               var ReEnterPassword = $('#ReEnterPassword').val()
+            setCookie('ReEnterPassword', ReEnterPassword, 7);
+           });
+
+
+       }
+
+       function FetchValues() {
+           var UserName = getCookie('UserName');
+        $('#UserName').val(UserName);
+
+           var MobileNumber = getCookie('MobileNumber');
+        $('#MobileNumber').val(MobileNumber);
+
+           var Emaill = getCookie('Emaill');
+        $('#Emaill').val(Emaill);
+
+           var CNIC = getCookie('CNIC');
+        $('#CNIC').val(CNIC);
+
+           var UserPassword = getCookie('UserPassword');
+        $('#UserPassword').val(UserPassword);
+
+           var ReEnterPassword = getCookie('ReEnterPassword');
+        $('#ReEnterPassword').val(ReEnterPassword);
+
+
+       }
+       function setCookie(name, value, days) {
+           var expires = "";
+           if (days) {
+               var date = new Date();
+               date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+               expires = "; expires=" + date.toUTCString();
+           }
+           document.cookie = name + "=" + (value || "") + expires + "; path=/";
+       }
+
+       function eraseCookie(name, value, days) {
+
+           if (days) {
+               var date = new Date();
+               date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+               var expires = "; expires=" + date.toGMTString();
+           }
+           else var expires = "";
+           document.cookie = name + "=" + value + expires + "; path=/";
+       }
+
+       function getCookie(name) {
+           var nameEQ = name + "=";
+           var ca = document.cookie.split(';');
+           for (var i = 0; i < ca.length; i++) {
+               var c = ca[i];
+               while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+               if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+           }
+           return null;
+       }
+
+
+
+       function EraseAllRecords() {
+           eraseCookie('UserName', "", -1);
+           eraseCookie('MobileNumber', "", -1);
+           eraseCookie('Emaill', "", -1);
+           eraseCookie('CNIC', "", -1);
+           eraseCookie('UserPassword', "", -1);
+           eraseCookie('ReEnterPassword', "", -1);
+
+       }
+
+    $(document).ready(function () {
+
+
+           RegisterEvents();
+           FetchValues();
+
+        @*var call = @ViewBag.scripCall;
+        if (call == "1")
+        {
+            EraseAllRecords();
+        }*@
+
+        //CNICFormat("CNIC");
+    });
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && charCode < 43 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+</script>
 

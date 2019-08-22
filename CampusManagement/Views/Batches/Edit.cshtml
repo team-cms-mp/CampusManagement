@@ -7,23 +7,23 @@
     <div class="row">
         <h2><span class="col-sm-12">Edit Batch</span></h2>
     </div>
-    <hr style=" border-top: 1px solid #6d9b90;" />
+    <hr style="border-top: 1px solid #6d9b90;" />
     @Html.HiddenFor(model => model.BatchID)
 
     <div class="row">
         <div class="col-sm-3">
-            @Html.LabelFor(model => model.BatchName, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.BatchName, new { htmlAttributes = new { @class = "form-control" } })
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.BatchName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.BatchName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
             @Html.ValidationMessageFor(model => model.BatchName, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
-            @Html.LabelFor(model => model.BatchCode, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.BatchCode, new { htmlAttributes = new { @class = "form-control" } })
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.BatchCode, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.BatchCode, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
             @Html.ValidationMessageFor(model => model.BatchCode, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
-            @Html.LabelFor(model => model.BatchSession, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.BatchSession, new { htmlAttributes = new { @class = "form-control" } })
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.BatchSession, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.BatchSession, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
             @Html.ValidationMessageFor(model => model.BatchSession, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
@@ -42,8 +42,8 @@
     <br />
     <div class="row">
         <div class="col-sm-3">
-            <input type="submit" value="Save" class="btn btn-success" />
-            <a href="@Url.Content("~/Batches/Index")" class="btn btn-success">Cancel</a>
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a href="@Url.Content("~/Batches/Index")" class="btn btn-primary">Cancel</a>
         </div>
     </div>
 }

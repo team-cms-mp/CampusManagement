@@ -1,0 +1,175 @@
+﻿@model CampusManagement.Models.ExamSubjectsViewModel
+@using CampusManagement.Models
+<!-- Include Twitter Bootstrap and jQuery: -->
+<!-- Include the plugin's CSS and JS: -->
+<link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/assets/js/bootstrap.min.js"></script>
+<script src="~/assets/js/jquery-2.1.1.min.js"></script>
+<script src="~/assets/js/bootstrap-multiselect.js"></script>
+<link href="~/assets/css/bootstrap-multiselect.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Index", "ExamResultDisplay", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12"> Exam Subject For Result Display</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+
+        <div class="col-sm-4">
+            <label>Exam</label>
+            @Html.DropDownListFor(model => model.ExamID, null, "--Please Select--", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ExamID, "", new { @class = "text-danger" })
+
+        </div>
+
+
+
+
+    </div>
+
+    <div class="row" style="margin-top: 1em;">
+        <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+
+    </div>
+
+}
+
+@{
+
+    string errorstring = ViewBag.MessageType;
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+
+    int hdnExamID = (ViewBag.hdnExamID == null) ? 0 : ViewBag.hdnExamID;
+
+    if (errorstring == "")
+    {
+        if (Convert.ToInt32(Session["Designation_ID"]) == 31 || Convert.ToInt32(Session["Designation_ID"]) == 59)
+        {
+            Model.SubjectList = dbc.GetExamSubjectsForResult(hdnExamID, Convert.ToInt32(Session["CurrentUserID"])).ToList();
+        }
+        else
+        {
+            Model.SubjectList = dbc.GetExamSubjectsForResult(hdnExamID, 0).ToList();
+        }
+
+
+    }
+
+
+    //if (errorstring == "")
+    //{
+    //      Model.SubjectList = dbc.GetExamSubjectsForResult(hdnExamID, 0).ToList();
+    //}
+
+    <input name="hdnExamID" value="@ViewBag.hdnExamID" type="hidden" id="hdnExamID" />
+
+
+
+    <table style="width:100%">
+        <tr style="width:100%">
+            <td style="width:100%; background-color:lightgray ; vertical-align:top">
+                @if (Model.SubjectList != null)
+                {
+                    if (Model.SubjectList.Count > 0)
+                    {
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    Exam Subject Details
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+
+                            </tr>
+                            @for (var z = 0; z < Model.SubjectList.Count; z++)
+                            {
+
+                                <tr>
+                                    <td>
+
+                                        @{ string id = "hdID_" + Model.SubjectList[z].ExamsDateSheetDetailID;}
+                                        @Html.Hidden(@id, new { value = Model.SubjectList[z].ExamsDateSheetDetailID })
+                                        @if (Model.SubjectList[z].TCourseAllocationID == null)
+                                        {
+                                            <span style="font-weight:bold;color:red">Note: ( This course is assign to no teacher yet )</span><br />
+                                        }
+                                        <span style="font-weight:bold">Session : </span>  @Html.DisplayFor(modelItem => Model.SubjectList[z].BatchName) <span style="color:red">( Program:  @Html.DisplayFor(modelItem => Model.SubjectList[z].ProgramName) )</span><br />
+                                        <span style="font-weight:bold">Subject: </span>  @Html.DisplayFor(modelItem => Model.SubjectList[z].ExamSubjectTitle) <span style="color:red">( Semester# :  @Html.DisplayFor(modelItem => Model.SubjectList[z].YearSemesterNo) )</span><br />
+
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].ExamsDateSheetDetailID)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].ExamID)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].ExamDateID)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].ExamDateTimeSlotID)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].ProgramCourseID)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].TCourseAllocationID)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].TeacherID)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].BatchProgramID)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].CourseID)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].CourseTypeID)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].YearSemesterNo)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].BatchName)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].ProgramName)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].ProgramCode)
+                                        @Html.HiddenFor(modelItem => Model.SubjectList[z].ExamSubjectTitle)
+
+                                    </td>
+
+                                    <td>
+                                        @if (Model.SubjectList[z].TCourseAllocationID != null)
+                                        {
+                                            @Html.ActionLink("StudentList", "ExamSubjectsStudent", new { ExamID = Model.SubjectList[z].ExamID, ProgramCourseID = Model.SubjectList[z].ProgramCourseID, ExamsDateSheetDetailID = Model.SubjectList[z].ExamsDateSheetDetailID, TeacherID = Model.SubjectList[z].TeacherID })
+                                        }
+                                        else
+                                        {
+                                            <span style="font-weight:bold;color:red">Note: (Please assign teacher and make Student Attendance for exam )</span>
+                                        }
+
+
+                                    </td>
+                                </tr>
+
+                                            }
+                        </table>
+                        <br />
+
+
+                                                }
+
+                                            }
+            </td>
+
+        </tr>
+
+    </table>
+
+
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+        });
+
+
+
+    </script>
+
+
+
+}
+
+
+

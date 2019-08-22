@@ -18,8 +18,8 @@ namespace CampusManagement.Models
         public int Page_ID { get; set; }
         public string Page_Name { get; set; }
         public string Page_URL { get; set; }
+        public string Module_Name { get; set; }
         public Nullable<int> ModulePriority { get; set; }
         public Nullable<int> PagePriority { get; set; }
-        public string Module_Name { get; set; }
     }
 }

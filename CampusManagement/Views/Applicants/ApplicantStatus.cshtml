@@ -1,0 +1,281 @@
+﻿@model CampusManagement.Models.Applicant
+
+@{
+    ViewBag.Title = "Personal Details";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    string FormNo = Model.FormNo;
+}
+
+@Html.Partial("_ApplicantAdmissionTabsView")
+
+<div class="row">
+    <h2><span class="col-sm-12">Applicant Status</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+
+@Html.Partial("_ApplicantInformation", FormNo)
+
+<hr style="border-top: 1px solid #6d9b90;" />
+
+@Html.Partial("_MessageViewTempData")
+<div style="color:red"> @ViewData["error"] </div> 
+@Html.Partial("_MessageView")
+
+    @using (Html.BeginForm("ApplicantStatus", "Applicants", FormMethod.Post, new { enctype = "multipart/form-data", @style= "margin-top: 0em;" }))
+    {
+        @Html.AntiForgeryToken()
+
+        /////Ex-students/////
+        <input hidden value="@ViewBag.applicantStatus" name="applicantStatus" id="applicantStatus" />
+        <div class="divHeading">
+            <a data-toggle="collapse" data-target="#hide5"><h4 class="fa fa-level-down" aria-hidden="true"> @MvcApplication.CampusName Graduates/Ex-Students </h4></a>
+        </div>
+        <div class="row" id="hide5">
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.ExCampus, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.ExCampus, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ExCampus, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.ExProgram, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.ExProgram, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ExProgram, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.ExRegistrationNo, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.ExRegistrationNo, new { htmlAttributes = new { @class = "form-control", @maxlength = "30" } })
+                @Html.ValidationMessageFor(model => model.ExRegistrationNo, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-12">
+                @Html.LabelFor(model => model.ExReasonForLeaving, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.ExReasonForLeaving, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ExReasonForLeaving, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        /////transfer students/////
+
+        <div class="divHeading">
+            <a data-toggle="collapse" data-target="#hide5"><h4 class="fa fa-level-down" aria-hidden="true"> Transfer Applicant </h4></a>
+        </div>
+        <div class="row" id="hide5">
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.TransferInstituteAttendend, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.TransferInstituteAttendend, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TransferInstituteAttendend, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.TransferProgram, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.TransferProgram, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TransferProgram, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.TransferCGPA, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.TransferCGPA, new { htmlAttributes = new { @class = "form-control", @maxlength = "4", @type = "number" } })
+                @Html.ValidationMessageFor(model => model.TransferCGPA, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.TransferCreditHoursCompleted, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.TransferCreditHoursCompleted, new { htmlAttributes = new { @class = "form-control", @maxlength = "4" } })
+                @Html.ValidationMessageFor(model => model.TransferCreditHoursCompleted, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-12">
+                @Html.LabelFor(model => model.TransferReasonForLeaving, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.TransferReasonForLeaving, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TransferReasonForLeaving, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        /////Result awaiting  students/////
+
+        <div class="divHeading">
+            <a data-toggle="collapse" data-target="#hide5"><h4 class="fa fa-level-down" aria-hidden="true"> Result Awaiting Applicant </h4></a>
+        </div>
+        <div class="row" id="hide5">
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.ResultAwaitingOf, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownList("ResultAwaitingOf", null, "Please select", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ResultAwaitingOf, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.ResultAwaitingRollNo, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.ResultAwaitingRollNo, new { htmlAttributes = new { @class = "form-control", @maxlength = "30" } })
+                @Html.ValidationMessageFor(model => model.ResultAwaitingRollNo, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.ResultAwaitingBoardUniversity, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownList("ResultAwaitingBoardUniversity", null, "Please select", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ResultAwaitingBoardUniversity, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-3">
+                @Html.LabelFor(model => model.ResultAwaitingYear, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.ResultAwaitingYear, new { htmlAttributes = new { @class = "form-control", @maxlength = "4" } })
+                @Html.ValidationMessageFor(model => model.ResultAwaitingYear, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+
+        <div class="divHeading">
+            <a data-toggle="collapse" data-target="#hide11"><h4 class="fa fa-level-down" aria-hidden="true">  Disciplinary Issues (in Previous Institution) </h4></a>
+        </div>
+        <div div class="row" id="hide11">
+            <ul>
+                <li class="col-sm-8 custom-control custom-checkbox">
+                    <label class="custom-control-label">Involved in any disciplinary issue in previous institution ? If Yes, provide details... </label>
+                </li>
+                <li class="col-sm-2 custom-control custom-checkbox">
+
+                    @if (!string.IsNullOrEmpty(Model.DisciplinaryIssue) && Model.DisciplinaryIssue != "No")
+                    {
+                        <label class="custom-control-label" for="No">No</label>
+                        <input type="checkbox" class="custom-control-input Disciplinary" id="No" value="No">
+                        <label class="custom-control-label" for="Yes">Yes</label>
+                        <input type="checkbox" class="custom-control-input Disciplinary" id="Yes" value="Yes" checked>
+
+                        <div id="divShowTextbox" class="col-sm-12">
+                            @Html.EditorFor(model => model.DisciplinaryIssue, new { htmlAttributes = new { @class = "form-control", @style = "height: 5em; width: 73em; float: right; margin-right: -12.8em;" } })
+                        </div>
+                    }
+                    else if (!string.IsNullOrEmpty(Model.DisciplinaryIssue) && Model.DisciplinaryIssue == "No")
+                    {
+                        <label class="custom-control-label" for="No">No</label>
+                        <input type="checkbox" class="custom-control-input Disciplinary" id="No" value="No" checked>
+                        <label class="custom-control-label" for="Yes">Yes</label>
+                        <input type="checkbox" class="custom-control-input Disciplinary" id="Yes">
+
+                        <div id="divShowTextbox" class="col-sm-12" style="display:none;">
+                            @Html.EditorFor(model => model.DisciplinaryIssue, new { htmlAttributes = new { @class = "form-control", @style = "height: 5em; width: 73em; float: right; margin-right: -12.8em;" } })
+                        </div>
+                    }
+                    else
+                    {
+                        <label class="custom-control-label" for="No">No</label>
+                        <input type="checkbox" class="custom-control-input Disciplinary" id="No">
+                        <label class="custom-control-label" for="Yes">Yes</label>
+                        <input type="checkbox" class="custom-control-input Disciplinary" id="Yes">
+
+                        <div id="divShowTextbox" class="col-sm-12" style="display:none;">
+                            @Html.EditorFor(model => model.DisciplinaryIssue, new { htmlAttributes = new { @class = "form-control", @style = "height: 5em; width: 73em; float: right; margin-right: -12.8em;" } })
+                        </div>
+                    }
+
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <span class="error">-- Please select at least one CheckBox --</span>
+        </div>
+
+        <hr style="border-top: 1px solid #6d9b90;" />
+        <div class="row">
+            <div class="col-sm-12">
+                <input type="submit" value="Save" class="btn btn-primary" id="save"/>
+            </div>
+        </div>
+
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+<style>
+    .error {
+        color: red;
+        display: none;
+    }
+</style>
+    @section Scripts {
+        <script>
+        $(document).ready(function () {
+
+            $("#tab4").css("background", "#eee");
+
+            $("#TransferCreditHoursCompleted").ForceNumericOnly();
+            $("#ResultAwaitingYear").ForceNumericOnly();
+
+            var lbl = $("#hdnConcatStatus").val();
+            
+            if (lbl != null && lbl != undefined && lbl != "")
+            {
+                var status = lbl.split(",");
+                for (var i = 0; i < status.length; i++) {
+                    var s = status[i];
+                    if (status[i] == "5") {
+
+                        $("#ExCampus").attr('required', 'required');
+                        $("#ExProgram").attr('required', 'required');
+                        $("#ExRegistrationNo").attr('required', 'required');
+                        $("#ExReasonForLeaving").attr('required', 'required');
+                    }
+                    if (status[i] == "1") {
+
+                        $("#TransferInstituteAttendend").attr('required', 'required');
+                        $("#TransferProgram").attr('required', 'required');
+                        $("#TransferCGPA").attr('required', 'required');
+                        $("#TransferCreditHoursCompleted").attr('required', 'required');
+                        $("#TransferReasonForLeaving").attr('required', 'required');
+                    }
+                    if (status[i] == "7") {
+
+                        $("#ResultAwaitingOf").attr('required', 'required');
+                        $("#ResultAwaitingRollNo").attr('required', 'required');
+                        $("#ResultAwaitingBoardUniversity").attr('required', 'required');
+                        $("#ResultAwaitingYear").attr('required', 'required');
+                    }
+                }
+            }
+            
+            $('input.remove').on('change', function () {
+                $('input.remove').not(this).prop('checked', false);
+            });
+
+            $("#save").click(function () {
+                var checked_checkboxes = $("#hide11 input[type=checkbox]:checked");
+                if (checked_checkboxes.length == 0) {
+                    $(".error").show();
+                    return false;
+                }
+                return true;
+            });
+            $("#tab6").click(function () {
+                var checked_checkboxes = $("#hide11 input[type=checkbox]:checked");
+                if (checked_checkboxes.length == 0) {
+                    $(".error").show();
+                    return false;
+                }
+                return true;
+            });
+
+            $('#No').on('click', function () {
+                if ($('#No').prop('checked'))
+                {
+                    $('#Yes').not(this).prop('checked', false);
+                    $('#divShowTextbox').css("display", "none");
+                    $("#DisciplinaryIssue").val("No");
+                }
+            });
+
+            $('#Yes').on('click', function () {
+                if ($('#Yes').prop('checked')) {
+                    $('#No').not(this).prop('checked', false);
+                    $('#divShowTextbox').css("display", "block");
+                }
+            });
+
+        });
+
+
+        </script>
+    }
+
+
+
+
+
+
+
+

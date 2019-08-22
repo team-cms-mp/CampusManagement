@@ -1,0 +1,87 @@
+﻿@using CampusManagement.Models
+@{
+    ViewBag.Title = "Applicants List";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+@Html.Partial("_MessageView")
+
+@{
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+    int hdnScholarshipOpportunitiesID = (ViewBag.hdnScholarshipOpportunitiesID == null) ? 0 : ViewBag.hdnScholarshipOpportunitiesID;
+    List<GetScholarShipApplicantBySoID_Result> lstDocs = dbc.GetScholarShipApplicantBySoID(hdnScholarshipOpportunitiesID).ToList();
+    <input name="hdnScholarshipOpportunitiesID" value="@ViewBag.hdnScholarshipOpportunitiesID" type="hidden" id="hdnScholarshipOpportunitiesID" />
+
+    if (lstDocs.Count > 0)
+    {
+        GetScholarShipApplicantBySoID_Result Obj = new GetScholarShipApplicantBySoID_Result();
+        Obj = lstDocs[0];
+        <table class="table">
+            <tr>
+                <th>
+                    Student Name
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Cell #
+                </th>
+                <th>
+                    Batch 
+                </th>
+                <th>
+                    Year Semester No
+                </th>
+                <th>
+                    Program 
+                </th>
+                <th>
+                    Date Applied 
+                </th>
+                <th>
+                   Action
+                </th>
+            </tr>
+
+            @foreach (var item in lstDocs)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CellNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BatchSession)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CurrentSemesterNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProgramName)
+                    </td> 
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateApplied)
+                        
+                    </td> 
+                    <td>
+                        @Html.ActionLink("Detail", "LoadScholarShipDetails", new { id = item.ScholarshipOpportunitiesID })
+
+                    </td>
+
+                </tr>
+            }
+        </table>
+
+    }
+}
+

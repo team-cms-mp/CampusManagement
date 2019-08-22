@@ -1,0 +1,82 @@
+﻿@model IEnumerable<CampusManagement.Models.Um_GetUserDetailForAdmin_Result>
+@using CampusManagement.Models
+
+@{
+    ViewBag.Title = "Users Detail";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+@Html.Partial("_MessageView")
+
+@using (Html.BeginForm("UsersDetail", "Employees", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row" style="margin-top: -2em;margin-bottom: -2em;">
+        <div class="col-sm-5 inner-addon right-addon">
+            <input type="text" class="form-control" placeholder="search" name="paramSearch" />
+        </div>
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-primary" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            User Name
+        </th>
+        <th>
+            Form #
+        </th>
+        <th>
+            Student Name
+        </th>
+        <th>
+            Father Name
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Type
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="font-weight:bold;">
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FatherName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpType)
+            </td>
+            <td>
+                @Html.ActionLink("Change Password", "UsersChangePassword", new { UserName = item.UserName })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -9,24 +9,30 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CampusManagement.Models;
+using Newtonsoft.Json;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
+    [Authorize]
     public class BatchProgramCoursesController : Controller
     {
-        private ModelCMSContainer db = new ModelCMSContainer();
-        BatchProgramCourseViewModel model = new BatchProgramCourseViewModel();
+        private ModelCMSNewContainer db = new ModelCMSNewContainer();
+        GetBatchProgramCourses_ResultViewModel model = new GetBatchProgramCourses_ResultViewModel();
 
         public ActionResult Index()
         {
-            model.BatchProgramCourses = db.BatchProgramCourses.OrderByDescending(a => a.ProgramCourseID).ToList();
+            model.BatchProgramCourses = db.GetBatchProgramCourses("").ToList();
             model.SelectedBatchProgramCourse = null;
             model.DisplayMode = "WriteOnly";
+            ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName");
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "CourseName");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0).ToList(), "ID", "Name");
             ViewBag.CourseTypeID = new SelectList(db.CourseTypes, "CourseTypeID", "CourseTypeName");
+           
+            ViewBag.SectionID = new SelectList(db.Sections.Where(a => a.IsActive == "Yes"), "SectionID", "SectionName");
+            ViewBag.LectureRoomID = new SelectList(db.Rooms.Where(l => l.RoomTypeID == 1), "RoomID", "RoomName");
+            ViewBag.LabRoomID = new SelectList(db.Rooms.Where(l => l.RoomTypeID == 6), "RoomID", "RoomName");
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View(model);
@@ -35,13 +41,18 @@ namespace CampusManagement.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            model.BatchProgramCourses = db.BatchProgramCourses.OrderByDescending(a => a.ProgramCourseID).ToList();
+            model.BatchProgramCourses = db.GetBatchProgramCourses("").ToList();
             model.SelectedBatchProgramCourse = null;
             model.DisplayMode = "WriteOnly";
+            ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName");
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "CourseName");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0).ToList(), "ID", "Name");
             ViewBag.CourseTypeID = new SelectList(db.CourseTypes, "CourseTypeID", "CourseTypeName");
+            ViewBag.SectionID = new SelectList(db.Sections.Where(a => a.IsActive == "Yes"), "SectionID", "SectionName");
+
+            ViewBag.LectureRoomID = new SelectList(db.Rooms.Where(l => l.RoomTypeID == 1), "RoomID", "RoomName");
+            ViewBag.LabRoomID = new SelectList(db.Rooms.Where(l => l.RoomTypeID == 6), "RoomID", "RoomName");
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -58,21 +69,24 @@ namespace CampusManagement.Controllers
                 if (batchProgramCourse.YearSemesterNo == 0)
                 {
                     ViewBag.MessageType = "error";
-                    ViewBag.Message = "Year/Semester # should not be 0.";
-                    ModelState.AddModelError(string.Empty, "Year/Semester # should not be 0.");
+                    ViewBag.Message = "Semester # should not be 0.";
+                    ModelState.AddModelError(string.Empty, "Semester # should not be 0.");
                 }
                 else
-                { 
+                {
                     BatchProgramCourse pc = db.BatchProgramCourses.FirstOrDefault(
                         p => p.BatchProgramID == batchProgramCourse.BatchProgramID
                         && p.CourseID == batchProgramCourse.CourseID
-                        && p.YearSemesterNo == batchProgramCourse.YearSemesterNo);
+                        && p.YearSemesterNo == batchProgramCourse.YearSemesterNo
+                        && p.LectureRoomID == batchProgramCourse.LectureRoomID
+                        );
+
 
                     if (pc != null)
                     {
                         ViewBag.MessageType = "error";
-                        ViewBag.Message = "Selected Course is already exists against the same Program and Year/Semester #.";
-                        ModelState.AddModelError(string.Empty, "Selected Course is already exists against the same Program and Year/Semester #.");
+                        ViewBag.Message = "Selected Course already exists against the same Program , Semester # and Room.";
+                        ModelState.AddModelError(string.Empty, "Selected Course already exists against the same Program , Semester # and Room");
                     }
                     else
                     {
@@ -109,13 +123,17 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.BatchProgramCourses = db.BatchProgramCourses.OrderByDescending(a => a.ProgramCourseID).ToList();
+            model.BatchProgramCourses = db.GetBatchProgramCourses("").ToList();
             model.SelectedBatchProgramCourse = null;
             model.DisplayMode = "WriteOnly";
+            ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName", batchProgramCourse.BatchID);
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", batchProgramCourse.IsActive);
             ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "CourseName", batchProgramCourse.CourseID);
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0).ToList(), "ID", "Name", batchProgramCourse.BatchProgramID);
             ViewBag.CourseTypeID = new SelectList(db.CourseTypes, "CourseTypeID", "CourseTypeName", batchProgramCourse.CourseTypeID);
+            ViewBag.SectionID = new SelectList(db.Sections.Where(a => a.IsActive == "Yes"), "SectionID", "SectionName", batchProgramCourse.SectionID);
+            ViewBag.LectureRoomID = new SelectList(db.Rooms.Where(l => l.RoomTypeID == 1), "RoomID", "RoomName", batchProgramCourse.LectureRoomID);
+            ViewBag.LabRoomID = new SelectList(db.Rooms.Where(l => l.RoomTypeID == 6), "RoomID", "RoomName", batchProgramCourse.LabRoomID);
             return View("Index", model);
         }
 
@@ -126,19 +144,23 @@ namespace CampusManagement.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            BatchProgramCourse batchProgramCourse = db.BatchProgramCourses.Find(id);
+            GetBatchProgramCourses_Result batchProgramCourse = db.GetBatchProgramCourses("").FirstOrDefault(bp => bp.ProgramCourseID == id);
             if (batchProgramCourse == null)
             {
                 return HttpNotFound();
             }
 
-            model.BatchProgramCourses = db.BatchProgramCourses.OrderByDescending(a => a.ProgramCourseID).ToList();
+            model.BatchProgramCourses = db.GetBatchProgramCourses("").ToList();
             model.SelectedBatchProgramCourse = batchProgramCourse;
             model.DisplayMode = "ReadWrite";
+            ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName", batchProgramCourse.BatchID);
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", batchProgramCourse.IsActive);
             ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "CourseName", batchProgramCourse.CourseID);
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0).ToList(), "ID", "Name", batchProgramCourse.BatchProgramID);
             ViewBag.CourseTypeID = new SelectList(db.CourseTypes, "CourseTypeID", "CourseTypeName", batchProgramCourse.CourseTypeID);
+            ViewBag.SectionID = new SelectList(db.Sections.Where(a => a.IsActive == "Yes"), "SectionID", "SectionName", batchProgramCourse.SectionID);
+            ViewBag.LectureRoomID = new SelectList(db.Rooms.Where(l => l.RoomTypeID == 1), "RoomID", "RoomName", batchProgramCourse.LectureRoomID);
+            ViewBag.LabRoomID = new SelectList(db.Rooms.Where(l => l.RoomTypeID == 6), "RoomID", "RoomName", batchProgramCourse.LabRoomID);
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -153,8 +175,8 @@ namespace CampusManagement.Controllers
                 if (batchProgramCourse.YearSemesterNo == 0)
                 {
                     ViewBag.MessageType = "error";
-                    ViewBag.Message = "Year/Semester # should not be 0.";
-                    ModelState.AddModelError(string.Empty, "Year/Semester # should not be 0.");
+                    ViewBag.Message = "Semester # should not be 0.";
+                    ModelState.AddModelError(string.Empty, "Semester # should not be 0.");
                 }
                 else
                 {
@@ -192,13 +214,18 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.BatchProgramCourses = db.BatchProgramCourses.OrderByDescending(a => a.ProgramCourseID).ToList();
+            model.BatchProgramCourses = db.GetBatchProgramCourses("").ToList();
             model.SelectedBatchProgramCourse = null;
             model.DisplayMode = "WriteOnly";
+            ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName", batchProgramCourse.BatchID);
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", batchProgramCourse.IsActive);
             ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "CourseName", batchProgramCourse.CourseID);
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0).ToList(), "ID", "Name", batchProgramCourse.BatchProgramID);
             ViewBag.CourseTypeID = new SelectList(db.CourseTypes, "CourseTypeID", "CourseTypeName", batchProgramCourse.CourseTypeID);
+            ViewBag.SectionID = new SelectList(db.Sections.Where(a => a.IsActive == "Yes"), "SectionID", "SectionName", batchProgramCourse.SectionID);
+            ViewBag.LectureRoomID = new SelectList(db.Rooms.Where(l => l.RoomTypeID == 1), "RoomID", "RoomName", batchProgramCourse.LectureRoomID);
+            ViewBag.LabRoomID = new SelectList(db.Rooms.Where(l => l.RoomTypeID == 6), "RoomID", "RoomName", batchProgramCourse.LabRoomID);
+
             return View("Index", model);
         }
 
@@ -208,13 +235,13 @@ namespace CampusManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BatchProgramCourse batchProgramCourse = db.BatchProgramCourses.Find(id);
+            GetBatchProgramCourses_Result batchProgramCourse = db.GetBatchProgramCourses("").FirstOrDefault(bp => bp.ProgramCourseID == id);
             if (batchProgramCourse == null)
             {
                 return HttpNotFound();
             }
 
-            model.BatchProgramCourses = db.BatchProgramCourses.OrderByDescending(a => a.ProgramCourseID).ToList();
+            model.BatchProgramCourses = db.GetBatchProgramCourses("").ToList();
             model.SelectedBatchProgramCourse = batchProgramCourse;
             model.DisplayMode = "Delete";
             ViewBag.MessageType = "";
@@ -240,15 +267,35 @@ namespace CampusManagement.Controllers
                 ViewBag.Message = ex.Message;
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
-            model.BatchProgramCourses = db.BatchProgramCourses.OrderByDescending(a => a.ProgramCourseID).ToList();
+            model.BatchProgramCourses = db.GetBatchProgramCourses("").ToList();
             model.SelectedBatchProgramCourse = null;
             model.DisplayMode = "WriteOnly";
+            ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName");
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "CourseName");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0).ToList(), "ID", "Name");
             ViewBag.CourseTypeID = new SelectList(db.CourseTypes, "CourseTypeID", "CourseTypeName");
+            ViewBag.SectionID = new SelectList(db.Sections.Where(a => a.IsActive == "Yes"), "SectionID", "SectionName");
+            ViewBag.LectureRoomID = new SelectList(db.Rooms.Where(l => l.RoomTypeID == 1), "RoomID", "RoomName");
+            ViewBag.LabRoomID = new SelectList(db.Rooms.Where(l => l.RoomTypeID == 6), "RoomID", "RoomName");
             return View("Index", model);
         }
+
+        // GEt programs by Faculty and Batch.
+        public JsonResult GetPrograms_by_FacultyLevelBatch(string FacultyID, string BatchID)
+        {
+            List<GetPrograms_by_FacultyLevelBatch_Result> lstPrograms = new List<GetPrograms_by_FacultyLevelBatch_Result>();
+
+            lstPrograms = db.GetPrograms_by_FacultyLevelBatch(Convert.ToInt32(FacultyID), 0, Convert.ToInt32(BatchID), 0).ToList();
+            var programs = lstPrograms.Select(p => new
+            {
+                BatchProgramID = p.BatchProgramID,
+                ProgramName = p.ProgramName
+            });
+            string result = JsonConvert.SerializeObject(programs, Formatting.Indented);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

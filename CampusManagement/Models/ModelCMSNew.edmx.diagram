@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3e31582852bc407ebb2d05aa78831d4b" Name="Diagram1" >
+        <EntityTypeShape EntityType="ModelCMSNew.AlumniEducationExpo" Width="1.5" PointX="12.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.AlumniReunionsDinner" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.AlumniUser" Width="1.5" PointX="15.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.AlumniUserBlog" Width="1.5" PointX="5.75" PointY="10.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.AlumniUserBlogComment" Width="1.5" PointX="15.75" PointY="14.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.AlumniUserCareer" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.AlumniUserCareerApplicant" Width="1.5" PointX="17.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.AlumniUserEvent" Width="1.5" PointX="17.75" PointY="10.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.AlumniUserNew" Width="1.5" PointX="17.75" PointY="15.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.AlumniUserPhoto" Width="1.5" PointX="18.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.AlumniUserResume" Width="1.5" PointX="10.75" PointY="18.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Applicant" Width="1.5" PointX="5.25" PointY="19.125" />
+        <EntityTypeShape EntityType="ModelCMSNew.ApplicantDocumentCheckList" Width="1.5" PointX="12" PointY="1" />
+        <EntityTypeShape EntityType="ModelCMSNew.ApplicantInstituteStatu" Width="1.5" PointX="19.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ApplicantQualification" Width="1.5" PointX="10.5" PointY="26.25" />
+        <EntityTypeShape EntityType="ModelCMSNew.ApplicantUpload" Width="1.5" PointX="19.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ApplyForProgram" Width="1.5" PointX="19.75" PointY="12.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.BankAccount" Width="1.5" PointX="19.75" PointY="16.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Batch" Width="1.5" PointX="0.75" PointY="31.25" />
+        <EntityTypeShape EntityType="ModelCMSNew.BatchProgram" Width="1.5" PointX="3" PointY="24.25" />
+        <EntityTypeShape EntityType="ModelCMSNew.BatchProgramCourse" Width="1.5" PointX="13.5" PointY="37.625" />
+        <EntityTypeShape EntityType="ModelCMSNew.BatchProgramSemester" Width="1.5" PointX="8.25" PointY="18.875" />
+        <EntityTypeShape EntityType="ModelCMSNew.BeliTrust" Width="1.5" PointX="20.75" PointY="20.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.BeliTrustAffidavit" Width="1.5" PointX="21.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.BeliTrustCategory" Width="1.5" PointX="17.75" PointY="20.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.CampusHomePageSetting" Width="1.5" PointX="21.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.CampusSetting" Width="1.5" PointX="22.75" PointY="12.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Challan" Width="1.5" PointX="5.25" PointY="41.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ChallanService" Width="1.5" PointX="10.5" PointY="44.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.City" Width="1.5" PointX="8.25" PointY="27.125" />
+        <EntityTypeShape EntityType="ModelCMSNew.CollegeService" Width="1.5" PointX="8.25" PointY="50.5" />
+        <EntityTypeShape EntityType="ModelCMSNew.CollegeServiceHistory" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Country" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Course" Width="1.5" PointX="11.25" PointY="36.25" />
+        <EntityTypeShape EntityType="ModelCMSNew.CourseType" Width="1.5" PointX="11.25" PointY="41" />
+        <EntityTypeShape EntityType="ModelCMSNew.CurrentOccupation" Width="1.5" PointX="3" PointY="49.125" />
+        <EntityTypeShape EntityType="ModelCMSNew.DateTable" Width="1.5" PointX="22.75" PointY="21.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Day" Width="1.5" PointX="7.75" PointY="11.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Degree" Width="1.5" PointX="8.25" PointY="32.375" />
+        <EntityTypeShape EntityType="ModelCMSNew.DegreeTitle" Width="1.5" PointX="23.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Department" Width="1.5" PointX="23.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Deposit" Width="1.5" PointX="7.5" PointY="45.875" />
+        <EntityTypeShape EntityType="ModelCMSNew.DepositType" Width="1.5" PointX="6" PointY="53.625" />
+        <EntityTypeShape EntityType="ModelCMSNew.Designation" Width="1.5" PointX="7.75" PointY="6.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Discipline" Width="1.5" PointX="15.75" PointY="22" />
+        <EntityTypeShape EntityType="ModelCMSNew.DisciplineCategory" Width="1.5" PointX="13.5" PointY="12.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.DisciplineCommitted" Width="1.5" PointX="13.5" PointY="19.125" />
+        <EntityTypeShape EntityType="ModelCMSNew.DisciplineSeverityLevel" Width="1.5" PointX="11.25" PointY="11.625" />
+        <EntityTypeShape EntityType="ModelCMSNew.DisciplineType" Width="1.5" PointX="11.25" PointY="15.125" />
+        <EntityTypeShape EntityType="ModelCMSNew.District" Width="1.5" PointX="23.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.DocumentCheckList" Width="1.5" PointX="9.75" PointY="1.125" />
+        <EntityTypeShape EntityType="ModelCMSNew.Duration" Width="1.5" PointX="3" PointY="64.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.EntryTest" Width="1.5" PointX="24.75" PointY="12.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Exam" Width="1.5" PointX="24.75" PointY="16.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamDate" Width="1.5" PointX="24.75" PointY="21.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamDateAvailableSolt" Width="1.5" PointX="25.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamDatesheet" Width="1.5" PointX="25.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamDateTimeSlot" Width="1.5" PointX="22.75" PointY="25.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamEligibleStudent" Width="1.5" PointX="24.75" PointY="25.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamEligibleStudentForExam" Width="1.5" PointX="26.75" PointY="9.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamGradeAppealForm" Width="1.5" PointX="26.75" PointY="13.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamGradeAppealFormCourseDetail" Width="1.5" PointX="26.75" PointY="18.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamRosterDetail" Width="1.5" PointX="26.75" PointY="23.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamsDateSheetDetail" Width="1.5" PointX="27.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamSeason" Width="1.5" PointX="27.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamStudentRoom" Width="1.5" PointX="28.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamStudentSubjectChangeGradeForm" Width="1.5" PointX="28.75" PointY="12.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamStudentSubjectMark" Width="1.5" PointX="28.75" PointY="19.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamStudentSubjectMarkDetail" Width="1.5" PointX="28.75" PointY="25.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamStudentSubjectMarkType" Width="1.5" PointX="29.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamSubjectMarkSheet" Width="1.5" PointX="30.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ExamTerm" Width="1.5" PointX="30.75" PointY="9.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.FamilyMember" Width="1.5" PointX="30.75" PointY="13.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.FinancialSupport" Width="1.5" PointX="30.75" PointY="18.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.FormSaleDetail" Width="1.5" PointX="8.25" PointY="36.125" />
+        <EntityTypeShape EntityType="ModelCMSNew.FormType" Width="1.5" PointX="6" PointY="50.125" />
+        <EntityTypeShape EntityType="ModelCMSNew.Gender" Width="1.5" PointX="3" PointY="8.875" />
+        <EntityTypeShape EntityType="ModelCMSNew.GeneralSetting" Width="1.5" PointX="30.75" PointY="22.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Institute" Width="1.5" PointX="8.25" PointY="22.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.InstituteStatu" Width="1.5" PointX="22.75" PointY="30.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Level" Width="1.5" PointX="1.5" PointY="44.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.LMSQuestionType" Width="1.5" PointX="24.75" PointY="30.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.LMSQuiz" Width="1.5" PointX="26.75" PointY="30.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.LMSQuizIQuestion" Width="1.5" PointX="28.75" PointY="30.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.LMSStudentQuizAttempt" Width="1.5" PointX="30.75" PointY="29.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.LMSStudentQuizAttemptDetail" Width="1.5" PointX="17.75" PointY="31.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.LMSStudentQuizAttemptHistory" Width="1.5" PointX="19.75" PointY="31.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.LMSSubjectLearning" Width="1.5" PointX="31.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.LMSWeek" Width="1.5" PointX="32.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.LMSWeekDetail" Width="1.5" PointX="32.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.LMSWeekDetailAttempt" Width="1.5" PointX="32.75" PointY="12.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.LMSWeekListType" Width="1.5" PointX="10.75" PointY="32.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.MaritalStatu" Width="1.5" PointX="3" PointY="52.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Nationality" Width="1.5" PointX="3" PointY="16.625" />
+        <EntityTypeShape EntityType="ModelCMSNew.NoticeBoard" Width="1.5" PointX="32.75" PointY="16.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.NoticeType" Width="1.5" PointX="32.75" PointY="20.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.OBE_BatchProgramPLOCourseCLO" Width="1.5" PointX="32.75" PointY="24.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.OBE_CourseCLO" Width="1.5" PointX="32.75" PointY="27.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.OBE_Level" Width="1.5" PointX="32.75" PointY="31.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.OBE_PLOCourseCLO" Width="1.5" PointX="33.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.OBE_ProgramPLO" Width="1.5" PointX="34.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.OBE_QuestionType" Width="1.5" PointX="34.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Option" Width="1.5" PointX="34.75" PointY="12.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Program" Width="1.5" PointX="0.75" PointY="24.875" />
+        <EntityTypeShape EntityType="ModelCMSNew.ProgramType" Width="1.5" PointX="1.5" PointY="35.25" />
+        <EntityTypeShape EntityType="ModelCMSNew.Province" Width="1.5" PointX="3" PointY="39.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.QRCode" Width="1.5" PointX="34.75" PointY="16.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.QuestionAnswer" Width="1.5" PointX="34.75" PointY="20.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.QuestionBank" Width="1.5" PointX="21.75" PointY="34.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.RelationType" Width="1.5" PointX="3" PointY="56.5" />
+        <EntityTypeShape EntityType="ModelCMSNew.Religion" Width="1.5" PointX="3" PointY="20.5" />
+        <EntityTypeShape EntityType="ModelCMSNew.Room" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="ModelCMSNew.RoomType" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="ModelCMSNew.Salutation" Width="1.5" PointX="3" PointY="60.25" />
+        <EntityTypeShape EntityType="ModelCMSNew.ScholarshipApplicant" Width="1.5" PointX="23.75" PointY="34.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ScholarshipApplicantDocument" Width="1.5" PointX="34.75" PointY="24.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ScholarshipCatagory" Width="1.5" PointX="34.75" PointY="28.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ScholarshipDocument" Width="1.5" PointX="34.75" PointY="32.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ScholarshipOpportunitie" Width="1.5" PointX="25.75" PointY="35.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Section" Width="1.5" PointX="35.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.SelectionCriteria" Width="1.5" PointX="10.5" PointY="22.25" />
+        <EntityTypeShape EntityType="ModelCMSNew.Semester" Width="1.5" PointX="6" PointY="14.875" />
+        <EntityTypeShape EntityType="ModelCMSNew.SF_StudentDiscount" Width="1.5" PointX="30.75" PointY="35.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.SF_StudentDiscountApplied" Width="1.5" PointX="36.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.SF_StudentDiscountType" Width="1.5" PointX="36.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.SF_StudentFine" Width="1.5" PointX="36.75" PointY="12.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.SF_StudentFineType" Width="1.5" PointX="36.75" PointY="16.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.SF_StudentPercentageInstallment" Width="1.5" PointX="36.75" PointY="20.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.SF_StudentService" Width="1.5" PointX="36.75" PointY="24.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.SF_StudentServiceInstallment" Width="1.5" PointX="36.75" PointY="29.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.SF_StudentServiceInstallmentAdjustment" Width="1.5" PointX="32.75" PointY="36.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Shift" Width="1.5" PointX="36.75" PointY="34.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Specialization" Width="1.5" PointX="37.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Status" Width="1.5" PointX="3" PointY="12.625" />
+        <EntityTypeShape EntityType="ModelCMSNew.Student" Width="1.5" PointX="13.5" PointY="22.875" />
+        <EntityTypeShape EntityType="ModelCMSNew.StudentAttandance" Width="1.5" PointX="38.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.StudentBatchProgramCourse" Width="1.5" PointX="15.75" PointY="27" />
+        <EntityTypeShape EntityType="ModelCMSNew.StudentCurrentSemester" Width="1.5" PointX="38.75" PointY="9.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.StudentDiscountRequest" Width="1.5" PointX="38.75" PointY="13.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.StudentPresentStatu" Width="1.5" PointX="15.75" PointY="38.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.StudentProgramEnrollment" Width="1.5" PointX="18.75" PointY="27" />
+        <EntityTypeShape EntityType="ModelCMSNew.StudentRequestStatu" Width="1.5" PointX="38.75" PointY="17.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.StudentRequestType" Width="1.5" PointX="17.75" PointY="38.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Teacher" Width="1.5" PointX="10" PointY="6" />
+        <EntityTypeShape EntityType="ModelCMSNew.TeachersCourseAllocation" Width="1.5" PointX="5.25" PointY="5.5" />
+        <EntityTypeShape EntityType="ModelCMSNew.TeacherUpload" Width="1.5" PointX="19.75" PointY="38.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.TimeSlot" Width="1.5" PointX="5.25" PointY="1.25" />
+        <EntityTypeShape EntityType="ModelCMSNew.TimeSlotCourseAllocation" Width="1.5" PointX="7.5" PointY="1.5" />
+        <EntityTypeShape EntityType="ModelCMSNew.TimeTable" Width="1.5" PointX="38.75" PointY="21.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.TimeTableBatchProgramCourseData" Width="1.5" PointX="21.75" PointY="38.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.TimeTableBatchProgramCourseDataSlot" Width="1.5" PointX="38.75" PointY="27.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.TimeTableData" Width="1.5" PointX="38.75" PointY="31.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.TimeTableDataTempTable" Width="1.5" PointX="34.75" PointY="38.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.TimeTableDate" Width="1.5" PointX="38.75" PointY="36.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.TimeTableMain" Width="1.5" PointX="40.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.TimeTableSlot" Width="1.5" PointX="40.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.TimeTableSlotDate" Width="1.5" PointX="40.75" PointY="9.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.TimeTableYear" Width="1.5" PointX="40.75" PointY="13.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.User" Width="1.5" PointX="40.75" PointY="17.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.UserChat" Width="1.5" PointX="40.75" PointY="21.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.UserChatMessage" Width="1.5" PointX="23.75" PointY="40.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.ProgramMeritFormula" Width="1.5" PointX="40.75" PointY="25.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.TimeTableManualTimeSlot" Width="1.5" PointX="25.75" PointY="40.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Finance_Bank_Accounts" Width="1.5" PointX="27.75" PointY="40.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Finance_Expenditures" Width="1.5" PointX="17.75" PointY="24.75" />
+        <EntityTypeShape EntityType="ModelCMSNew.Login" Width="1.5" PointX="29.75" PointY="40.75" />
+        <AssociationConnector Association="ModelCMSNew.FK_Applicant_BatchProgram" />
+        <AssociationConnector Association="ModelCMSNew.FK_Applicant_City" />
+        <AssociationConnector Association="ModelCMSNew.FK_Applicant_Country" />
+        <AssociationConnector Association="ModelCMSNew.FK_Applicant_CurrentOccupation" />
+        <AssociationConnector Association="ModelCMSNew.FK_Applicant_Gender" />
+        <AssociationConnector Association="ModelCMSNew.FK_Applicant_MaritalStatus" />
+        <AssociationConnector Association="ModelCMSNew.FK_Applicant_Nationality" />
+        <AssociationConnector Association="ModelCMSNew.FK_Applicant_Province" />
+        <AssociationConnector Association="ModelCMSNew.FK_Applicant_RelationType" />
+        <AssociationConnector Association="ModelCMSNew.FK_Applicant_Religion" />
+        <AssociationConnector Association="ModelCMSNew.FK_Applicant_Salutation" />
+        <AssociationConnector Association="ModelCMSNew.FK_Applicant_Status" />
+        <AssociationConnector Association="ModelCMSNew.FK_ApplicantQualification_Applicant" />
+        <AssociationConnector Association="ModelCMSNew.FK_Student_Applicant" />
+        <AssociationConnector Association="ModelCMSNew.FK_ApplicantDocumentCheckList_DocumentCheckList" />
+        <AssociationConnector Association="ModelCMSNew.FK_ApplicantQualification_Degree" />
+        <AssociationConnector Association="ModelCMSNew.FK_ApplicantQualification_Institute" />
+        <AssociationConnector Association="ModelCMSNew.FK_BatchProgram_Batch" />
+        <AssociationConnector Association="ModelCMSNew.FK_BatchProgram_Program" />
+        <AssociationConnector Association="ModelCMSNew.FK_BatchProgramCourse_BatchProgram" />
+        <AssociationConnector Association="ModelCMSNew.FK_BatchProgramSemester_BatchProgram" />
+        <AssociationConnector Association="ModelCMSNew.FK_Challan_BatchProgram" />
+        <AssociationConnector Association="ModelCMSNew.FK_FormSaleDetail_BatchProgram" />
+        <AssociationConnector Association="ModelCMSNew.FK_SelectionCriteria_BatchProgram" />
+        <AssociationConnector Association="ModelCMSNew.FK_Student_BatchProgram" />
+        <AssociationConnector Association="ModelCMSNew.FK_StudentProgramEnrollment_BatchProgram" />
+        <AssociationConnector Association="ModelCMSNew.FK_BatchProgramCourse_Course" />
+        <AssociationConnector Association="ModelCMSNew.FK_BatchProgramCourse_CourseType" />
+        <AssociationConnector Association="ModelCMSNew.FK_StudentBatchProgramCourse_BatchProgramCourse" />
+        <AssociationConnector Association="ModelCMSNew.FK_TeachersCourseAllocation_ProgramCourse" />
+        <AssociationConnector Association="ModelCMSNew.FK_BatchProgramSemester_Semesters" />
+        <AssociationConnector Association="ModelCMSNew.FK_ChallanService_Challan" />
+        <AssociationConnector Association="ModelCMSNew.FK_Deposit_Challan" />
+        <AssociationConnector Association="ModelCMSNew.FK_ChallanService_CollegeService" />
+        <AssociationConnector Association="ModelCMSNew.FK_City_Country" />
+        <AssociationConnector Association="ModelCMSNew.FK_City_Province" />
+        <AssociationConnector Association="ModelCMSNew.FK_Student_City" />
+        <AssociationConnector Association="ModelCMSNew.FK_Province_Country" />
+        <AssociationConnector Association="ModelCMSNew.FK_Student_Country" />
+        <AssociationConnector Association="ModelCMSNew.FK_StudentBatchProgramCourse_Course" />
+        <AssociationConnector Association="ModelCMSNew.FK_Student_CurrentOccupation" />
+        <AssociationConnector Association="ModelCMSNew.FK_SelectionCriteria_Degree" />
+        <AssociationConnector Association="ModelCMSNew.FK_FormSaleDetail_DepositType" />
+        <AssociationConnector Association="ModelCMSNew.FK_Teachers_Designation" />
+        <AssociationConnector Association="ModelCMSNew.FK_Discipline_DisciplineCategory" />
+        <AssociationConnector Association="ModelCMSNew.FK_Discipline_DisciplineCommitted" />
+        <AssociationConnector Association="ModelCMSNew.FK_Discipline_Status" />
+        <AssociationConnector Association="ModelCMSNew.FK_Discipline_Student" />
+        <AssociationConnector Association="ModelCMSNew.FK_DisciplineCategory_DisciplineSeverityLevel" />
+        <AssociationConnector Association="ModelCMSNew.FK_DisciplineCategory_DisciplineType" />
+        <AssociationConnector Association="ModelCMSNew.FK_TimeSlot_Duration" />
+        <AssociationConnector Association="ModelCMSNew.FK_FormSaleDetail_FormType" />
+        <AssociationConnector Association="ModelCMSNew.FK_Student_Gender" />
+        <AssociationConnector Association="ModelCMSNew.FK_Program_Level" />
+        <AssociationConnector Association="ModelCMSNew.FK_Student_MaritalStatus" />
+        <AssociationConnector Association="ModelCMSNew.FK_Student_Nationality" />
+        <AssociationConnector Association="ModelCMSNew.FK_Program_ProgramType" />
+        <AssociationConnector Association="ModelCMSNew.FK_Student_Province" />
+        <AssociationConnector Association="ModelCMSNew.FK_Student_RelationType" />
+        <AssociationConnector Association="ModelCMSNew.FK_Student_Religion" />
+        <AssociationConnector Association="ModelCMSNew.FK_Room_RoomType" />
+        <AssociationConnector Association="ModelCMSNew.FK_TimeSlot_Room" />
+        <AssociationConnector Association="ModelCMSNew.FK_Student_Salutation" />
+        <AssociationConnector Association="ModelCMSNew.FK_Student_Status" />
+        <AssociationConnector Association="ModelCMSNew.FK_StudentBatchProgramCourse_Student" />
+        <AssociationConnector Association="ModelCMSNew.FK_StudentProgramEnrollment_Student" />
+        <AssociationConnector Association="ModelCMSNew.FK_TimeSlotCourseAllocation_TeacherCourseAllocation" />
+        <AssociationConnector Association="ModelCMSNew.FK_TimeSlotCourseAllocation_TimeSlot" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

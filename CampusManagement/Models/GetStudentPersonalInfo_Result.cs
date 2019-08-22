@@ -15,7 +15,7 @@ namespace CampusManagement.Models
     {
         public string StudentName { get; set; }
         public string FatherName { get; set; }
-        public System.DateTime StudentDOB { get; set; }
+        public string StudentDOB { get; set; }
         public string ACNIC { get; set; }
         public string ProvinceName { get; set; }
         public string PermanentAddress { get; set; }

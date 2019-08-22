@@ -1,0 +1,66 @@
+﻿
+@model CampusManagement.Models.AlumniUserBlogViewModel
+
+@{
+    ViewBag.Title = "Learning Subjects ";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedAlumniUserBlogs != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedAlumniUserBlogs);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedAlumniUserBlogs);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.AlumniUserBlog());
+    }
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            <input id="AlumniUserID" name="AlumniUserID" value="@ViewBag.AlumniUserID" type="hidden" />
+            Blog Title
+        </th>
+        <th>
+            Blog Content
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedAlumniUserBlogs.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.AlumniUserBlogs)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BlogTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BlogContent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id = item.AlumniUserBlogID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+

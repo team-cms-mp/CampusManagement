@@ -1,0 +1,57 @@
+﻿@model CampusManagement.Models.OBE_ProgramPLO
+@using CampusManagement.Models
+@using (Html.BeginForm("Create", "ObeProgramPLO", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="row">
+        <h2><span class="col-sm-12">Add Program PLO</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+                    <div class="row">
+
+                        <div class="col-sm-4">
+                            <label>Programs</label>
+                            @Html.DropDownListFor(model => model.ProgramID, null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ProgramID, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(model => model.PLOCode, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.PLOCode, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                            @Html.ValidationMessageFor(model => model.PLOCode, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(model => model.PLOName, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.PLOName, new { htmlAttributes = new { @class = "form-control",  @required = true } })
+                            @Html.ValidationMessageFor(model => model.PLOName, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input type="submit" value="Add" class="btn btn-primary" />
+                            @Html.ActionLink("Refresh", "Create", "ObeProgramPLO", new { ExamID = ViewBag.hdnExamID }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Back to Program PLO", "Index", "ObeProgramPLO", new { ExamID = ViewBag.hdnExamID }, new { @class = "btn btn-primary" })
+
+                        </div>
+                    </div>
+                    }

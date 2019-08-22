@@ -1,0 +1,237 @@
+﻿
+
+@model CampusManagement.Models.GetAlumniUserBlogCommentByBlogID_ResultViewModel
+
+@{
+    ViewBag.Title = "Alumni Education Expos";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@if (Model.AlumniUserBlogObj != null)
+{
+    // Upper Blog Design Single Object;
+    <div class="row">
+        <ul class="event-list">
+            <li>
+                <time datetime="2016-02-14">
+                    <span class="day"><img src="@Url.Content(Model.AlumniUserBlogObj.Picture)" style="width:130px; height:120px; border-radius: 2px;" /></span>
+                    <span style="display: block;font-size: 8pt;line-height: 1.7;padding-top: 3px;"><b style="color:black;">by </b> <b style="color:#025ea3">@Html.DisplayFor(modelItem => Model.AlumniUserBlogObj.UserName) </b> </span>
+                </time>
+                <div class="info" style="overflow-y: scroll;">
+                    <h2 class="title" style="margin-bottom: 5px;"><u>@Html.DisplayFor(modelItem => Model.AlumniUserBlogObj.UserName)</u></h2>
+                    <p class="desc"> <span class="glyphicon glyphicon-time"></span> @Html.DisplayFor(modelItem => Model.AlumniUserBlogObj.CreatedOn)</p>
+                    <p class="desc"><span class="glyphicon glyphicon-eye-open"></span> @Html.DisplayFor(modelItem => Model.AlumniUserBlogObj.BlogContent)</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+  
+    //
+}
+
+<br />
+@if (Model.GetAlumniUserBlogCommentByBlogID_Results != null)
+{
+    if (Model.GetAlumniUserBlogCommentByBlogID_Results.Count > 0)
+    {
+        // all comment of comments with photos here
+
+        <div class="row">
+            <ul class="event-list">
+@using (Html.BeginForm("GetAlumniUserBlogCommentByBlogID", "AUBlogs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(Model=> Model.AlumniUserBlogID)
+
+                <li class="col-lg-12 col-sm-12 col-xs-12" style=" margin-top:-4em ;margin-bottom: 1em;; box-shadow:none">
+                    <input id="AlumniUserBlogID" name="AlumniUserBlogID" value="@ViewBag.AlumniUserBlogID" type="hidden" />
+                    <div class="col-lg-10 pull-left"><textarea placeholder="Add Comment Her...." type="text" style="border: none;border-bottom: 2px solid #337ab7;" class="col-lg-7 form-control" id="txtBlogCommet" name="txtBlogCommet"></textarea></div>
+                    <div class="col-lg-2 pull-right" style="margin-top: 1em;"><input class="btn btn-primary" type="submit" value="Post Comment" /></div>
+                </li>
+}
+
+
+
+                    @foreach (var item in Model.GetAlumniUserBlogCommentByBlogID_Results)
+                    {
+                        if (item.UserName != null)
+                        {
+
+                            <li style="padding-left: 1em; padding-bottom: 1em;" class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+                                <time style="width: 70px;height: 70px;padding: 0px;margin: 0px; box-shadow:none" pull-left>
+                                    <span class="day"><img src="@Url.Content(item.Picture)" style="width:70px; height:70px;border-radius: 40px;" /></span>
+                                </time>
+                                <div class="info" style="height: 70px;overflow-y: scroll;">
+                                    <p style="display: block;font-size: 8pt;line-height: 1.7;padding-top: 3px;"> <b style="color: #025ea3;padding: 11px; background: #eeeeee;     border-radius: 5px;">@Html.DisplayFor(modelItem => item.UserName) </b> </p>
+                                    <p class="desc" style="margin-top: -1%;"> <span class="glyphicon glyphicon-comment"></span> @Html.DisplayFor(modelItem => item.BlogComment)</p>
+                                </div>
+                             </li>
+
+
+                                }
+                                else
+                                {
+
+                <li style="padding-left: 1em; padding-bottom: 1em; " class="col-lg-12">
+                    <time style="width: 70px;border-radius: 30px;height: 70px;padding: 0px;margin: 0px; box-shadow:none">
+                        @{
+                            var base64 = "";
+                            var imgSrc = "";
+                            if (item.PictureCMS != null)
+                            {
+                                base64 = Convert.ToBase64String(item.PictureCMS);
+                                imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            }
+
+                        }
+
+                        <span class="day" style="background-color: snow;"><img src="@imgSrc" style="width:70px; height:70px; border-radius: 40px; background-color: snow;" /></span>
+                    </time>
+                    <div class="info" style="height: 70px;overflow-y: scroll;">
+                        <p style="display: block;font-size: 8pt;line-height: 1.7;padding-top: 3px;"> <b style="color: #025ea3;padding: 11px; background: #eeeeee;     border-radius: 5px;">@Html.DisplayFor(modelItem => item.UserNameCMS) </b> </p>
+                        <p class="desc" style="margin-top: -1%;"> <span class="glyphicon glyphicon-comment"></span> @Html.DisplayFor(modelItem => item.BlogComment)</p>
+                    </div>
+                </li>
+
+
+
+                    }
+
+
+
+
+                    }
+                
+
+            </ul>
+        </div>
+
+                                            
+                                        }
+
+                                    }
+
+
+<style>
+    .event-list {
+        list-style: none;
+        font-family: 'Lato', sans-serif;
+        margin: 0px;
+        padding: 0px;
+    }
+
+        .event-list > li {
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0px 0px 5px rgb(51, 51, 51);
+            box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.7);
+            padding: 0px;
+            margin: 0px 0px 20px;
+            cursor: pointer;
+        }
+
+            .event-list > li > time {
+                display: inline-block;
+                width: 100%;
+                color: rgb(255, 255, 255);
+                background-color: rgba(222, 222, 222, 0.52);
+                padding: 5px;
+                text-align: center;
+                text-transform: uppercase;
+            }
+
+            .event-list > li:nth-child(even) > time {
+                background-color: rgb(165, 82, 167);
+            }
+
+            .event-list > li > time > span {
+                display: none;
+            }
+
+            .event-list > li > time > .day {
+                display: block;
+                font-size: 16pt;
+                font-weight: 600;
+                line-height: 1.7;
+            }
+
+            .event-list > li time > .month {
+                display: block;
+                font-size: 24pt;
+                font-weight: 900;
+                line-height: 1;
+            }
+
+            .event-list > li > img {
+                width: 100%;
+            }
+
+            .event-list > li > .info {
+                padding-top: 5px;
+                text-align: center;
+            }
+
+                .event-list > li > .info > .title {
+                    font-size: 17pt;
+                    font-weight: 700;
+                    margin: 0px;
+                }
+
+                .event-list > li > .info > .desc {
+                    font-size: 13pt;
+                    font-weight: 300;
+                    margin: 0px;
+                }
+
+                .event-list > li > .info > ul,
+                .event-list > li > .info > ul > li > a {
+                    display: block;
+                    width: 100%;
+                    color: rgb(30, 30, 30);
+                    text-decoration: none;
+                }
+
+
+            .event-list > li > time,
+            .event-list > li > img {
+                display: inline-block;
+            }
+
+            .event-list > li > time,
+            .event-list > li > img {
+                width: 150px;
+                float: left;
+            }
+
+            .event-list > li > .info {
+                background-color: rgba(245, 245, 245, 0.43);
+                overflow: hidden;
+            }
+
+            .event-list > li > time,
+            .event-list > li > img {
+                width: 130px;
+                box-shadow: 2px 0px 5px rgba(51, 51, 51, 0.7);
+                height: 150px;
+                padding: 0px;
+                margin: 0px;
+            }
+
+            .event-list > li > .info {
+                position: relative;
+                height: 150px;
+                text-align: left;
+                padding-left: 12px;
+            }
+
+                .event-list > li > .info > .title,
+                .event-list > li > .info > .desc {
+                    padding: 0px 10px;
+                    color: #555;
+                }
+
+                .event-list > li > .info > ul {
+                    position: absolute;
+                    left: 0px;
+                    bottom: 0px;
+                }
+</style>

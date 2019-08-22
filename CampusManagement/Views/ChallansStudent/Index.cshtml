@@ -1,0 +1,102 @@
+﻿@model CampusManagement.Models.ChallansViewModel
+@{
+    ViewBag.Title = "Challans";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<div>
+    <a href="/Finance/Invoicing" class="btn btn-primary pull-right">Back</a>
+</div>
+
+@{
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.Challan());
+    }
+}
+
+@section Scripts {
+<script>
+    $(document).ready(function () {
+        GetPrograms_by_FacultyLevelBatch();
+        $("#BatchProgramID").val(@ViewBag.hdnBatchProgramID);
+        GetBatchProgramSemesterList();
+        $("#YearSemesterNo").val(@ViewBag.hdnYearSemesterNo);
+
+        $("#BatchID").change(function () {
+            GetPrograms_by_FacultyLevelBatch();
+            $("#BatchProgramID").val(@ViewBag.hdnBatchProgramID);
+            GetBatchProgramSemesterList();
+            $("#YearSemesterNo").val(@ViewBag.hdnYearSemesterNo);
+        });
+
+        $("#BatchProgramID").change(function () {
+            GetBatchProgramSemesterList();
+            $("#YearSemesterNo").val(@ViewBag.hdnYearSemesterNo);
+        });
+
+        var dummyClassAmount = $(".dummyClassAmount");
+        var dummyClassQuantity = $(".dummyClassQuantity");
+        for (var j = 0; j < dummyClassAmount.length; j++) {
+            $("#" + dummyClassAmount[j].id).ForceNumericOnly();
+            $("#" + dummyClassAmount[j].id).attr("maxlength", "7");
+            if ($("#" + dummyClassAmount[j].id).val() == "" || $("#" + dummyClassAmount[j].id).val() == null) {
+                $("#" + dummyClassAmount[j].id).val("0");
+            }
+        }
+
+        for (var j = 0; j < dummyClassQuantity.length; j++) {
+            $("#" + dummyClassQuantity[j].id).ForceNumericOnly();
+            $("#" + dummyClassQuantity[j].id).attr("maxlength", "2");
+            if ($("#" + dummyClassQuantity[j].id).val() == "" || $("#" + dummyClassQuantity[j].id).val() == null) {
+                $("#" + dummyClassQuantity[j].id).val("1");
+            }
+        }
+    });
+
+    function GetBatchProgramSemesterList() {
+        var BatchProgramID = $("#BatchProgramID").val();
+        $.ajax({
+            url: "@Url.Content("~/ChallansStudent/GetBatchProgramSemesterList")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ BatchProgramID: +BatchProgramID }),
+            success: function (result) {
+                $("#YearSemesterNo").html("");
+                $.each($.parseJSON(result), function (i, sem) {
+                    $("#YearSemesterNo").append($('<option></option>').val(sem.YearSemesterNo).html(sem.YearSemesterNo));
+                });
+            },
+            error: function (ex) {
+                alert(ex.error);
+            },
+        });
+    }
+
+    function GetPrograms_by_FacultyLevelBatch() {
+        var BatchID = $("#BatchID").val();
+        $.ajax({
+            url: "@Url.Content("~/ChallansStudent/GetPrograms_by_FacultyLevelBatch")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ BatchID: +BatchID }),
+            success: function (result) {
+                $("#BatchProgramID").html("");
+                $("#BatchProgramID").append($('<option></option>').val("0").html("--Please Select--"));
+                $.each($.parseJSON(result), function (i, sem) {
+                    $("#BatchProgramID").append($('<option></option>').val(sem.BatchProgramID).html(sem.ProgramName));
+                });
+            },
+            error: function (ex) {
+                alert(ex.error);
+            },
+        });
+    }
+</script>
+}
+

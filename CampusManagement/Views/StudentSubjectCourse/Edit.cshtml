@@ -1,0 +1,64 @@
+﻿@model CampusManagement.Models.Discipline
+
+@using (Html.BeginForm("Edit", "Disciplines", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Edit Discipline</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.HiddenFor(model => model.DisciplineID)
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Campus</label>
+            <select class="form-control">
+                <option> Lahore Campus </option>
+                <option> @MvcApplication.UniversityCampusName </option>
+                <option> Karachi Campus </option>
+            </select>
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.DisciplineDate, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.DisciplineDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DisciplineDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label for="searchValue" class="control-label">Student Search</label>
+            <input id="searchValue" class="form-control" />
+            <input id="selectedValue" class="form-control" type="hidden" />
+            <input id="StudentID" name="StudentID" class="form-control" type="hidden" value="@Model.StudentID" />
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.DisciplineCategoryID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("DisciplineCategoryID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DisciplineCategoryID, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.DisciplineCommittedID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("DisciplineCommittedID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DisciplineCommittedID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.StatusID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("StatusID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+            @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a href="@Url.Content("~/Disciplines/Index")" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+}

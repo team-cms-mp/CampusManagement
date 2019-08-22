@@ -1,0 +1,63 @@
+﻿@model CampusManagement.Models.DegreeTitleViewModel
+@using CampusManagement.Models
+
+@{
+    ViewBag.Title = "Degree Titles";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedDegreeTitle != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedDegreeTitle);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedDegreeTitle);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.SP_DegreeTitleForPage_Result());
+    }
+ 
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Degree Title
+        </th>
+        <th>
+            Degree
+        </th>
+        <th>
+            Is Active
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.DegreeTitles)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DegreeTitleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DegreeName)
+           
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.DegreeTitleID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.DegreeTitleID })
+        </td>
+    </tr>
+    }
+
+</table>

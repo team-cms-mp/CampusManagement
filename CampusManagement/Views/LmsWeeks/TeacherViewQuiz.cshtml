@@ -1,0 +1,53 @@
+﻿@model CampusManagement.Models.LMSStudentQuizAttemptViewModel
+@{
+    ViewBag.Title = "Lms Week Details Attemps By Students";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <h2>Student Quiz Details</h2>
+    <hr style="border-top: 1px solid #6d9b90;" />
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            Student ID
+        </th>
+        <th>
+            LMSQuiz ID
+        </th>
+        <th>
+            Student Attempts
+        </th>
+        <th>
+            Attempt Start Time
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.LMSStudentQuizAttempts)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LMSQuizID)
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentAttempts)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttemptStartTime)
+            </td>
+            <td>
+                @Html.ActionLink("View Quiz Details", "ViewQuizResults", new { LMSQuizID = item.LMSQuizID, StudentID = item.StudentID, LMSStudentQuizAttemptID = item.LMSStudentQuizAttemptID }, null)
+            </td>
+
+        </tr>
+
+    }
+
+</table>
+
+

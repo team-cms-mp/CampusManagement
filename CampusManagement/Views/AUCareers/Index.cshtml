@@ -1,0 +1,83 @@
+﻿
+@model CampusManagement.Models.AlumniUserCareerViewModel
+
+@{
+    ViewBag.Title = "Learning Subjects ";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedAlumniUserCareers != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedAlumniUserCareers);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedAlumniUserCareers);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.AlumniUserCareer());
+    }
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            <input id="AlumniUserID" name="AlumniUserID" value="@ViewBag.AlumniUserID" type="hidden" />
+            Title
+        </th>
+        <th>
+            Discription
+        </th>
+        <th>
+            Last Date Apply
+        </th>
+        <th>
+            Salary From
+        </th>
+        <th>
+            Salary To
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedAlumniUserCareers.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.AlumniUserCareers)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CareerTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CareerDiscription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastDateApply)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalaryFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalaryTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id = item.AlumniUserCareerID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+

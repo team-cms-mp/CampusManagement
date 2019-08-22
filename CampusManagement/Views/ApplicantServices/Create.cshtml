@@ -1,0 +1,107 @@
+﻿@model CampusManagement.Models.BatchProgramCourse
+@using CampusManagement.Models
+@using (Html.BeginForm("Create", "StudentBatchProgramCourses", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Student Courses</span></h2>
+    </div>
+    <hr style=" border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+    ModelCMSContainer dbCMS = new ModelCMSContainer();
+    <input type="hidden" name="hdnBatchProgramID" value="@ViewBag.hdnBatchProgramID" />
+    <input type="hidden" name="hdnYearSemesterNo" value="@ViewBag.hdnYearSemesterNo" />
+
+    <div class="row">
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.BatchProgramID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("BatchProgramID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BatchProgramID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.YearSemesterNo, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("YearSemesterNo", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.YearSemesterNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3" style="display:none;">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <table class="table">
+        <tr>
+            <th>Course</th>
+            <th>Assign</th>
+        </tr>
+        @{ 
+            int bpID = ViewBag.hdnBatchProgramID;
+            int ysNo = ViewBag.hdnYearSemesterNo;
+            foreach (var item in dbCMS.BatchProgramCourses.Where(bpc => bpc.BatchProgramID == bpID && bpc.YearSemesterNo == ysNo).ToList())
+            {
+                string ProgramCourseID = string.Concat("ProgramCourseID_", item.ProgramCourseID);
+                string CourseID = string.Concat("CourseID_", item.ProgramCourseID);
+                <tr>
+                    <td>
+                        <input type="hidden" id="@ProgramCourseID" name="@ProgramCourseID" value="@item.ProgramCourseID" />
+                        <input type="hidden" id="@CourseID" name="@CourseID" value="@item.CourseID" />
+                @{
+                    Course c = dbCMS.Courses.FirstOrDefault(co => co.CourseID == item.CourseID);
+                    string CourseName = "";
+                    if (c != null)
+                    {
+                        CourseName = c.CourseName;
+                    }
+                }
+                @Html.Raw(CourseName)
+            </td>
+            <td>
+                @Html.ActionLink("Assign", "Assign", new { id = item.ProgramCourseID })
+            </td>
+
+        </tr>
+                    }
+            }
+    </table>
+    <br />
+    <table class="table">
+        <tr>
+            <th>Course</th>
+            <th>Unassign</th>
+        </tr>
+        @{ 
+            foreach (var item in dbCMS.StudentBatchProgramCourses.Where(bpc => bpc.BatchProgramID == bpID && bpc.YearSemesterNo == ysNo).ToList())
+            {
+                string ProgramCourseID = string.Concat("ProgramCourseID_", item.StudentBatchProgramCourseID);
+                string StudentBatchProgramCourseID = string.Concat("StudentBatchProgramCourseID_", item.StudentBatchProgramCourseID);
+            <tr>
+                <td>
+                    <input type="hidden" id="@ProgramCourseID" name="@ProgramCourseID" value="@item.ProgramCourseID" />
+                    <input type="hidden" id="@StudentBatchProgramCourseID" name="@StudentBatchProgramCourseID" value="@item.StudentBatchProgramCourseID" />
+                    @{
+                        Course c = dbCMS.Courses.FirstOrDefault(co => co.CourseID == item.CourseID);
+                        string CourseName = "";
+                        if (c != null)
+                        {
+                            CourseName = c.CourseName;
+                        }
+                    }
+                    @Html.Raw(CourseName)
+                </td>
+                <td>
+                    @Html.ActionLink("Unassign", "Unassign", new { id = item.StudentBatchProgramCourseID })
+                </td>
+            </tr>
+            }
+        }
+    </table>
+    <br />
+    <div class="row">
+        <div class="col-sm-5">
+            <input type="hidden" value="Generate" class="btn btn-success" />
+            <a style="display:none;" href="@Url.Content("~/StudentBatchProgramCourses/Index")" class="btn btn-success">Refresh</a>
+        </div>
+    </div>
+}

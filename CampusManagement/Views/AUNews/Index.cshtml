@@ -1,0 +1,65 @@
+﻿
+@model CampusManagement.Models.AlumniUserNewViewModel
+
+@{
+    ViewBag.Title = "Learning Subjects ";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedAlumniUserNews != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedAlumniUserNews);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedAlumniUserNews);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.AlumniUserNew());
+    }
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            <input id="AlumniUserID" name="AlumniUserID" value="@ViewBag.AlumniUserID" type="hidden" />
+            News Title
+        </th>
+        <th>
+            News Content
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedAlumniUserNews.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.AlumniUserNews)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewsTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewsContent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id = item.AlumniUserNewsID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+

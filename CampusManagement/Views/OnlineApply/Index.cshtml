@@ -1,94 +1,187 @@
 ﻿@model IEnumerable<CampusManagement.Models.Applicant>
-
+@using CampusManagement.Models
 @{
     ViewBag.Title = "Your Applications";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 <div class="row">
     <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
 </div>
-<hr style=" border-top: 1px solid #6d9b90;" />
+<hr style="border-top: 1px solid #6d9b90;" />
 
-<p>
-    @{ 
-        if(Model.Count() == 0)
-        {
-            @Html.ActionLink("Create New", "Create")
-        }
-    }
-</p>
-<table class="table">
-    <tr>
-        <th></th>
-        <th></th>
-        <th>Actions</th>
-    </tr>
 
-    @foreach (var item in Model)
+@{
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+    if (Model.Count() == 0)
     {
-        <tr>
-            <td>
-                <img src="@Url.Content(item.Picture)" style="width:125px; height:125px;border-radius:150px;" />
-            </td>
-            <td>
-                <table class="table-striped">
-                    <tr>
-                        <td>
-                            <label class="control-label">First Name : </label>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FirstName)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">Last Name : </label>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LastName)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">Cell # : </label>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CellNo)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">Email : </label>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">Status : </label>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Status.StatusName)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">Nationality : </label>
-                        </td>
-                        <td>
-                            <img src="@Url.Content(item.Nationality.FlagURL)" style="width:20px;height:20px;" /> @Html.DisplayFor(modelItem => item.Nationality.NationalityName)
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.FormNo }) |
-                @Html.ActionLink("Detail", "Delete", new { id = item.FormNo }) |
-                @Html.ActionLink("Add Qualification", "Index", "OnlineApplyQualifications", new { FormNo = item.FormNo }, null)
-            </td>
-        </tr>
-    }
+        <p>
+            <h1>
+                @Html.ActionLink("Apply Now", "Create")
+            </h1>
+            <hr />
+        </p>
 
-</table>
+    }
+    else
+    {
+
+        <table class="table">
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Actions</th>
+            </tr>
+
+            @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        <a href="@Url.Content(item.Picture)" id="lnkProfilePicture" target="_blank"><img src="@Url.Content(item.Picture)" style="width:125px; height:125px;border-radius:10px;" /></a>
+                    </td>
+                    <td>
+                        <table class="table-striped">
+                            <tr>
+                                <td>
+                                    <label class="control-label">Form # : </label>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FormNo)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="control-label">First Name : </label>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="control-label">Last Name : </label>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LastName)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="control-label">Cell # : </label>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CellNo)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="control-label">Email : </label>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="control-label">Status : </label>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status.StatusName)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="control-label">Nationality : </label>
+                                </td>
+                                <td>
+                                    <img src="@Url.Content(item.Nationality.FlagURL)" style="width:20px;height:20px;" /> @Html.DisplayFor(modelItem => item.Nationality.NationalityName)
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table class="table-striped">
+                            <tr>
+                                <td>
+                                    @Html.ActionLink("Detail", "Details", new { id = item.FormNo }) |
+                                    @Html.ActionLink("Edit Form", "Create", "OnlineApply", new { FormNo = item.FormNo }, null) |
+                                    @Html.ActionLink("Fee Detail", "StudentFeeDetail", "Finance", null, null) |
+                                    <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptApplicantCompleteDetails&FormNo=")@item.FormNo" target="_blank">Profile</a>
+                                    @{
+
+                                        Applicant ap = dbc.Applicants.FirstOrDefault(a => a.FormNo == item.FormNo);
+                                        if (ap != null)
+                                        {
+                                            if (ap.StatusID == 2008 || ap.StatusID == 4014) // 2008-Show Admit Card, 4014-Entry Test Email Sent
+                                            {
+                                                <span> | </span><a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptGetAdmitCard&FormNo=")@item.FormNo" target="_blank">Admit Card</a>
+                                            }
+
+                                            Challan apCh = dbc.Challans.FirstOrDefault(a => a.FormNo == item.FormNo);
+                                            if (apCh != null)
+                                            {
+                                                <span> | </span><a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?Type=Applicant&ReportName=rptGetChallan&ChallanID=")@apCh.ChallanID" target="_blank">Challan</a>
+                                            }
+                                        }
+                                    }
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Selected Programs </label>
+                                    @{List<GetApplicantAppliedPrograms_Result> lstAQ1 = dbc.GetApplicantAppliedPrograms(item.FormNo).ToList();
+                                        if (lstAQ1.Count > 0)
+                                        {
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <th>
+                                                        Session
+                                                    </th>
+                                                    <th>
+                                                        Priority
+                                                    </th>
+                                                    <th>
+                                                        Program
+                                                    </th>
+                                                    <th>
+                                                        Level
+                                                    </th>
+                                                </tr>
+
+                                                @foreach (var item1 in lstAQ1)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item1.BatchName)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item1.ProgramPriority)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item1.ProgramName)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item1.LevelName)
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                                        }
+
+        </table>
+                                        }
+}
+

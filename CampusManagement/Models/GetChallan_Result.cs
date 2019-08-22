@@ -14,12 +14,14 @@ namespace CampusManagement.Models
     public partial class GetChallan_Result
     {
         public int ChallanID { get; set; }
-        public Nullable<System.DateTime> IssueDate { get; set; }
-        public Nullable<System.DateTime> LastDate { get; set; }
+        public string IssueDate { get; set; }
+        public string LastDate { get; set; }
         public string ProgramName { get; set; }
         public string BatchName { get; set; }
         public string Name { get; set; }
         public int BankAccountID { get; set; }
         public string BankName { get; set; }
+        public string FormNo { get; set; }
+        public Nullable<int> CreditHours { get; set; }
     }
 }

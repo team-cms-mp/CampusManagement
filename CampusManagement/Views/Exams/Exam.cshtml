@@ -1,0 +1,253 @@
+﻿
+@{
+    ViewBag.Title = "Exams";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<div class="row" style="background:white;box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important;">
+
+    <div class="" style="padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc; border-top: 1px solid #e3e6f0; border-bottom: 1px solid #e3e6f0;">
+        <h6 class="" style="color: #4e73df!important;font-weight: 700!important;font-size: 2rem;line-height: 1.2;"> Exams </h6>
+    </div>
+    <br />
+
+    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a href="@Url.Action("Index", "Exams")" class="btn btn-primary btn-icon-split" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Create Exam</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a href="@Url.Action("IndexExamList", "GeneraterDateSheet")" class="btn btn-primary btn-icon-split" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Generate DateSheet</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a href="@Url.Action("Index", "ExamEligibleStudentForAdmin")" class="btn btn-primary btn-icon-split" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Exam Eligible Student</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a href="@Url.Action("Index", "ExamRoomDispatch")" class="btn btn-primary btn-icon-split" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Exam Room Dispatch</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a href="@Url.Action("Index", "ExamRosterDispatch")" class="btn btn-primary btn-icon-split" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Exam Roster Dispatch</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a  href="@Url.Action("Index", "ExamDispatchDetails")" class="btn btn-primary btn-icon-split" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Exam Dispatch Details</span>
+                </a>
+            </div>
+        </div>
+        <br />
+
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "ExamStudentAdmitCard")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Exam Student Admit Card</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "ExamStudentAttandanceForAdmin")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Exam Student Attendance</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "ExamDutyRosterAttandanceForAdmin")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Exam Duty Roster Attandance</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "ExamSubjectsForResult")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Exam Subjects Entry</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "ExamResultDisplay")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Exam Result Display</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "ExamAwardListDisplay")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Exam Award List Display</span>
+                </a>
+            </div>
+        </div>
+        <br />
+
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" style="background:white;">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "ExamEligibleStudentForExamReport")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">View Eligible Student</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "ExamStudentSubjectClashReport")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Student Paper Clash Report</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "ExamAdminStudentForGardeForm")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Grade Form Student Request</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "ExamStudentSubjectReport")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Student List More Than 2 Papers</span>
+                </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <!-- small box -->
+                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "ExamRosterDetailsTeacherForAdmin")" target="_blank">
+                    <span class="icon text-white-50">
+                        <i class="fa fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Roster Details Against Teacher</span>
+                </a>
+            </div>
+        </div>
+        <br />
+    </div>
+
+</div>
+
+
+
+<style>
+    .icon {
+        color: rgba(255,255,255,.5) !important;
+        position: absolute;
+        background: rgba(0,0,0,.15);
+        display: inline-block;
+        padding: 0.5em 0.8em 0.7em 0.5em;
+        margin-left: -13px;
+        margin-top: -7px;
+        border-radius: 5px 1px 1px 5px;
+    }
+
+    .text {
+        padding: 1em 1em 1em 2em;
+        font-size: 17px;
+    }
+
+    .btn {
+        width: 22em;
+        text-align: left;
+    }
+</style>

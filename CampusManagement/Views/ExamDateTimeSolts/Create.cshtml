@@ -1,0 +1,72 @@
+﻿@model CampusManagement.Models.GetExamDateTimeSlot_By_ExamIDExamDateID_Result
+
+@using CampusManagement.Models
+
+@using (Html.BeginForm("Create", "ExamDateTimeSolts", FormMethod.Post))
+{ 
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h1>
+            <span class="col-sm-12">
+                @{ int hdnEid = ViewBag.hdnExamID;
+                    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+                    Exam nt = dbc.Exams.FirstOrDefault(bp => bp.ExamID == hdnEid);
+                    @Html.Raw(nt.ExamTitle)
+                } :
+            </span>
+        </h1>
+    </div>
+
+    <div class="row">
+        <h2><span class="col-sm-12">Add Time Slots</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+   
+    <input name="ExamID" value="@ViewBag.hdnExamID" type="hidden" id="ExamID" />
+    <div class="row">
+     
+ 
+        @*<div class="col-sm-3 ">
+            @Html.LabelFor(model => model.ExamTitle, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ExamTitle, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ExamTitle, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.ExamDateTitle, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ExamDateTitle, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ExamDateTitle, "", new { @class = "text-danger" })
+
+        </div>*@
+
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", @type = "time", @required = true } })
+            @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control", @type = "time", @required = true } })
+            @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="submit" value="Add" class="btn btn-primary" />
+            @Html.ActionLink("Refresh", "Index", "ExamDateTimeSolts", new {ExamID= ViewBag.hdnExamID }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Back to Exams", "Index", "Exams", new { ExamID = ViewBag.hdnExamID }, new { @class = "btn btn-primary" })
+            
+        </div>
+    </div>
+}

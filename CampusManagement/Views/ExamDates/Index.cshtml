@@ -1,0 +1,71 @@
+﻿
+@model CampusManagement.Models.ExamDatesViewModel
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Index";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedExamDate != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedExamDate);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedExamDate);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.ExamDate());
+    }
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+}
+
+<table class="table">
+    <tr>
+        
+
+        <th>
+           Title
+        </th>
+        <th>
+            Days
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedExamDate.IsActive)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.ExamDates)
+    {
+        <tr>
+            
+            <td>
+                @{
+                    Exam nt = dbc.Exams.FirstOrDefault(bp => bp.ExamID == item.ExamID);
+                    @Html.Raw(nt.ExamTitle)
+                }
+               
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExamDateTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>                                                        
+            
+                @Html.ActionLink("Edit", "Update", new { id = item.ExamDateID }) 
+               
+            </td>
+        </tr>
+
+    }
+
+</table>

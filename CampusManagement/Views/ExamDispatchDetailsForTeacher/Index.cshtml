@@ -1,0 +1,360 @@
+﻿@model CampusManagement.Models.ExamDispatchDetailsViewModel
+@using CampusManagement.Models
+<!-- Include Twitter Bootstrap and jQuery: -->
+<!-- Include the plugin's CSS and JS: -->
+<link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/assets/js/bootstrap.min.js"></script>
+@*<script src="~/assets/js/jquery-2.1.1.min.js"></script>*@
+<script src="~/assets/js/bootstrap-multiselect.js"></script>
+<link href="~/assets/css/bootstrap-multiselect.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Index", "ExamDispatchDetailsForTeacher", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12"> Dispatch Details For Exam </span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    if (Model.ExamID != 0)
+    {
+        <div class="row">
+
+            <div class="col-sm-4">
+                <label>Exam</label>
+
+               @Html.HiddenFor(model => model.ExamID)
+               @* @Html.HiddenFor(model => model.ExamDateID)
+    @Html.HiddenFor(model => model.ExamDateTimeSlotID)*@
+                @Html.DropDownListFor(model => model.ExamID, null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                @Html.ValidationMessageFor(model => model.ExamID, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="col-sm-4">
+                <label>Exam Dates</label>
+                @Html.DropDownListFor(model => model.ExamDateID, null, htmlAttributes: new { @class = "form-control" })
+                @*@Html.DropDownList("ExamDateID", null, htmlAttributes: new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(model => model.ExamDateID, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="col-sm-4">
+                <label>Exam Time Slots</label>
+                @Html.DropDownListFor(model => model.ExamDateTimeSlotID, null, htmlAttributes: new { @class = "form-control" })
+                @*@Html.DropDownList("ExamDateTimeSlotID", null, htmlAttributes: new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(model => model.ExamDateTimeSlotID, "", new { @class = "text-danger" })
+            </div>
+
+
+        </div>
+
+        <div class="row" style="margin-top: 1em;">
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-primary" value="Search">
+                    <span class="glyphicon glyphicon-search"></span> Search
+                </button>
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <span style="color:red"> No Exam / Exam DateSheet Approve Yet </span>
+    }
+
+
+
+}
+
+@{
+
+    string errorstring = ViewBag.MessageType;
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+    int hdnExamDateID = (ViewBag.hdnExamDateID == null) ? 0 : ViewBag.hdnExamDateID;
+    int hdnExamID = (ViewBag.hdnExamID == null) ? 0 : ViewBag.hdnExamID;
+    int hdnExamDateTimeSlotID = (ViewBag.hdnExamDateTimeSlotID == null) ? 0 : ViewBag.hdnExamDateTimeSlotID;
+    int hdnRoomID = (ViewBag.hdnRoomID == null) ? 0 : ViewBag.hdnRoomID;
+
+    if (hdnExamID != 0)
+    {
+        Model.CourseList = dbc.GetExamDispatchDetails(hdnExamID, hdnExamDateID, hdnExamDateTimeSlotID).ToList();
+
+        <input name="hdnExamID" value="@ViewBag.hdnExamID" type="hidden" id="hdnExamID" />
+        <input name="hdnExamDateID" value="@ViewBag.hdnExamDateID" type="hidden" id="hdnExamDateID" />
+        <input name="hdnExamDateTimeSlotID" value="@ViewBag.hdnExamDateTimeSlotID" type="hidden" id="hdnExamDateTimeSlotID" />
+
+        <table style="width:100%">
+            <tr style="width:100%">
+                <td style="width:100%; background-color:lightgray ; vertical-align:top">
+                    @if (Model.CourseList.Count > 0)
+                {
+                        <table class="table">
+                            <tr style="background-color:darksalmon">
+                                <th>
+                                    Exam Date
+                                </th>
+                                <th>
+                                    Exam Time
+                                </th>
+                                <th>
+                                    Exam Subject Details
+                                </th>
+
+                                <th>
+                                    Dispatch Details (Room & Lecturers)
+                                </th>
+
+
+                            </tr>
+                            @for (var z = 0; z < Model.CourseList.Count; z++)
+                            {
+
+                                <tr>
+                                    <td style="background-color:burlywood">
+                                        @if (z == 0)
+                                        {
+                                            <span style="font-weight:bold">@Html.DisplayFor(modelItem => Model.CourseList[z].ExamDateTitle)</span>
+                                        }
+                                        else
+                                        {
+                                            if (Model.CourseList[z - 1].ExamDateTitle != Model.CourseList[z].ExamDateTitle)
+                                            {
+                                                <span style="font-weight:bold">@Html.DisplayFor(modelItem => Model.CourseList[z].ExamDateTitle)</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td style="background-color:darkkhaki">
+                                        @if (z == 0)
+                                        {
+                                            <span style="font-weight:bold">@Html.DisplayFor(modelItem => Model.CourseList[z].TimeSlot)</span>
+                                        }
+                                        else
+                                        {
+                                            if (Model.CourseList[z - 1].TimeSlot != Model.CourseList[z].TimeSlot)
+                                            {
+                                                <span style="font-weight:bold">@Html.DisplayFor(modelItem => Model.CourseList[z].TimeSlot)</span>
+                                            }
+                                        }
+
+                                    </td>
+                                    <td>
+
+                                        @{ string id = "hdID_" + Model.CourseList[z].ExamsDateSheetDetailID;}
+                                        @Html.Hidden(@id, new { value = Model.CourseList[z].ExamsDateSheetDetailID })
+
+                                        <span style="font-weight:bold">Session : </span>  @Html.DisplayFor(modelItem => Model.CourseList[z].BatchSession) <span style="color:red">( Program:  @Html.DisplayFor(modelItem => Model.CourseList[z].ProgramName) )</span><br />
+                                        <span style="font-weight:bold">Subject: </span> @Html.DisplayFor(modelItem => Model.CourseList[z].CourseCode) - @Html.DisplayFor(modelItem => Model.CourseList[z].CourseName) <span style="color:red">( Semester# :  @Html.DisplayFor(modelItem => Model.CourseList[z].YearSemesterNo) )</span><br />
+                                        <span style="font-weight:bold"> Eligible Student Count:</span> <span style="color:red">(@Html.DisplayFor(modelItem => Model.CourseList[z].StudentCount))</span>
+
+                                    </td>
+
+                                    <td>
+                                        @if (Model.CourseList[z].EesExamsDateSheetDetailID == null)
+                                        {
+                                            <span style="color:red"> Please Make Eligible Students For This</span> @*@Html.ActionLink("Make Eligible Students", "StudentAttendanceSummary", "ExamEligibleStudent", new { ProgramCourseID = 4011}, new { @class = "btn btn-primary" })*@
+                                        }
+                                        else
+                                        {
+                                            Model.ExamSubjectRoomList = dbc.GetExamSubjectForRosterDispatch(Model.CourseList[z].EesExamsDateSheetDetailID).ToList();
+                                            <table style="width:100% ;">
+                                                <tr style="width:100%">
+                                                    <td style="width:100%; background-color:lightgray ; vertical-align:top">
+                                                        @if (Model.ExamSubjectRoomList.Count > 0)
+                                                        {
+                                                            <table class="table">
+                                                                <tr>
+                                                                    <th>
+                                                                        Room / Eligible Students
+                                                                    </th>
+                                                                    <th></th>
+                                                                </tr>
+                                                                @for (var y = 0; y < Model.ExamSubjectRoomList.Count; y++)
+                                                                {
+                                                                    if (Model.ExamSubjectRoomList[y].RoomID == null)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>
+                                                                                <span style="color:red"> Dispach Room First</span>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <tr>
+                                                                            <td>
+
+
+                                                                                <span style="font-weight:bold"> Room(Capicity):</span> <span style="color:red"> @Html.DisplayFor(modelItem => Model.ExamSubjectRoomList[y].RoomName) (@Html.DisplayFor(modelItem => Model.ExamSubjectRoomList[y].RoomCapacity))</span><br />
+                                                                                <span style="font-weight:bold"> Eligible Student Count:</span> <span style="color:red">(@Html.DisplayFor(modelItem => Model.ExamSubjectRoomList[y].StudentCount))</span><br />
+
+
+                                                                            </td>
+                                                                            <td>
+                                                                                @{ Model.RosterDispatchList = dbc.GetExamRosterDispatchList(Model.ExamSubjectRoomList[y].ExamsDateSheetDetailID, Model.ExamSubjectRoomList[y].RoomID).ToList();}
+
+
+                                                                                @if (Model.RosterDispatchList.Count > 0)
+                                                                                {
+                                                                                    <table class="table">
+                                                                                        <tr>
+
+                                                                                            <th>
+
+                                                                                            </th>
+                                                                                        </tr>
+
+
+                                                                                        <tr>
+
+
+                                                                                            <td>
+
+                                                                                                <table style="width:100%">
+                                                                                                    <tr>
+
+                                                                                                        <th>
+                                                                                                            Lecturers Detail
+                                                                                                        </th>
+
+
+                                                                                                    </tr>
+                                                                                                    @for (var x = 0; x < Model.RosterDispatchList.Count; x++)
+                                                                                                    {
+                                                                                                        <tr style="width:100%;">
+                                                                                                            <td style="width:70%">
+                                                                                                                @{int SerialNumeber = x + 1;  }
+                                                                                                                <span style="font-weight:bold"> Sr# @SerialNumeber: </span>   @Html.DisplayFor(modelItem => Model.RosterDispatchList[x].UserName) (@Html.DisplayFor(modelItem => Model.RosterDispatchList[x].Designation))
+                                                                                                            </td>
+
+                                                                                                        </tr>
+                                                                                                                    }
+                                                                                                </table>
+
+                                                                                            </td>
+
+                                                                                        </tr>
+
+
+                                                                                    </table>
+                                                                                    <br />
+                                                                                                                    }
+                                                                                                                    else
+                                                                                                                    {
+                                                                                                                        <span style="color:red"> Please Dispatch Lecturers</span>
+                                                                                                                    }
+                                                                            </td>
+
+                                                                            @*<td>
+                                                                                    @{
+                                                                                            string btnId = "btn_" + Model.ExamSubjectRoomList[y].ExamsDateSheetDetailID;
+                                                                                            string ExamsDateSheetDetailID = Model.ExamSubjectRoomList[y].ExamsDateSheetDetailID.ToString();
+                                                                                            string RoomID = Model.ExamSubjectRoomList[y].RoomID.ToString();
+                                                                                        }
+                                                                                        <input id="@btnId" type="submit" class="btn btn-primary" value="Add Dispatch" onclick="@("RoomTeacherDispatch('"+ExamsDateSheetDetailID+"','"+ RoomID + "')")" />
+                                                                                        @Html.ActionLink("View / Remove Dispatch", "RosterDispatchList", "ExamRosterDispatch", new { ExamsDateSheetDetailID = Model.ExamSubjectRoomList[y].ExamsDateSheetDetailID, RoomID = Model.ExamSubjectRoomList[y].RoomID }, new { @class = "btn btn-primary" })
+                                                                                </td>*@
+                                                                        </tr>
+
+                                                      }
+
+                                                    }
+                                                            </table>
+                                                            <br />
+
+
+                                           }
+                                                    </td>
+
+                                                </tr>
+
+                                            </table>
+                                        }
+                                    </td>
+                                </tr>
+
+                                        }
+                        </table>
+                        <br />
+
+
+                                      }
+                </td>
+
+            </tr>
+
+        </table>
+                  }
+
+
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+          //  GetExamDatesByExamID();
+          //  $("#ExamDateID").val(@ViewBag.hdnExamDateID);
+          //  GetExamDateTimeSlotByExamID();
+          //  $("#ExamDateTimeSlotID").val(@ViewBag.hdnExamDateTimeSlotID);
+
+            @*$("#ExamID").change(function () {
+                GetExamDatesByExamID();
+                $("#ExamDateID").val(@ViewBag.hdnExamDateID);
+                GetExamDateTimeSlotByExamID();
+                $("#ExamDateTimeSlotID").val(@ViewBag.hdnExamDateTimeSlotID);
+            });*@
+
+        });
+
+        @*function GetExamDatesByExamID() {
+            var ExamID = $("#ExamID").val();
+            $.ajax({
+                url: "@Url.Content("~/ExamDispatchDetailsForTeacher/GetExamDatesByExamID")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ ExamID: +ExamID }),
+                success: function (result) {
+                    $("#ExamDateID").html("");
+                    //    $("#ExamDateID").append($('<option></option>').val("0").html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#ExamDateID").append($('<option></option>').val(sem.ExamDateID).html(sem.ExamDateTitle));
+                    });
+                    $("#ExamDateID").val(@ViewBag.hdnExamDateID)
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                },
+            });
+        }*@
+
+        @*function GetExamDateTimeSlotByExamID() {
+            var ExamID = $("#ExamID").val();
+            $.ajax({
+                url: "@Url.Content("~/ExamDispatchDetailsForTeacher/GetExamDateTimeSlotByExamID")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ ExamID: +ExamID }),
+                success: function (result) {
+                    $("#ExamDateTimeSlotID").html("");
+                    //   $("#ExamDateTimeSlotID").append($('<option></option>').val("0").html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#ExamDateTimeSlotID").append($('<option></option>').val(sem.ExamDateTimeSlotID).html(sem.TimeSlot));
+                    });
+                    $("#ExamDateTimeSlotID").val(@ViewBag.hdnExamDateTimeSlotID)
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                },
+            });
+        }*@
+
+    </script>
+}
+

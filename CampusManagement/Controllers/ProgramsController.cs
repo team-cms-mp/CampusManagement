@@ -12,19 +12,21 @@ using CampusManagement.Models;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
+    [Authorize]
     public class ProgramsController : Controller
     {
-        private ModelCMSContainer db = new ModelCMSContainer();
+        private ModelCMSNewContainer db = new ModelCMSNewContainer();
         ProgramsViewModel model = new ProgramsViewModel();
 
         public ActionResult Index()
         {
-            model.Programs = db.Programs.OrderByDescending(a => a.ProgramID).ToList();
+            model.Programs = db.SP_ProgramForPage("").ToList();
             model.SelectedProgram = null;
             model.DisplayMode = "WriteOnly";
+            ViewBag.FacultyID = new SelectList(db.GetSubDepartments_by_HospitalID(MvcApplication.Hospital_ID), "SubDept_Id", "SubDept_Name");
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.ProgramTypeID = new SelectList(db.ProgramTypes, "ProgramTypeID", "ProgramTypeName");
+            ViewBag.LevelID = new SelectList(db.Levels, "LevelID", "LevelName");
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View(model);
@@ -33,11 +35,13 @@ namespace CampusManagement.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            model.Programs = db.Programs.OrderByDescending(a => a.ProgramID).ToList();
+            model.Programs = db.SP_ProgramForPage("").ToList();
             model.SelectedProgram = null;
             model.DisplayMode = "WriteOnly";
+            ViewBag.FacultyID = new SelectList(db.GetSubDepartments_by_HospitalID(MvcApplication.Hospital_ID), "SubDept_Id", "SubDept_Name");
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.ProgramTypeID = new SelectList(db.ProgramTypes, "ProgramTypeID", "ProgramTypeName");
+            ViewBag.LevelID = new SelectList(db.Levels, "LevelID", "LevelName");
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -55,17 +59,17 @@ namespace CampusManagement.Controllers
                 p = db.Programs.FirstOrDefault(c => c.ProgramName == program.ProgramName);
                 if (p != null)
                 {
-                    ModelState.AddModelError(string.Empty, "Program Name is already exists.");
+                    ModelState.AddModelError(string.Empty, "Program Name already exists.");
                     count++;
-                    ErrorMessage += count + "-" + "Program Name is already exists." + "<br />";
+                    ErrorMessage += count + "-" + "Program Name already exists." + "<br />";
                 }
 
                 p = db.Programs.FirstOrDefault(c => c.ProgramCode == program.ProgramCode);
                 if (p != null)
                 {
-                    ModelState.AddModelError(string.Empty, "Program Code is already exists.");
+                    ModelState.AddModelError(string.Empty, "Program Code already exists.");
                     count++;
-                    ErrorMessage += count + "-" + "Program Code is already exists." + "<br />";
+                    ErrorMessage += count + "-" + "Program Code already exists." + "<br />";
                 }
 
                 if (!string.IsNullOrEmpty(ErrorMessage))
@@ -108,11 +112,13 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.Programs = db.Programs.OrderByDescending(a => a.ProgramID).ToList();
+             model.Programs = db.SP_ProgramForPage("").ToList();
             model.SelectedProgram = null;
             model.DisplayMode = "WriteOnly";
+            ViewBag.FacultyID = new SelectList(db.GetSubDepartments_by_HospitalID(MvcApplication.Hospital_ID), "SubDept_Id", "SubDept_Name", program.FacultyID);
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", program.IsActive);
             ViewBag.ProgramTypeID = new SelectList(db.ProgramTypes, "ProgramTypeID", "ProgramTypeName", program.ProgramTypeID);
+            ViewBag.LevelID = new SelectList(db.Levels, "LevelID", "LevelName", program.LevelID);
 
             return View("Index", model);
         }
@@ -124,17 +130,18 @@ namespace CampusManagement.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Program program = db.Programs.Find(id);
+            SP_ProgramForPage_Result program = db.SP_ProgramForPage("").FirstOrDefault(s => s.ProgramID == id);
             if (program == null)
             {
                 return HttpNotFound();
             }
-
-            model.Programs = db.Programs.OrderByDescending(a => a.ProgramID).ToList();
+            model.Programs = db.SP_ProgramForPage("").ToList();
             model.SelectedProgram = program;
             model.DisplayMode = "ReadWrite";
+            ViewBag.FacultyID = new SelectList(db.GetSubDepartments_by_HospitalID(MvcApplication.Hospital_ID), "SubDept_Id", "SubDept_Name", program.FacultyID);
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", program.IsActive);
             ViewBag.ProgramTypeID = new SelectList(db.ProgramTypes, "ProgramTypeID", "ProgramTypeName", program.ProgramTypeID);
+            ViewBag.LevelID = new SelectList(db.Levels, "LevelID", "LevelName", program.LevelID);
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -179,11 +186,14 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.Programs = db.Programs.OrderByDescending(a => a.ProgramID).ToList();
+            model.Programs = db.SP_ProgramForPage("").ToList();
+           
             model.SelectedProgram = null;
             model.DisplayMode = "WriteOnly";
+            ViewBag.FacultyID = new SelectList(db.GetSubDepartments_by_HospitalID(MvcApplication.Hospital_ID), "SubDept_Id", "SubDept_Name", program.FacultyID);
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", program.IsActive);
             ViewBag.ProgramTypeID = new SelectList(db.ProgramTypes, "ProgramTypeID", "ProgramTypeName", program.ProgramTypeID);
+            ViewBag.LevelID = new SelectList(db.Levels, "LevelID", "LevelName", program.LevelID);
             return View("Index", model);
         }
 
@@ -193,13 +203,14 @@ namespace CampusManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Program program = db.Programs.Find(id);
-            if (program == null)
+
+            SP_ProgramForPage_Result program = db.SP_ProgramForPage("").FirstOrDefault(s => s.ProgramID == id);
+            if(program==null)
             {
                 return HttpNotFound();
             }
 
-            model.Programs = db.Programs.OrderByDescending(a => a.ProgramID).ToList();
+            model.Programs = db.SP_ProgramForPage("").ToList();
             model.SelectedProgram = program;
             model.DisplayMode = "Delete";
             ViewBag.MessageType = "";
@@ -225,11 +236,13 @@ namespace CampusManagement.Controllers
                 ViewBag.Message = ex.Message;
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
-            model.Programs = db.Programs.OrderByDescending(a => a.ProgramID).ToList();
+            model.Programs = db.SP_ProgramForPage("").ToList();
             model.SelectedProgram = null;
             model.DisplayMode = "WriteOnly";
+            ViewBag.FacultyID = new SelectList(db.GetSubDepartments_by_HospitalID(MvcApplication.Hospital_ID), "SubDept_Id", "SubDept_Name");
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.ProgramTypeID = new SelectList(db.ProgramTypes, "ProgramTypeID", "ProgramTypeName");
+            ViewBag.LevelID = new SelectList(db.Levels, "LevelID", "LevelName");
             return View("Index", model);
         }
 

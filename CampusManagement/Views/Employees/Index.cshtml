@@ -1,0 +1,114 @@
+﻿@model IEnumerable<CampusManagement.Models.um_GetEmployees_Result>
+@using CampusManagement.Models
+
+@{
+    ViewBag.Title = "Employees - Module Rights";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+@Html.Partial("_MessageView")
+
+@using (Html.BeginForm("Index", "Employees", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row" style="margin-top: -2em;margin-bottom: -2em;">
+        <div class="col-sm-5 inner-addon right-addon">
+            <input type="text" class="form-control" placeholder="search" name="paramSearch" value="@ViewBag.paramSearch" />
+        </div>
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-primary" value="Search">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Gender
+        </th>
+        <th>
+            Designation
+        </th>
+        <th>
+            Department
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmpID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeGender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Designation_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubDept_Name)
+        </td>
+        <td>
+            @{
+                int EmpID = Convert.ToInt32(item.EmpID);
+                int intCheckRight = Convert.ToInt32(dbc.um_CheckEmployeeRights(EmpID).FirstOrDefault());
+
+                if (intCheckRight == 0)
+                {
+                    @Html.ActionLink("Admin Rights", "AssignPages", new { EmpID = item.EmpID, RightsType = "admin" }) <span> | </span>
+                    @Html.ActionLink("Lecturer Rights", "AssignPages", new { EmpID = item.EmpID, RightsType = "lecturer" }) <span> | </span>
+                    @Html.ActionLink("Admission Rights", "AssignPages", new { EmpID = item.EmpID, RightsType = "admission" }) <span> | </span>
+                    @Html.ActionLink("Exam Rights", "AssignPages", new { EmpID = item.EmpID, RightsType = "exam" }) <span> | </span>
+                    @Html.ActionLink("Student Finance", "AssignPages", new { EmpID = item.EmpID, RightsType = "finance" }) <span> | </span>
+                    @Html.ActionLink("Management Dashboards", "AssignPages", new { EmpID = item.EmpID, RightsType = "mdashboard" })
+                }
+                else if (intCheckRight == 1)
+                {
+                    <span style="font-weight:bold;color:brown;">Admin Rights Assigned</span> <span> | </span> @Html.ActionLink("Revert Rights", "um_RevertEmployeeRights", new { EmpID = item.EmpID })
+                }
+                else if (intCheckRight == 2)
+                {
+                    <span style="font-weight:bold;color:blue;">Lecturer Rights Assigned</span> <span> | </span> @Html.ActionLink("Revert Rights", "um_RevertEmployeeRights", new { EmpID = item.EmpID })
+                }
+                else if (intCheckRight == 3)
+                {
+                    <span style="font-weight:bold;color:greenyellow;">Admission Rights Assigned</span> <span> | </span> @Html.ActionLink("Revert Rights", "um_RevertEmployeeRights", new { EmpID = item.EmpID })
+                }
+                else if (intCheckRight == 4)
+                {
+                    <span style="font-weight:bold;color:yellow;">Exam Rights Assigned</span> <span> | </span> @Html.ActionLink("Revert Rights", "um_RevertEmployeeRights", new { EmpID = item.EmpID })
+                }
+                else if (intCheckRight == 5)
+                {
+                    <span style="font-weight:bold;color:red;">Student Finance</span> <span> | </span> @Html.ActionLink("Revert Rights", "um_RevertEmployeeRights", new { EmpID = item.EmpID })
+                }
+                else if (intCheckRight == 6)
+                {
+                    <span style="font-weight:bold;color:yellow;">Management Dashboards</span> <span> | </span> @Html.ActionLink("Revert Rights", "um_RevertEmployeeRights", new { EmpID = item.EmpID })
+                }
+            }
+            
+        </td>
+    </tr>
+    }
+
+</table>

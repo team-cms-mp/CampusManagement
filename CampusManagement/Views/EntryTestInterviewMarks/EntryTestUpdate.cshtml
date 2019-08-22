@@ -1,0 +1,273 @@
+﻿@model CampusManagement.Models.GetApplicantEntryTestInfo_Result
+@using CampusManagement.Models
+
+@using (Html.BeginForm("Search", "EntryTestInterviewMarks", FormMethod.Post, new { @style = "margin-top: 0px !important; margin-bottom: 0px !important;" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Entry Test / Interview / Drawing Test</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+    <div class="row">
+        <div class="col-sm-3">
+            <label>Form #</label>
+            @Html.EditorFor(model => model.FormNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FormNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3" hidden>
+            <label>Entry Test</label>
+            @Html.EditorFor(model => model.EntryTestName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => model.EntryTestName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label>Entry Test Marks</label>
+            @Html.EditorFor(model => model.ActiveEntryTestMarks, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ActiveEntryTestMarks, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label>Drawing Test Marks</label>
+            @Html.EditorFor(model => model.DrawingTestMakrs, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DrawingTestMakrs, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label>Interview Marks</label>
+            @Html.EditorFor(model => model.InterviewMarks, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.InterviewMarks, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <br />
+            <input style="margin-top: 3px;display:none;" type="button" value="Save" class="btn btn-primary" id="btn_updateEntryTestMarks" />
+        </div>
+        <div class="col-sm-9">
+            <br />
+
+                <table class="table table-striped col-md-6" style="font-size:11px;font-weight:bold;background:#f9f9f9;">
+                    <tr>
+                        <td style="padding:5px; text-align:center;background: #e6e6e6; width:25%;">
+                            First Name
+                        </td>
+                        <td style="padding:5px; text-align:center; width:25%;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="pFirstName"></p>
+                        </td>
+
+                        <td style="padding:5px; text-align:center;background: #e6e6e6; width:25%;">
+                            Entry Test Marks
+                        </td>
+                        <td style="padding:5px; text-align:center; width:25%;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="pEntryTestObtainedMarks"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px; text-align:center;background: #e6e6e6; width:25%;">
+                            Last Name
+                        </td>
+                        <td style="padding:5px; text-align:center; width:25%;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="pLastName"></p>
+                        </td>
+
+                        <td style="padding:5px; text-align:center;background: #ffeb3b; width:25%;">
+                            Test Total Marks
+                        </td>
+                        <td style="padding:5px; text-align:center; width:25%;background: #ffeb3b;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="TestTotalMarks"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px; text-align:center;background: #e6e6e6; width:25%;">
+                            Father Name
+                        </td>
+                        <td style="padding:5px; text-align:center; width:25%;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="pFatherName"></p>
+                        </td>
+
+                        <td style="padding:5px; text-align:center;background: #e6e6e6; width:25%;">
+                            Drawing Test Marks
+                        </td>
+                        <td style="padding:5px; text-align:center;width:25%;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="pDrawingTestMakrs"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px; text-align:center;background: #e6e6e6; width:25%;">
+                            CNIC
+                        </td>
+                        <td style="padding:5px; text-align:center;width:25%;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="pCNIC"></p>
+                        </td>
+
+                        <td style="padding:5px; text-align:center;background: #ffeb3b; width:25%;">
+                            Drawing Test Total Marks
+                        </td>
+                        <td style="padding:5px; text-align:center;width:25%;background: #ffeb3b;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="DrawingTestTotalMarks"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px; text-align:center;background: #e6e6e6; width:25%;">
+                            Email
+                        </td>
+                        <td style="padding:5px; text-align:center;width:25%;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="pEmail"></p>
+                        </td>
+
+                        <td style="padding:5px; text-align:center;background: #e6e6e6; width:25%;">
+                            Inerview Marks
+                        </td>
+                        <td style="padding:5px; text-align:center;width:25%;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="pInterviewMarks"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px; text-align:center;background: #e6e6e6; width:25%;">
+                            Cell #
+                        </td>
+                        <td style="padding:5px; text-align:center;width:25%;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="pCell"></p>
+                        </td>
+
+                        <td style="padding:5px; text-align:center;background: #ffeb3b; width:25%;">
+                            Interview Total Marks
+                        </td>
+                        <td style="padding:5px; text-align:center;width: 25%;background: #ffeb3b;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="InterviewTotalMarks"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px; text-align:center;background: #e6e6e6; width:25%;">
+                            Session
+                        </td>
+                        <td style="padding:5px; text-align:center;width: 25%;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="BatchName"></p>
+                        </td>
+                        <td style="padding:5px; text-align:center;background: #e6e6e6; width:25%;"> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px; text-align:center;background: #e6e6e6; width:25%;">
+                            Program
+                        </td>
+                        <td style="padding:5px; text-align:center;width: 25%;">
+                            <p style="color: #000000; padding:0px; margin:0px" id="ProgramName"></p>
+                        </td>
+                        <td style="padding:5px; text-align:center;background: #e6e6e6; width:25%;"> </td>
+                        <td> </td>
+                    </tr>
+                </table>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#FormNo").blur(function () {
+            GetEntryTest();
+        });
+
+        $("#btn_updateEntryTestMarks").click(function () {
+            UpdateEntryTestMarks(2);
+        });
+    });
+
+    function GetEntryTest() {
+
+        ClearForm();
+        var FormNo = $("#FormNo").val();
+        $.ajax({
+            url: "@Url.Content("~/EntryTestInterviewMarks/GetApplicantEntryTestInfot")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ FormNo: +FormNo, QueryID: +1 }),
+            success: function (result) {
+                if (result == "null") {
+                    $("#btn_updateEntryTestMarks").css("display", "none");
+                    alert("No record found.");
+                    return;
+                }
+
+                $("#btn_updateEntryTestMarks").css("display", "block");
+                var result = $.parseJSON(result);
+                //Textboxes
+                $("#ActiveEntryTestMarks").val(result.ActiveEntryTestMarks);
+                $("#InterviewMarks").val(result.InterviewMarks);
+                $("#DrawingTestMakrs").val(result.DrawingTestMakrs);
+
+                //p tags
+                $("#pFirstName").html(result.FirstName);
+                $("#pLastName").html(result.LastName);
+                $("#pFatherName").html(result.FatherName);
+                $("#pCNIC").html(result.ACNIC);
+                $("#pEmail").html(result.Email);
+                $("#pCell").html(result.CellNo);
+                $("#pEntryTestObtainedMarks").html(result.ActiveEntryTestMarks);
+                $("#pDrawingTestMakrs").html(result.DrawingTestMakrs);
+                $("#pInterviewMarks").html(result.InterviewMarks);
+                $("#BatchName").html(result.BatchName);
+                $("#ProgramName").html(result.ProgramName);
+                $("#TestTotalMarks").html(result.TestTotalMarks);
+                $("#DrawingTestTotalMarks").html(result.DrawingTestTotalMarks);
+                $("#InterviewTotalMarks").html(result.InterviewTotalMarks);
+            },
+            error: function () {
+                //alert("Something went wrong..");
+            },
+        }).done(function (model) {
+
+        });
+    }
+
+    function UpdateEntryTestMarks(QueryID) {
+
+        var FormNo = $("#FormNo").val();
+        var EntryTestMarks = $("#ActiveEntryTestMarks").val();
+        var InterviewMarks = $("#InterviewMarks").val();
+        var DrawingTestMakrs = $("#DrawingTestMakrs").val();
+        $.ajax({
+            url: "@Url.Content("~/EntryTestInterviewMarks/UpdateEntryTest")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ FormNo: +FormNo, QueryID: +QueryID, EntryTestMarks: +EntryTestMarks, InterviewMarks: +InterviewMarks, DrawingTestMakrs: +DrawingTestMakrs }),
+            success: function (result) {
+                if (result == "1") {
+                    alert("Data has been saved successfully.");
+                    GetEntryTest();
+                    return;
+                }
+            },
+            error: function () {
+                //alert("Something went wrong..");
+            },
+        }).done(function (model) {
+
+        });
+    }
+
+    function ClearForm() {
+        $("#EntryTestName").val("");
+        $("#pFirstName").html("");
+        $("#pLastName").html("");
+        $("#pFatherName").html("");
+        $("#pCNIC").html("");
+        $("#pEmail").html("");
+        $("#pCell").html("");
+        $("#ActiveEntryTestMarks").val("");
+        $("#InterviewMarks").val("");
+        $("#DrawingTestMakrs").val("");
+        $("#pEntryTestObtainedMarks").html("");
+        $("#pDrawingTestMakrs").html("");
+        $("#pInterviewMarks").html("");
+        $("#BatchName").html("");
+        $("#ProgramName").html("");
+        $("#TestTotalMarks").html("");
+        $("#DrawingTestTotalMarks").html("");
+        $("#InterviewTotalMarks").html("");
+    }
+</script>
+

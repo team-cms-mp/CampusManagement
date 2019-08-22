@@ -1,0 +1,93 @@
+﻿@model CampusManagement.Models.AlumniUserEvent
+
+@using (Html.BeginForm("Edit", "AUEvents", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2><span class="col-sm-12">Edit Alumni User Event</span></h2>
+    </div>
+    <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.HiddenFor(model => model.AlumniUserEventID)
+
+    <div class="row">
+        <div class="col-sm-4" hidden>
+            <input id="AlumniUserID" name="AlumniUserID" value="@ViewBag.AlumniUserID" type="hidden" />
+        </div>
+        <div class="col-sm-4">
+            <label>Event Title</label>
+            @Html.TextBoxFor(model => model.EventTitle, new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(model => model.EventTitle, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-4">
+            <label> Event Location </label>
+            @Html.TextBoxFor(model => model.EventLocation, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.EventLocation, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="col-sm-4">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            <label>Event Details</label>
+            @Html.TextAreaFor(model => model.EventDetails, new { @class = "form-control", @style = "height: 10em;" })
+            @Html.ValidationMessageFor(model => model.EventDetails, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label> Event Start Date </label>
+            <input name="Start_Date" class="form-control" id="datepicker" required>
+            @Html.ValidationMessageFor(model => model.EventStartDateTime, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label> Event Start Time </label>
+            <input name="Start_time" class="form-control" id="datepicker2" required type="time">
+        </div>
+        <div class="col-sm-3">
+            <label>Event End Date</label>
+            <input name="End_Date" class="form-control" id="datepicker1" required>
+            @Html.ValidationMessageFor(model => model.EventEndDateTime, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <label> Event End Time </label>
+            <input name="End_time" class="form-control" id="datepicker3" required type="time">
+        </div>
+        <div class="col-sm-4 hidden">
+            @Html.TextBoxFor(model => model.CreatedOn, new { @class = "form-control" })
+            @Html.TextBoxFor(model => model.CreatedBy, new { @class = "form-control" })
+        </div>
+
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a href="@Url.Content("~/AUEvents/Index")" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="@Url.Content("~/Scripts/jquery-1.12.4.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.js")"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $("#datepicker").val("@ViewBag.strDate");
+        $("#datepicker1").val("@ViewBag.endDate");
+        $("#datepicker2").val("@ViewBag.strTime");
+        $("#datepicker3").val("@ViewBag.endTime");
+        $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' });
+        $("#datepicker1").datepicker({ dateFormat: 'dd/mm/yy' });
+
+    });
+
+</script>
+
+
+

@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Provinces";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
@@ -19,14 +19,14 @@
     }
     if (Model.DisplayMode == "WriteOnly")
     {
-        Html.RenderPartial("Create", new CampusManagement.Models.Province());
+        Html.RenderPartial("Create", new CampusManagement.Models.GetProvinces_Result());
     }
 }
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedProvince.Country.CountryName)
+            @Html.DisplayNameFor(model => model.SelectedProvince.CountryName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SelectedProvince.ProvinceName)
@@ -44,7 +44,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Country.CountryName)
+                @Html.DisplayFor(modelItem => item.CountryName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProvinceName)

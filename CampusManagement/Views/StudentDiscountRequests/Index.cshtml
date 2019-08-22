@@ -1,0 +1,62 @@
+﻿@model CampusManagement.Models.StudentDiscountRequestsViewModel
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Requests";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@{
+    if (Model.SelectedStudentDiscountRequest != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedStudentDiscountRequest);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedStudentDiscountRequest);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.GetStudentDiscountRequests_Result());
+    }
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Request Status
+        </th>
+        <th>
+            Request Type
+        </th>
+        <th>
+            Discount
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.StudentDiscountRequests)
+    {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentRequestStatusName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDescription)
+            </td>
+            <td>
+               @Html.DisplayFor(modelItem => item.DiscountPercentage)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id = item.StudentDiscountRequestID })
+               | @Html.ActionLink("Delete", "Delete", new { id = item.StudentDiscountRequestID })
+            </td>
+        </tr>
+    }
+
+</table>
+

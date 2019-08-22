@@ -32,7 +32,20 @@
         <dd>
             @Html.DisplayFor(model => model.CourseDescription)
         </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.TotalLabCount)</label>
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.TotalLabCount)
+        </dd>
+        <dt>
+            <label class="control-label">@Html.DisplayNameFor(model => model.TotalLectureCount)</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalLectureCount)
+        </dd>
         <dt>
             <label class="control-label">@Html.DisplayNameFor(model => model.IsActive)</label>
         </dt>
@@ -79,8 +92,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-success" />
-            <a href="@Url.Content("~/Courses/Index")" class="btn btn-success">Cancel</a>
+            <input type="submit" value="Delete" class="btn btn-primary" />
+            <a href="@Url.Content("~/Courses/Index")" class="btn btn-primary">Cancel</a>
         </div>
     }
 </div>

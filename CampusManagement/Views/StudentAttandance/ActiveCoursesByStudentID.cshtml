@@ -1,0 +1,85 @@
+﻿@using CampusManagement.Models
+@{
+    ViewBag.Title = "Student Active Subjects";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+@Html.Partial("_MessageView")
+
+@{
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+    int hdnStudentID = (ViewBag.hdnStudentID == null) ? 0 : ViewBag.hdnStudentID;
+    List<GetAdminStudentListByCourseID_Result> lstDocs = dbc.GetAdminStudentListByCourseID(0, hdnStudentID).ToList();
+    <input name="hdnStudentID" value="@ViewBag.hdnStudentID" type="hidden" id="StudentID" />
+
+    if (lstDocs.Count > 0)
+    {
+        GetAdminStudentListByCourseID_Result StudentCources_ResultObj = new GetAdminStudentListByCourseID_Result();
+        StudentCources_ResultObj = lstDocs[0];
+
+        <div class="row">
+            <h3><span class="col-sm-12"> Student Detail </span></h3>
+        </div>
+
+        <table class="table">
+            <tr>
+                <td><b>  Student Name  </b> : @StudentCources_ResultObj.FullName </td>
+                <td><b> Email </b> : @StudentCources_ResultObj.Email </td>
+            </tr>
+
+            <tr>
+                <td><b> Cell # </b> : @StudentCources_ResultObj.CellNo </td>
+                <td><b>   Session </b> : @StudentCources_ResultObj.BatchSession </td>
+            </tr>
+
+            <tr>
+                <td><b> Program </b> : @StudentCources_ResultObj.ProgramName </td>
+                <td></td>
+            </tr>
+        </table>
+        <div class="row">
+            <h3><span class="col-sm-12"> Active Subjects </span></h3>
+        </div>
+
+        <table class="table">
+            <tr>
+                <th>
+                    Subject Code
+                </th>
+                <th>
+                    Subject Name
+                </th>
+                <th>
+                    Semester
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+
+            @foreach (var item in lstDocs)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.YearSemesterNo)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Attendance Summary", "StudentAttendanceSummary", new { StudentID = item.studentID, CourseID = item.CourseID }) |
+                        @Html.ActionLink("Attendance Detail", "StudentAttendanceDetail", new { StudentID = item.studentID, CourseID = item.CourseID })
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+}
+

@@ -9,22 +9,25 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CampusManagement.Models;
+using Newtonsoft.Json;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
+    [Authorize]
     public class BatchProgramSemestersController : Controller
     {
-        private ModelCMSContainer db = new ModelCMSContainer();
-        BatchProgramSemesterViewModel model = new BatchProgramSemesterViewModel();
+        private ModelCMSNewContainer db = new ModelCMSNewContainer();
+        GetBatchProgramSemester_ResultViewModel model = new GetBatchProgramSemester_ResultViewModel();
 
         public ActionResult Index()
         {
-            model.BatchProgramSemesters = db.BatchProgramSemesters.OrderByDescending(a=>a.BatchProgramSemesterID).ToList();
-            model.SelectedBatchProgramSemester = null;
+            model.GetBatchProgramSemester_Results = db.GetBatchProgramSemester("").ToList();
+            model.SelectedGetBatchProgramSemester_Result = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
+            ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0).ToList(), "ID", "Name");
+            ViewBag.YearSemesterNo = new SelectList(db.Semesters.Where(s => s.IsActive == "Yes").OrderBy(o => o.YearSemesterNo), "YearSemesterNo", "YearSemesterNo");
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View(model);
@@ -33,11 +36,13 @@ namespace CampusManagement.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            model.BatchProgramSemesters = db.BatchProgramSemesters.OrderByDescending(a=>a.BatchProgramSemesterID).ToList();
-            model.SelectedBatchProgramSemester = null;
+            model.GetBatchProgramSemester_Results = db.GetBatchProgramSemester("").ToList();
+            model.SelectedGetBatchProgramSemester_Result = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
+            ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0).ToList(), "ID", "Name");
+            ViewBag.YearSemesterNo = new SelectList(db.Semesters.Where(s => s.IsActive == "Yes").OrderBy(o => o.YearSemesterNo), "YearSemesterNo", "YearSemesterNo");
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -73,9 +78,9 @@ namespace CampusManagement.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Selected Batch Program is already exist against the same Year/Semester #.");
+                    ModelState.AddModelError(string.Empty, "Selected Batch Program is already exist against the same Semester #.");
                     ViewBag.MessageType = "error";
-                    ViewBag.Message = "Selected Batch Program is already exist against the same Year/Semester #.";
+                    ViewBag.Message = "Selected Batch Program is already exist against the same Semester #.";
                 }
             }
             catch (DbEntityValidationException ex)
@@ -95,11 +100,15 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.BatchProgramSemesters = db.BatchProgramSemesters.OrderByDescending(a=>a.BatchProgramSemesterID).ToList();
-            model.SelectedBatchProgramSemester = null;
+            model.GetBatchProgramSemester_Results = db.GetBatchProgramSemester("").ToList();
+            model.SelectedGetBatchProgramSemester_Result = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", batchProgramSemester.IsActive);
+            ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0).ToList(), "ID", "Name", batchProgramSemester.BatchProgramID);
+            ViewBag.YearSemesterNo = new SelectList(db.Semesters.Where(s => s.IsActive == "Yes").OrderBy(o => o.YearSemesterNo), "YearSemesterNo", "YearSemesterNo", batchProgramSemester.YearSemesterNo);
+            ViewBag.hdnBatchID = batchProgramSemester.BatchID;
+            ViewBag.hdnBatchProgramID = batchProgramSemester.BatchProgramID;
             return View("Index", model);
         }
 
@@ -116,13 +125,17 @@ namespace CampusManagement.Controllers
                 return HttpNotFound();
             }
 
-            model.BatchProgramSemesters = db.BatchProgramSemesters.OrderByDescending(a=>a.BatchProgramSemesterID).ToList();
-            model.SelectedBatchProgramSemester = batchProgramSemester;
+            model.GetBatchProgramSemester_Results = db.GetBatchProgramSemester("").ToList();
+            model.SelectedGetBatchProgramSemester_Result = batchProgramSemester;
             model.DisplayMode = "ReadWrite";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", batchProgramSemester.IsActive);
+            ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0).ToList(), "ID", "Name", batchProgramSemester.BatchProgramID);
+            ViewBag.YearSemesterNo = new SelectList(db.Semesters.Where(s => s.IsActive == "Yes").OrderBy(o => o.YearSemesterNo), "YearSemesterNo", "YearSemesterNo", batchProgramSemester.YearSemesterNo);
             ViewBag.MessageType = "";
             ViewBag.Message = "";
+            ViewBag.hdnBatchID = batchProgramSemester.BatchID;
+            ViewBag.hdnBatchProgramID = batchProgramSemester.BatchProgramID;
             return View("Index", model);
         }
 
@@ -165,11 +178,16 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.BatchProgramSemesters = db.BatchProgramSemesters.OrderByDescending(a=>a.BatchProgramSemesterID).ToList();
-            model.SelectedBatchProgramSemester = null;
+
+            model.GetBatchProgramSemester_Results = db.GetBatchProgramSemester("").ToList();
+            model.SelectedGetBatchProgramSemester_Result = batchProgramSemester;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", batchProgramSemester.IsActive);
+            ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0).ToList(), "ID", "Name", batchProgramSemester.BatchProgramID);
+            ViewBag.YearSemesterNo = new SelectList(db.Semesters.Where(s => s.IsActive == "Yes").OrderBy(o => o.YearSemesterNo), "YearSemesterNo", "YearSemesterNo", batchProgramSemester.YearSemesterNo);
+            ViewBag.hdnBatchID = batchProgramSemester.BatchID;
+            ViewBag.hdnBatchProgramID = batchProgramSemester.BatchProgramID;
             return View("Index", model);
         }
 
@@ -184,9 +202,8 @@ namespace CampusManagement.Controllers
             {
                 return HttpNotFound();
             }
-
-            model.BatchProgramSemesters = db.BatchProgramSemesters.OrderByDescending(a=>a.BatchProgramSemesterID).ToList();
-            model.SelectedBatchProgramSemester = batchProgramSemester;
+            model.GetBatchProgramSemester_Results = db.GetBatchProgramSemester("").ToList();
+            model.SelectedGetBatchProgramSemester_Result = batchProgramSemester;
             model.DisplayMode = "Delete";
             ViewBag.MessageType = "";
             ViewBag.Message = "";
@@ -211,14 +228,29 @@ namespace CampusManagement.Controllers
                 ViewBag.Message = ex.Message;
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
-            model.BatchProgramSemesters = db.BatchProgramSemesters.OrderByDescending(a=>a.BatchProgramSemesterID).ToList();
-            model.SelectedBatchProgramSemester = null;
+            model.GetBatchProgramSemester_Results = db.GetBatchProgramSemester("").ToList();
+            model.SelectedGetBatchProgramSemester_Result = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
+            ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0).ToList(), "ID", "Name");
+            ViewBag.YearSemesterNo = new SelectList(db.Semesters.Where(s => s.IsActive == "Yes").OrderBy(o => o.YearSemesterNo), "YearSemesterNo", "YearSemesterNo");
             return View("Index", model);
         }
+        // GEt programs by Faculty and Batch.
+        public JsonResult GetPrograms_by_FacultyLevelBatch(string FacultyID, string BatchID)
+        {
+            List<GetPrograms_by_FacultyLevelBatch_Result> lstPrograms = new List<GetPrograms_by_FacultyLevelBatch_Result>();
 
+            lstPrograms = db.GetPrograms_by_FacultyLevelBatch(Convert.ToInt32(FacultyID), 0, Convert.ToInt32(BatchID), 0).ToList();
+            var programs = lstPrograms.Select(p => new
+            {
+                BatchProgramID = p.BatchProgramID,
+                ProgramName = p.ProgramName
+            });
+            string result = JsonConvert.SerializeObject(programs, Formatting.Indented);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

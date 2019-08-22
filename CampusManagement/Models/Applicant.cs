@@ -13,7 +13,6 @@ namespace CampusManagement.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
-
     public partial class Applicant
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -34,22 +33,22 @@ namespace CampusManagement.Models
         [Required(ErrorMessage = "Required")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
-        [Required(ErrorMessage = "Required")]
+        //[Required(ErrorMessage = "Required")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [Required(ErrorMessage = "Required")]
+        //[Required(ErrorMessage = "Required")]
         [Display(Name = "Father Name")]
         public string FatherName { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "DOB")]
-        public Nullable<DateTime> ApplicantDOB { get; set; }
-        [Required(ErrorMessage = "Required")]
+        public string ApplicantDOB { get; set; }
+        //[Required(ErrorMessage = "Required")]
         [Display(Name = "Place of Birth")]
         public string PlaceOfBirth { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Gender")]
         public int GenderID { get; set; }
-        [Required(ErrorMessage = "Required")]
+        //[Required(ErrorMessage = "Required")]
         [Display(Name = "Nationality")]
         public int NationalityID { get; set; }
         [Required(ErrorMessage = "Required")]
@@ -61,8 +60,8 @@ namespace CampusManagement.Models
         [Display(Name = "Passport #")]
         public string PassportNo { get; set; }
         [Display(Name = "Expiry Date")]
-        public Nullable<DateTime> PassportExpiryDate { get; set; }
-        [Display(Name = "PTCL #")]
+        public string PassportExpiryDate { get; set; }
+        [Display(Name = "Home Phone #")]
         public string PTCLNO { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Cell #")]
@@ -74,27 +73,26 @@ namespace CampusManagement.Models
         [EmailAddress(ErrorMessage = "Invalid Email")]
         public string AlternateEmail { get; set; }
         [Required(ErrorMessage = "Required")]
-        [Display(Name = "Guardian Name")]
+        [Display(Name = "Parent/Guardian")]
         public string GuardianName { get; set; }
         [Required(ErrorMessage = "Required")]
-        [Display(Name = "Relation Type")]
+        [Display(Name = "Relation")]
         public int RelationTypeID { get; set; }
-        [Required(ErrorMessage = "Required")]
-        [Display(Name = "Guardian CNIC")]
+        [Display(Name = "CNIC")]
         public string GuardianCNIC { get; set; }
         [Required(ErrorMessage = "Required")]
-        [Display(Name = "Batch Program")]
+        [Display(Name = "Program")]
         public int BatchProgramID { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Profile Picture")]
         public string Picture { get; set; }
-        [Required(ErrorMessage = "Required")]
+        //[Required(ErrorMessage = "Required")]
         [Display(Name = "Country")]
         public int? CountryID { get; set; }
-        [Required(ErrorMessage = "Required")]
+        //[Required(ErrorMessage = "Required")]
         [Display(Name = "State")]
         public int? ProvinceID { get; set; }
-        [Required(ErrorMessage = "Required")]
+        //[Required(ErrorMessage = "Required")]
         [Display(Name = "City")]
         public int? CityID { get; set; }
         [Required(ErrorMessage = "Required")]
@@ -122,10 +120,117 @@ namespace CampusManagement.Models
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         [Display(Name = "Modified By")]
         public Nullable<int> ModifiedBy { get; set; }
-
+        [Display(Name = "Challan Image")]
+        public string ChallanImagePath { get; set; }
         [Display(Name = "Profile Picture")]
         public HttpPostedFileBase ProfilePicture { get; set; }
+        [Display(Name = "Upload Challan Image")]
+        public HttpPostedFileBase ChallanImage { get; set; }
         public string[] SelectedPrograms { get; set; }
+        [Display(Name = "Level")]
+        public Nullable<int> LevelID { get; set; }
+        [Display(Name = "Faculty")]
+        public Nullable<int> FacultyID { get; set; }
+
+        [Required(ErrorMessage = "Required")]
+        [Display(Name = "Guardian Cell #")]
+        public string GuardianCellNo { get; set; }
+        //[Required(ErrorMessage = "Required")]
+        [Display(Name = "Guardian Email")]
+        [EmailAddress(ErrorMessage = "Invalid Email")]
+        public string GuardianEmail { get; set; }
+
+        //custom fields
+        [Display(Name = "Newspaper")]
+        public string Newspaper { get; set; }
+        [Display(Name = "Internet")]
+        public string Internet { get; set; }
+        [Display(Name = "Friends/Relatives")]
+        public string FriendsRelatives { get; set; }
+        [Display(Name = "Student at Iqra")]
+        public string StudentAtIqra { get; set; }
+        [Display(Name = "Other")]
+        public string Other { get; set; }
+        [Display(Name = "How to know ?")]
+        public string HowToKnowAbout { get; set; }
+
+        [Display(Name = "Campus")]
+        public string ExCampus { get; set; }
+        [Display(Name = "Program")]
+        public string ExProgram { get; set; }
+        [Display(Name = "Registration No")]
+        public string ExRegistrationNo { get; set; }
+        [Display(Name = "Reason for Leaving")]
+        public string ExReasonForLeaving { get; set; }
+        [Display(Name = "Institution Attendend")]
+        public string TransferInstituteAttendend { get; set; }
+        [Display(Name = "Program")]
+        public string TransferProgram { get; set; }
+        [Display(Name = "CGPA")]
+        public string TransferCGPA { get; set; }
+        [Display(Name = "Credit Hours Completed")]
+        public string TransferCreditHoursCompleted { get; set; }
+        [Display(Name = "Reason for Leaving")]
+        public string TransferReasonForLeaving { get; set; }
+        [Display(Name = "Awaiting Result of")]
+        public string ResultAwaitingOf { get; set; }
+        [Display(Name = "Roll Number")]
+        public string ResultAwaitingRollNo { get; set; }
+        [Display(Name = "Board/University")]
+        public string ResultAwaitingBoardUniversity { get; set; }
+        [Display(Name = "Year")]
+        public string ResultAwaitingYear { get; set; }
+
+        public string ToEmail { get; set; }
+        [Display(Name = "Body")]
+        [DataType(DataType.MultilineText)]
+        public string EmailBody { get; set; }
+        [Display(Name = "Subject")]
+        public string EmailSubject { get; set; }
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "CC")]
+        public string EmailCC { get; set; }
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "BCC")]
+        public string EmailBCC { get; set; }
+
+        public string From { get; set; }
+
+        public string BatchID { get; set; }
+        public HttpPostedFileBase Attachment { get; set; }
+        public string type { get; set; }
+        public Nullable<int> EntryTestID { get; set; }
+        public Nullable<int> DrawingEntryTestID { get; set; }
+        public Nullable<int> InterviewID { get; set; }
+
+        public string ApplicantStatus { get; set; }
+		[Display(Name = "Province")]
+        public string Domicile { get; set; }
+		public string DisciplinaryIssue { get; set; }
+		public string FatherCNIC { get; set; }
+		public Nullable<int> NationalityID2 { get; set; }
+		public string ApplicantDisabled { get; set; }
+		public string DesignationID { get; set; }
+		public string OrganizationID { get; set; }
+		public string FatherOccupation { get; set; }
+		public string GuardianOccupation { get; set; }
+
+        public string ApplicantDistrictName { get; set; }
+        public string FatherCellNo { get; set; }
+        public string FatherPhoneNo { get; set; }
+        public string FatherAddress { get; set; }
+        public string Guardian2CellNo { get; set; }
+        public string Guardian2PhoneNo { get; set; }
+        public string Guardian2Occupation { get; set; }
+        public string Guardian2Address { get; set; }
+        public string Guardian2Name { get; set; }
+        public string GuardianPhoneNo { get; set; }
+        public string GuardianAddress { get; set; }
+        public string DisabilityText { get; set; }
+        public string Guardian2CNIC { get; set; }
+        public string OtherTextHowToKnow { get; set; }
+        public string CountryCode { get; set; }
+
 
         public virtual BatchProgram BatchProgram { get; set; }
         public virtual City City { get; set; }

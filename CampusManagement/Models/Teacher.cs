@@ -12,19 +12,13 @@ namespace CampusManagement.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Teacher
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Teacher()
-        {
-            this.TeachersCourseAllocations = new HashSet<TeachersCourseAllocation>();
-        }
-
         [Display(Name = "Teacher ID")]
         public int TeacherID { get; set; }
         [Required(ErrorMessage = "Required")]
-        [Display(Name = "Teacher Name")]
+        [Display(Name = "Lecturer Name")]
         public string TeacherName { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Father Name")]
@@ -64,11 +58,9 @@ namespace CampusManagement.Models
         public Nullable<int> ModifiedBy { get; set; }
     
         public virtual Designation Designation { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeachersCourseAllocation> TeachersCourseAllocations { get; set; }
     }
-
-    public class TeachersViewModel
+	
+	public class TeachersViewModel
     {
         public List<Teacher> Teachers { get; set; }
         public Teacher SelectedTeacher { get; set; }

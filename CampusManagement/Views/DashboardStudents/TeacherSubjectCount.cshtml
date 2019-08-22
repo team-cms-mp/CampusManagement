@@ -1,0 +1,128 @@
+﻿@model CampusManagement.Models.GetApplicantStudentSummaryForDashboard_Result
+@{
+    ViewBag.Title = "Dashboard";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<h2>Teacher Subjects count</h2>
+
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <script src="@Url.Content("~/assets/DashboardChart/Canvas.js")"></script>
+
+    <script>
+        
+        window.onload = function () {
+            var print = new CanvasJS.Chart("chartContainer7", {
+
+                exportEnabled: true,
+
+            });
+            print.render();
+
+        
+            /////Teache subjects countt///
+            var chart7 = new CanvasJS.Chart("chartContainer7", {
+                animationEnabled: true,
+                exportEnabled: true,
+                title: {
+                    text: "Teacher Subject Count"
+                },
+                legend: {
+                    //verticalAlign: "center",
+                    //horizontalAlign: "left",
+                    fontSize: 12,
+                    fontFamily: "Helvetica"
+                },
+
+                data: [{
+                    type: "column",
+                    startAngle:60,
+                    showInLegend: false,
+                    legendText: "{label} - {y}",
+
+                    indexLabelFontSize: 16,
+                    indexLabel: "{y}",
+                    toolTipContent: "<b>{label}</b> {y}",
+                    dataPoints: @Html.Raw(ViewBag.DataPoints7),
+                }]
+            });
+            chart7.render();
+
+        }
+    </script>
+</head>
+<body>
+
+@using (Html.BeginForm("FacultyDashboard", "DashboardStudents", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+ 
+   
+   
+    <br/>
+   
+
+    <div class="row" style="border-top: solid 1px #808080 !important;margin-bottom:40px">
+
+      
+        
+        
+        <div class="col-sm-12" style="margin-top:30px">
+
+            <div id="chartContainer7" style="height: 370px; width: 100%;"></div>
+
+
+        </div>
+    </div>
+}
+</body>
+</html> 
+<input type="hidden" id="hdnBatchID" name="hdnBatchID" value="@ViewBag.hdnBatchID" />
+<input type="hidden" id="hdnBatchProgramID" name="hdnBatchProgramID" value="@ViewBag.hdnBatchProgramID" />
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            
+            $("#BatchID").change(function () {
+                GetPrograms_by_FacultyLevelBatch();
+                $("#BatchProgramID").val(@ViewBag.hdnBatchProgramID);
+              
+            });
+
+            GetPrograms_by_FacultyLevelBatch();
+            $("#BatchProgramID").val(@ViewBag.hdnBatchProgramID);
+           
+        });
+
+        function GetPrograms_by_FacultyLevelBatch() {
+            
+            var BatchID = $("#BatchID").val();
+            $.ajax({
+                url: "@Url.Content("~/DashboardStudents/GetPrograms_by_FacultyLevelBatch")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ BatchID: +BatchID }),
+                success: function (result) {
+                    $("#BatchProgramID").html("");
+                    $("#BatchProgramID").append($('<option></option>').val("0").html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#BatchProgramID").append($('<option></option>').val(sem.BatchProgramID).html(sem.ProgramName));
+                    });
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                },
+            });
+        }
+    </script>
+}
+  
+
+@*//////////////test//////////////*@      
+  

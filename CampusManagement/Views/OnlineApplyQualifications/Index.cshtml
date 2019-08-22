@@ -2,9 +2,8 @@
 
 @{
     ViewBag.Title = "Applicant Qualifications";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
-
 
 @{
     if (Model.SelectedApplicantQualification != null)
@@ -24,112 +23,69 @@
     }
 }
 
-<table class="table">
-    <tr>
-        <th>
-        </th>
-        <th></th>
-        <th>Actions</th>
-    </tr>
-
-    @foreach (var item in Model.ApplicantQualifications)
-    {
-        <tr>
-            <td>
-                @{
-                    string docLink = "~/DegreeDocument/noimage.png";
-                    if (item.DegreeDocument != null)
-                    {
-                        docLink = item.DegreeDocument;
-                    }
-                }
-                <a href="@Url.Content(docLink)" target="_blank"><img src="@Url.Content(docLink)" style="width:125px; height:125px;" /></a>
-            </td>
-            <td>
-                <table class="table-striped">
-                    <tr>
-                        <td>
-                            <label class="control-label">@Html.DisplayNameFor(model => item.Degree.DegreeName) : </label>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Degree.DegreeName)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">@Html.DisplayNameFor(model => item.Institute.InstituteName) : </label>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Institute.InstituteName)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">@Html.DisplayNameFor(model => item.YearQualification) : </label>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.YearQualification)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">@Html.DisplayNameFor(model => item.InstituteCity) : </label>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.InstituteCity)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">@Html.DisplayNameFor(model => item.TotalMarks) : </label>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TotalMarks)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">@Html.DisplayNameFor(model => item.ObtainedMarks) : </label>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ObtainedMarks)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">@Html.DisplayNameFor(model => item.Percentage) : </label>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Percentage)
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Update", new { id = item.AppQualiID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.AppQualiID, FormNo = item.FormNo })
-            </td>
-        </tr>
-        }
-</table>
-
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $("#YearQualification").ForceNumericOnly();
-            $("#TotalMarks").ForceNumericWithDot();
-            $("#ObtainedMarks").ForceNumericWithDot();
+            $("#tab3").css("background", "#eee");
 
-            $("#TotalMarks").blur(function () {
-                CalculatePercentage("#TotalMarks", "#ObtainedMarks", "#Percentage");
-            });
+            var rowCount = $("#hdnRowCount").val();
+            for (i = 1; i <= rowCount; i++) {
+                $("#YearQualification_" + i).ForceNumericOnly();
+                $("#TotalMarks_" + i).ForceNumericOnly();
+                $("#ObtainedMarks_" + i).ForceNumericWithDot();
 
-            $("#ObtainedMarks").blur(function () {
-                CalculatePercentage("#TotalMarks", "#ObtainedMarks", "#Percentage");
-            });
+                $("#YearQualification_" + i).attr("maxlength", "4");
+                $("#TotalMarks_" + i).attr("maxlength", "4");
+                $("#ObtainedMarks_" + i).attr("maxlength", "5");
+
+                if($("#YearQualification_" + i).val() == "0")
+                {
+                    $("#YearQualification_" + i).val("");
+                }
+
+                if ($("#TotalMarks_" + i).val() == "0") {
+                    $("#TotalMarks_" + i).val("");
+                }
+
+                if ($("#ObtainedMarks_" + i).val() == "0") {
+                    $("#ObtainedMarks_" + i).val("");
+                }
+
+                if ($("#InstituteID_" + i).val() == "0") {
+                    $("#InstituteID_" + i).val("");
+                }
+            }
+            
+            var rowCount1 = 100 + parseInt($("#hdnRowCount1").val());
+            for (j = 100; j <= rowCount1; j++) {
+                $("#TotalMarks_" + j).ForceNumericOnly();
+                $("#ObtainedMarks_" + j).ForceNumericWithDot();
+
+                $("#TotalMarks_" + j).attr("maxlength", "4");
+                $("#ObtainedMarks_" + j).attr("maxlength", "5");
+
+                if ($("#TotalMarks_" + j).val() == "0") {
+                    $("#TotalMarks_" + j).val("");
+                }
+
+                if ($("#ObtainedMarks_" + j).val() == "0") {
+                    $("#ObtainedMarks_" + j).val("");
+                }
+            }
+
+            if ($("#DegreeDocument").val() != "") {
+                $("#imgView").attr("src", $('#DegreeDocument').val());
+            }
+            else {
+                $("#DegreeDocument").val("@Url.Content("~/DegreeDocument/noimage.png")");
+            }
         });
 
-        function CalculatePercentage(TotalMarks, ObtainedMarks, PercentageField) {
+        function CalculatePercentage(ControlID) {
+            var TotalMarks = "#TotalMarks" + ControlID.id.substring(ControlID.id.indexOf("_"), ControlID.id.length);
+            var ObtainedMarks = "#ObtainedMarks" + ControlID.id.substring(ControlID.id.indexOf("_"), ControlID.id.length);
+            var PercentageField = "#Percentage" + ControlID.id.substring(ControlID.id.indexOf("_"), ControlID.id.length);
+
             if ($(TotalMarks).val() != "" && $(ObtainedMarks).val() != ""
                 && $(TotalMarks).val() != "0" && $(ObtainedMarks).val() != "0") {
 
@@ -144,6 +100,7 @@
                 $(PercentageField).val(parseFloat(Percentage).toFixed(2));
             }
         }
+
     </script>
 }
 

@@ -11,7 +11,8 @@ namespace CampusManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class ChallanService
     {
         public int ChallanServiceID { get; set; }
@@ -19,7 +20,8 @@ namespace CampusManagement.Models
         public int CollegeServiceID { get; set; }
         public Nullable<int> Amount { get; set; }
         public Nullable<int> Quantity { get; set; }
-    
+        public Nullable<int> StudentServiceID { get; set; }
+
         public virtual Challan Challan { get; set; }
         public virtual CollegeService CollegeService { get; set; }
     }

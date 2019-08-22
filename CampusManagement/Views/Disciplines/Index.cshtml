@@ -1,0 +1,114 @@
+﻿@model CampusManagement.Models.DisciplineViewModel
+
+@{
+    ViewBag.Title = "Disciplines";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@{
+    if (Model.SelectedDiscipline != null)
+    {
+        if (Model.DisplayMode == "Delete")
+        {
+            Html.RenderPartial("Delete", Model.SelectedDiscipline);
+        }
+        else if (Model.DisplayMode == "ReadWrite")
+        {
+            Html.RenderPartial("Edit", Model.SelectedDiscipline);
+        }
+    }
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Create", new CampusManagement.Models.Discipline());
+    }
+}
+<div class="row">
+    <h2><span class="col-sm-12">List Of Cases</span></h2>
+</div>
+<hr style="border-top: 1px solid #6d9b90;" />
+<div>
+    @Html.ActionLink("Back to List", "ListOfDisciplines")
+</div><br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDiscipline.DisciplineDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDiscipline.StudentID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDiscipline.DisciplineCategoryID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDiscipline.DisciplineCommittedID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedDiscipline.StatusID)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.Disciplines)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisciplineDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisciplineCategory.DisciplineCategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisciplineCommitted.DisciplineCommittedName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status.StatusName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.DisciplineID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.DisciplineID })
+        </td>
+    </tr>
+    }
+
+</table>
+@section Scripts {
+    <script>
+            $(document).ready(function () {
+                GetStudentsList();
+            });
+
+            function GetStudentsList() {
+                $("#searchValue").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "@Url.Content("~/Disciplines/GetStudentsList")",
+                            datatype: 'json',
+                            data: { searchValue: $("#searchValue").val() },
+                            success: function (data) {
+                                response($.map($.parseJSON(data), function (item) {
+                                    return {
+                                        label: item.AddAppID + ":" + item.FormNo + ":" + item.FirstName + ":" + item.LastName + ":" + item.ACNIC,
+                                        value: item.AddAppID + ":" + item.FormNo + ":" + item.FirstName + ":" + item.LastName + ":" + item.ACNIC
+                                    };
+                                }));
+                            },
+                            error: function (xhr, status, error) {
+                                alert(xhr.error);
+                            }
+                        });
+                    },
+                    select: function (event, ui) {
+                        var splitted = ui.item.label.split(":");
+                        $("#StudentID").val(splitted[0]);
+                        $("#selectedValue").val(splitted[1]);
+                        
+                    }
+                });
+            }
+    </script>
+}

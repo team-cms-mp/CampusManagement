@@ -1,0 +1,33 @@
+﻿@model CampusManagement.Models.Challan
+@using (Html.BeginForm("Search", "ApplicantServices", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+       <hr style="border-top: 1px solid #6d9b90;" />
+    @Html.Partial("_MessageView")
+
+    <div class="row">
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.BatchID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("BatchID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BatchID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(model => model.BatchProgramID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("BatchProgramID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BatchProgramID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3 hidden">
+            @Html.LabelFor(model => model.YearSemesterNo, htmlAttributes: new { @class = "control-label" })
+            <input type="text" id="YearSemesterNo" name="YearSemesterNo" value="1" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-5">
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <a href="@Url.Content("~/ApplicantServices/StudentServicesAccumulate")" class="btn btn-primary">Refresh</a>
+            <a href="@Url.Content("~/ApplicantServices/StudentServicesAccumulateGenerated")" class="btn btn-primary">Generated Challans</a>
+        </div>
+    </div>
+}

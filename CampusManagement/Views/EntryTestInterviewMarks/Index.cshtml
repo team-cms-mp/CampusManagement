@@ -1,10 +1,13 @@
 ﻿@model CampusManagement.Models.GetSelectionCriteria_ResultViewModel
+@using CampusManagement.Models
 @{
     ViewBag.Title = "Entry Test/Interview Marks";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+
     if (Model.DisplayMode == "WriteOnly")
     {
         Html.RenderPartial("Search", new CampusManagement.Models.GetSelectionCriteria_Result());
@@ -23,6 +26,7 @@
 {
     @Html.AntiForgeryToken()
     <input type="hidden" name="hdnDegreeID" value="@ViewBag.hdnDegreeID" />
+    <input type="hidden" name="hdnBatchID" value="@ViewBag.hdnBatchID" />
     <input type="hidden" name="hdnBatchProgramID" value="@ViewBag.hdnBatchProgramID" />
     <input type="hidden" name="hdnFullName" value="@ViewBag.hdnFullName" />
     <input type="hidden" name="TotalRows" value="@Model.GetSelectionCriteria_Results.Count" />
@@ -43,6 +47,9 @@
             <th>
                 Obtained Marks
             </th>
+            <th>
+                Test #
+            </th>
         </tr>
 
         @foreach (var item in Model.GetSelectionCriteria_Results)
@@ -50,6 +57,7 @@
             string FormNoID = "txtFormNo_" + i;
             string TotalMarksID = "txtTotalMarks_" + i;
             string ObtainedMarksID = "txtObtainedMarks_" + i;
+            string EntryTestID = "cmbEntryTestID_" + i;
             <tr>
                 <td>
                     <input name="@FormNoID" type="hidden" value="@item.FormNo" class="form-control col-sm-1" readonly />
@@ -67,14 +75,32 @@
                 <td>
                     <input id="@ObtainedMarksID" name="@ObtainedMarksID" value="@item.ObtainedMarks" class="form-control col-sm-1 dummyClassObtainedMarks" />
                 </td>
+                <td>
+                    <select id="@EntryTestID" name="@EntryTestID" value="@item.EntryTestID" class="form-control col-sm-1" disabled>
+                        @{
+                            Applicant ap = dbc.Applicants.FirstOrDefault(a => a.FormNo == item.FormNo);
+                            <option value="0">--Select--</option>
+                            foreach (var itemEntryTest in dbc.EntryTests)
+                            {
+                                if (ap.EntryTestID == itemEntryTest.EntryTestID)
+                                {
+                                    <option value="@itemEntryTest.EntryTestID" selected>@itemEntryTest.EntryTestName</option>
+                                }
+                                else
+                                { 
+                                    <option value="@itemEntryTest.EntryTestID">@itemEntryTest.EntryTestName</option>
+                                }
+                            }
+                        }
+                    </select>
+                </td>
             </tr>
             i++;
         }
     </table>
     <div class="row">
         <div class="col-sm-12">
-            <input type="submit" value="Save All" class="btn btn-success" />
-            <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rpt_MeritList&IsBlank=false&BatchProgramID=")@ViewBag.hdnBatchProgramID" class="btn btn-success" target="_blank">Merit List Report</a>
+            <input type="submit" value="Save All" class="btn btn-primary" />
         </div>
     </div>
 }
@@ -82,6 +108,30 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
+            $("#DegreeID").val("22");
+            GetPrograms_by_FacultyLevelBatch();
+            GetEntryTestsByDegreeID();
+            if ("@ViewBag.hdnBatchProgramID" != "")
+            {
+                $("#BatchProgramID").val("@ViewBag.hdnBatchProgramID");
+            }
+
+            if ("@ViewBag.hdnDegreeID" != "") {
+                $("#DegreeID").val("@ViewBag.hdnDegreeID");
+                GetEntryTestsByDegreeID();
+                if ("@ViewBag.hdnEntryTestID" != "") {
+                    $("#EntryTestID").val("@ViewBag.hdnEntryTestID");
+                }
+            }
+
+            $("#BatchID").change(function () {
+                GetPrograms_by_FacultyLevelBatch();
+            });
+
+            $("#DegreeID").change(function () {
+                GetEntryTestsByDegreeID();
+            });
+
             var dummyClassTotalMarks = $(".dummyClassTotalMarks");
             var dummyClassObtainedMarks = $(".dummyClassObtainedMarks");
             for (var j = 0; j < dummyClassTotalMarks.length; j++) {
@@ -115,5 +165,48 @@
                 }
             });
         });
+
+        function GetPrograms_by_FacultyLevelBatch() {
+            var BatchID = $("#BatchID").val();
+            $.ajax({
+                url: "@Url.Content("~/EntryTestInterviewMarks/GetPrograms_by_FacultyLevelBatch")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ BatchID: +BatchID }),
+                success: function (result) {
+                    $("#BatchProgramID").html("");
+                    $("#BatchProgramID").append($('<option></option>').val("0").html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#BatchProgramID").append($('<option></option>').val(sem.BatchProgramID).html(sem.ProgramName));
+                    });
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                },
+            });
+        }
+
+        function GetEntryTestsByDegreeID() {
+            var DegreeID = $("#DegreeID").val();
+            $.ajax({
+                url: "@Url.Content("~/EntryTestInterviewMarks/GetEntryTestsByDegreeID")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                data: JSON.stringify({ DegreeID: +DegreeID }),
+                success: function (result) {
+                    $("#EntryTestID").html("");
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#EntryTestID").append($('<option></option>').val(sem.EntryTestID).html(sem.EntryTestName));
+                    });
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                },
+            });
+        }
     </script>
 }

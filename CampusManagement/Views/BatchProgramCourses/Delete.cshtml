@@ -1,40 +1,68 @@
-﻿@model CampusManagement.Models.BatchProgramCourse
+﻿@model CampusManagement.Models.GetBatchProgramCourses_Result
 @using CampusManagement.Models
 <h4 class="alert alert-info">Are you sure you want to delete this?</h4>
 
 <div>
     <dl class="dl-horizontal">
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.BatchProgramID)</label>
+            <label class="control-label">Session</label>
         </dt>
 
         <dd>
-            @{
-                ModelCMSContainer dbView = new ModelCMSContainer();
-                GetBatchProgramNameConcat_Result bpn = dbView.GetBatchProgramNameConcat("", 0).FirstOrDefault(b => b.ID == Model.BatchProgramID);
-                string bpName = "";
-                if (bpn != null)
-                {
-                    bpName = bpn.Name;
-                }
-            }
-            @Html.Raw(bpName)
+            @Html.DisplayFor(model => model.BatchName)
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.Course.CourseName)</label>
+            <label class="control-label">Program</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Course.CourseName)
+            @Html.DisplayFor(model => model.ProgramName)
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.Course.CourseName)</label>
+            <label class="control-label">Subject</label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Course.CourseName)
+            @Html.DisplayFor(model => model.CourseName)
+        </dd>
+
+        <dt>
+            <label class="control-label">Subject Type</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseTypeName)
+        </dd>
+        <dt>
+            <label class="control-label">Section</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SectionName)
+        </dd>
+        <dt>
+            <label class="control-label">Lecture Room</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LectureRoomName)
+        </dd>
+        <dt>
+            <label class="control-label">Per Week Lecure Count</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PerWeekLectureCount)
+        </dd>
+
+        <dt>
+            <label class="control-label">Per Week Lab Count</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model =>model.PerWeekLabCount)
         </dd>
 
         <dt>
@@ -46,15 +74,7 @@
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.CourseType.CourseTypeName)</label>
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseType.CourseTypeName)
-        </dd>
-
-        <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.IsActive)</label>
+            <label class="control-label">Is Active</label>
         </dt>
 
         <dd>
@@ -62,7 +82,7 @@
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.CreatedOn)</label>
+            <label class="control-label">Created On</label>
         </dt>
 
         <dd>
@@ -70,7 +90,7 @@
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.CreatedBy)</label>
+            <label class="control-label">Created By</label>
         </dt>
 
         <dd>
@@ -78,14 +98,14 @@
         </dd>
 
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.ModifiedOn)</label>
+            <label class="control-label">Modified On</label>
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.ModifiedOn)
         </dd>
         <dt>
-            <label class="control-label">@Html.DisplayNameFor(model => model.ModifiedBy)</label>
+            <label class="control-label">Modified By</label>
         </dt>
 
         <dd>
@@ -99,8 +119,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-success" />
-            <a href="@Url.Content("~/BatchProgramCourses/Index")" class="btn btn-success">Cancel</a>
+            <input type="submit" value="Delete" class="btn btn-primary" />
+            <a href="@Url.Content("~/BatchProgramCourses/Index")" class="btn btn-primary">Cancel</a>
         </div>
     }
 </div>

@@ -1,0 +1,93 @@
+﻿@model CampusManagement.Models.ScholarshipOpportunitie
+
+@{
+    ViewBag.Title = "Scholarship Detail";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<script type="text/javascript"
+        src="https://viralpatel.net/blogs/demo/jquery/jquery.shorten.1.0.js"></script>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            <label>Scholarship Image</label>
+        </dt>
+
+        <dd>
+           
+            <a href="@Url.Content(Model.ScholarshipImagePath)"  target="_blank"><img id="imgView" src="@Url.Content(Model.ScholarshipImagePath)" style="width:100px;height:100px;border-radius:10px;" /></a>
+         
+        </dd>
+       
+        <dt >
+            <br />
+      
+            <label>Scholarship Title</label>
+            
+        </dt>
+
+        <dd>
+            <br />
+           
+            @Html.DisplayFor(model => model.ScholarshipTitle)
+        </dd>
+
+        <dt >
+            <br />
+            <label>DeadLine</label>
+          
+        </dt>
+
+        <dd>
+            <br />
+            @Html.DisplayFor(model => model.DeadLine)
+        </dd>
+
+        <dt>
+            <br />
+            <label>Scholarship Description</label>
+            
+        </dt>
+
+        <dd class="comment">
+            <br />
+            @Html.DisplayFor(model => model.ScholarshipDescription)
+        </dd>
+
+        <dt>
+            <br />
+            <label>How To Qualify</label>
+            
+        </dt>
+
+        <dd class="comment">
+            <br />
+            @Html.DisplayFor(model => model.HowToQualify)
+        </dd>
+
+        <dt>
+            <br />
+            <label>Eligibility Description</label>
+       
+        </dt>
+
+        <dd class="comment">
+            <br />
+            @Html.DisplayFor(model => model.EligibilityDescription)
+        </dd>
+    </dl>
+    <a href="@Url.Content("~/ScholarshipOpportunities/Index")" class="btn btn-primary">Cancel</a>
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+	    $(".comment").shorten({
+	        "showChars": 50,
+	        "moreText": "Read More",
+	        "lessText": "Less",
+	    });
+
+	});
+</script>

@@ -12,6 +12,7 @@ namespace CampusManagement.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     public partial class TeachersCourseAllocation
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -38,7 +39,6 @@ namespace CampusManagement.Models
         public Nullable<int> ModifiedBy { get; set; }
 
         public virtual BatchProgramCourse BatchProgramCourse { get; set; }
-        public virtual Teacher Teacher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TimeSlotCourseAllocation> TimeSlotCourseAllocations { get; set; }
     }

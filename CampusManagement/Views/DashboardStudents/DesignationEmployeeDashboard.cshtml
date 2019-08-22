@@ -1,0 +1,88 @@
+﻿@model CampusManagement.Models.GetAttandanceStudentSummaryForDashboard_Result
+@{
+    ViewBag.Title = "Employee Dashboard";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<h2>Designation wise Lecturers</h2>
+
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <script src="@Url.Content("~/assets/DashboardChart/Canvas.js")"></script>
+
+    <script>
+    
+        window.onload = function () {
+            //-Designation wise Teacher Summary
+            var print = new CanvasJS.Chart("chartContainer8", {
+
+                exportEnabled: true,
+
+            });
+            print.render();
+
+            var chart8 = new CanvasJS.Chart("chartContainer8", {
+
+                exportEnabled: true,
+                title: {
+                    text: "Designation wise Lecturers "
+                },
+
+                legend: {
+
+                    //verticalAlign: "center",
+                    //horizontalAlign: "left",
+                    fontSize:12,
+                    fontFamily: "Helvetica",
+
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 60,
+                    showInLegend: true,
+                    legendText: "{label}-{y}",
+                    indexLabelFontSize: 16,
+                    indexLabel: " {label}-{y}",
+                    toolTipContent: "<b>{label}:</b> {y}",
+
+                    dataPoints: @Html.Raw(ViewBag.DataPoints8),
+                }],
+
+
+
+            });
+            chart8.render();
+        }
+    </script>
+</head>
+<body>
+
+    @using (Html.BeginForm("DesignationEmployeeDashboard", "DashboardStudents", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+
+        <br />
+        <div class="row" style="border-top: solid 1px #808080 !important;margin-bottom:40px">
+
+            <div class="col-sm-12" style="margin-top:30px">
+                <div class="col-sm-12">
+                    <div id="chartContainer8" style="height: 370px; width: 100%;"></div>
+                </div>
+              
+            </div>
+            
+        </div>
+    }
+</body>
+</html>
+
+
+
+
+@*//////////////test//////////////*@

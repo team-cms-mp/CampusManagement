@@ -18,7 +18,6 @@ namespace CampusManagement.Models
         public int AppQualiID { get; set; }
         [Display(Name = "Degree")]
         public int DegreeID { get; set; }
-        [Required(ErrorMessage = "Required")]
         [Display(Name = "Roll #")]
         public string RollNO { get; set; }
         [Display(Name = "Registration #")]
@@ -54,11 +53,43 @@ namespace CampusManagement.Models
         public string DegreeDocument { get; set; }
         [Display(Name = "Upload Document")]
         public HttpPostedFileBase UploadDocument { get; set; }
+        [Display(Name = "Institute Name")]
+        public string InstituteName { get; set; }
+
+        [Display(Name = "Level")]
+        public Nullable<int> LevelID { get; set; }
+        [Display(Name = "Faculty / Departments")]
+        public Nullable<int> FacultyID { get; set; }
+       
+        [Display(Name = "Program Preference 1")]
+        public Nullable<int> BatchProgramID1 { get; set; }
+        [Display(Name = "Program Preference 2")]
+        public Nullable<int> BatchProgramID2 { get; set; }
+        [Display(Name = "Program Preference 3")]
+        public Nullable<int> BatchProgramID3 { get; set; }
+        [Display(Name = "Program Preference 4")]
+        public Nullable<int> BatchProgramID4 { get; set; }
+        [Display(Name = "Session")]
+        public Nullable<int> BatchID { get; set; }
+        /// <summary>
+        /// custom fields
+        /// </summary>
+
+        [Display(Name = "Faculty / Departments")]
+        public Nullable<int> FacultyID1 { get; set; }
+        [Display(Name = "Faculty / Departments")]
+        public Nullable<int> FacultyID2 { get; set; }
+
+        public string DegreeTitle { get; set; }
+        public Nullable<int> CompleteResultAwaitedID { get; set; }
+        public string ValidUpTo { get; set; }
+
 
         public virtual Applicant Applicant { get; set; }
         public virtual Degree Degree { get; set; }
         public virtual Institute Institute { get; set; }
     }
+
     public class ApplicantQualificationViewModel
     {
         public List<ApplicantQualification> ApplicantQualifications { get; set; }

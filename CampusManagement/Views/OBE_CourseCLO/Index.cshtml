@@ -1,0 +1,217 @@
+﻿@model PagedList.IPagedList<CampusManagement.Models.GetAllOBE_CourseCLO_Result>
+@using PagedList.Mvc;
+@using CampusManagement.Models
+@{
+    ViewBag.Title = "Course CLO";
+    //Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
+}
+
+
+<div class="row">
+    <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
+</div>
+
+<hr style="border-top: 1px solid #6d9b90;" />
+
+<fieldset class="box-border">
+    <legend class="box-border">Search</legend>
+    <div class="control-group">
+        @Html.Partial("_MessageView")
+        @using (Html.BeginForm("Index", "OBE_CourseCLO", FormMethod.Post))
+        {
+            <div class="row" style="margin-top: -4em;margin-bottom: -2em;">
+
+
+                <div class="col-sm-3">
+                    <label>Course</label>
+                    @Html.DropDownList("CourseID", null, htmlAttributes: new { @class = "form-control" })
+
+                </div>
+                <div class="col-sm-3">
+                    <label>CLO Name </label>
+                    @Html.TextBox("CLOName", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+                <div class="col-sm-3">
+                    <label>CLO Code </label>
+                    @Html.TextBox("CLOCode", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+                <div class="col-sm-1 " style="margin-top:25px;">
+                    <button type="submit" class="btn btn-primary" value="Search">
+                        <span class="glyphicon glyphicon-search"></span> Search
+                    </button>
+
+                </div>
+            </div>
+        }
+        <br />
+    </div>
+</fieldset>
+
+<div class="row" style="margin-top:20px">
+
+    <div class="col-sm-1 pull-right">
+        <!-- small box -->
+        <a href="@Url.Action("Create", "OBE_CourseCLO")" data-toggle="tooltip" title="Add New Program PLO">
+            <img src="~/assets/img/icons/addnew.png" width="40" height="40">
+        </a>
+
+    </div>
+
+    @*<div class="col-sm-1 pull-right">
+            <button type="submit" class="btn btn-primary" value="Save">
+                Add New
+            </button>
+        </div>*@
+</div>
+<fieldset class="boxpanel-border">
+    <legend class="boxpanel-border">Course CLO's Section</legend>
+    <div class="control-group">
+        <br />
+
+        <input id='CourseID' name='CourseID' type="hidden" value='@ViewBag.hdnCourseID' />
+        @*<div class="col-sm-1 inner-addon right-addon">
+                <select id="pageSize" name="pageSize" class="form-control" onchange="redirect(this.value)" value="@ViewBag.pageSize" style="padding: 7px;">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+            </div>*@
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        <table class="table" id="tblEligiblestudents" name="tblEligiblestudents">
+            <tr>
+                <th>CLO Code</th>
+                <th>CLO Name</th>
+                <th>Course Name</th>
+                <th>Description</th>
+                <th>IsActive</th>
+                <th>Actions</th>
+            </tr>
+            @{ int i = 0; }
+            @foreach (var item in Model)
+                {
+           
+
+                @Html.HiddenFor(model => item.CLOCode)
+                @Html.HiddenFor(model => item.CLOID)
+                @Html.HiddenFor(model => item.CLOName)
+                @Html.HiddenFor(model => item.CourseID)
+                @Html.HiddenFor(model => item.CourseName)
+                @Html.HiddenFor(model => item.Description)
+                @Html.HiddenFor(model => item.CreatedOn)
+                @Html.HiddenFor(model => item.CreatedBy)
+                @Html.HiddenFor(model => item.IsActive)
+               
+
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CLOCode)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CLOName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CLOID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.CLOID })
+                    </td>
+                </tr>
+            }
+
+
+        </table>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+
+    </div>
+</fieldset>
+
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $("#pageSize").val("@ViewBag.pageSize");
+
+            GetCources();
+            // $("#BatchProgramID").val(@ViewBag.hdnProgramID);
+
+        });
+
+        function GetCources() {
+            //var BatchID = $("#BatchID").val();
+            $.ajax({
+                url: "@Url.Content("~/OBE_CourseCLO/GetCources")",
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                async: false,
+                //data: JSON.stringify({ BatchID: +BatchID }),
+                success: function (result) {
+                    $("#CourseID").html("");
+                    // $("#BatchProgramID").append($('<option></option>').val("0").html("--Please Select--"));
+                    $.each($.parseJSON(result), function (i, sem) {
+                        $("#CourseID").append($('<option></option>').val(sem.CourseID).html(sem.CourseName));
+                    });
+                    $("#CourseID").val(@ViewBag.hdnCourseID)
+                },
+                error: function (ex) {
+                    alert(ex.error);
+                },
+            });
+        }
+
+
+
+        function redirect(dropDownValue) {
+            window.location.href = '/Applicants/Index?page = 1&pageSize=' + dropDownValue;
+        }
+    </script>
+    <style>
+        fieldset.box-border {
+            border: 1px groove #ddd !important;
+            padding: 0 1.4em 0 1.4em !important;
+            margin: 0 0 1.5em 0 !important;
+            -webkit-box-shadow: 0px 0px 0px 0px #000;
+            box-shadow: 0px 0px 0px 0px #000;
+        }
+
+        legend.box-border {
+            font-size: 1.2em !important;
+            font-weight: bold !important;
+            text-align: left !important;
+        }
+
+        fieldset.boxpanel-border {
+            border: 1px groove #ddd !important;
+            padding: 0 1.4em 0 1.4em !important;
+            margin: 0 0 1.5em 0 !important;
+            -webkit-box-shadow: 0px 0px 0px 0px #000;
+            box-shadow: 0px 0px 0px 0px #000;
+        }
+
+        legend.boxpanel-border {
+            font-size: 1.2em !important;
+            font-weight: bold !important;
+            text-align: left !important;
+        }
+    </style>
+
+}

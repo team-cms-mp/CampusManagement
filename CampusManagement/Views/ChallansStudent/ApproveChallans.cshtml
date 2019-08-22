@@ -1,0 +1,178 @@
+﻿@model CampusManagement.Models.ChallansViewModel
+@{
+    ViewBag.Title = "Approve Challans";
+    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<div>
+    <a href="/Finance/Invoicing" class="btn btn-primary pull-right">Back</a>
+</div>
+
+@{
+    if (Model.DisplayMode == "WriteOnly")
+    {
+        Html.RenderPartial("Search", new CampusManagement.Models.Challan());
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>Form #</th>
+        <th>Student Name</th>
+        <th>Challan ID</th>
+        <th>Issue Date</th>
+        <th>Last Date</th>
+        <th>Amount</th>
+        <th>Deposit Date</th>
+        <th>Approve</th>
+        <th>Challan</th>
+    </tr>
+    @foreach (var item in Model.Challans)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChallanID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @{
+                    if (item.DepositDate != null)
+                    {
+                        @Html.Raw(item.DepositDate)
+                    }
+                    else
+                    {
+                        string inputName = string.Concat("dDate", item.ChallanID);
+                        string spanName = string.Concat("span", item.ChallanID);
+                        <input id="@inputName" class="form-control" style="width:100px;" placeholder="mm/dd/yyyy" type="date" required />
+                        <span id="@spanName" style="color:red;"></span>
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (item.IsDeposited == "Yes")
+                    {
+                        <span style="color:green; font-weight:bold;">Approved</span>
+                    }
+                    else
+                    {
+                        <input type="button" class="btn btn-primary" value="Approve" onclick="ApproveStudentChallan(@item.ChallanID);" />
+                    }
+                }
+            </td>
+            <td>
+                <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?Type=Student&ReportName=rptGetChallan&ChallanID=")@item.ChallanID" target="_blank">Challan</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<input type="hidden" id="hdnBatchID" name="hdnBatchID" value="@ViewBag.hdnBatchID" />
+<input type="hidden" id="hdnBatchProgramID" name="hdnBatchProgramID" value="@ViewBag.hdnBatchProgramID" />
+<input type="hidden" id="hdnYearSemesterNo" name="hdnYearSemesterNo" value="@ViewBag.hdnYearSemesterNo" />
+
+@section Scripts {
+<script>
+    $(document).ready(function () {
+        GetPrograms_by_FacultyLevelBatch();
+        $("#BatchProgramID").val(@ViewBag.hdnBatchProgramID);
+        GetBatchProgramSemesterList();
+        $("#YearSemesterNo").val(@ViewBag.hdnYearSemesterNo);
+
+        $("#BatchID").change(function () {
+            GetPrograms_by_FacultyLevelBatch();
+            $("#BatchProgramID").val(@ViewBag.hdnBatchProgramID);
+            GetBatchProgramSemesterList();
+            $("#YearSemesterNo").val(@ViewBag.hdnYearSemesterNo);
+        });
+
+        $("#BatchProgramID").change(function () {
+            GetBatchProgramSemesterList();
+            $("#YearSemesterNo").val(@ViewBag.hdnYearSemesterNo);
+        });
+    });
+
+    function GetBatchProgramSemesterList() {
+        var BatchProgramID = $("#BatchProgramID").val();
+        $.ajax({
+            url: "@Url.Content("~/ChallansStudent/GetBatchProgramSemesterList")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ BatchProgramID: +BatchProgramID }),
+            success: function (result) {
+                $("#YearSemesterNo").html("");
+                $.each($.parseJSON(result), function (i, sem) {
+                    $("#YearSemesterNo").append($('<option></option>').val(sem.YearSemesterNo).html(sem.YearSemesterNo));
+                });
+            },
+            error: function (ex) {
+                alert(ex.error);
+            },
+        });
+    }
+
+    function ApproveStudentChallan(ChallanID) {
+        var depositDate = $("#dDate" + ChallanID).val();
+        $.ajax({
+            url: "@Url.Content("~/ChallansStudent/ApproveStudentChallan")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ ChallanID: +ChallanID, depositDate: depositDate }),
+            success: function (result) {
+                if (result != "success" && result != "error") {
+                    $("#span" + ChallanID).html(result);
+                }
+                else if (result == "success") {
+                    window.location = "@Url.Content("~/ChallansStudent/ApproveChallans?")";
+                }
+            },
+            error: function (ex) {
+                alert(ex.error);
+            },
+        });
+    }
+
+    function GetPrograms_by_FacultyLevelBatch() {
+
+        var BatchID = $("#BatchID").val();
+        $.ajax({
+            url: "@Url.Content("~/ChallansStudent/GetPrograms_by_FacultyLevelBatch")",
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            async: false,
+            data: JSON.stringify({ BatchID: +BatchID }),
+            success: function (result) {
+                $("#BatchProgramID").html("");
+                $("#BatchProgramID").append($('<option></option>').val("0").html("--Please Select--"));
+                $.each($.parseJSON(result), function (i, sem) {
+                    $("#BatchProgramID").append($('<option></option>').val(sem.BatchProgramID).html(sem.ProgramName));
+                });
+            },
+            error: function (ex) {
+                alert(ex.error);
+            },
+        });
+    }
+</script>
+}
+

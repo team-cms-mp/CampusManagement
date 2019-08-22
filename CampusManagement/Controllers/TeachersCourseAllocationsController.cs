@@ -9,13 +9,15 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CampusManagement.Models;
+using CampusManagement.App_Code;
+using Newtonsoft.Json;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
+    [Authorize]
     public class TeachersCourseAllocationsController : Controller
     {
-        private ModelCMSContainer db = new ModelCMSContainer();
+        private ModelCMSNewContainer db = new ModelCMSNewContainer();
         TeachersCourseAllocationsViewModel model = new TeachersCourseAllocationsViewModel();
 
         public ActionResult Index()
@@ -25,7 +27,7 @@ namespace CampusManagement.Controllers
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.ProgramCourseID = new SelectList(db.GetBatchProgramNameConcat("", 1), "ID", "Name");
-            ViewBag.TeacherID = new SelectList(db.Teachers, "TeacherID", "TeacherName");
+            
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View(model);
@@ -39,7 +41,7 @@ namespace CampusManagement.Controllers
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.ProgramCourseID = new SelectList(db.GetBatchProgramNameConcat("", 1), "ID", "Name");
-            ViewBag.TeacherID = new SelectList(db.Teachers, "TeacherID", "TeacherName");
+            
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -60,8 +62,7 @@ namespace CampusManagement.Controllers
                 if (tc != null)
                 {
                     ViewBag.MessageType = "error";
-                    ViewBag.Message = "Selected Teacher Course is already exists.";
-                    ModelState.AddModelError(string.Empty, "Selected Teacher Course is already exists.");
+                    ViewBag.Message = "Selected Subject is already assigned to the selected Lecturer.";
                 }
                 else
                 {
@@ -78,7 +79,6 @@ namespace CampusManagement.Controllers
                     {
                         ViewBag.MessageType = "error";
                         ViewBag.Message = ex.Message;
-                        ModelState.AddModelError(string.Empty, ex.Message);
                     }
                 }
             }
@@ -102,7 +102,6 @@ namespace CampusManagement.Controllers
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", teachersCourseAllocation.IsActive);
             ViewBag.ProgramCourseID = new SelectList(db.GetBatchProgramNameConcat("", 1), "ID", "Name", teachersCourseAllocation.ProgramCourseID);
-            ViewBag.TeacherID = new SelectList(db.Teachers, "TeacherID", "TeacherName", teachersCourseAllocation.TeacherID);
             return View("Index", model);
         }
 
@@ -124,7 +123,7 @@ namespace CampusManagement.Controllers
             model.DisplayMode = "ReadWrite";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", teachersCourseAllocation.IsActive);
             ViewBag.ProgramCourseID = new SelectList(db.GetBatchProgramNameConcat("", 1), "ID", "Name", teachersCourseAllocation.ProgramCourseID);
-            ViewBag.TeacherID = new SelectList(db.Teachers, "TeacherID", "TeacherName", teachersCourseAllocation.TeacherID);
+
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -174,7 +173,6 @@ namespace CampusManagement.Controllers
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", teachersCourseAllocation.IsActive);
             ViewBag.ProgramCourseID = new SelectList(db.GetBatchProgramNameConcat("", 1), "ID", "Name", teachersCourseAllocation.ProgramCourseID);
-            ViewBag.TeacherID = new SelectList(db.Teachers, "TeacherID", "TeacherName", teachersCourseAllocation.TeacherID);
             return View("Index", model);
         }
 
@@ -192,6 +190,7 @@ namespace CampusManagement.Controllers
 
             model.TeachersCourseAllocations = db.TeachersCourseAllocations.OrderByDescending(t => t.TCourseAllocationID).ToList();
             model.SelectedTeachersCourseAllocation = teachersCourseAllocation;
+            ViewBag.ProgramCourseID = new SelectList(db.GetBatchProgramNameConcat("", 1), "ID", "Name", teachersCourseAllocation.ProgramCourseID);
             model.DisplayMode = "Delete";
             ViewBag.MessageType = "";
             ViewBag.Message = "";
@@ -221,8 +220,36 @@ namespace CampusManagement.Controllers
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.ProgramCourseID = new SelectList(db.GetBatchProgramNameConcat("", 1), "ID", "Name");
-            ViewBag.TeacherID = new SelectList(db.Teachers, "TeacherID", "TeacherName");
+            
             return View("Index", model);
+        }
+
+        public JsonResult GetSubDepartment()
+        {
+            List<GetSubDepartments_by_HospitalID_Result> lstDept = new List<GetSubDepartments_by_HospitalID_Result>();
+
+            lstDept = CommonFunctions.GetSubDepartments(MvcApplication.Hospital_ID).ToList();
+            var depts = lstDept.Select(S => new
+            {
+                SubDept_Id = S.SubDept_Id,
+                SubDept_Name = S.SubDept_Name,
+            });
+            string result = JsonConvert.SerializeObject(depts, Formatting.Indented);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult um_GetEmployeesForSubjectAllocation(int SubDeptId)
+        {
+            List<um_GetEmployeesForSubjectAllocation_Result> lstEmp = new List<um_GetEmployeesForSubjectAllocation_Result>();
+
+            lstEmp = db.um_GetEmployeesForSubjectAllocation(1).Where(e => e.SubDeptId == SubDeptId).ToList();
+            var emps = lstEmp.Select(S => new
+            {
+                EmpID = S.EmpID,
+                EmployeeName = S.EmployeeName,
+            });
+            string result = JsonConvert.SerializeObject(emps, Formatting.Indented);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

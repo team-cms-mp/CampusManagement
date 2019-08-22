@@ -1,0 +1,50 @@
+﻿@model CampusManagement.Models.QRCode
+
+@{
+    ViewBag.Title = "Generate";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="row">
+            <h2><span class="col-sm-12">Generate QR Code</span></h2>
+        </div>
+        <hr style="border-top: 1px solid #6d9b90;" />
+        @Html.Partial("_MessageView")
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.QRCodeURL, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.QRCodeURL, new { htmlAttributes = new { @class = "form-control", @required = true } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.QRCodeImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @if (Model != null && !String.IsNullOrEmpty(Model.QRCodeImagePath))
+                {
+                    <img src="@Url.Content(Model.QRCodeImagePath)" alt="Image" />
+                }
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Read QR Code", "Read")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

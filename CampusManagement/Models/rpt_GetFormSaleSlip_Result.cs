@@ -19,7 +19,9 @@ namespace CampusManagement.Models
         public string FormPrice { get; set; }
         public string FormTypeName { get; set; }
         public string DepositTypeName { get; set; }
-        public Nullable<System.DateTime> PurchaseDate { get; set; }
+        public string PurchaseDate { get; set; }
         public string CNIC { get; set; }
+        public string BatchName { get; set; }
+        public string ProgramName { get; set; }
     }
 }
