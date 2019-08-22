@@ -1,4 +1,4 @@
-﻿@model CampusManagement.Models.GetSelectionCriterias_Result
+﻿@model CampusManagement.Models.SelectionCriteria
 
 @using (Html.BeginForm("Create", "SelectionCriterias", FormMethod.Post))
 {
@@ -7,7 +7,7 @@
     <div class="row">
         <h2><span class="col-sm-12">Add Selection Criteria</span></h2>
     </div>
-    <hr style="border-top: 1px solid #6d9b90;" />
+    <hr style=" border-top: 1px solid #6d9b90;" />
     @Html.Partial("_MessageView")
 
     <div class="row">
@@ -37,8 +37,8 @@
     <br />
     <div class="row">
         <div class="col-sm-3">
-            <input type="submit" value="Add" class="btn btn-primary" />
-            <a href="@Url.Content("~/SelectionCriterias/Index")" class="btn btn-primary">Refresh</a>
+            <input type="submit" value="Add" class="btn btn-success" />
+            <a href="@Url.Content("~/SelectionCriterias/Index")" class="btn btn-success">Refresh</a>
         </div>
     </div>
    

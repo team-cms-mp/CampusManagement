@@ -12,10 +12,10 @@ using CampusManagement.Models;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
     public class TimeSlotCourseAllocationsController : Controller
     {
-        private ModelCMSNewContainer db = new ModelCMSNewContainer();
+        private ModelCMSContainer db = new ModelCMSContainer();
         TimeSlotCourseAllocationsViewModel model = new TimeSlotCourseAllocationsViewModel();
 
         public ActionResult Index()

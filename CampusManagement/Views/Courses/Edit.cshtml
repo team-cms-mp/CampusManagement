@@ -7,36 +7,26 @@
     <div class="row">
         <h2><span class="col-sm-12">Edit Course</span></h2>
     </div>
-    <hr style="border-top: 1px solid #6d9b90;" />
+    <hr style=" border-top: 1px solid #6d9b90;" />
     @Html.HiddenFor(model => model.CourseID)
 
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             @Html.LabelFor(model => model.CourseName, htmlAttributes: new { @class = "control-label" })
             @Html.EditorFor(model => model.CourseName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.CourseName, "", new { @class = "text-danger" })
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             @Html.LabelFor(model => model.CourseCode, htmlAttributes: new { @class = "control-label" })
             @Html.EditorFor(model => model.CourseCode, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.CourseCode, "", new { @class = "text-danger" })
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             @Html.LabelFor(model => model.CreditHours, htmlAttributes: new { @class = "control-label" })
             @Html.EditorFor(model => model.CreditHours, new { htmlAttributes = new { @class = "form-control", type = "number" } })
             @Html.ValidationMessageFor(model => model.CreditHours, "", new { @class = "text-danger" })
         </div>
-        <div class="col-sm-4">
-            @Html.LabelFor(model => model.TotalLabCount, "Total Lab Count", htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.TotalLabCount, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.TotalLabCount, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-4">
-            @Html.LabelFor(model => model.TotalLectureCount, "Total Lecture Count", htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.TotalLectureCount, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.TotalLectureCount, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
@@ -52,8 +42,8 @@
     <br />
     <div class="row">
         <div class="col-sm-3">
-            <input type="submit" value="Save" class="btn btn-primary" />
-            <a href="@Url.Content("~/Courses/Index")" class="btn btn-primary">Cancel</a>
+            <input type="submit" value="Save" class="btn btn-success" />
+            <a href="@Url.Content("~/Courses/Index")" class="btn btn-success">Cancel</a>
         </div>
     </div>
 }

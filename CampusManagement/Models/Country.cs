@@ -40,8 +40,6 @@ namespace CampusManagement.Models
         [Display(Name = "Modified By")]
         public Nullable<int> ModifiedBy { get; set; }
         public string FlagURL { get; set; }
-        [Display(Name = "Country Code")]
-        public string CountryCode { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Applicant> Applicants { get; set; }

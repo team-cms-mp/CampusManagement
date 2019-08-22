@@ -1,8 +1,8 @@
 ﻿@model CampusManagement.Models.TeachersViewModel
 
 @{
-    ViewBag.Title = "Lecturers";
-    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ViewBag.Title = "Teachers";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
@@ -30,7 +30,7 @@
             <input type="text" class="form-control" placeholder="search" name="Search" />
         </div>
         <div class="col-sm-1">
-            <button type="submit" class="btn btn-primary" value="Search">
+            <button type="submit" class="btn btn-success" value="Search">
                 <span class="glyphicon glyphicon-search" ></span> Search
             </button>
         </div>
@@ -83,16 +83,3 @@
     }
 
 </table>
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("#TeacherName").OnlyAlphabets();
-            $("#FatherName").OnlyAlphabets();
-            $("#MobileNo").ForceNumericOnly();
-            $("#CNIC").CnicFormat();
-        });
-    </script>
-}
-
-
-

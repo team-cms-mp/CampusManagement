@@ -12,35 +12,20 @@ using CampusManagement.Models;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
     public class BatchProgramsController : Controller
     {
-        private ModelCMSNewContainer db = new ModelCMSNewContainer();
-        GetBatchPrograms_ResultViewModel model = new GetBatchPrograms_ResultViewModel();
+        private ModelCMSContainer db = new ModelCMSContainer();
+        BatchProgramViewModel model = new BatchProgramViewModel();
 
         public ActionResult Index()
         {
-            model.GetBatchPrograms_Results = db.GetBatchPrograms("").OrderByDescending(a => a.BatchProgramID).ToList();
-            model.SelectedGetBatchPrograms_Result = null;
+            model.BatchPrograms = db.BatchPrograms.OrderByDescending(a => a.BatchProgramID).ToList();
+            model.SelectedBatchProgram = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName");
             ViewBag.ProgramID = new SelectList(db.Programs, "ProgramID", "ProgramName");
-            ViewBag.ShiftID = new SelectList(db.Shifts.Where(a => a.IsActive == "Yes"), "ShiftID", "ShiftName");
-            ViewBag.MessageType = "";
-            ViewBag.Message = "";
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult Index(string Search)
-        {
-            model.GetBatchPrograms_Results = db.GetBatchPrograms(Search).OrderByDescending(a => a.BatchProgramID).ToList();
-            model.SelectedGetBatchPrograms_Result = null;
-            model.DisplayMode = "WriteOnly";
-            ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
-            ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName");
-            ViewBag.ProgramID = new SelectList(db.Programs, "ProgramID", "ProgramName");
-            ViewBag.ShiftID = new SelectList(db.Shifts.Where(a => a.IsActive == "Yes"), "ShiftID", "ShiftName");
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View(model);
@@ -49,14 +34,12 @@ namespace CampusManagement.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            model.GetBatchPrograms_Results = db.GetBatchPrograms("").OrderByDescending(a => a.BatchProgramID).ToList();
-            model.SelectedGetBatchPrograms_Result = null;
+            model.BatchPrograms = db.BatchPrograms.OrderByDescending(a => a.BatchProgramID).ToList();
+            model.SelectedBatchProgram = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName");
             ViewBag.ProgramID = new SelectList(db.Programs, "ProgramID", "ProgramName");
-            ViewBag.ShiftID = new SelectList(db.Shifts.Where(a => a.IsActive == "Yes"), "ShiftID", "ShiftName");
-          
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -114,13 +97,12 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.GetBatchPrograms_Results = db.GetBatchPrograms("").OrderByDescending(a => a.BatchProgramID).ToList();
-            model.SelectedGetBatchPrograms_Result = null;
+            model.BatchPrograms = db.BatchPrograms.OrderByDescending(a => a.BatchProgramID).ToList();
+            model.SelectedBatchProgram = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", batchprogram.IsActive);
             ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName", batchprogram.BatchID);
             ViewBag.ProgramID = new SelectList(db.Programs, "ProgramID", "ProgramName", batchprogram.ProgramID);
-            ViewBag.ShiftID = new SelectList(db.Shifts.Where(a=>a.IsActive == "Yes"), "ShiftID", "ShiftName");
             return View("Index", model);
         }
 
@@ -131,19 +113,18 @@ namespace CampusManagement.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            GetBatchPrograms_Result batchprogram = db.GetBatchPrograms("").FirstOrDefault(b => b.BatchProgramID == id);
+            BatchProgram batchprogram = db.BatchPrograms.Find(id);
             if (batchprogram == null)
             {
                 return HttpNotFound();
             }
 
-            model.GetBatchPrograms_Results = db.GetBatchPrograms("").OrderByDescending(a => a.BatchProgramID).ToList();
-            model.SelectedGetBatchPrograms_Result = batchprogram;
+            model.BatchPrograms = db.BatchPrograms.OrderByDescending(a => a.BatchProgramID).ToList();
+            model.SelectedBatchProgram = batchprogram;
             model.DisplayMode = "ReadWrite";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", batchprogram.IsActive);
             ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName", batchprogram.BatchID);
             ViewBag.ProgramID = new SelectList(db.Programs, "ProgramID", "ProgramName", batchprogram.ProgramID);
-            ViewBag.ShiftID = new SelectList(db.Shifts.Where(a => a.IsActive == "Yes"), "ShiftID", "ShiftName");
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -188,13 +169,12 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.GetBatchPrograms_Results = db.GetBatchPrograms("").OrderByDescending(a => a.BatchProgramID).ToList();
-            model.SelectedGetBatchPrograms_Result = null;
+            model.BatchPrograms = db.BatchPrograms.OrderByDescending(a => a.BatchProgramID).ToList();
+            model.SelectedBatchProgram = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", batchprogram.IsActive);
             ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName", batchprogram.BatchID);
             ViewBag.ProgramID = new SelectList(db.Programs, "ProgramID", "ProgramName", batchprogram.ProgramID);
-            ViewBag.ShiftID = new SelectList(db.Shifts.Where(a => a.IsActive == "Yes"), "ShiftID", "ShiftName");
             return View("Index", model);
         }
 
@@ -204,14 +184,14 @@ namespace CampusManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            GetBatchPrograms_Result batchprogram = db.GetBatchPrograms("").FirstOrDefault(b => b.BatchProgramID == id);
+            BatchProgram batchprogram = db.BatchPrograms.Find(id);
             if (batchprogram == null)
             {
                 return HttpNotFound();
             }
 
-            model.GetBatchPrograms_Results = db.GetBatchPrograms("").OrderByDescending(a => a.BatchProgramID).ToList();
-            model.SelectedGetBatchPrograms_Result = batchprogram;
+            model.BatchPrograms = db.BatchPrograms.OrderByDescending(a => a.BatchProgramID).ToList();
+            model.SelectedBatchProgram = batchprogram;
             model.DisplayMode = "Delete";
             ViewBag.MessageType = "";
             ViewBag.Message = "";
@@ -236,13 +216,12 @@ namespace CampusManagement.Controllers
                 ViewBag.Message = ex.Message;
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
-            model.GetBatchPrograms_Results = db.GetBatchPrograms("").OrderByDescending(a => a.BatchProgramID).ToList();
-            model.SelectedGetBatchPrograms_Result = null;
+            model.BatchPrograms = db.BatchPrograms.OrderByDescending(a => a.BatchProgramID).ToList();
+            model.SelectedBatchProgram = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.BatchID = new SelectList(db.Batches, "BatchID", "BatchName");
             ViewBag.ProgramID = new SelectList(db.Programs, "ProgramID", "ProgramName");
-            ViewBag.ShiftID = new SelectList(db.Shifts.Where(a => a.IsActive == "Yes"), "ShiftID", "ShiftName");
             return View("Index", model);
         }
 

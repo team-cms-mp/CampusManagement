@@ -12,10 +12,10 @@ using CampusManagement.Models;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
     public class CoursesController : Controller
     {
-        private ModelCMSNewContainer db = new ModelCMSNewContainer();
+        private ModelCMSContainer db = new ModelCMSContainer();
         CoursesViewModel model = new CoursesViewModel();
 
         public ActionResult Index()
@@ -66,17 +66,17 @@ namespace CampusManagement.Controllers
                 cou = db.Courses.FirstOrDefault(c => c.CourseName == course.CourseName);
                 if (cou != null)
                 {
-                    ModelState.AddModelError(string.Empty, "Course Name already exists.");
+                    ModelState.AddModelError(string.Empty, "Course Name is already exists.");
                     count++;
-                    ErrorMessage += count + "-" + "Course Name already exists." + "<br />";
+                    ErrorMessage += count + "-" + "Course Name is already exists." + "<br />";
                 }
 
                 cou = db.Courses.FirstOrDefault(c => c.CourseCode == course.CourseCode);
                 if (cou != null)
                 {
-                    ModelState.AddModelError(string.Empty, "Course Code already exists.");
+                    ModelState.AddModelError(string.Empty, "Course Code is already exists.");
                     count++;
-                    ErrorMessage += count + "-" + "Course Code already exists." + "<br />";
+                    ErrorMessage += count + "-" + "Course Code is already exists." + "<br />";
                 }
 
                 if (!string.IsNullOrEmpty(ErrorMessage))

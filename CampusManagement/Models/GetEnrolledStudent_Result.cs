@@ -13,15 +13,15 @@ namespace CampusManagement.Models
     using System.ComponentModel.DataAnnotations;
     public partial class GetEnrolledStudent_Result
     {
-        [Display(Name = "Search By Form #")]
+        [Display(Name = "Search By Student ID / Form # / Enrollment ID / Enrollment #")]
         public int StudentID { get; set; }
         public string FormNo { get; set; }
         public string FullName { get; set; }
         public string ACNIC { get; set; }
         public string CellNo { get; set; }
         public string Email { get; set; }
-        public string RollNumber { get; set; }
-        public string RegistrationNo { get; set; }
+        public int EnrollmentID { get; set; }
+        public string EnrollmentNo { get; set; }
         public string BatchCode { get; set; }
         public string BatchName { get; set; }
         public string BatchSession { get; set; }
@@ -29,7 +29,7 @@ namespace CampusManagement.Models
         public string ProgramName { get; set; }
         public string Picture { get; set; }
         public int BatchProgramID { get; set; }
-        [Display(Name = "Semester #")]
+        [Display(Name = "Year/Semester #")]
         public int YearSemesterNo { get; set; }
         [Display(Name = "Issue Date")]
         public string IssueDate { get; set; }

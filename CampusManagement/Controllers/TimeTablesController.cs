@@ -9,26 +9,18 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using CampusManagement.Models;
-using Newtonsoft.Json;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
     public class TimeTablesController : Controller
     {
-        private ModelCMSNewContainer db = new ModelCMSNewContainer();
+        private ModelCMSContainer db = new ModelCMSContainer();
 
         public ActionResult TimeTableTabs()
         {
             return View();
         }
-
-        public ActionResult TimeTableDataTemp()
-        {
-            return View(db.TimeTableDataTempTables.ToList().OrderBy(t => t.TimeSlotID));
-        }
-
-
 
         // GET: TimeTables
         public ActionResult RoomWiseTimeTable()
@@ -66,34 +58,13 @@ namespace CampusManagement.Controllers
         {
             return View();
         }
-        public ActionResult TimeTableSetuptest()
-        {
-           
-
-            return View(db.TimeTableDataTempTables.ToList().OrderBy(t => t.TimeSlotID));
-      
-        }
 
 
         public ActionResult TimeTableView()
         {
             return View();
         }
-        // GEt TimeTableMainID
-        public JsonResult GetTimeTableMain()
-        {
 
-            List<TimeTableMain> lstTimetables = new List<TimeTableMain>();
-
-            lstTimetables = db.TimeTableMains.ToList();
-            var timetable = lstTimetables.Select(p => new
-            {
-                TimeTableMainID = p.TimeTableMainID,
-                TimeTableMainName = p.TimeTableMainName
-            });
-            string result = JsonConvert.SerializeObject(timetable, Formatting.Indented);
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

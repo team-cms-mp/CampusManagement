@@ -16,7 +16,7 @@ namespace CampusManagement.Models
         public int ChallanID { get; set; }
         public string IssueDate { get; set; }
         public string LastDate { get; set; }
-        public string FormNo { get; set; }
+        public int StudentID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string BatchName { get; set; }

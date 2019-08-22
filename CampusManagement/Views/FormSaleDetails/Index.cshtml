@@ -1,11 +1,8 @@
 ﻿@model CampusManagement.Models.FormSaleDetailsViewModel
-@using PagedList.Mvc;
-@*<div>
-    @Html.ActionLink("Go to Form Receive Details", "Index", "FormReceiveDetails")
-</div>*@
+
 @{
     ViewBag.Title = "Form Sale Detail";
-    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
@@ -22,58 +19,48 @@
     }
     if (Model.DisplayMode == "WriteOnly")
     {
-        Html.RenderPartial("Create", new CampusManagement.Models.sp_GetFormSaleDatailForPage_Result());
+        Html.RenderPartial("Create", new CampusManagement.Models.FormSaleDetail());
     }
 }
 
 @using (Html.BeginForm("Index", "FormSaleDetails", FormMethod.Post))
 {
-    <div class="row hidden-sm hidden-xs" style="margin-top: -2em;margin-bottom: -2em;">
-       
-        <div class="col-sm-4 pull-left inner-addon right-addon">
+    <div class="row" style="margin-top: -2em;margin-bottom: -2em;">
+        <div class="col-sm-5 inner-addon right-addon">
             <input type="text" class="form-control" placeholder="search" name="Search" />
         </div>
-        <div class="col-sm-2 pull-left" >
-            <button type="submit" class="btn btn-primary" value="Search">
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-success" value="Search">
                 <span class="glyphicon glyphicon-search"></span> Search
             </button>
         </div>
-
     </div>
 }
-
-<span>Page @(Model.plFormsale.PageCount < Model.plFormsale.PageNumber ? 0 : Model.plFormsale.PageNumber) of @Model.plFormsale.PageCount</span> <span style="font-weight:bold;">(Total Records : @ViewBag.TotalRecords)</span>
-@Html.PagedListPager(Model.plFormsale, page => Url.Action("Index", new { page, pageSize = ViewBag.pageSize, BatchID = ViewBag.BatchIDAssigned }))
-
-
 
 <table class="table">
     <tr>
         <th>
-            Form #
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.FormNo)
         </th>
         <th>
-            Applicant Name
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.ApplicantName)
         </th>
         <th>
-            Father Name
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.FormType.FormTypeName)
         </th>
         <th>
-            Form Type
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.DepositType.DepositTypeName)
         </th>
         <th>
-            Deposit Type
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.FormPrice)
         </th>
         <th>
-            Receive Date
-        </th>
-        <th>
-            Wavier Discount
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.PurchaseDate)
         </th>
         <th>Actions</th>
     </tr>
 
-    @foreach (var item in Model.plFormsale)
+    @foreach (var item in Model.FormSaleDetails)
     {
     <tr>
         <td>
@@ -83,117 +70,45 @@
             @Html.DisplayFor(modelItem => item.ApplicantName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FatherName)
+            @Html.DisplayFor(modelItem => item.FormType.FormTypeName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FormTypeName)
+            @Html.DisplayFor(modelItem => item.DepositType.DepositTypeName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DepositTypeName)
-        </td>
-       
-        <td>
-            @Html.DisplayFor(modelItem => item.ReceiveDate)
+            @Html.DisplayFor(modelItem => item.FormPrice)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Wavier_Discount)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Update", new { id = item.FormNo })
-            @*@Html.ActionLink("Delete", "Delete", new { id = item.FormID }) |*@
             @{
-                if (item.DegreeID != 9 && item.DegreeID != 10)
+                string purchaseDate = "";
+                if (item.PurchaseDate != null)
                 {
-                    <span> | </span><a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptFormReceiveSlip&FormID=")@item.FormID" target="_blank">Slip</a><span> | </span>
-                    <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptGetAdmitCardFormReceived&FormNo=")@item.FormNo" target="_blank">Admit Card</a>
-                }
-                else if (item.DegreeID != null && item.DegreeID != 0)
-                {
-                    <span> | </span><a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptFormSaleSlip&FormID=")@item.FormID" target="_blank">Slip</a>
+                    DateTime pd = (DateTime)item.PurchaseDate;
+                    purchaseDate = pd.ToString("MM/dd/yyyy");
                 }
             }
-            
-            
-             @*| 
-          
-            @Html.ActionLink("Receive Form", "UpdateReciveForm", new { id = item.FormID })*@ 
+            @Html.Raw(purchaseDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { id = item.FormID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.FormID }) |
+            <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptFormSaleSlip&FormID=")@item.FormID" target="_blank">Slip</a>
         </td>
     </tr>
     }
 
 </table>
-<span>Page @(Model.plFormsale.PageCount < Model.plFormsale.PageNumber ? 0 : Model.plFormsale.PageNumber) of @Model.plFormsale.PageCount</span> <span style="font-weight:bold;">(Total Records : @ViewBag.TotalRecords)</span>
-@Html.PagedListPager(Model.plFormsale, page => Url.Action("Index", new { page, pageSize = ViewBag.pageSize, BatchID = ViewBag.BatchIDAssigned }))
 
 @section Scripts {
     <script>
-        Date.prototype.toDateInputValue = (function () {
-            var local = new Date(this);
-            local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-            return local.toJSON().slice(0, 10);
-        });
-
         $(document).ready(function () {
-            $("#Wavier_Discount").ForceNumericOnly();
-            GetPrograms_by_FacultyLevelBatch("#BatchProgramID1");
-            GetPrograms_by_FacultyLevelBatch("#BatchProgramID2");
-            GetPrograms_by_FacultyLevelBatch("#BatchProgramID3");
-
-            GetSelectedPrograms();
-            RemovePrograms();
-
-            $("#BatchProgramID1").change(function () {
-                var a = $('#BatchProgramID1 option:selected').val();
-                $("#BatchProgramID2 option[value=" + a + "]").hide().siblings().show();
-                $("#BatchProgramID3 option[value=" + a + "]").hide().siblings().show();
-            });
-
-            $("#BatchProgramID2").change(function () {
-                var b1 = $('#BatchProgramID1 option:selected').val();
-                var b2 = $('#BatchProgramID2 option:selected').val();
-                $("#BatchProgramID3 option[value=" + b1 + "]").remove();
-                $("#BatchProgramID3 option[value=" + b2 + "]").remove();
-            });
-
-            $("#LevelID").change(function () {
-                GetPrograms_by_FacultyLevelBatch("#BatchProgramID1");
-                GetPrograms_by_FacultyLevelBatch("#BatchProgramID2");
-                GetPrograms_by_FacultyLevelBatch("#BatchProgramID3");
-            });
-
-            $('#PurchaseDate').val(new Date().toDateInputValue());
-            //$("#PurchaseDate").mask("99/99/9999");
+            $("#PurchaseDate").mask("99/99/9999");
             $("#FormPrice").ForceNumericOnly();
-            $("#ApplicantName").OnlyAlphabets();
-            $("#PhoneNo").ForceNumericOnly();
-            //$("#CNIC").CnicFormat();
-            $("#FatherName").OnlyAlphabets();
             ShowHideBankDetail();
             $("#DepositTypeID").change(function () {
                 ShowHideBankDetail();
             });
         });
-
-        function RemovePrograms()
-        {
-            
-            var a = $('#BatchProgramID1 option:selected').val();
-            if (a != null && a != undefined && a != "") {
-                $("#BatchProgramID2 option[value=" + a + "]").hide().siblings().show();
-                $("#BatchProgramID3 option[value=" + a + "]").hide().siblings().show();
-            }
-            
-            var b1 = $('#BatchProgramID1 option:selected').val();
-            if (b1 != null && b1 != undefined && b1 != "")
-            {
-                $("#BatchProgramID3 option[value=" + b1 + "]").remove();
-            }
-
-            var b2 = $('#BatchProgramID2 option:selected').val();
-            if (b2 != null && b2 != undefined && b2 != "") {
-                $("#BatchProgramID3 option[value=" + b2 + "]").remove();
-            }
-        }
 
         function ShowHideBankDetail() {
             var DepositType = $("#DepositTypeID option:selected").text();
@@ -206,60 +121,6 @@
                 $("#divDepositSlipNo").css("display", "none");
             }
         }
-
-        function GetPrograms_by_FacultyLevelBatch(DropDownID) {
-            $(DropDownID).html("");
-            var LevelID = $("#LevelID").val();
-            $.ajax({
-                url: "@Url.Content("~/FormSaleDetails/GetPrograms_by_FacultyLevelBatch")",
-                type: 'POST',
-                datatype: 'application/json',
-                contentType: 'application/json',
-                async: false,
-                cache: false,
-                data: JSON.stringify({ LevelID: +LevelID }),
-                success: function (result) {
-                    $(DropDownID).append($('<option></option>').val("").html("--Please Select--"));
-                    $.each($.parseJSON(result), function (i, sem) {
-                        $(DropDownID).append($('<option></option>').val(sem.BatchProgramID).html(sem.ProgramName));
-                    });
-                },
-                error: function (ex) {
-                    alert(ex.error);
-                },
-            });
-        }
-
-        function GetSelectedPrograms() {
-            var FormNo = $("#FormNo").val();
-            $.ajax({
-                url: "@Url.Content("~/FormSaleDetails/GetSelectedPrograms")",
-                type: 'POST',
-                datatype: 'application/json',
-                contentType: 'application/json',
-                async: false,
-                cache: false,
-                data: JSON.stringify({ FormNo: +FormNo }),
-                success: function (result) {
-                    $.each($.parseJSON(result), function (i, sem) {
-                        if(sem.ProgramPriority == 1)
-                        {
-                            $("#BatchProgramID1").val(sem.ProgramID);
-                        }
-                        else if (sem.ProgramPriority == 2) {
-                            $("#BatchProgramID2").val(sem.ProgramID);
-                        }
-                        else if (sem.ProgramPriority == 3) {
-                            $("#BatchProgramID3").val(sem.ProgramID);
-                        }
-                    });
-                },
-                error: function (ex) {
-                    alert(ex.error);
-                },
-            });
-        }
-
     </script>
 }
 

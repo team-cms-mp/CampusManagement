@@ -12,7 +12,6 @@ namespace CampusManagement.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
     public partial class Course
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,13 +21,13 @@ namespace CampusManagement.Models
             this.StudentBatchProgramCourses = new HashSet<StudentBatchProgramCourse>();
         }
 
-        [Display(Name = "Subject Name")]
+        [Display(Name = "Course Name")]
         public int CourseID { get; set; }
         [Required(ErrorMessage = "Required")]
-        [Display(Name = "Subject Name")]
+        [Display(Name = "Course Name")]
         public string CourseName { get; set; }
         [Required(ErrorMessage = "Required")]
-        [Display(Name = "Subject Code")]
+        [Display(Name = "Course Code")]
         public string CourseCode { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Credit Hours")]
@@ -45,10 +44,7 @@ namespace CampusManagement.Models
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         [Display(Name = "Modified By")]
         public Nullable<int> ModifiedBy { get; set; }
-        public Nullable<int> TotalLectureCount { get; set; }
-        public Nullable<int> TotalLabCount { get; set; }
-        public Nullable<int> ComputedColumn { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchProgramCourse> BatchProgramCourses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

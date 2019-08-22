@@ -1,8 +1,8 @@
 ﻿@model CampusManagement.Models.CollegeServicesViewModel
-@using CampusManagement.Models
+
 @{
     ViewBag.Title = "College Services";
-    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
@@ -21,8 +21,6 @@
     {
         Html.RenderPartial("Create", new CampusManagement.Models.CollegeService());
     }
-
-    ModelCMSNewContainer db = new ModelCMSNewContainer();
 }
 
 <table class="table">
@@ -34,7 +32,7 @@
             @Html.DisplayNameFor(model => model.SelectedCollegeService.IsEffectProgramFee)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SelectedCollegeService.E_Code)
+            @Html.DisplayNameFor(model => model.SelectedCollegeService.IsActive)
         </th>
         <th>Actions</th>
     </tr>
@@ -49,21 +47,11 @@
                 @Html.DisplayFor(modelItem => item.IsEffectProgramFee)
             </td>
             <td>
-                @{ 
-                    string E_Name = "";
-                    if(!string.IsNullOrEmpty(item.E_Code))
-                    {
-                        Finance_Expenditures exp = db.Finance_Expenditures.FirstOrDefault(e => e.E_Code == item.E_Code);
-                        if(exp != null)
-                        {
-                            E_Name = exp.E_Name;
-                        }
-                    }
-                }
-                @Html.Raw(E_Name)
+                @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Update", new { id = item.CollegeServiceID })
+                @* | @Html.ActionLink("Delete", "Delete", new { id = item.CollegeServiceID })*@
             </td>
         </tr>
     }

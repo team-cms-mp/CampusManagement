@@ -1,218 +1,86 @@
 ﻿
 @{
     ViewBag.Title = "Campus";
-    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
-
-<div class="row" style="background:white;box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important;">
-
-    <div class="" style="padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc; border-top: 1px solid #e3e6f0; border-bottom: 1px solid #e3e6f0;">
-        <h6 class="" style="color: #4e73df!important;font-weight: 700!important;font-size: 2rem;line-height: 1.2;"> Campus </h6>
-    </div>
-    <br />
-
-    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a href="@Url.Action("Index", "Designations")" class="btn btn-primary btn-icon-split" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Designations</span>
-                </a>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a href="@Url.Action("Index", "Degrees")" class="btn btn-primary btn-icon-split" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Degrees</span>
-                </a>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a  href="@Url.Action("Index", "DegreeTitles")" class="btn btn-primary btn-icon-split" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Degree Titles</span>
-                </a>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a href="@Url.Action("Index", "ProgramTypes")" class="btn btn-primary btn-icon-split" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Program Types</span>
-                </a>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a href="@Url.Action("Index", "Programs")" class="btn btn-primary btn-icon-split" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Programs</span>
-                </a>
-            </div>
-        </div>
-        <br />
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "CourseTypes")" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Types Of Subject</span>
-                </a>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "Courses")" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Subjects</span>
-                </a>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "Batches")" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Sessions</span>
-                </a>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "BatchPrograms")" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Session Programs</span>
-                </a>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "Semesters")" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Semesters</span>
-                </a>
-            </div>
-        </div>
-        <br />
- 
-
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" style="background:white;">
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "BatchProgramSemesters")" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Program Semesters</span>
-                </a>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "BatchProgramCourses")" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Program Subjects</span>
-                </a>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a class="btn btn-primary btn-icon-split" href="@Url.Action("Index", "EntryTests")" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Entry Tests</span>
-                </a>
-            </div>
-        </div>
-        <br />
-        <div class="row hidden">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <!-- small box -->
-                <a class="btn btn-primary btn-icon-split" href="@Url.Action("ActiveSession", "Batches")" target="_blank">
-                    <span class="icon text-white-50">
-                        <i class="fa fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Set Active Session</span>
-                </a>
+<div class="row">
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "Designations")" class="alert-link"> Designations </a>
             </div>
         </div>
     </div>
-
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "Degrees")" class="alert-link"> Degrees </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "ProgramTypes")" class="alert-link"> Program Types </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "Programs")" class="alert-link"> Programs </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "CourseTypes")" class="alert-link"> Type of Course </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "Courses")" class="alert-link"> Courses </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "Batches")" class="alert-link"> Batches </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "BatchPrograms")" class="alert-link"> Batch Programs </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "Semesters")" class="alert-link"> Semesters </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "BatchProgramSemesters")" class="alert-link"> Batch Program Semesters </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 ">
+        <div class="card">
+            <div class="content SmallDivs zoom">
+                <a href="@Url.Action("Index", "BatchProgramCourses")" class="alert-link"> Program Courses </a>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-
-<style>
-    .icon {
-        color: rgba(255,255,255,.5) !important;
-        position: absolute;
-        background: rgba(0,0,0,.15);
-        display: inline-block;
-        padding: 0.5em 0.8em 0.7em 0.5em;
-        margin-left: -13px;
-        margin-top: -7px;
-        border-radius: 5px 1px 1px 5px;
-    }
-
-    .text {
-        padding: 1em 1em 1em 2em;
-        font-size: 17px;
-    }
-
-    .btn {
-        width: 22em;
-        text-align: left;
-    }
-</style>
-
 
 

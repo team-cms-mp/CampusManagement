@@ -7,20 +7,13 @@
 @using (Html.BeginForm("Login2", "Home", new { returnURL = Request.QueryString["ReturnUrl"] }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "login100-form validate-form", @style = "Position:absolute" }))
 {      
         <img src="@Url.Content(@MvcApplication.CompanyLogo)" alt="Alternate Text" style="margin-top: -10em; margin-left: 14%; width: 70%; ">
-        @*<label class="txt1" style="font-weight:bold;display:none;">Login As</label>
-        <select class="size1 dropdown_custom" id="Designation_Name" name="Designation_Name" style="display:none;">
-            <option value="Applicant" selected>Applicant</option>
-            <option value="Student">Student</option>
-            <option value="Employee">Employee</option>
-            <option value="AlumniUser">AlumniUser</option>
-        </select>*@
         <div class="wrap-input100 validate-input" data-validate="User Name is required">
-            <input class="input100" type="text" name="UserName" placeholder="User Name / Email" autocomplete="off">
+            <input class="input100" type="text" name="UserName" placeholder="User Name">
             <span class="focus-input100"></span>
          </div>
 
         <div class="wrap-input100 validate-input" data-validate="Password is required">
-            <input class="input100" type="password" name="Password" placeholder="Password" autocomplete="off">
+            <input class="input100" type="password" name="Password" placeholder="Password">
             <span class="focus-input100"></span>
         </div>
 
@@ -32,7 +25,7 @@
                 </label>
             </div>
             <div>
-                <a href="@Url.Content("~/Home/ForgotPassword")" class="txt1">
+                <a href="#" class="txt1">
                     Forgot Password?
                 </a>
             </div>
@@ -42,18 +35,8 @@
                 </a>
             </div>
         </div>
-        <div>
-            @{
-                if (ViewBag.MessageType == "error")
-                {
-                    <span style="color:red;">@Html.Raw(ViewBag.ErrorMessage)</span>
-                }
-                if (ViewBag.MessageType == "success")
-                {
-                    <span style="color:green;">@Html.Raw(ViewBag.ErrorMessage)</span>
-                }
-            }
-
+        <div style="color:red;">
+            @ViewBag.ErrorMessage
         </div>
         <div class="container-login100-form-btn">
             <button class="login100-form-btn" type="submit">
@@ -65,35 +48,10 @@
 
 <script>
     $(document).ready(function () {
-       
-        if(@ViewBag.scripCall == "1"){
-
-            EraseAllRecords();
-        }
-
         $("#ckb1").click(function () {
             var chkvalue = $("#ckb1").prop("checked");
             $("#LoginAsApplicant").val(chkvalue);
         });
     });
-
-    function EraseAllRecords() {
-        eraseCookie('UserName', "", -1);
-        eraseCookie('MobileNumber', "", -1);
-        eraseCookie('Emaill', "", -1);
-        eraseCookie('CNIC', "", -1);
-        eraseCookie('UserPassword', "", -1);
-        eraseCookie('ReEnterPassword', "", -1);
-    }
-
-    function eraseCookie(name, value, days) {
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            var expires = "; expires=" + date.toGMTString();
-        }
-        else var expires = "";
-        document.cookie = name + "=" + value + expires + "; path=/";
-    }
 </script>
 

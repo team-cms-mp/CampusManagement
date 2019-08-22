@@ -16,10 +16,10 @@ namespace CampusManagement.Models
     public partial class BatchProgramSemester
     {
         public int BatchProgramSemesterID { get; set; }
-        [Display(Name = "Program")]
+        [Display(Name = "Batch Program")]
         public int BatchProgramID { get; set; }
         [Required(ErrorMessage = "Required")]
-        [Display(Name = "Semester #")]
+        [Display(Name = "Year/Semester #")]
         public int YearSemesterNo { get; set; }
         [Display(Name = "Created On")]
         public Nullable<System.DateTime> CreatedOn { get; set; }
@@ -31,8 +31,7 @@ namespace CampusManagement.Models
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         [Display(Name = "Modified By")]
         public Nullable<int> ModifiedBy { get; set; }
-        public int BatchID { get; set; }
-        
+
         public virtual BatchProgram BatchProgram { get; set; }
         public virtual Semester Semester { get; set; }
     }

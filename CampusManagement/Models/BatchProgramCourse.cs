@@ -12,7 +12,6 @@ namespace CampusManagement.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
     public partial class BatchProgramCourse
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -29,7 +28,7 @@ namespace CampusManagement.Models
         public int BatchProgramID { get; set; }
         [Display(Name = "Course")]
         public int CourseID { get; set; }
-        [Display(Name = "Semester #")]
+        [Display(Name = "Year/Semester #")]
         public int YearSemesterNo { get; set; }
         [Display(Name = "Created On")]
         public Nullable<System.DateTime> CreatedOn { get; set; }
@@ -43,13 +42,7 @@ namespace CampusManagement.Models
         public Nullable<int> ModifiedBy { get; set; }
         [Display(Name = "Course Type")]
         public Nullable<int> CourseTypeID { get; set; }
-        public Nullable<int> SectionID { get; set; }
-        public Nullable<int> LectureRoomID { get; set; }
-        public Nullable<int> LabRoomID { get; set; }
-        public Nullable<int> PerWeekLectureCount { get; set; }
-        public Nullable<int> PerWeekLabCount { get; set; }
-        public Nullable<int> BatchID { get; set; }
-
+    
         public virtual BatchProgram BatchProgram { get; set; }
         public virtual Course Course { get; set; }
         public virtual CourseType CourseType { get; set; }
@@ -62,8 +55,6 @@ namespace CampusManagement.Models
     public class BatchProgramCourseViewModel
     {
         public List<BatchProgramCourse> BatchProgramCourses { get; set; }
-
-        public List<StudentBatchProgramCourse> StudentBatchProgramCourses { get; set; }
         public BatchProgramCourse SelectedBatchProgramCourse { get; set; }
         public string DisplayMode { get; set; }
     }

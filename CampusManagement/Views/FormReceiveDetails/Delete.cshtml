@@ -73,7 +73,10 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ReceiveDate)
+            @{
+                string rd = Model.ReceiveDate.Value.ToShortDateString();
+            }
+            @Html.Raw(rd)
         </dd>
 
         <dt>
@@ -122,8 +125,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-primary" />
-            <a href="@Url.Content("~/FormSaleDetails/Index")" class="btn btn-primary">Cancel</a>
+            <input type="submit" value="Delete" class="btn btn-success" />
+            <a href="@Url.Content("~/FormSaleDetails/Index")" class="btn btn-success">Cancel</a>
         </div>
     }
 </div>

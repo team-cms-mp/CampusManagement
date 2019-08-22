@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Batches";
-    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 
@@ -57,19 +57,8 @@
             @Html.DisplayFor(modelItem => item.IsActive)
         </td>
         <td>
-            @{
-                if (item.IsActive == "Current")
-                {
-                    @Html.ActionLink("Edit", "Update", new { id = item.BatchID }) <span> | </span>
-                    @Html.ActionLink("Delete", "Delete", new { id = item.BatchID })
-                }
-                else
-                {
-                    @Html.ActionLink("Set Current Session", "SetCurrentSession", new { id = item.BatchID }) <span> | </span>
-                    @Html.ActionLink("Edit", "Update", new { id = item.BatchID }) <span> | </span>
-                    @Html.ActionLink("Delete", "Delete", new { id = item.BatchID })
-                }
-            }
+            @Html.ActionLink("Edit", "Update", new { id = item.BatchID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BatchID })
         </td>
     </tr>
     }

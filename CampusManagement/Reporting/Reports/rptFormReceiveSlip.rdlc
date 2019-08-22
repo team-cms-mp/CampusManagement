@@ -934,9 +934,10 @@
             <Source>External</Source>
             <Value>=Parameters!ImagePath.Value</Value>
             <Sizing>Fit</Sizing>
-            <Top>0.02619cm</Top>
-            <Height>2.12985cm</Height>
-            <Width>5.47688cm</Width>
+            <Top>0.36987cm</Top>
+            <Left>1.18722cm</Left>
+            <Height>1.76458cm</Height>
+            <Width>3.51896cm</Width>
             <ToolTip>Image</ToolTip>
             <Style>
               <Border>
@@ -955,6 +956,7 @@
                     <Style>
                       <FontSize>16pt</FontSize>
                       <FontWeight>Bold</FontWeight>
+                      <Color>White</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -981,15 +983,15 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>0.02328cm</Top>
-        <Height>2.15604cm</Height>
+        <Top>0.34078cm</Top>
+        <Height>2.5cm</Height>
         <Width>20.79625cm</Width>
         <ZIndex>29</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>White</BackgroundColor>
+          <BackgroundColor>Gray</BackgroundColor>
         </Style>
       </Rectangle>
       <Rectangle Name="Rectangle2">
@@ -998,8 +1000,10 @@
             <Source>External</Source>
             <Value>=Parameters!ImagePath.Value</Value>
             <Sizing>Fit</Sizing>
-            <Height>2.14092cm</Height>
-            <Width>5.47688cm</Width>
+            <Top>0.37042cm</Top>
+            <Left>1.18722cm</Left>
+            <Height>1.7705cm</Height>
+            <Width>3.22792cm</Width>
             <ToolTip>Image</ToolTip>
             <Style>
               <Border>
@@ -1018,6 +1022,7 @@
                     <Style>
                       <FontSize>16pt</FontSize>
                       <FontWeight>Bold</FontWeight>
+                      <Color>White</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -1045,14 +1050,14 @@
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Top>11.42591cm</Top>
-        <Height>2.20896cm</Height>
+        <Height>2.5cm</Height>
         <Width>20.79625cm</Width>
         <ZIndex>30</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>White</BackgroundColor>
+          <BackgroundColor>Gray</BackgroundColor>
         </Style>
       </Rectangle>
       <Textbox Name="Textbox44">

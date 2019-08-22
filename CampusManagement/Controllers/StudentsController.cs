@@ -13,66 +13,27 @@ using Newtonsoft.Json;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
     public class StudentsController : Controller
     {
-        private ModelCMSNewContainer db = new ModelCMSNewContainer();
+        private ModelCMSContainer db = new ModelCMSContainer();
         string ErrorMessage = "";
         string MessageType = "";
         int count = 0;
 
         public ActionResult Index()
         {
-            int EmpID = Convert.ToInt32(Session["emp_id"]);
-            if (EmpID == 0)
-            {
-                return RedirectToAction("Login2", "Home");
-            }
-
-            return View(db.GetStudents("").OrderByDescending(a => a.StudentID));
-        }
-
-        public ActionResult Students()
-        {
-            int EmpID = Convert.ToInt32(Session["emp_id"]);
-            if (EmpID == 0)
-            {
-                return RedirectToAction("Login2", "Home");
-            }
-
-            return View();
-        }
-
-        public ActionResult Lecturers()
-        {
-            int EmpID = Convert.ToInt32(Session["emp_id"]);
-            if (EmpID == 0)
-            {
-                return RedirectToAction("Login2", "Home");
-            }
-
-            return View();
+            return View(db.Students.OrderByDescending(a => a.StudentID));
         }
 
         [HttpPost]
         public ActionResult Index(string Search)
         {
-            int EmpID = Convert.ToInt32(Session["emp_id"]);
-            if (EmpID == 0)
-            {
-                return RedirectToAction("Login2", "Home");
-            }
-            return View(db.GetStudents(Search).ToList());
+            return View(db.Students.Where(x => x.FirstName.Contains(Search) || x.Email.Contains(Search) || x.LastName.Contains(Search)).OrderByDescending(a => a.StudentID));
         }
 
         public ActionResult Create()
         {
-            int EmpID = Convert.ToInt32(Session["emp_id"]);
-            if (EmpID == 0)
-            {
-                return RedirectToAction("Login2", "Home");
-            }
-
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.CityID = new SelectList(db.Cities, "CityID", "CityName");
             ViewBag.CountryID = new SelectList(db.Countries, "CountryID", "CountryName");
@@ -95,12 +56,6 @@ namespace CampusManagement.Controllers
         {
             try
             {
-                int EmpID = Convert.ToInt32(Session["emp_id"]);
-                if (EmpID == 0)
-                {
-                    return RedirectToAction("Login2", "Home");
-                }
-
                 Applicant applicant = db.Applicants.FirstOrDefault(a => a.FormNo == student.FormNo);
                 if (applicant != null)
                 {
@@ -108,9 +63,9 @@ namespace CampusManagement.Controllers
 
                     if (st != null)
                     {
-                        ModelState.AddModelError(string.Empty, "Form # already exists.");
+                        ModelState.AddModelError(string.Empty, "Form # is already exists.");
                         count++;
-                        ErrorMessage += count + "-Form # already exists.";
+                        ErrorMessage += count + "-Form # is already exists.";
                         MessageType = "error";
                     }
                     else
@@ -125,9 +80,9 @@ namespace CampusManagement.Controllers
                         }
                         catch (Exception)
                         {
-                            ModelState.AddModelError(string.Empty, "Profile Picture is required.");
+                            ModelState.AddModelError(string.Empty, "Profile pictuer is required.");
                             count++;
-                            ErrorMessage += count + "-Profile Picture is required.<br />";
+                            ErrorMessage += count + "-Profile pictuer is required.<br />";
                             MessageType = "error";
                         }
 
@@ -198,66 +153,37 @@ namespace CampusManagement.Controllers
 
         public ActionResult Edit(int? id)
         {
-            Student stu = new Student();
-            int? CheckForStudentProfile = null;
-            int EmpID = Convert.ToInt32(Session["emp_id"]);
-            if (EmpID == 0)
-            {
-                return RedirectToAction("Login2", "Home");
-            }
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            else if (id == 0)
-            {
-                CheckForStudentProfile = 0;
-                string FormNo = "";
-                if (Session["FormNo"] != null)
-                {
-                    if (!string.IsNullOrEmpty(Session["FormNo"].ToString()))
-                    {
-                        FormNo = Session["FormNo"].ToString();
-                        stu = db.Students.FirstOrDefault(s => s.FormNo == FormNo);
-                    }
-                }
-            }
-           
-            if (stu == null)
+            Student student = db.Students.Find(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
 
-            stu.CheckForStudentProfile = CheckForStudentProfile;
+            ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", student.IsActive);
+            ViewBag.CityID = new SelectList(db.Cities, "CityID", "CityName", student.CityID);
+            ViewBag.CountryID = new SelectList(db.Countries, "CountryID", "CountryName", student.CountryID);
+            ViewBag.CurrentOccupationID = new SelectList(db.CurrentOccupations, "CurrentOccupationID", "CurrentOccupationName", student.CurrentOccupationID);
+            ViewBag.GenderID = new SelectList(db.Genders, "GenderID", "GenderName", student.GenderID);
+            ViewBag.MaritalStatusID = new SelectList(db.MaritalStatus, "MaritalStatusID", "MaritalStatusName", student.MaritalStatusID);
+            ViewBag.NationalityID = new SelectList(db.Nationalities, "NationalityID", "NationalityName", student.NationalityID);
+            ViewBag.ProvinceID = new SelectList(db.Provinces, "ProvinceID", "ProvinceName", student.ProvinceID);
+            ViewBag.RelationTypeID = new SelectList(db.RelationTypes, "RelationTypeID", "RelationTypeName", student.RelationTypeID);
+            ViewBag.ReligionID = new SelectList(db.Religions, "ReligionID", "ReligionName", student.ReligionID);
+            ViewBag.SalutationID = new SelectList(db.Salutations, "SalutationID", "SalutationName", student.SalutationID);
+            ViewBag.StatusID = new SelectList(db.Status, "StatusID", "StatusName", student.StatusID);
+            ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name", student.BatchProgramID);
 
-            ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", stu.IsActive);
-            ViewBag.CityID = new SelectList(db.Cities, "CityID", "CityName", stu.CityID);
-            ViewBag.CountryID = new SelectList(db.Countries, "CountryID", "CountryName", stu.CountryID);
-            ViewBag.CurrentOccupationID = new SelectList(db.CurrentOccupations, "CurrentOccupationID", "CurrentOccupationName", stu.CurrentOccupationID);
-            ViewBag.GenderID = new SelectList(db.Genders, "GenderID", "GenderName", stu.GenderID);
-            ViewBag.MaritalStatusID = new SelectList(db.MaritalStatus, "MaritalStatusID", "MaritalStatusName", stu.MaritalStatusID);
-            ViewBag.NationalityID = new SelectList(db.Nationalities, "NationalityID", "NationalityName", stu.NationalityID);
-            ViewBag.ProvinceID = new SelectList(db.Provinces, "ProvinceID", "ProvinceName", stu.ProvinceID);
-            ViewBag.RelationTypeID = new SelectList(db.RelationTypes, "RelationTypeID", "RelationTypeName", stu.RelationTypeID);
-            ViewBag.ReligionID = new SelectList(db.Religions, "ReligionID", "ReligionName", stu.ReligionID);
-            ViewBag.SalutationID = new SelectList(db.Salutations, "SalutationID", "SalutationName", stu.SalutationID);
-            ViewBag.StatusID = new SelectList(db.Status, "StatusID", "StatusName", stu.StatusID);
-            ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name", stu.BatchProgramID);
-
-            return View(stu);
+            return View(student);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Student student)
         {
-            int EmpID = Convert.ToInt32(Session["emp_id"]);
-            if (EmpID == 0)
-            {
-                return RedirectToAction("Login2", "Home");
-            }
-
             try
             {
                 if (student.ProfilePicture != null)
@@ -268,9 +194,9 @@ namespace CampusManagement.Controllers
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, "Profile Picture is not saved.");
+                ModelState.AddModelError(string.Empty, "Profile pictuer is not saved.");
                 count++;
-                ErrorMessage += count + "-Profile Picture is not saved.<br />";
+                ErrorMessage += count + "-Profile pictuer is not saved.<br />";
                 MessageType = "error";
             }
 
@@ -281,13 +207,11 @@ namespace CampusManagement.Controllers
                     db.Entry(student).State = EntityState.Modified;
                     student.ModifiedOn = DateTime.Now;
                     student.ModifiedBy = Convert.ToInt32(Session["emp_id"]);
+                    ApplyForProgram applyForProgram = db.ApplyForPrograms.FirstOrDefault(afp => afp.FormNo == student.FormNo);
+                    student.BatchProgramID = Convert.ToInt32(applyForProgram.ProgramID);
                     db.SaveChanges();
                     ViewBag.MessageType = "success";
                     ViewBag.Message = "Data has been saved successfully.";
-                    if (student.CheckForStudentProfile == 0)
-                    {
-                        return RedirectToAction("Edit", "Students", new { id = 0 });
-                    }
                     return RedirectToAction("Index", "Students");
                 }
                 catch (DbUpdateException ex)
@@ -337,12 +261,6 @@ namespace CampusManagement.Controllers
 
         public ActionResult Delete(int? id)
         {
-            int EmpID = Convert.ToInt32(Session["emp_id"]);
-            if (EmpID == 0)
-            {
-                return RedirectToAction("Login2", "Home");
-            }
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -361,127 +279,15 @@ namespace CampusManagement.Controllers
         {
             try
             {
-                int EmpID = Convert.ToInt32(Session["emp_id"]);
-                if (EmpID == 0)
-                {
-                    return RedirectToAction("Login2", "Home");
-                }
-
                 Student student = db.Students.Find(id);
-                //db.Students.Remove(student);
-                //db.SaveChanges();
-
-                db.Entry(student).State = EntityState.Modified;
-                student.ModifiedOn = DateTime.Now;
-                student.ModifiedBy = Convert.ToInt32(Session["emp_id"]);
-                student.IsActive = "Deleted";
+                db.Students.Remove(student);
                 db.SaveChanges();
             }
             catch (DbUpdateException ex)
             {
-                ViewBag.MessageType = "error";
-                ViewBag.Message = "Please remove reference data first.";
+                throw ex;
             }
             return RedirectToAction("Index");
-        }
-
-        public ActionResult StudentProfile(int? id)
-        {
-            GetStudents_Result stu = new GetStudents_Result();
-            int EmpID = Convert.ToInt32(Session["emp_id"]);
-            if (EmpID == 0)
-            {
-                return RedirectToAction("Login2", "Home");
-            }
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            else if (id == 0)
-            {
-                string FormNo = "";
-                if(Session["FormNo"] != null)
-                {
-                    if(!string.IsNullOrEmpty(Session["FormNo"].ToString()))
-                    {
-                        FormNo = Session["FormNo"].ToString();
-                        stu = db.GetStudents("").FirstOrDefault(s => s.FormNo == FormNo);
-                    }
-                }
-            }
-
-            if (stu == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(stu);
-        }
-
-        public ActionResult StudentTimeTable()
-        {
-            int EmpID = Convert.ToInt32(Session["emp_id"]);
-            if (EmpID == 0)
-            {
-                return RedirectToAction("Login2", "Home");
-            }
-
-            return View();
-        }
-
-        public ActionResult StudentSubjects()
-        {
-            int EmpID = Convert.ToInt32(Session["emp_id"]);
-            if (EmpID == 0)
-            {
-                return RedirectToAction("Login2", "Home");
-            }
-
-            return View();
-        }
-
-        public ActionResult DownloadAssignments()
-        {
-            int EmpID = Convert.ToInt32(Session["emp_id"]);
-            if (EmpID == 0)
-            {
-                return RedirectToAction("Login2", "Home");
-            }
-
-            return View();
-        }
-
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult ChangePassword(string OldPassword, string UserName, string CnfrmPassword, string NewPassword)
-        {
-            Login login = db.Logins.FirstOrDefault(a => a.Password == OldPassword && a.UserName == UserName);
-
-            if (login != null)
-            {
-                if (NewPassword.Trim() != CnfrmPassword.Trim())
-                {
-                    ViewBag.MessageType = "error";
-                    ViewBag.ErrorMessage = " New Password and Confirm Password must be same";
-                }
-                else
-                {
-                    db.um_UpdatePassword(UserName, OldPassword, NewPassword);
-                    ViewBag.MessageType = "success";
-                    ViewBag.ErrorMessage = "Password changed successfully.";
-                }
-            }
-            else
-            {
-                ViewBag.MessageType = "error";
-                ViewBag.ErrorMessage = "User Name or Old Password is incorrect.";
-            }
-            return View();
         }
 
         public JsonResult GetProvinceList(string CountryID)
@@ -490,8 +296,7 @@ namespace CampusManagement.Controllers
             int cId = Convert.ToInt32(CountryID);
 
             lstProvince = db.Provinces.Where(p => p.CountryID == cId).ToList();
-            var Provinces = lstProvince.Select(S => new
-            {
+            var Provinces = lstProvince.Select(S => new {
                 ProvinceID = S.ProvinceID,
                 ProvinceName = S.ProvinceName,
             });
@@ -505,8 +310,7 @@ namespace CampusManagement.Controllers
             int pId = Convert.ToInt32(ProvinceID);
 
             lstCity = db.Cities.Where(p => p.ProvinceID == pId).ToList();
-            var Cities = lstCity.Select(S => new
-            {
+            var Cities = lstCity.Select(S => new {
                 CityID = S.CityID,
                 CityName = S.CityName,
             });
@@ -523,8 +327,7 @@ namespace CampusManagement.Controllers
             || a.FormNo.Contains(searchValue)
             || a.ACNIC.Contains(searchValue)).ToList();
 
-            var Applicants = lstApplicant.Select(s => new
-            {
+            var Applicants = lstApplicant.Select(s => new {
                 AddAppID = s.AddAppID,
                 FirstName = s.FirstName,
                 LastName = s.LastName,
@@ -543,10 +346,10 @@ namespace CampusManagement.Controllers
             string DOB = "";
 
             lstApplicant = db.Applicants.Where(a => a.FormNo == FormNo).ToList();
-            if (lstApplicant.Count > 0)
+            if(lstApplicant.Count > 0)
             {
-                expiryDate = (lstApplicant[0].PassportExpiryDate == null) ? "" : lstApplicant[0].PassportExpiryDate;
-                DOB = (lstApplicant[0].ApplicantDOB == null) ? "" : lstApplicant[0].ApplicantDOB;
+                expiryDate = (lstApplicant[0].PassportExpiryDate == null) ? "" : lstApplicant[0].PassportExpiryDate.Value.ToShortDateString();
+                DOB = (lstApplicant[0].ApplicantDOB == null) ? "" : lstApplicant[0].ApplicantDOB.Value.ToShortDateString();
             }
             else
             {
@@ -597,12 +400,6 @@ namespace CampusManagement.Controllers
 
             string result = JsonConvert.SerializeObject(Applicants, Formatting.Indented);
             return new JsonResult { Data = result, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-        public ActionResult ApplicantStudentChallansFeeDefaulter()
-        {
-            string FormNo = Session["FormNo"].ToString();
-            List<SF_GetApplicantStudentChallansFeeDefaulterSummary_Result> lst = db.SF_GetApplicantStudentChallansFeeDefaulterSummary(FormNo, "Student", 0, 0).ToList();
-            return View(lst);
         }
 
         protected override void Dispose(bool disposing)

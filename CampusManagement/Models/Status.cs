@@ -12,13 +12,13 @@ namespace CampusManagement.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     public partial class Status
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Status()
         {
             this.Applicants = new HashSet<Applicant>();
-            this.Disciplines = new HashSet<Discipline>();
             this.Students = new HashSet<Student>();
         }
 
@@ -38,12 +38,9 @@ namespace CampusManagement.Models
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         [Display(Name = "Modified By")]
         public Nullable<int> ModifiedBy { get; set; }
-        public string StatusType { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Applicant> Applicants { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Discipline> Disciplines { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student> Students { get; set; }
     }

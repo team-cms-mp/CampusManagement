@@ -27,7 +27,7 @@ namespace CampusManagement.Models
         public string TeacherName { get; set; }
         [Display(Name = "Day")]
         public string DayName { get; set; }
-        [Display(Name = "Session")]
+        [Display(Name = "Batch")]
         public string BatchName { get; set; }
         [Display(Name = "Semester")]
         public string SemesterName { get; set; }

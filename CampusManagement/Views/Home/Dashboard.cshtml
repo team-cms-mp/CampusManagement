@@ -1,7 +1,7 @@
 ﻿@using CampusManagement.Models
 @{
     ViewBag.Title = "Dashboard";
-    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 <div class="row">
@@ -33,7 +33,7 @@
                             <div class="row">
                                 @foreach (var itemPage in lstPages)
                                 {
-                                    <p class="col-sm-6 Navbarr"><a href="@Url.Content(itemPage.Page_URL)" class="alert-link" target="_blank">@itemPage.Page_Name</a></p>
+                                    <p class="col-sm-6 Navbarr"><a href="@Url.Content(itemPage.Page_URL)" class="alert-link">@itemPage.Page_Name</a></p>
                                 }
                             </div>
                         </div>

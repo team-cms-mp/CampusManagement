@@ -24,7 +24,7 @@ namespace CampusManagement.Models
         public int BatchProgramID { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Admission Date")]
-        public string AdmissionDate { get; set; }
+        public Nullable<System.DateTime> AdmissionDate { get; set; }
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Enrollment #")]
         public string EnrollmentNo { get; set; }
@@ -33,7 +33,7 @@ namespace CampusManagement.Models
         [Display(Name = "Degree Completed")]
         public string DegreeCompleted { get; set; }
         [Display(Name = "Degree Completion Date")]
-        public string DegreeCompletionDate { get; set; }
+        public Nullable<System.DateTime> DegreeCompletionDate { get; set; }
         [Display(Name = "Created On")]
         public Nullable<System.DateTime> CreatedOn { get; set; }
         [Display(Name = "Created By")]

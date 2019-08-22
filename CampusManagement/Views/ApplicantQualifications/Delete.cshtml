@@ -42,19 +42,19 @@
             @Html.DisplayFor(model => model.Institute.InstituteName)
         </dd>
 
-        <dt style="display:none">
+        <dt>
             <label class="control-label">@Html.DisplayNameFor(model => model.RollNO)</label>
         </dt>
 
-        <dd style="display:none">
+        <dd>
             @Html.DisplayFor(model => model.RollNO)
         </dd>
 
-        <dt style="display:none">
+        <dt>
             <label class="control-label">@Html.DisplayNameFor(model => model.RegNo)</label>
-        </dt >
+        </dt>
 
-        <dd style="display:none">
+        <dd>
             @Html.DisplayFor(model => model.RegNo)
         </dd>
 
@@ -66,11 +66,11 @@
             @Html.DisplayFor(model => model.YearQualification)
         </dd>
 
-        <dt style="display:none">
+        <dt>
             <label class="control-label">@Html.DisplayNameFor(model => model.InstituteCity)</label>
         </dt>
 
-        <dd style="display:none">
+        <dd>
             @Html.DisplayFor(model => model.InstituteCity)
         </dd>
 
@@ -98,11 +98,11 @@
             @Html.DisplayFor(model => model.Percentage)
         </dd>
 
-        <dt style="display:none">
+        <dt>
             <label class="control-label">@Html.DisplayNameFor(model => model.IsActive)</label>
         </dt>
 
-        <dd style="display:none">
+        <dd>
             @Html.DisplayFor(model => model.IsActive)
         </dd>
 
@@ -144,8 +144,8 @@
         @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn btn-primary" />
-        @Html.ActionLink("Cancel", "Index", "ApplicantQualifications", new { FormNo = ViewBag.FormNo }, htmlAttributes: new { @class = "btn btn-primary" })
+        <input type="submit" value="Delete" class="btn btn-success" />
+        @Html.ActionLink("Cancel", "Index", "ApplicantQualifications", new { FormNo = ViewBag.FormNo }, htmlAttributes: new { @class = "btn btn-success" })
     </div>
     }
 </div>

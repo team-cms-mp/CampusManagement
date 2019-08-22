@@ -1,4 +1,4 @@
-﻿@model CampusManagement.Models.SP_ProgramForPage_Result
+﻿@model CampusManagement.Models.Program
 
 @using (Html.BeginForm("Edit", "Programs", FormMethod.Post))
 {
@@ -7,64 +7,32 @@
     <div class="row">
         <h2><span class="col-sm-12">Edit Program</span></h2>
     </div>
-    <hr style="border-top: 1px solid #6d9b90;" />
+    <hr style=" border-top: 1px solid #6d9b90;" />
     @Html.HiddenFor(model => model.ProgramID)
 
     <div class="row">
         <div class="col-sm-3">
-            @Html.LabelFor(model => model.ProgramName, "Program Name", htmlAttributes: new { @class = "control-label" })
+            @Html.LabelFor(model => model.ProgramName, htmlAttributes: new { @class = "control-label" })
             @Html.EditorFor(model => model.ProgramName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.ProgramName, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
-            @Html.LabelFor(model => model.ProgramCode, "Program Code", htmlAttributes: new { @class = "control-label" })
+            @Html.LabelFor(model => model.ProgramCode, htmlAttributes: new { @class = "control-label" })
             @Html.EditorFor(model => model.ProgramCode, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.ProgramCode, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
-            @Html.LabelFor(model => model.ProgramTypeID, "Program Type", htmlAttributes: new { @class = "control-label" })
+            @Html.LabelFor(model => model.ProgramTypeID, htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("ProgramTypeID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.ProgramTypeID, "", new { @class = "text-danger" })
         </div>
-        <div class="col-sm-3 ">
-            @Html.LabelFor(model => model.PerCreditHourFee, "Fee Per Credit Hour", htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.PerCreditHourFee, new { htmlAttributes = new { @class = "form-control", @maxlength = "5" } })
-            @Html.ValidationMessageFor(model => model.PerCreditHourFee, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-3 ">
-            @Html.LabelFor(model => model.ProspectusFee, "Application Fee", htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.ProspectusFee, new { htmlAttributes = new { @class = "form-control", @maxlength = "5" } })
-            @Html.ValidationMessageFor(model => model.ProspectusFee, "", new { @class = "text-danger" })
-        </div>
         <div class="col-sm-3">
-            @Html.LabelFor(model => model.FacultyID, "Faculty / Departments", htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownList("FacultyID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.FacultyID, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.LevelID, "Level", htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownList("LevelID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.LevelID, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.TestTotalMarks, "Entry Test Total Marks", htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.TestTotalMarks, new { htmlAttributes = new { @class = "form-control", maxlength = "3", type = "text" } })
-        </div>
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.DrawingTestTotalMarks, "Drawing Test Total Marks", htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.DrawingTestTotalMarks, new { htmlAttributes = new { @class = "form-control", maxlength = "3", type = "text" } })
-        </div>
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.InterviewTotalMarks, "Interview Total Marks", htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.InterviewTotalMarks, new { htmlAttributes = new { @class = "form-control", maxlength = "3", type = "text" } })
-        </div>
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.IsActive, "Is Active", htmlAttributes: new { @class = "control-label" })
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-12">
-            @Html.LabelFor(model => model.ProgramDescription, "Description", htmlAttributes: new { @class = "control-label" })
+            @Html.LabelFor(model => model.ProgramDescription, htmlAttributes: new { @class = "control-label" })
             @Html.EditorFor(model => model.ProgramDescription, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.ProgramDescription, "", new { @class = "text-danger" })
             @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
@@ -74,8 +42,8 @@
     <br />
     <div class="row">
         <div class="col-sm-3">
-            <input type="submit" value="Save" class="btn btn-primary" />
-            <a href="@Url.Content("~/Programs/Index")" class="btn btn-primary">Cancel</a>
+            <input type="submit" value="Save" class="btn btn-success" />
+            <a href="@Url.Content("~/Programs/Index")" class="btn btn-success">Cancel</a>
         </div>
     </div>
 }

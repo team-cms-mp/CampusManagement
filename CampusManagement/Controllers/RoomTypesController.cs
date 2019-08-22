@@ -12,10 +12,10 @@ using CampusManagement.Models;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
     public class RoomTypesController : Controller
     {
-        private ModelCMSNewContainer db = new ModelCMSNewContainer();
+        private ModelCMSContainer db = new ModelCMSContainer();
         RoomTypesViewModel model = new RoomTypesViewModel();
 
         public ActionResult Index()
@@ -68,9 +68,9 @@ namespace CampusManagement.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Room Type already exists.");
+                    ModelState.AddModelError(string.Empty, "Room Type is already exists.");
                     ViewBag.MessageType = "error";
-                    ViewBag.Message = "Room Type already exists.";
+                    ViewBag.Message = "Room Type is already exists.";
                 }
             }
             catch (DbEntityValidationException ex)

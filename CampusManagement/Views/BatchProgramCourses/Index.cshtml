@@ -1,12 +1,11 @@
-﻿@model CampusManagement.Models.GetBatchProgramCourses_ResultViewModel
+﻿@model CampusManagement.Models.BatchProgramCourseViewModel
 @using CampusManagement.Models
 @{
-    ViewBag.Title = "Program Subjects";
-    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ViewBag.Title = "Program Courses";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
-    ModelCMSContainer dbView = new ModelCMSContainer();
     if (Model.SelectedBatchProgramCourse != null)
     {
         if (Model.DisplayMode == "Delete")
@@ -20,41 +19,26 @@
     }
     if (Model.DisplayMode == "WriteOnly")
     {
-        Html.RenderPartial("Create", new GetBatchProgramCourses_Result());
+        Html.RenderPartial("Create", new BatchProgramCourse());
     }
 }
 
 <table class="table">
     <tr>
         <th>
-            Session
+            @Html.DisplayNameFor(model => model.SelectedBatchProgramCourse.BatchProgramID)
         </th>
         <th>
-            Program
+            @Html.DisplayNameFor(model => model.SelectedBatchProgramCourse.Course.CourseName)
         </th>
         <th>
-            Subject
+            @Html.DisplayNameFor(model => model.SelectedBatchProgramCourse.CourseType.CourseTypeName)
         </th>
         <th>
-            Subject Type
+            @Html.DisplayNameFor(model => model.SelectedBatchProgramCourse.YearSemesterNo)
         </th>
         <th>
-           Section
-        </th>
-        <th>
-            Lecture Room
-        </th>
-        <th>
-            Lab Room
-        </th>
-        <th>
-            Lecture Count
-        </th>
-        <th>
-            Lab Count
-        </th>
-        <th>
-            Semester #
+            @Html.DisplayNameFor(model => model.SelectedBatchProgramCourse.IsActive)
         </th>
         <th>Actions</th>
     </tr>
@@ -63,34 +47,28 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.BatchName)
+                @{
+                    ModelCMSContainer dbView = new ModelCMSContainer();
+                    GetBatchProgramNameConcat_Result bpn = dbView.GetBatchProgramNameConcat("", 0).FirstOrDefault(b => b.ID == item.BatchProgramID);
+                    string bpName = "";
+                    if(bpn != null)
+                    {
+                        bpName = bpn.Name;
+                    }
+                }
+                @Html.Raw(bpName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProgramName)
+                @Html.DisplayFor(modelItem => item.Course.CourseName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CourseName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CourseTypeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SectionName)
-            </td>
-            <td>
-               @Html.DisplayFor(modelItem => item.LectureRoomName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LabRoomName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PerWeekLectureCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PerWeekLabCount)
+                @Html.DisplayFor(modelItem => item.CourseType.CourseTypeName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.YearSemesterNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Update", new { id = item.ProgramCourseID }) |
@@ -100,37 +78,5 @@
     }
 
 </table>
-
-@section Scripts {
-    <script>
-    $(document).ready(function () {
-        GetPrograms_by_FacultyLevelBatch();
-        $("#BatchID").change(function () {
-            GetPrograms_by_FacultyLevelBatch();
-        });
-    });
-
-    function GetPrograms_by_FacultyLevelBatch() {
-        var BatchID = $("#BatchID").val();
-        $.ajax({
-            url: "@Url.Content("~/BatchProgramCourses/GetPrograms_by_FacultyLevelBatch")",
-            type: 'POST',
-            datatype: 'application/json',
-            contentType: 'application/json',
-            async: false,
-            data: JSON.stringify({ BatchID: +BatchID }),
-            success: function (result) {
-                $("#BatchProgramID").html("");
-                $.each($.parseJSON(result), function (i, sem) {
-                    $("#BatchProgramID").append($('<option></option>').val(sem.BatchProgramID).html(sem.ProgramName));
-                });
-            },
-            error: function (ex) {
-                alert(ex.error);
-            },
-        });
-    }
-    </script>
-}
 
 

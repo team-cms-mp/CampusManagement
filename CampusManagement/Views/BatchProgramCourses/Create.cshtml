@@ -1,86 +1,47 @@
-﻿@model CampusManagement.Models.GetBatchProgramCourses_Result
+﻿@model CampusManagement.Models.BatchProgramCourse
 
 @using (Html.BeginForm("Create", "BatchProgramCourses", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
     <div class="row">
-        <h2><span class="col-sm-12">Add Program Subject</span></h2>
+        <h2><span class="col-sm-12">Add Program Course</span></h2>
     </div>
-    <hr style="border-top: 1px solid #6d9b90;" />
+    <hr style=" border-top: 1px solid #6d9b90;" />
     @Html.Partial("_MessageView")
 
     <div class="row">
         <div class="col-sm-12">
-            @Html.LabelFor(model => model.BatchID, "Session", htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownList("BatchID", null, htmlAttributes: new { @class = "form-control" })
-        </div>
-        <div class="col-sm-12">
-            @Html.LabelFor(model => model.BatchProgramID, "Program", htmlAttributes: new { @class = "control-label" })
+            @Html.LabelFor(model => model.BatchProgramID, htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("BatchProgramID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.BatchProgramID, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-12">
-            @Html.LabelFor(model => model.CourseID, "Subject", htmlAttributes: new { @class = "control-label" })
+            @Html.LabelFor(model => model.CourseID, htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("CourseID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.CourseID, "", new { @class = "text-danger" })
         </div>
-        <div class="col-sm-12">
-            @Html.LabelFor(model => model.CourseTypeID, "Subject Type", htmlAttributes: new { @class = "control-label" })
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.CourseTypeID, htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("CourseTypeID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.CourseTypeID, "", new { @class = "text-danger" })
         </div>
-        <div class="col-sm-4">
-            @Html.LabelFor(model => model.SectionID, "Section", htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownList("SectionID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.SectionID, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="col-sm-4">
-            <label>Per Week Lecture Count</label>
-            <select class="form-control" name="PerWeekLectureCount" id="PerWeekLectureCount" required>
-
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-        </div>
-        <div class="col-sm-4">
-            <label>Per Week Lab Count</label>
-            <select class="form-control" name="PerWeekLabCount" id="PerWeekLabCount" required>
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-        </div>
-        <div class="col-sm-4">
-            @Html.LabelFor(model => model.LectureRoomID, "Lecture Room", htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownList("LectureRoomID", null, htmlAttributes: new { @class = "form-control" })
-        </div>
-        <div class="col-sm-4">
-            @Html.LabelFor(model => model.LabRoomID, "Lab Room", htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownList("LabRoomID",null, "--Select Lab Room--", htmlAttributes: new { @class = "form-control" })
-        </div>
-
-        <div class="col-sm-4">
-            @Html.LabelFor(model => model.YearSemesterNo, "Semester #", htmlAttributes: new { @class = "control-label" })
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.YearSemesterNo, htmlAttributes: new { @class = "control-label" })
             @Html.EditorFor(model => model.YearSemesterNo, new { htmlAttributes = new { @class = "form-control", Type = "number" } })
             @Html.ValidationMessageFor(model => model.YearSemesterNo, "", new { @class = "text-danger" })
         </div>
-        <div class="col-sm-4">
-            @Html.LabelFor(model => model.IsActive, "Is Active", htmlAttributes: new { @class = "control-label" })
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("IsActive", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-            @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
-            @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control", type = "hidden" } })
         </div>
     </div>
     <br />
     <div class="row">
         <div class="col-sm-3">
-            <input type="submit" value="Add" class="btn btn-primary" />
-            <a href="@Url.Content("~/BatchProgramCourses/Index")" class="btn btn-primary">Refresh</a>
+            <input type="submit" value="Add" class="btn btn-success" />
+            <a href="@Url.Content("~/BatchProgramCourses/Index")" class="btn btn-success">Refresh</a>
         </div>
     </div>
 }

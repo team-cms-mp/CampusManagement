@@ -14,23 +14,24 @@ using Newtonsoft.Json;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
     public class FormReceiveDetailsController : Controller
     {
         private ModelCMSContainer db = new ModelCMSContainer();
+        private ModelFinanceContainer dbFinance = new ModelFinanceContainer();
         FormSaleDetailsViewModel model = new FormSaleDetailsViewModel();
 
         public ActionResult Index()
         {
-            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes" && f.DepositTypeID != 4).OrderByDescending(a => a.FormID).ToList();
+            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes").OrderByDescending(a => a.FormID).ToList();
             model.SelectedFormSaleDetail = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.IsReceived = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.FormTypeID = new SelectList(db.FormTypes, "FormTypeID", "FormTypeName");
-            ViewBag.DepositTypeID = new SelectList(db.DepositTypes.Where(d => d.DepositTypeName != "Online"), "DepositTypeID", "DepositTypeName");
+            ViewBag.DepositTypeID = new SelectList(db.DepositTypes, "DepositTypeID", "DepositTypeName");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name");
-            ViewBag.AccountID = new SelectList(db.Finance_Bank_Accounts, "Account_ID", "Account_No");
+            ViewBag.AccountID = new SelectList(dbFinance.Bank_Account, "Account_ID", "Account_No");
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View(model);
@@ -39,15 +40,15 @@ namespace CampusManagement.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes" && f.DepositTypeID != 4).OrderByDescending(a => a.FormID).ToList();
+            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes").OrderByDescending(a => a.FormID).ToList();
             model.SelectedFormSaleDetail = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.IsReceived = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.FormTypeID = new SelectList(db.FormTypes, "FormTypeID", "FormTypeName");
-            ViewBag.DepositTypeID = new SelectList(db.DepositTypes.Where(d => d.DepositTypeName != "Online"), "DepositTypeID", "DepositTypeName");
+            ViewBag.DepositTypeID = new SelectList(db.DepositTypes, "DepositTypeID", "DepositTypeName");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name");
-            ViewBag.AccountID = new SelectList(db.Finance_Bank_Accounts, "Account_ID", "Account_No");
+            ViewBag.AccountID = new SelectList(dbFinance.Bank_Account, "Account_ID", "Account_No");
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -96,14 +97,14 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes" && f.DepositTypeID != 4).OrderByDescending(a => a.FormID).ToList();
+            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes").OrderByDescending(a => a.FormID).ToList();
             model.SelectedFormSaleDetail = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", formSaleDetail.IsActive);
             ViewBag.FormTypeID = new SelectList(db.FormTypes, "FormTypeID", "FormTypeName", formSaleDetail.FormTypeID);
-            ViewBag.DepositTypeID = new SelectList(db.DepositTypes.Where(d => d.DepositTypeName != "Online"), "DepositTypeID", "DepositTypeName", formSaleDetail.DepositTypeID);
+            ViewBag.DepositTypeID = new SelectList(db.DepositTypes, "DepositTypeID", "DepositTypeName", formSaleDetail.DepositTypeID);
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name", formSaleDetail.BatchProgramID);
-            ViewBag.AccountID = new SelectList(db.Finance_Bank_Accounts, "Account_ID", "Account_No", formSaleDetail.AccountID);
+            ViewBag.AccountID = new SelectList(dbFinance.Bank_Account, "Account_ID", "Account_No", formSaleDetail.AccountID);
             return View("Index", model);
         }
 
@@ -154,12 +155,11 @@ namespace CampusManagement.Controllers
                     db.InsertFormSaleDetail(formSaleDetail.FormID, formSaleDetail.FormNo
                         , formSaleDetail.FormTypeID, formSaleDetail.FormPrice
                         , formSaleDetail.FormDescription, formSaleDetail.DepositTypeID
-                        , formSaleDetail.BatchProgramID
+                        , formSaleDetail.BatchProgramID, formSaleDetail.ApplicantName
                         , formSaleDetail.FatherName, formSaleDetail.PhoneNo, formSaleDetail.CNIC
                         , formSaleDetail.DepositSlipNo, formSaleDetail.PurchaseDate
                         , formSaleDetail.AccountID, formSaleDetail.CreatedBy, formSaleDetail.IsActive
-                        , formSaleDetail.ModifiedBy, formSaleDetail.IsReceived, formSaleDetail.ReceiveDate
-                        , formSaleDetail.FirstName, formSaleDetail.LastName, formSaleDetail.DegreeID, formSaleDetail.Wavier_Discount);
+                        , formSaleDetail.ModifiedBy, formSaleDetail.IsReceived, formSaleDetail.ReceiveDate);
                     ViewBag.MessageType = "success";
                     ViewBag.Message = "Data has been saved successfully.";
                 }
@@ -190,14 +190,14 @@ namespace CampusManagement.Controllers
                 return HttpNotFound();
             }
 
-            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes" && f.DepositTypeID != 4).OrderByDescending(a => a.FormID).ToList();
+            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes").OrderByDescending(a => a.FormID).ToList();
             model.SelectedFormSaleDetail = formSaleDetail;
             model.DisplayMode = "ReadWrite";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", formSaleDetail.IsActive);
             ViewBag.FormTypeID = new SelectList(db.FormTypes, "FormTypeID", "FormTypeName", formSaleDetail.FormTypeID);
-            ViewBag.DepositTypeID = new SelectList(db.DepositTypes.Where(d => d.DepositTypeName != "Online"), "DepositTypeID", "DepositTypeName", formSaleDetail.DepositTypeID);
+            ViewBag.DepositTypeID = new SelectList(db.DepositTypes, "DepositTypeID", "DepositTypeName", formSaleDetail.DepositTypeID);
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name", formSaleDetail.BatchProgramID);
-            ViewBag.AccountID = new SelectList(db.Finance_Bank_Accounts, "Account_ID", "Account_No", formSaleDetail.AccountID);
+            ViewBag.AccountID = new SelectList(dbFinance.Bank_Account, "Account_ID", "Account_No", formSaleDetail.AccountID);
             ViewBag.MessageType = "";
             ViewBag.Message = "";
             return View("Index", model);
@@ -213,7 +213,6 @@ namespace CampusManagement.Controllers
             {
                 formSaleDetail.ModifiedBy = Convert.ToInt32(Session["emp_id"]);
                 formSaleDetail.IsReceived = "Yes";
-                //formSaleDetail.FormPrice = "1500";
                 InsertFormDetail(formSaleDetail, ref ErrorMessage, ref count);
             }
             catch (DbEntityValidationException ex)
@@ -231,14 +230,14 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes" && f.DepositTypeID != 4).OrderByDescending(a => a.FormID).ToList();
+            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes").OrderByDescending(a => a.FormID).ToList();
             model.SelectedFormSaleDetail = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", formSaleDetail.IsActive);
             ViewBag.FormTypeID = new SelectList(db.FormTypes, "FormTypeID", "FormTypeName", formSaleDetail.FormTypeID);
-            ViewBag.DepositTypeID = new SelectList(db.DepositTypes.Where(d => d.DepositTypeName != "Online"), "DepositTypeID", "DepositTypeName", formSaleDetail.DepositTypeID);
+            ViewBag.DepositTypeID = new SelectList(db.DepositTypes, "DepositTypeID", "DepositTypeName", formSaleDetail.DepositTypeID);
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name", formSaleDetail.BatchProgramID);
-            ViewBag.AccountID = new SelectList(db.Finance_Bank_Accounts, "Account_ID", "Account_No", formSaleDetail.AccountID);
+            ViewBag.AccountID = new SelectList(dbFinance.Bank_Account, "Account_ID", "Account_No", formSaleDetail.AccountID);
             return View("Index", model);
         }
 
@@ -254,7 +253,7 @@ namespace CampusManagement.Controllers
                 return HttpNotFound();
             }
 
-            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes" && f.DepositTypeID != 4).OrderByDescending(a => a.FormID).ToList();
+            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes").OrderByDescending(a => a.FormID).ToList();
             model.SelectedFormSaleDetail = formSaleDetail;
             model.DisplayMode = "Delete";
             ViewBag.MessageType = "";
@@ -282,30 +281,29 @@ namespace CampusManagement.Controllers
                 ViewBag.Message = ex.Message;
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
-            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes" && f.DepositTypeID != 4).OrderByDescending(a => a.FormID).ToList();
+            model.FormSaleDetails = db.FormSaleDetails.Where(f => f.IsReceived == "Yes").OrderByDescending(a => a.FormID).ToList();
             model.SelectedFormSaleDetail = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.IsReceived = new SelectList(db.Options, "OptionDesc", "OptionDesc");
             ViewBag.FormTypeID = new SelectList(db.FormTypes, "FormTypeID", "FormTypeName");
-            ViewBag.DepositTypeID = new SelectList(db.DepositTypes.Where(d => d.DepositTypeName != "Online"), "DepositTypeID", "DepositTypeName");
+            ViewBag.DepositTypeID = new SelectList(db.DepositTypes, "DepositTypeID", "DepositTypeName");
             ViewBag.BatchProgramID = new SelectList(db.GetBatchProgramNameConcat("", 0), "ID", "Name");
-            ViewBag.AccountID = new SelectList(db.Finance_Bank_Accounts, "Account_ID", "Account_No");
+            ViewBag.AccountID = new SelectList(dbFinance.Bank_Account, "Account_ID", "Account_No");
             return View("Index", model);
         }
 
-        public JsonResult GetFormSaleDetail()
+        public JsonResult GetFormSaleDetail(string FormNo)
         {
             List<FormSaleDetail> lstFS = new List<FormSaleDetail>();
             string pDate = "";
             string cDate = "";
             string mDate = "";
-            string FormNo = Request.QueryString["FormNo"];
 
-            lstFS = db.FormSaleDetails.Where(f => f.FormNo == FormNo && f.PurchaseDate != null && (f.IsReceived == "No" || f.IsReceived == null) && f.DepositTypeID != 4).OrderByDescending(a => a.FormID).ToList();
+            lstFS = db.FormSaleDetails.Where(a => a.FormNo == FormNo).ToList();
             if (lstFS.Count > 0)
             {
-                pDate = (lstFS[0].PurchaseDate == null) ? "" : lstFS[0].PurchaseDate;
+                pDate = (lstFS[0].PurchaseDate == null) ? "" : lstFS[0].PurchaseDate.Value.ToShortDateString();
                 cDate = (lstFS[0].CreatedOn == null) ? "" : lstFS[0].CreatedOn.Value.ToShortDateString();
                 mDate = (lstFS[0].ModifiedOn == null) ? "" : lstFS[0].ModifiedOn.Value.ToShortDateString();
             }

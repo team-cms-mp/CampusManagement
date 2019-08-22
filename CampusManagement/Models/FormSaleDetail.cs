@@ -16,36 +16,36 @@ namespace CampusManagement.Models
     {
         [Display(Name = "Form ID")]
         public int FormID { get; set; }
-        
+        [Required(ErrorMessage = "Required")]
         [Display(Name = "Form #")]
         public string FormNo { get; set; }
         [Display(Name = "Form Type")]
         public Nullable<int> FormTypeID { get; set; }
-        
-        [Display(Name = "Application Processing Fee")]
+        [Required(ErrorMessage = "Required")]
+        [Display(Name = "Form Price")]
         public string FormPrice { get; set; }
         [Display(Name = "Description")]
         public string FormDescription { get; set; }
         [Display(Name = "Deposit Type")]
         public Nullable<int> DepositTypeID { get; set; }
-        [Display(Name = "Program")]
+        [Display(Name = "Batch Program")]
         public Nullable<int> BatchProgramID { get; set; }
-        
+        [Required(ErrorMessage = "Required")]
         [Display(Name = "Applicant Name")]
         public string ApplicantName { get; set; }
-        
+        [Required(ErrorMessage = "Required")]
         [Display(Name = "Father/Husband")]
         public string FatherName { get; set; }
-        
+        [Required(ErrorMessage = "Required")]
         [Display(Name = "Phone #")]
         public string PhoneNo { get; set; }
-        
-        [Display(Name = "CNIC/Passport")]
+        [Required(ErrorMessage = "Required")]
+        [Display(Name = "CNIC")]
         public string CNIC { get; set; }
-        [Display(Name = "Draft #")]
+        [Display(Name = "Deposit Slip #")]
         public string DepositSlipNo { get; set; }
         [Display(Name = "Date")]
-        public string PurchaseDate { get; set; }
+        public Nullable<System.DateTime> PurchaseDate { get; set; }
         [Display(Name = "Bank Account")]
         public Nullable<int> AccountID { get; set; }
         [Display(Name = "Created By")]
@@ -61,37 +61,18 @@ namespace CampusManagement.Models
 
         public Nullable<int> Voucher_Trans_ID { get; set; }
         public string IsReceived { get; set; }
-        [Display(Name = "Receive Date")]
-        public string ReceiveDate { get; set; }
-
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
-        
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
-        [Display(Name = "Test Type")]
-        public Nullable<int> DegreeID { get; set; }
-
-        [Display(Name = "Waive Off/Discount")]
-        public string Wavier_Discount { get; set; }
-
-        [Display(Name = "Program Preference 1")]
-        public Nullable<int> BatchProgramID1 { get; set; }
-        [Display(Name = "Program Preference 2")]
-        public Nullable<int> BatchProgramID2 { get; set; }
-        [Display(Name = "Program Preference 3")]
-        public Nullable<int> BatchProgramID3 { get; set; }
-        public Nullable<int> LevelID { get; set; }
-
+        [Display(Name = "Date")]
+        public Nullable<System.DateTime> ReceiveDate { get; set; }
+    
         public virtual BatchProgram BatchProgram { get; set; }
         public virtual DepositType DepositType { get; set; }
         public virtual FormType FormType { get; set; }
     }
 
-    //public class FormSaleDetailsViewModel
-    //{
-    //    public List<FormSaleDetail> FormSaleDetails { get; set; }
-    //    public FormSaleDetail SelectedFormSaleDetail { get; set; }
-    //    public string DisplayMode { get; set; }
-    //}
+    public class FormSaleDetailsViewModel
+    {
+        public List<FormSaleDetail> FormSaleDetails { get; set; }
+        public FormSaleDetail SelectedFormSaleDetail { get; set; }
+        public string DisplayMode { get; set; }
+    }
 }

@@ -17,18 +17,10 @@ namespace CampusManagement.Models
         public string UserName { get; set; }
         public string Password { get; set; }
         public int EmpID { get; set; }
-        public string Remarks { get; set; }
+        public string EmpType { get; set; }
         public Nullable<int> MainPage_Id { get; set; }
         public int id { get; set; }
         public Nullable<int> ShiftID { get; set; }
-        public string Confirmation_Code { get; set; }
-        public Nullable<System.DateTime> date_time { get; set; }
-        public Nullable<int> entry_emp { get; set; }
-        public Nullable<bool> Branch_Access { get; set; }
-        public string UserName1 { get; set; }
-        public string EmpType { get; set; }
-        public string Email { get; set; }
-        public string MobileNumber { get; set; }
-        public string CNIC { get; set; }
+        public Nullable<int> Branch_Access { get; set; }
     }
 }

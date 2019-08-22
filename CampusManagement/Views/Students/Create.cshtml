@@ -1,14 +1,14 @@
 ﻿@model CampusManagement.Models.Student
 
 @{
-    ViewBag.Title = "Add Student";
-    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ViewBag.Title = "Create Student";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 <div class="row">
     <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
 </div>
-<hr style="border-top: 1px solid #6d9b90;" />
+<hr style=" border-top: 1px solid #6d9b90;" />
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -29,7 +29,7 @@
     <br />
     <div class="row">
         <div class="col-sm-3">
-            <input type="button" value="Populate Applicant" class="btn btn-primary" onclick="GetApplicant();" />
+            <input type="button" value="Populate Applicant" class="btn btn-success" onclick="GetApplicant();" />
         </div>
     </div>
     <div class="row">
@@ -45,7 +45,7 @@
         </div>
         <div class="col-sm-3">
             <label for="imgView" class="control-label">Profile Picture</label>
-            <a href="@Url.Content("~/ProfilePics/noimage.png")" id="lnkProfilePicture" target="_blank"><img id="imgView" src="@Url.Content("~/ProfilePics/noimage.png")" style="width:100px;height:100px;border-radius:10px;" /></a>
+            <img id="imgView" src="@Url.Content("~/ProfilePics/noimage.png")" style="width:100px;height:100px;border-radius:150px;" />
             @Html.TextBoxFor(model => model.Picture, new { @class = "form-control", type = "hidden" })
         </div>
     </div>
@@ -60,22 +60,22 @@
         </div>
         <div class="col-sm-3">
             <span style="color:red;">*</span> @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
             @Html.LabelFor(model => model.FatherName, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.FatherName, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+            @Html.EditorFor(model => model.FatherName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.FatherName, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
             <span style="color:red;">*</span> @Html.LabelFor(model => model.StudentDOB, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.StudentDOB, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+            @Html.EditorFor(model => model.StudentDOB, new { htmlAttributes = new { @class = "form-control", @placeholder = "mm/dd/yyyy" } })
             @Html.ValidationMessageFor(model => model.StudentDOB, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
@@ -95,22 +95,22 @@
         </div>
         <div class="col-sm-3">
             <span style="color:red;">*</span> @Html.LabelFor(model => model.MaritalStatusID, htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownList("MaritalStatusID", null, "--Please Select--", htmlAttributes: new { @class = "form-control", @required = "required" })
+            @Html.DropDownList("MaritalStatusID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.MaritalStatusID, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
             <span style="color:red;">*</span> @Html.LabelFor(model => model.ACNIC, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.ACNIC, new { htmlAttributes = new { @class = "form-control", @maxlength = "15", @minlength = "14" } })
+            @Html.EditorFor(model => model.ACNIC, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.ACNIC, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
             @Html.LabelFor(model => model.PassportNo, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.PassportNo, new { htmlAttributes = new { @class = "form-control",  @maxlength = "15", @minlength = "14" } })
+            @Html.EditorFor(model => model.PassportNo, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.PassportNo, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
             @Html.LabelFor(model => model.PassportExpiryDate, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.PassportExpiryDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+            @Html.EditorFor(model => model.PassportExpiryDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "mm/dd/yyyy" } })
             @Html.ValidationMessageFor(model => model.PassportExpiryDate, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
@@ -131,12 +131,12 @@
     <div class="row" id="hide1">
         <div class="col-sm-3">
             @Html.LabelFor(model => model.PTCLNO, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.PTCLNO, new { htmlAttributes = new { @class = "form-control", @maxlength = "11" } })
+            @Html.EditorFor(model => model.PTCLNO, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.PTCLNO, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
             <span style="color:red;">*</span> @Html.LabelFor(model => model.CellNo, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.CellNo, new { htmlAttributes = new { @class = "form-control", @maxlength = "11", @minlength = "11" } })
+            @Html.EditorFor(model => model.CellNo, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.CellNo, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
@@ -152,12 +152,12 @@
     </div>
 
     <div class="divHeading">
-        <a data-toggle="collapse" data-target="#hide2"><h4 class="fa fa-level-down" aria-hidden="true"> Emergency Contact (other than Father and Guardian (should be blood relation)) </h4></a>
+        <a data-toggle="collapse" data-target="#hide2"><h4 class="fa fa-level-down" aria-hidden="true"> Guardian Info </h4></a>
     </div>
     <div class="row" id="hide2">
         <div class="col-sm-3">
             <span style="color:red;">*</span> @Html.LabelFor(model => model.GuardianName, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.GuardianName, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+            @Html.EditorFor(model => model.GuardianName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.GuardianName, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
@@ -166,8 +166,8 @@
             @Html.ValidationMessageFor(model => model.RelationTypeID, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-3">
-            <span style="color:red;">*</span> <span style="color:red;">*</span> @Html.LabelFor(model => model.GuardianCNIC, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.GuardianCNIC, new { htmlAttributes = new { @class = "form-control", @maxlength = "15", @minlength = "15" } })
+            <span style="color:red;">*</span> @Html.LabelFor(model => model.GuardianCNIC, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.GuardianCNIC, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.GuardianCNIC, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -176,17 +176,17 @@
         <a data-toggle="collapse" data-target="#hide3"><h4 class="fa fa-level-down" aria-hidden="true"> Address Info </h4></a>
     </div>
     <div class="row" id="hide3">
-        <div class="col-sm-3 hidden">
+        <div class="col-sm-3">
             <span style="color:red;">*</span> @Html.LabelFor(model => model.CountryID, htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("CountryID", null, "--Please Select", htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
         </div>
-        <div class="col-sm-3 hidden">
+        <div class="col-sm-3">
             <span style="color:red;">*</span> @Html.LabelFor(model => model.ProvinceID, htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("ProvinceID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.ProvinceID, "", new { @class = "text-danger" })
         </div>
-        <div class="col-sm-3 hidden">
+        <div class="col-sm-3">
             <span style="color:red;">*</span> @Html.LabelFor(model => model.CityID, htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("CityID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
@@ -218,12 +218,12 @@
             @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
         </div>
     </div>
-    <hr style="border-top: 1px solid #6d9b90;" />
+    <hr style=" border-top: 1px solid #6d9b90;" />
     <div class="row">
         <div class="col-sm-12">
             <button type="submit" class="btn btn-lg mybutton">
                 <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-                Save
+                Submit
             </button>
         </div>
     </div>
@@ -237,21 +237,11 @@
 @section Scripts {
     <script>
             $(document).ready(function () {
-                //$("#PassportExpiryDate").mask("99/99/9999");
-                //$("#StudentDOB").mask("99/99/9999");
-                //$("#FirstName").OnlyAlphabets();
-                //$("#LastName").OnlyAlphabets();
-                //$("#FatherName").OnlyAlphabets();
-                $("#PTCLNO").ForceNumericOnly();
-                $("#CellNo").ForceNumericOnly();
-                $("#ACNIC").CnicFormat();
-                $("#GuardianCNIC").CnicFormat();
-                $("#PassportNo").CnicFormat();
+                $("#PassportExpiryDate").mask("99/99/9999");
+                $("#StudentDOB").mask("99/99/9999");
 
                 if ($("#Picture").val() != "") {
                     $("#imgView").attr("src", $('#Picture').val());
-                    var pic = $("#Picture").val().replace("~/", "");
-                    $("#lnkProfilePicture").attr("href", "@Url.Content("~/")" + pic);
                 }
                 else {
                     $("#Picture").val("@Url.Content("~/ProfilePics/noimage.png")");

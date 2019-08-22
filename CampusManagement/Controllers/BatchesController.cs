@@ -12,10 +12,10 @@ using CampusManagement.Models;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
     public class BatchesController : Controller
     {
-        private ModelCMSNewContainer db = new ModelCMSNewContainer();
+        private ModelCMSContainer db = new ModelCMSContainer();
         BatchViewModel model = new BatchViewModel();
 
         public ActionResult Index()
@@ -28,35 +28,6 @@ namespace CampusManagement.Controllers
             ViewBag.Message = "";
             return View(model);
         }
-
-        [HttpGet]
-        public ActionResult ActiveSession()
-        {
-            model.Batches = db.Batches.OrderByDescending(a => a.BatchID).ToList();
-            model.SelectedBatch = null;
-            model.DisplayMode = "WriteOnly";
-            ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
-            ViewBag.MessageType = "";
-            ViewBag.Message = "";
-            return View(model);
-        }
-
-        public ActionResult ActiveSessionByBatchID(int BatchID)
-        {
-            int EmpID = Convert.ToInt32(Session["emp_id"]);
-            db.UpdateActiveSession(BatchID, EmpID);
-            // Update Request For Approve Here
-
-            //model.Batches = db.Batches.OrderByDescending(a => a.BatchID).ToList();
-            //model.SelectedBatch = null;
-            //model.DisplayMode = "WriteOnly";
-            //ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
-            ViewBag.MessageType = "";
-            ViewBag.Message = "";
-            return RedirectToAction("ActiveSession");
-        }
-
-
 
         [HttpGet]
         public ActionResult Create()
@@ -82,17 +53,17 @@ namespace CampusManagement.Controllers
                 ba = db.Batches.FirstOrDefault(bac => bac.BatchName == batch.BatchName);
                 if (ba != null)
                 {
-                    ModelState.AddModelError(string.Empty, "Session Name already exists.");
+                    ModelState.AddModelError(string.Empty, "Batch Name is already exists.");
                     count++;
-                    ErrorMessage += count + "-" + "Session Name already exists." + "<br />";
+                    ErrorMessage += count + "-" + "Batch Name is already exists." + "<br />";
                 }
 
                 ba = db.Batches.FirstOrDefault(bac => bac.BatchCode == batch.BatchCode);
                 if (ba != null)
                 {
-                    ModelState.AddModelError(string.Empty, "Session Code already exists.");
+                    ModelState.AddModelError(string.Empty, "Batch Code is already exists.");
                     count++;
-                    ErrorMessage += count + "-" + "Session Code already exists." + "<br />";
+                    ErrorMessage += count + "-" + "Batch Code is already exists." + "<br />";
                 }
 
                 if (!string.IsNullOrEmpty(ErrorMessage))
@@ -234,7 +205,7 @@ namespace CampusManagement.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int? id)
+        public ActionResult DeleteConfirmed(int id)
         {
             try
             {
@@ -256,23 +227,6 @@ namespace CampusManagement.Controllers
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
 
             return View("Index", model);
-        }
-
-        public ActionResult SetCurrentSession(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Batch batch = db.Batches.Find(id);
-            if (batch == null)
-            {
-                return HttpNotFound();
-            }
-
-            db.UpdateActiveSession(id, Convert.ToInt32(Session["emp_id"])); //Update to Current Session
-
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

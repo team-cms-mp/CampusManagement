@@ -26,27 +26,5 @@ namespace CampusManagement.Models
         public Nullable<int> ModifiedBy { get; set; }
         public string LogoWidth { get; set; }
         public string LogoHeight { get; set; }
-        public string MarginTop { get; set; }
-        public string CampusTitle { get; set; }
-        public string MarginLeftTitle { get; set; }
-        public int Hospital_ID { get; set; }
-        public string EligibilityPercentage { get; set; }
-        public string CampusAddress { get; set; }
-        public string UniversityCampusName { get; set; }
-		public string LayoutName { get; set; }
-		public string UniversityName { get; set; }
-
-        public string PhoneNumber1 { get; set; }
-        public string PhoneNumber2 { get; set; }
-        public string PhoneNumber3 { get; set; }
-        public string MobileNumber1 { get; set; }
-        public string MobileNumber2 { get; set; }
-        public string MobileNumber3 { get; set; }
-        public string UniversityEmail { get; set; }
-        public string CampusEmail { get; set; }
-        public string QueryEmail { get; set; }
-		public string Extension1 { get; set; }
-		public string Extension2 { get; set; }
-		public string Extension3 { get; set; }
     }
 }

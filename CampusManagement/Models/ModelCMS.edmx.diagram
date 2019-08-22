@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8ae03bd30f3e4641bf79231380821c8d" Name="Diagram1" ZoomLevel="74" >
+        <EntityTypeShape EntityType="ModelCMS.Applicant" Width="1.5" PointX="7.5" PointY="15.75" />
+        <EntityTypeShape EntityType="ModelCMS.ApplicantQualification" Width="1.5" PointX="9.75" PointY="18.75" />
+        <EntityTypeShape EntityType="ModelCMS.ApplyForProgram" Width="1.5" PointX="9.75" PointY="37.25" />
+        <EntityTypeShape EntityType="ModelCMS.BankAccount" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelCMS.Batch" Width="1.5" PointX="3" PointY="31.125" />
+        <EntityTypeShape EntityType="ModelCMS.BatchProgram" Width="1.5" PointX="5.25" PointY="28.125" />
+        <EntityTypeShape EntityType="ModelCMS.BatchProgramCourse" Width="1.5" PointX="12.75" PointY="9.25" />
+        <EntityTypeShape EntityType="ModelCMS.BatchProgramSemester" Width="1.5" PointX="7.5" PointY="36.125" />
+        <EntityTypeShape EntityType="ModelCMS.CampusHomePageSetting" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ModelCMS.CampusSetting" Width="1.5" PointX="7.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ModelCMS.Challan" Width="1.5" PointX="15" PointY="18.875" />
+        <EntityTypeShape EntityType="ModelCMS.ChallanService" Width="1.5" PointX="20.25" PointY="20" />
+        <EntityTypeShape EntityType="ModelCMS.City" Width="1.5" PointX="5.25" PointY="19.375" />
+        <EntityTypeShape EntityType="ModelCMS.CollegeService" Width="1.5" PointX="18" PointY="14.75" />
+        <EntityTypeShape EntityType="ModelCMS.Country" Width="1.5" PointX="0.75" PointY="17.25" />
+        <EntityTypeShape EntityType="ModelCMS.Course" Width="1.5" PointX="10.5" PointY="11.25" />
+        <EntityTypeShape EntityType="ModelCMS.CourseType" Width="1.5" PointX="10.5" PointY="7.75" />
+        <EntityTypeShape EntityType="ModelCMS.CurrentOccupation" Width="1.5" PointX="5.25" PointY="24.125" />
+        <EntityTypeShape EntityType="ModelCMS.Day" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ModelCMS.Degree" Width="1.5" PointX="7.5" PointY="12" />
+        <EntityTypeShape EntityType="ModelCMS.Department" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="ModelCMS.Deposit" Width="1.5" PointX="17.25" PointY="24.875" />
+        <EntityTypeShape EntityType="ModelCMS.DepositType" Width="1.5" PointX="12.25" PointY="36.5" />
+        <EntityTypeShape EntityType="ModelCMS.Designation" Width="1.5" PointX="7.75" PointY="32.5" />
+        <EntityTypeShape EntityType="ModelCMS.Duration" Width="1.5" PointX="10" PointY="24.5" />
+        <EntityTypeShape EntityType="ModelCMS.FormSaleDetail" Width="1.5" PointX="14.5" PointY="32.75" />
+        <EntityTypeShape EntityType="ModelCMS.FormType" Width="1.5" PointX="12.25" PointY="40" />
+        <EntityTypeShape EntityType="ModelCMS.Gender" Width="1.5" PointX="5.25" PointY="10.25" />
+        <EntityTypeShape EntityType="ModelCMS.Institute" Width="1.5" PointX="7.5" PointY="27.625" />
+        <EntityTypeShape EntityType="ModelCMS.MaritalStatu" Width="1.5" PointX="5.25" PointY="34.75" />
+        <EntityTypeShape EntityType="ModelCMS.Nationality" Width="1.5" PointX="5.25" PointY="2.625" />
+        <EntityTypeShape EntityType="ModelCMS.Option" Width="1.5" PointX="12.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ModelCMS.Program" Width="1.5" PointX="3" PointY="26.875" />
+        <EntityTypeShape EntityType="ModelCMS.ProgramType" Width="1.5" PointX="0.75" PointY="27.25" />
+        <EntityTypeShape EntityType="ModelCMS.Province" Width="1.5" PointX="3" PointY="21.625" />
+        <EntityTypeShape EntityType="ModelCMS.RelationType" Width="1.5" PointX="5.25" PointY="42.125" />
+        <EntityTypeShape EntityType="ModelCMS.Religion" Width="1.5" PointX="5.25" PointY="45.875" />
+        <EntityTypeShape EntityType="ModelCMS.Room" Width="1.5" PointX="10" PointY="1.125" />
+        <EntityTypeShape EntityType="ModelCMS.RoomType" Width="1.5" PointX="7.75" PointY="1.375" />
+        <EntityTypeShape EntityType="ModelCMS.Salutation" Width="1.5" PointX="5.25" PointY="6.5" />
+        <EntityTypeShape EntityType="ModelCMS.SelectionCriteria" Width="1.5" PointX="12.75" PointY="28" />
+        <EntityTypeShape EntityType="ModelCMS.Semester" Width="1.5" PointX="5.25" PointY="50.125" />
+        <EntityTypeShape EntityType="ModelCMS.Status" Width="1.5" PointX="5.25" PointY="38.5" />
+        <EntityTypeShape EntityType="ModelCMS.Student" Width="1.5" PointX="12.75" PointY="15.75" />
+        <EntityTypeShape EntityType="ModelCMS.StudentBatchProgramCourse" Width="1.5" PointX="15" PointY="14.375" />
+        <EntityTypeShape EntityType="ModelCMS.StudentProgramEnrollment" Width="1.5" PointX="18" PointY="19.25" />
+        <EntityTypeShape EntityType="ModelCMS.Teacher" Width="1.5" PointX="10" PointY="31.625" />
+        <EntityTypeShape EntityType="ModelCMS.TeachersCourseAllocation" Width="1.5" PointX="12.25" PointY="32.375" />
+        <EntityTypeShape EntityType="ModelCMS.TimeSlot" Width="1.5" PointX="12.25" PointY="1" />
+        <EntityTypeShape EntityType="ModelCMS.TimeSlotCourseAllocation" Width="1.5" PointX="14.5" PointY="1.25" />
+        <EntityTypeShape EntityType="ModelCMS.TimeTable" Width="1.5" PointX="14.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ModelCMS.User" Width="1.5" PointX="2.75" PointY="14.75" />
+        <AssociationConnector Association="ModelCMS.FK_Applicant_BatchProgram" />
+        <AssociationConnector Association="ModelCMS.FK_Applicant_City" />
+        <AssociationConnector Association="ModelCMS.FK_Applicant_Country" />
+        <AssociationConnector Association="ModelCMS.FK_Applicant_CurrentOccupation" />
+        <AssociationConnector Association="ModelCMS.FK_Applicant_Gender" />
+        <AssociationConnector Association="ModelCMS.FK_Applicant_MaritalStatus" />
+        <AssociationConnector Association="ModelCMS.FK_Applicant_Nationality" />
+        <AssociationConnector Association="ModelCMS.FK_Applicant_Province" />
+        <AssociationConnector Association="ModelCMS.FK_Applicant_RelationType" />
+        <AssociationConnector Association="ModelCMS.FK_Applicant_Religion" />
+        <AssociationConnector Association="ModelCMS.FK_Applicant_Salutation" />
+        <AssociationConnector Association="ModelCMS.FK_Applicant_Status" />
+        <AssociationConnector Association="ModelCMS.FK_ApplicantQualification_Applicant" />
+        <AssociationConnector Association="ModelCMS.FK_ApplyForProgram_Applicant" />
+        <AssociationConnector Association="ModelCMS.FK_Student_Applicant" />
+        <AssociationConnector Association="ModelCMS.FK_ApplicantQualification_Degree" />
+        <AssociationConnector Association="ModelCMS.FK_ApplicantQualification_Institute" />
+        <AssociationConnector Association="ModelCMS.FK_BatchProgram_Batch" />
+        <AssociationConnector Association="ModelCMS.FK_BatchProgram_Program" />
+        <AssociationConnector Association="ModelCMS.FK_BatchProgramCourse_BatchProgram" />
+        <AssociationConnector Association="ModelCMS.FK_BatchProgramSemester_BatchProgram" />
+        <AssociationConnector Association="ModelCMS.FK_Challan_BatchProgram" />
+        <AssociationConnector Association="ModelCMS.FK_FormSaleDetail_BatchProgram" />
+        <AssociationConnector Association="ModelCMS.FK_SelectionCriteria_BatchProgram" />
+        <AssociationConnector Association="ModelCMS.FK_Student_BatchProgram" />
+        <AssociationConnector Association="ModelCMS.FK_StudentProgramEnrollment_BatchProgram" />
+        <AssociationConnector Association="ModelCMS.FK_BatchProgramCourse_Course" />
+        <AssociationConnector Association="ModelCMS.FK_BatchProgramCourse_CourseType" />
+        <AssociationConnector Association="ModelCMS.FK_StudentBatchProgramCourse_BatchProgramCourse" />
+        <AssociationConnector Association="ModelCMS.FK_TeachersCourseAllocation_ProgramCourse" />
+        <AssociationConnector Association="ModelCMS.FK_BatchProgramSemester_Semesters" />
+        <AssociationConnector Association="ModelCMS.FK_Challan_Student" />
+        <AssociationConnector Association="ModelCMS.FK_ChallanService_Challan" />
+        <AssociationConnector Association="ModelCMS.FK_Deposit_Challan" />
+        <AssociationConnector Association="ModelCMS.FK_ChallanService_CollegeService" />
+        <AssociationConnector Association="ModelCMS.FK_City_Country" />
+        <AssociationConnector Association="ModelCMS.FK_City_Province" />
+        <AssociationConnector Association="ModelCMS.FK_Student_City" />
+        <AssociationConnector Association="ModelCMS.FK_Province_Country" />
+        <AssociationConnector Association="ModelCMS.FK_Student_Country" />
+        <AssociationConnector Association="ModelCMS.FK_StudentBatchProgramCourse_Course" />
+        <AssociationConnector Association="ModelCMS.FK_Student_CurrentOccupation" />
+        <AssociationConnector Association="ModelCMS.FK_SelectionCriteria_Degree" />
+        <AssociationConnector Association="ModelCMS.FK_FormSaleDetail_DepositType" />
+        <AssociationConnector Association="ModelCMS.FK_Teachers_Designation" />
+        <AssociationConnector Association="ModelCMS.FK_TimeSlot_Duration" />
+        <AssociationConnector Association="ModelCMS.FK_FormSaleDetail_FormType" />
+        <AssociationConnector Association="ModelCMS.FK_Student_Gender" />
+        <AssociationConnector Association="ModelCMS.FK_Student_MaritalStatus" />
+        <AssociationConnector Association="ModelCMS.FK_Student_Nationality" />
+        <AssociationConnector Association="ModelCMS.FK_Program_ProgramType" />
+        <AssociationConnector Association="ModelCMS.FK_Student_Province" />
+        <AssociationConnector Association="ModelCMS.FK_Student_RelationType" />
+        <AssociationConnector Association="ModelCMS.FK_Student_Religion" />
+        <AssociationConnector Association="ModelCMS.FK_Room_RoomType" />
+        <AssociationConnector Association="ModelCMS.FK_TimeSlot_Room" />
+        <AssociationConnector Association="ModelCMS.FK_Student_Salutation" />
+        <AssociationConnector Association="ModelCMS.FK_Student_Status" />
+        <AssociationConnector Association="ModelCMS.FK_StudentBatchProgramCourse_Student" />
+        <AssociationConnector Association="ModelCMS.FK_StudentProgramEnrollment_Student" />
+        <AssociationConnector Association="ModelCMS.FK_TeachersCourseAllocation_Teacher" />
+        <AssociationConnector Association="ModelCMS.FK_TimeSlotCourseAllocation_TeacherCourseAllocation" />
+        <AssociationConnector Association="ModelCMS.FK_TimeSlotCourseAllocation_TimeSlot" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

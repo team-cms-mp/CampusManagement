@@ -12,10 +12,10 @@ using CampusManagement.Models;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
     public class TimeSlotsController : Controller
     {
-        private ModelCMSNewContainer db = new ModelCMSNewContainer();
+        private ModelCMSContainer db = new ModelCMSContainer();
         TimeSlotsViewModel model = new TimeSlotsViewModel();
 
         public ActionResult Index()
@@ -78,7 +78,10 @@ namespace CampusManagement.Controllers
                         int NumberOfSlots = slotsMinutes / slotDuration;
 
                         List<TimeSlot> lstTS = db.TimeSlots.Where(
-                            t => t.DayName == timeSlot.DayName).ToList();
+                            t => t.DurationID == timeSlot.DurationID
+                            && t.DayName == timeSlot.DayName
+                            && t.DurationID == timeSlot.DurationID
+                            && t.RoomID == timeSlot.RoomID).ToList();
 
                         if (lstTS.Count > 0)
                         {
@@ -151,54 +154,6 @@ namespace CampusManagement.Controllers
             ViewBag.StartingHour = new SelectList(lstHour, "StartingHour", "StartingHour");
             ViewBag.EndingHour = new SelectList(lstHour, "EndingHour", "EndingHour");
         }
-
-
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TimeSlot ts = db.TimeSlots.Find(id);
-            if (ts == null)
-            {
-                return HttpNotFound();
-            }
-
-            model.TimeSlots = db.TimeSlots.OrderByDescending(a => a.TimeSlotID).ToList();
-            model.SelectedTimeSlot = ts;
-            model.DisplayMode = "Delete";
-            ViewBag.MessageType = "";
-            ViewBag.Message = "";
-            return View("Index", model);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            try
-            {
-                TimeSlot ts = db.TimeSlots.Find(id);
-                db.TimeSlots.Remove(ts);
-                db.SaveChanges();
-                ViewBag.MessageType = "success";
-                ViewBag.Message = "Record has been removed successfully.";
-            }
-            catch (DbUpdateException ex)
-            {
-                ViewBag.MessageType = "error";
-                ViewBag.Message = ex.Message;
-                ModelState.AddModelError(string.Empty, ex.Message);
-            }
-            model.TimeSlots = db.TimeSlots.OrderByDescending(a => a.TimeSlotID).ToList();
-            model.SelectedTimeSlot = null;
-            model.DisplayMode = "WriteOnly";
-            ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
-
-            return View("Index", model);
-        }
-
 
         protected override void Dispose(bool disposing)
         {

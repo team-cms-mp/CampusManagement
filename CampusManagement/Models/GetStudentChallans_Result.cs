@@ -20,6 +20,6 @@ namespace CampusManagement.Models
         public Nullable<int> Amount { get; set; }
         public string DepositDate { get; set; }
         public string Account_No { get; set; }
-        public string FormNo { get; set; }
+        public Nullable<int> StudentID { get; set; }
     }
 }

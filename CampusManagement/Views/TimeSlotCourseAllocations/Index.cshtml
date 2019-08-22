@@ -2,7 +2,7 @@
 @using CampusManagement.Models
 @{
     ViewBag.Title = "Slot Courses";
-    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
@@ -21,7 +21,6 @@
     {
         Html.RenderPartial("Create", new CampusManagement.Models.TimeSlotCourseAllocation());
     }
-    ModelCMSNewContainer dbc = new ModelCMSNewContainer();
 }
 
 <table class="table">
@@ -43,6 +42,7 @@
     <tr>
         <td>
             @{
+                ModelCMSContainer dbc = new ModelCMSContainer();
                 GetBatchProgramNameConcat_Result dv = dbc.GetBatchProgramNameConcat("", 2).FirstOrDefault(bp => bp.ID == item.TimeSlotID);
             }
             @Html.Raw(dv.Name)

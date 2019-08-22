@@ -13,15 +13,15 @@ using Newtonsoft.Json;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
     public class CitiesController : Controller
     {
-        private ModelCMSNewContainer db = new ModelCMSNewContainer();
+        private ModelCMSContainer db = new ModelCMSContainer();
         CitiesViewModel model = new CitiesViewModel();
 
         public ActionResult Index()
         {
-            model.Cities = db.GetCities("").OrderByDescending(a=>a.CityID).ToList();
+            model.Cities = db.Cities.OrderByDescending(a=>a.CityID).ToList();
             model.SelectedCity = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
@@ -35,7 +35,7 @@ namespace CampusManagement.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            model.Cities = db.GetCities("").OrderByDescending(a => a.CityID).ToList();
+            model.Cities = db.Cities.OrderByDescending(a=>a.CityID).ToList();
             model.SelectedCity = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");
@@ -73,9 +73,9 @@ namespace CampusManagement.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "City Name already exists.");
+                    ModelState.AddModelError(string.Empty, "City Name is already exists.");
                     ViewBag.MessageType = "error";
-                    ViewBag.Message = "City Name already exists.";
+                    ViewBag.Message = "City Name is already exists.";
                 }
             }
             catch (DbEntityValidationException ex)
@@ -95,7 +95,7 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.Cities = db.GetCities("").OrderByDescending(a => a.CityID).ToList();
+            model.Cities = db.Cities.OrderByDescending(a=>a.CityID).ToList();
             model.SelectedCity = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", city.IsActive);
@@ -112,13 +112,13 @@ namespace CampusManagement.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            GetCities_Result city = db.GetCities("").FirstOrDefault(x=>x.CityID == id);
+            City city = db.Cities.Find(id);
             if (city == null)
             {
                 return HttpNotFound();
             }
 
-            model.Cities = db.GetCities("").OrderByDescending(a => a.CityID).ToList();
+            model.Cities = db.Cities.OrderByDescending(a=>a.CityID).ToList();
             model.SelectedCity = city;
             model.DisplayMode = "ReadWrite";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", city.IsActive);
@@ -168,7 +168,7 @@ namespace CampusManagement.Controllers
                 ViewBag.MessageType = "error";
                 ViewBag.Message = ErrorMessage;
             }
-            model.Cities = db.GetCities("").OrderByDescending(a => a.CityID).ToList();
+            model.Cities = db.Cities.OrderByDescending(a=>a.CityID).ToList();
             model.SelectedCity = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc", city.IsActive);
@@ -184,13 +184,13 @@ namespace CampusManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            GetCities_Result city = db.GetCities("").FirstOrDefault(x => x.CityID == id);
+            City city = db.Cities.Find(id);
             if (city == null)
             {
                 return HttpNotFound();
             }
 
-            model.Cities = db.GetCities("").OrderByDescending(a => a.CityID).ToList();
+            model.Cities = db.Cities.OrderByDescending(a=>a.CityID).ToList();
             model.SelectedCity = city;
             model.DisplayMode = "Delete";
             ViewBag.MessageType = "";
@@ -216,7 +216,7 @@ namespace CampusManagement.Controllers
                 ViewBag.Message = ex.Message;
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
-            model.Cities = db.GetCities("").OrderByDescending(a => a.CityID).ToList();
+            model.Cities = db.Cities.OrderByDescending(a=>a.CityID).ToList();
             model.SelectedCity = null;
             model.DisplayMode = "WriteOnly";
             ViewBag.IsActive = new SelectList(db.Options, "OptionDesc", "OptionDesc");

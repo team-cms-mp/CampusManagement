@@ -18,9 +18,7 @@ namespace CampusManagement.Models
         public Nullable<int> Dept_ID { get; set; }
         public Nullable<int> Priority { get; set; }
         public Nullable<bool> For_Main_Page { get; set; }
-        public Nullable<bool> Module_Type { get; set; }
-        public Nullable<int> type { get; set; }
+        public Nullable<bool> IS_Active { get; set; }
         public string Module_Icon { get; set; }
-        public Nullable<bool> Is_Active { get; set; }
     }
 }

@@ -25,14 +25,14 @@ namespace CampusManagement.Models
         [Display(Name = "Form #")]
         public string FormNo { get; set; }
         [Display(Name = "Issue Date")]
-        public string IssueDate { get; set; }
+        public Nullable<System.DateTime> IssueDate { get; set; }
         [Display(Name = "Last Date")]
-        public string LastDate { get; set; }
+        public Nullable<System.DateTime> LastDate { get; set; }
         [Display(Name = "Bank Account")]
         public Nullable<int> AccountID { get; set; }
         [Display(Name = "Is Deposited")]
         public string IsDeposited { get; set; }
-        [Display(Name = "Semester #")]
+        [Display(Name = "Year/Semester #")]
         public Nullable<int> YearSemesterNo { get; set; }
         public Nullable<int> Voucher_Trans_ID { get; set; }
         [Display(Name = "Created By")]
@@ -45,19 +45,16 @@ namespace CampusManagement.Models
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         [Display(Name = "Modified By")]
         public Nullable<int> ModifiedBy { get; set; }
+        [Display(Name = "Student ID")]
+        public Nullable<int> StudentID { get; set; }
         [Display(Name = "Program")]
         public Nullable<int> BatchProgramID { get; set; }
 
         // Custom code added
         public Nullable<int> Quantity { get; set; }
-        [Display(Name = "Session")]
-        public Nullable<int> BatchID { get; set; }
-        [Display(Name = "Challan Type")]
-        public string ChallanType { get; set; }
-        [Display(Name = "IsBatchProgramWise")]
-        public string IsBatchProgramWise { get; set; }
 
         public virtual BatchProgram BatchProgram { get; set; }
+        public virtual Student Student { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChallanService> ChallanServices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

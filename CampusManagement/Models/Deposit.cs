@@ -17,7 +17,7 @@ namespace CampusManagement.Models
         public int DepositID { get; set; }
         public Nullable<int> ChallanID { get; set; }
         public string DepositAmount { get; set; }
-        public string DepositDate { get; set; }
+        public Nullable<System.DateTime> DepositDate { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public string IsActive { get; set; }

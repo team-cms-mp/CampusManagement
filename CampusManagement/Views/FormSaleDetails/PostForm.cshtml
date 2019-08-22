@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Form Sale Detail";
-    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @using (Html.BeginForm("PostForm", "FormSaleDetails", FormMethod.Post))
@@ -20,7 +20,7 @@
             <input type="date" class="form-control" placeholder="EndDate" name="EndDate" />
         </div>
         <div class="col-sm-1"><br />
-            <button type="submit" class="btn btn-primary" value="Search">
+            <button type="submit" class="btn btn-success" value="Search">
                 <span class="glyphicon glyphicon-search"></span> Search
             </button>
         </div>
@@ -80,7 +80,15 @@
             @Html.DisplayFor(modelItem => item.FormPrice)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PurchaseDate)
+            @{
+                string purchaseDate = "";
+                if (item.PurchaseDate != null)
+                {
+                    DateTime pd = (DateTime)item.PurchaseDate;
+                    purchaseDate = pd.ToString("MM/dd/yyyy");
+                }
+            }
+            @Html.Raw(purchaseDate)
         </td>
         <td>
             <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptFormSaleSlip&FormID=")@item.FormID" target="_blank">Slip</a>
@@ -90,7 +98,7 @@
                 }
 </table>
 <div class="col-sm-1">
-    <button type="submit" class="btn btn-primary">
+    <button type="submit" class="btn btn-success">
         Post Vouchers
     </button>
 </div>
@@ -99,7 +107,7 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            //$("#PurchaseDate").mask("99/99/9999");
+            $("#PurchaseDate").mask("99/99/9999");
             $("#FormPrice").ForceNumericOnly();
             ShowHideBankDetail();
             $("#DepositTypeID").change(function () {

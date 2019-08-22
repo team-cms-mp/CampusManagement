@@ -1,7 +1,7 @@
 ﻿@model CampusManagement.Models.TimeSlotsViewModel
 @{
     ViewBag.Title = "Time Slots";
-    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
@@ -25,17 +25,19 @@
 <table class="table">
     <tr>
         <th>
-            Time Slot
+            @Html.DisplayNameFor(model => model.SelectedTimeSlot.TimeSlot1)
         </th>
         <th>
-            Day
-        </th>
-       
-        <th>
-            Duration(Minutes)
+            @Html.DisplayNameFor(model => model.SelectedTimeSlot.DayName)
         </th>
         <th>
-            Room #
+            @Html.DisplayNameFor(model => model.SelectedTimeSlot.Room.RoomName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTimeSlot.Duration.DurationMinutes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedTimeSlot.IsActive)
         </th>
     </tr>
 
@@ -49,10 +51,13 @@
             @Html.DisplayFor(modelItem => item.DayName)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Room.RoomName)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Duration.DurationMinutes)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Room.RoomName)
+            @Html.DisplayFor(modelItem => item.IsActive)
         </td>
     </tr>
     }
@@ -69,3 +74,5 @@
         });
     </script>    
 }
+
+

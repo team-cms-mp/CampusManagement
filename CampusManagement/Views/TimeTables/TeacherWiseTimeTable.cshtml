@@ -2,17 +2,12 @@
 
 @{
     ViewBag.Title = "Teacher Wise Time Table";
-    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
-<div class="row">
-    <div class="col-sm-12 ">
-        <a href="@Url.Content("~/TimeTables/TimeTableView")" class="btn btn-primary pull-right">Back</a>
-    </div>
-</div>
 <div class="row">
     <h2><span class="col-sm-12">@ViewBag.Title</span></h2>
 </div>
-<hr style="border-top: 1px solid #6d9b90;" />
+<hr style=" border-top: 1px solid #6d9b90;" />
 
 
 <table id="tblTimeTable" class="table table-striped" style="font-size:11px;font-weight:bold;">

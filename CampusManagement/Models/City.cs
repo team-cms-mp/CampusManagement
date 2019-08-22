@@ -50,4 +50,10 @@ namespace CampusManagement.Models
         public virtual ICollection<Student> Students { get; set; }
     }
 
+    public class CitiesViewModel
+    {
+        public List<City> Cities { get; set; }
+        public City SelectedCity { get; set; }
+        public string DisplayMode { get; set; }
+    }
 }

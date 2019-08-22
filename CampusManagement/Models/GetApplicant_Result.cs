@@ -13,18 +13,11 @@ namespace CampusManagement.Models
     
     public partial class GetApplicant_Result
     {
-        public int FormNoInt { get; set; }
-        public string FatherName { get; set; }
-        public string CreatedOn { get; set; }
         public string BatchName { get; set; }
         public string ProgramName { get; set; }
         public string ApplicantName { get; set; }
         public string ACNIC { get; set; }
         public string Email { get; set; }
         public string CellNo { get; set; }
-        public string StatusName { get; set; }
-        public string SubDept_Name { get; set; }
-        public string ApplicantStatus { get; set; }
-		public string FormNo { get; set; }
     }
 }

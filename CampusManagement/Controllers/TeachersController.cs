@@ -12,10 +12,10 @@ using CampusManagement.Models;
 
 namespace CampusManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Account Officer,Accounts Officer,Admin Assistant,Admin Officer,Admin.Assistant,Assist. Account Officer,Assist.Technician,Import Manager,Manager Servive & Support,Office Manager,Officer QMS,RSM - Center 2,RSM - South,Sales & Service Executive,Sales Executive,Sales Manager,Sales Representative,Sr.Accounts Officer,Sr.Associate Engineer,Sr.Sales Executive,Sr.Sales Representative,Store Assistant,Store Incharge,Technician")]
     public class TeachersController : Controller
     {
-        private ModelCMSNewContainer db = new ModelCMSNewContainer();
+        private ModelCMSContainer db = new ModelCMSContainer();
         TeachersViewModel model = new TeachersViewModel();
 
         public ActionResult Index()
@@ -115,23 +115,23 @@ namespace CampusManagement.Controllers
                 t = db.Teachers.FirstOrDefault(te => te.CNIC == teacher.CNIC);
                 if (t != null)
                 {
-                    ModelState.AddModelError(string.Empty, "CNIC already exists.");
+                    ModelState.AddModelError(string.Empty, "CNIC is already exists.");
                     count++;
-                    ErrorMessage += count + "-CNIC already exists.<br />";
+                    ErrorMessage += count + "-CNIC is already exists.<br />";
                 }
                 t = db.Teachers.FirstOrDefault(te => te.Email == teacher.Email);
                 if (t != null)
                 {
-                    ModelState.AddModelError(string.Empty, "Email already exists.");
+                    ModelState.AddModelError(string.Empty, "Email is already exists.");
                     count++;
-                    ErrorMessage += count + "-Email already exists.<br />";
+                    ErrorMessage += count + "-Email is already exists.<br />";
                 }
                 t = db.Teachers.FirstOrDefault(te => te.EmployeeNo == teacher.EmployeeNo);
                 if (t != null)
                 {
-                    ModelState.AddModelError(string.Empty, "Employee # already exists.");
+                    ModelState.AddModelError(string.Empty, "Employee # is already exists.");
                     count++;
-                    ErrorMessage += count + "-Employee # already exists.<br />";
+                    ErrorMessage += count + "-Employee # is already exists.<br />";
                 }
 
                 if(!string.IsNullOrEmpty(ErrorMessage))
@@ -300,58 +300,6 @@ namespace CampusManagement.Controllers
             ViewBag.DesignationID = new SelectList(db.Designations, "DesignationID", "DesignationName");
 
             return View("Index", model);
-        }
-
-        public ActionResult TeacherProfile()
-        {
-            return View();
-        }
-
-        public ActionResult TeacherTimeTable()
-        {
-            return View();
-        }
-
-        public ActionResult TeacherSubjects()
-        {
-            return View();
-        }
-
-        public ActionResult UploadAssignments()
-        {
-            return View();
-        }
-
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult ChangePassword(string OldPassword, string UserName, string CnfrmPassword, string NewPassword)
-        {
-            Login login = db.Logins.FirstOrDefault(a => a.Password == OldPassword && a.UserName == UserName);
-
-            if (login != null)
-            {
-                if (NewPassword.Trim() != CnfrmPassword.Trim())
-                {
-                    ViewBag.MessageType = "error";
-                    ViewBag.ErrorMessage = "New Password and Confirm Password must be same";
-                }
-                else
-                {
-                    db.um_UpdatePassword(UserName, OldPassword, NewPassword);
-                    ViewBag.MessageType = "success";
-                    ViewBag.ErrorMessage = "Password changed successfully.";
-                }
-            }
-            else
-            {
-                ViewBag.MessageType = "error";
-                ViewBag.ErrorMessage = "User Name or Old Password is incorrect.";
-            }
-            return View();
         }
 
         protected override void Dispose(bool disposing)

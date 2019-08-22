@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Form Receive Detail";
-    ////Layout = "~/Views/Shared/_MyLayout.cshtml";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
 @{
@@ -26,19 +26,22 @@
 <table class="table">
     <tr>
         <th>
-            Form #
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.FormNo)
         </th>
         <th>
-            Applicant Name
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.ApplicantName)
         </th>
         <th>
-            Father Name
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.FatherName)
         </th>
-        @*<th>
-            Application Processing Fee
-        </th>*@
         <th>
-            Receive Date
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.PhoneNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.CNIC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedFormSaleDetail.ReceiveDate)
         </th>
         <th>Actions</th>
     </tr>
@@ -55,17 +58,27 @@
         <td>
             @Html.DisplayFor(modelItem => item.FatherName)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.FormPrice)
-        </td>*@
         <td>
-           @Html.DisplayFor(modelItem => item.ReceiveDate)
+            @Html.DisplayFor(modelItem => item.PhoneNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CNIC)
+        </td>
+        <td>
+            @{
+                string receiveDate = "";
+                if (item.ReceiveDate != null)
+                {
+                    DateTime rd = (DateTime)item.ReceiveDate;
+                    receiveDate = rd.ToString("MM/dd/yyyy");
+                }
+            }
+            @Html.Raw(receiveDate)
         </td>
         <td>
             @Html.ActionLink("Edit", "Update", new { id = item.FormID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.FormID }) |
-            <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptFormReceiveSlip&FormID=")@item.FormID" target="_blank">Slip</a> |
-            <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptGetAdmitCardFormReceived&FormNo=")@item.FormNo" target="_blank">Admit Card</a>
+            <a href="@Url.Content("~/Reporting/ReportForms/ReportViewerForm.aspx?ReportName=rptFormReceiveSlip&FormID=")@item.FormID" target="_blank">Slip</a>
         </td>
     </tr>
     }
@@ -75,13 +88,9 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $("#FormPrice").val("1500");
-            //$("#ReceiveDate").mask("99/99/9999");
+            $("#ReceiveDate").mask("99/99/9999");
             $("#FormPrice").ForceNumericOnly();
-            $("#ApplicantName").OnlyAlphabets();
-            $("#PhoneNo").ForceNumericOnly();
-            $("#CNIC").CnicFormat();
-            $("#FatherName").OnlyAlphabets();
+            $("#FormPrice").val("0");
             ShowHideBankDetail();
             $("#DepositTypeID").change(function () {
                 ShowHideBankDetail();
@@ -106,13 +115,13 @@
 
         function GetFormSaleDetail() {
             var FormNo = $("#FormNo").val();
-
             $.ajax({
-                url: "@Url.Content("~/FormReceiveDetails/GetFormSaleDetail?FormNo=")"+FormNo,
+                url: "@Url.Content("~/FormReceiveDetails/GetFormSaleDetail")",
                 type: 'POST',
             datatype: 'application/json',
             contentType: 'application/json',
             async: false,
+            data: JSON.stringify({ FormNo: + FormNo }),
             success: function (result) {
                 if (result == "No result found.") {
                     alert(result);
